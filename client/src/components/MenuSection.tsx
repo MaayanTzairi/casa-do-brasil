@@ -2,12 +2,11 @@
  * CASA DO BRASIL — MENU — Section 3
  *
  * Design:
- * - Single unified section: white background throughout
- * - Sepia engraving illustration fades seamlessly from white → visible → white (top & bottom)
- * - Heading "TWO WAYS TO EXPERIENCE BRASIL" sits over the illustration
- * - Two cards below: Churrascaria (dark bordeaux) | Classic Menu (light)
+ * - Clean white background — no illustration (illustration is in standalone SectionDivider above)
+ * - Heading "TWO WAYS TO EXPERIENCE BRASIL" centered at top
+ * - Two menu tracks: Churrascaria (dark bordeaux) | Classic Menu (light)
  * - VIEW FULL MENU CTA at bottom
- * - Everything fits in one contained section, no overflow
+ * - Fully responsive
  */
 
 import { useRef, useState, useEffect } from "react";
@@ -17,8 +16,6 @@ const CHURRASCARIA_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-churrascaria-ijXuaBJJLFb4tBUQeN7cvj.webp";
 const CLASSIC_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-classic-KrHBQJp2Ar2RgqSpD4t4tj.webp";
-const DIVIDER_IMG =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider-engraving-NL9EyAEmsSEASNWmeGeoti.webp";
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(62,4,9)";
@@ -49,59 +46,10 @@ export default function MenuSection() {
       ref={ref}
       style={{
         background: "#ffffff",
-        position: "relative",
-        padding: mobile ? "4rem 1.5rem 4rem" : "5rem 5vw 5rem",
-        overflow: "hidden",
+        padding: mobile ? "0 1.5rem 4rem" : "0 5vw 5rem",
       }}
     >
-      {/* ── SEPIA ILLUSTRATION — fades from white on all sides ── */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      >
-        <img
-          src={DIVIDER_IMG}
-          alt=""
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center 40%",
-            opacity: 0.18,
-            mixBlendMode: "multiply",
-          }}
-        />
-        {/* Seamless white fade — top */}
-        <div style={{
-          position: "absolute", top: 0, left: 0, right: 0, height: "35%",
-          background: "linear-gradient(to bottom, #ffffff 0%, rgba(255,255,255,0) 100%)",
-        }} />
-        {/* Seamless white fade — bottom */}
-        <div style={{
-          position: "absolute", bottom: 0, left: 0, right: 0, height: "35%",
-          background: "linear-gradient(to top, #ffffff 0%, rgba(255,255,255,0) 100%)",
-        }} />
-        {/* Seamless white fade — left */}
-        <div style={{
-          position: "absolute", top: 0, bottom: 0, left: 0, width: "12%",
-          background: "linear-gradient(to right, #ffffff 0%, rgba(255,255,255,0) 100%)",
-        }} />
-        {/* Seamless white fade — right */}
-        <div style={{
-          position: "absolute", top: 0, bottom: 0, right: 0, width: "12%",
-          background: "linear-gradient(to left, #ffffff 0%, rgba(255,255,255,0) 100%)",
-        }} />
-      </div>
-
-      {/* ── CONTENT — sits above illustration ── */}
-      <div style={{ position: "relative", zIndex: 1, maxWidth: "1200px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
 
         {/* ── HEADING BLOCK ── */}
         <div style={{ textAlign: "center", marginBottom: mobile ? "2.5rem" : "3.5rem" }}>
