@@ -17,8 +17,7 @@ const MEAT_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/section2-meat-ke9deE2CaiwVZ9ZoiEuQWQ.png";
 const CARNIVAL_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/section2-carnival-cpA5t7SkhMGYiXQYXTmtnv.png";
-const BG_ILLUSTRATION =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/section2-lineart-3haptojbPCCSSJBrApGQcA.webp";
+
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(62,4,9)";
@@ -127,38 +126,7 @@ export default function CasaVibesSection() {
         {/* RIGHT — Staggered images with illustrated background */}
         <div style={{ position: "relative", height: "500px" }}>
 
-          {/* Premium illustrated background — churrascaria + carnival fusion */}
-          <motion.div
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.04 }}
-            transition={{ duration: 1.4, delay: 0.05, ease: [0.25, 0.46, 0.45, 0.94] }}
-            style={{
-              position: "absolute",
-              inset: "-2rem -1rem -2rem -1rem",
-              zIndex: 0,
-              overflow: "hidden",
-              borderRadius: "2px",
-            }}
-          >
-            <img
-              src={BG_ILLUSTRATION}
-              alt=""
-              style={{
-                width: "100%",
-                height: "100%",
-              objectFit: "cover",
-              objectPosition: "center",
-              opacity: 0.55,
-              mixBlendMode: "normal",
-              }}
-            />
-            {/* Soft white vignette on edges so it blends into white bg */}
-            <div style={{
-              position: "absolute", inset: 0,
-              background: "radial-gradient(ellipse at center, transparent 20%, rgba(255,255,255,0.92) 100%)",
-              pointerEvents: "none",
-            }} />
-          </motion.div>
+
 
           {/* LEFT image — taller, starts from top */}
           <motion.div
