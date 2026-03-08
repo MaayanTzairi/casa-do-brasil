@@ -46,7 +46,7 @@ export default function MenuSection() {
       ref={ref}
       style={{
         background: "#ffffff",
-        padding: mobile ? "0 1.5rem 4rem" : "0 5vw 5rem",
+        padding: mobile ? "3.5rem 1.5rem 4rem" : "4.5rem 5vw 5rem",
       }}
     >
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
