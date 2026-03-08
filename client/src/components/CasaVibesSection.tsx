@@ -1,9 +1,15 @@
 /**
- * CASA DO BRASIL — CASA VIBES Section 2
- * Layout: Original text LEFT unchanged | Right column: two images stacked smartly
- * Top-right: Meat image (taller, portrait) | Bottom-right: Carnival image (shorter, landscape)
- * Colors: White background · Bordeaux text · Gold accents
- * Font: Heebo Black/Bold/Regular/Light — English only
+ * CASA DO BRASIL — CASA VIBES / OUR STORY — Section 2
+ *
+ * Design philosophy:
+ * One unified section. Text anchors the left.
+ * Images on the right are NOT flat boxes — they are placed with character:
+ *   - Meat image: slightly rotated, elevated, with a subtle shadow
+ *   - Carnival image: counter-rotated, offset lower, partially overlapping the meat image
+ * This creates a "pinned on a board" editorial feel — alive, not constructed.
+ *
+ * Colors: White · Bordeaux rgb(62,4,9) · Gold rgb(185,161,103)
+ * Font: Heebo Black/Bold/Light — English only
  */
 
 import { useRef } from "react";
@@ -22,19 +28,6 @@ const fadeUp = {
     y: 0,
     transition: {
       duration: 0.85,
-      delay,
-      ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
-    },
-  }),
-};
-
-const revealImg = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 1.15,
       delay,
       ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
     },
@@ -60,7 +53,7 @@ export default function CasaVibesSection() {
         background: "#FFFFFF",
         overflow: "hidden",
         paddingTop: "5rem",
-        paddingBottom: "5rem",
+        paddingBottom: "6rem",
         paddingLeft: "clamp(2rem, 6vw, 7rem)",
         paddingRight: "clamp(2rem, 6vw, 7rem)",
       }}
@@ -88,17 +81,18 @@ export default function CasaVibesSection() {
         </span>
       </motion.div>
 
-      {/* ── TWO-COLUMN GRID: Text LEFT | Images RIGHT ── */}
+      {/* ── MAIN LAYOUT: Text LEFT | Images RIGHT (overlapping, rotated) ── */}
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
-          gap: "0 3rem",
-          alignItems: "start",
+          gap: "0 2rem",
+          alignItems: "center",
+          minHeight: "580px",
         }}
       >
-        {/* ══ LEFT — Text (unchanged from original) ══ */}
-        <div style={{ paddingTop: "0.5rem" }}>
+        {/* ══ LEFT — Text ══ */}
+        <div style={{ paddingTop: "0.5rem", paddingRight: "2rem" }}>
           {["FIRE.", "TRADITION.", "BRASIL."].map((word, i) => (
             <div key={word} style={{ overflow: "hidden", marginBottom: "0.1rem" }}>
               <motion.h2
@@ -121,7 +115,6 @@ export default function CasaVibesSection() {
             </div>
           ))}
 
-          {/* Gold rule */}
           <motion.div
             variants={drawLine}
             initial="hidden"
@@ -135,7 +128,6 @@ export default function CasaVibesSection() {
             }}
           />
 
-          {/* Body text */}
           <motion.p
             custom={0.55}
             variants={fadeUp}
@@ -157,7 +149,6 @@ export default function CasaVibesSection() {
             all the senses.
           </motion.p>
 
-          {/* Stats */}
           <motion.div
             custom={0.7}
             variants={fadeUp}
@@ -171,28 +162,24 @@ export default function CasaVibesSection() {
               { num: "RODIZIO", label: "ALL-INCLUSIVE" },
             ].map((stat) => (
               <div key={stat.label}>
-                <div
-                  style={{
-                    fontFamily: "'Heebo', sans-serif",
-                    fontWeight: 900,
-                    fontSize: "clamp(22px, 2.5vw, 32px)",
-                    color: "rgb(185,161,103)",
-                    lineHeight: 1,
-                    letterSpacing: "-0.01em",
-                  }}
-                >
+                <div style={{
+                  fontFamily: "'Heebo', sans-serif",
+                  fontWeight: 900,
+                  fontSize: "clamp(22px, 2.5vw, 32px)",
+                  color: "rgb(185,161,103)",
+                  lineHeight: 1,
+                  letterSpacing: "-0.01em",
+                }}>
                   {stat.num}
                 </div>
-                <div
-                  style={{
-                    fontFamily: "'Heebo', sans-serif",
-                    fontWeight: 700,
-                    fontSize: "0.6rem",
-                    letterSpacing: "0.2em",
-                    color: "rgb(62,4,9)",
-                    marginTop: "4px",
-                  }}
-                >
+                <div style={{
+                  fontFamily: "'Heebo', sans-serif",
+                  fontWeight: 700,
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.2em",
+                  color: "rgb(62,4,9)",
+                  marginTop: "4px",
+                }}>
                   {stat.label}
                 </div>
               </div>
@@ -204,26 +191,27 @@ export default function CasaVibesSection() {
           </motion.div>
         </div>
 
-        {/* ══ RIGHT — Two images stacked ══ */}
+        {/* ══ RIGHT — Images with character ══ */}
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.75rem",
-            marginTop: "-1rem",
+            position: "relative",
+            height: "580px",
           }}
         >
-          {/* TOP: Meat image — taller portrait */}
+          {/* MEAT IMAGE — top-left, slight clockwise tilt */}
           <motion.div
-            custom={0.15}
-            variants={revealImg}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
+            initial={{ opacity: 0, y: 40, rotate: 0 }}
+            animate={isInView ? { opacity: 1, y: 0, rotate: -2.5 } : { opacity: 0, y: 40, rotate: 0 }}
+            transition={{ duration: 1.1, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
             style={{
-              position: "relative",
-              overflow: "hidden",
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "72%",
+              zIndex: 2,
+              boxShadow: "0 20px 60px rgba(62,4,9,0.22), 0 4px 16px rgba(62,4,9,0.12)",
               borderRadius: "2px",
-              aspectRatio: "4/3",
+              overflow: "hidden",
             }}
           >
             <img
@@ -231,65 +219,58 @@ export default function CasaVibesSection() {
               alt="Brazilian Churrasco — Picanha"
               style={{
                 width: "100%",
-                height: "100%",
+                aspectRatio: "4/3",
                 objectFit: "cover",
                 objectPosition: "center 40%",
                 display: "block",
-                transition: "transform 1s ease",
-              }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
-            />
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                background: "linear-gradient(to top, rgba(62,4,9,0.7) 0%, transparent 55%)",
-                pointerEvents: "none",
               }}
             />
-            <motion.div
-              custom={0.4}
-              variants={fadeUp}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              style={{ position: "absolute", bottom: "1.4rem", left: "1.4rem" }}
-            >
+            {/* Bottom gradient + label */}
+            <div style={{
+              position: "absolute",
+              inset: 0,
+              background: "linear-gradient(to top, rgba(62,4,9,0.72) 0%, transparent 55%)",
+              pointerEvents: "none",
+            }} />
+            <div style={{ position: "absolute", bottom: "1.2rem", left: "1.2rem" }}>
               <div style={{
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 700,
-                fontSize: "0.55rem",
-                letterSpacing: "0.3em",
+                fontSize: "0.52rem",
+                letterSpacing: "0.28em",
                 color: "rgb(185,161,103)",
                 textTransform: "uppercase",
-                marginBottom: "0.3rem",
+                marginBottom: "0.25rem",
               }}>
                 CHURRASCO
               </div>
               <div style={{
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 900,
-                fontSize: "clamp(18px, 2vw, 28px)",
+                fontSize: "clamp(16px, 1.8vw, 24px)",
                 color: "#FFFFFF",
                 lineHeight: 1,
                 letterSpacing: "-0.02em",
               }}>
                 THE ART OF FIRE
               </div>
-            </motion.div>
+            </div>
           </motion.div>
 
-          {/* BOTTOM: Carnival image — shorter landscape */}
+          {/* CARNIVAL IMAGE — bottom-right, counter-tilt, overlapping */}
           <motion.div
-            custom={0.3}
-            variants={revealImg}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
+            initial={{ opacity: 0, y: 60, rotate: 0 }}
+            animate={isInView ? { opacity: 1, y: 0, rotate: 2.5 } : { opacity: 0, y: 60, rotate: 0 }}
+            transition={{ duration: 1.2, delay: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
             style={{
-              position: "relative",
-              overflow: "hidden",
+              position: "absolute",
+              bottom: "0",
+              right: "0",
+              width: "72%",
+              zIndex: 3,
+              boxShadow: "0 20px 60px rgba(62,4,9,0.28), 0 4px 16px rgba(62,4,9,0.14)",
               borderRadius: "2px",
-              aspectRatio: "16/9",
+              overflow: "hidden",
             }}
           >
             <img
@@ -297,52 +278,42 @@ export default function CasaVibesSection() {
               alt="Brazilian Carnival"
               style={{
                 width: "100%",
-                height: "100%",
+                aspectRatio: "4/3",
                 objectFit: "cover",
-                objectPosition: "center 25%",
+                objectPosition: "center 20%",
                 display: "block",
-                transition: "transform 1s ease",
-              }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
-            />
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                background: "linear-gradient(to top, rgba(62,4,9,0.75) 0%, transparent 60%)",
-                pointerEvents: "none",
               }}
             />
-            <motion.div
-              custom={0.5}
-              variants={fadeUp}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              style={{ position: "absolute", bottom: "1.2rem", left: "1.4rem" }}
-            >
+            {/* Bottom gradient + label */}
+            <div style={{
+              position: "absolute",
+              inset: 0,
+              background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 55%)",
+              pointerEvents: "none",
+            }} />
+            <div style={{ position: "absolute", bottom: "1.2rem", left: "1.2rem" }}>
               <div style={{
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 700,
-                fontSize: "0.55rem",
-                letterSpacing: "0.3em",
+                fontSize: "0.52rem",
+                letterSpacing: "0.28em",
                 color: "rgb(185,161,103)",
                 textTransform: "uppercase",
-                marginBottom: "0.3rem",
+                marginBottom: "0.25rem",
               }}>
                 CARNIVAL
               </div>
               <div style={{
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 900,
-                fontSize: "clamp(18px, 2vw, 28px)",
+                fontSize: "clamp(16px, 1.8vw, 24px)",
                 color: "#FFFFFF",
                 lineHeight: 1,
                 letterSpacing: "-0.02em",
               }}>
                 THE SOUL OF BRASIL
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>
