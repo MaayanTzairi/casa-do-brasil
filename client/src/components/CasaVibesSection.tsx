@@ -2,7 +2,7 @@
  * CASA DO BRASIL — CASA VIBES Section 2
  * Design: Editorial white canvas — asymmetric layout, cutout images floating
  * Colors: White background · Bordeaux text · Gold accents
- * Font: Heebo Black/Bold/Regular/Light
+ * Font: Heebo Black/Bold/Regular/Light — English only
  * Inspired by: Reference design — NOSSA HISTORIA / FOGO. TRADIÇÃO. BRASIL.
  */
 
@@ -11,10 +11,9 @@ import { motion, useInView } from "framer-motion";
 
 const PICANHA_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/vibes-picanha-TdkHVXbYm9fwTygPnx3fs6.png";
-const CARNIVAL_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/vibes-carnival-nisbXBHEhJq48Pkn8nJuxT.png";
-const SKEWER_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/vibes-skewer-jWR7X9oSNBG9d3vdHuDtsZ.png";
+
+const CHURRASCO_CARNIVAL_URL =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/vibes-churrasco-carnival-oJNcnUKGKjzM3kBVm6vcXz.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 50 },
@@ -34,19 +33,6 @@ const fadeIn = {
   visible: (delay = 0) => ({
     opacity: 1,
     transition: { duration: 1.0, delay },
-  }),
-};
-
-const slideLeft = {
-  hidden: { opacity: 0, x: 80 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 1.0,
-      delay,
-      ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
-    },
   }),
 };
 
@@ -106,7 +92,6 @@ export default function CasaVibesSection() {
           paddingTop: "5rem",
           paddingLeft: "clamp(2rem, 6vw, 7rem)",
           paddingRight: "clamp(2rem, 6vw, 7rem)",
-          marginBottom: "0",
         }}
       >
         <motion.div
@@ -116,13 +101,7 @@ export default function CasaVibesSection() {
           animate={isInView ? "visible" : "hidden"}
           style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.2rem" }}
         >
-          <div
-            style={{
-              width: "32px",
-              height: "1px",
-              background: "rgb(185,161,103)",
-            }}
-          />
+          <div style={{ width: "32px", height: "1px", background: "rgb(185,161,103)" }} />
           <span
             style={{
               fontFamily: "'Heebo', sans-serif",
@@ -133,7 +112,7 @@ export default function CasaVibesSection() {
               color: "rgb(185,161,103)",
             }}
           >
-            NOSSA EXPERIÊNCIA
+            OUR STORY
           </span>
         </motion.div>
       </div>
@@ -146,70 +125,32 @@ export default function CasaVibesSection() {
           gap: "0",
           paddingLeft: "clamp(2rem, 6vw, 7rem)",
           paddingRight: "clamp(2rem, 6vw, 7rem)",
-          paddingBottom: "0",
           alignItems: "start",
         }}
       >
         {/* LEFT — Big headline + text */}
         <div style={{ paddingRight: "3rem", paddingTop: "0.5rem" }}>
-          {/* Big stacked headline */}
-          <div style={{ overflow: "hidden", marginBottom: "0.1rem" }}>
-            <motion.h2
-              custom={0.1}
-              variants={fadeUp}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(52px, 7.5vw, 105px)",
-                color: "rgb(62,4,9)",
-                lineHeight: 0.88,
-                letterSpacing: "-0.02em",
-                margin: 0,
-              }}
-            >
-              FOGO.
-            </motion.h2>
-          </div>
-          <div style={{ overflow: "hidden", marginBottom: "0.1rem" }}>
-            <motion.h2
-              custom={0.22}
-              variants={fadeUp}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(52px, 7.5vw, 105px)",
-                color: "rgb(62,4,9)",
-                lineHeight: 0.88,
-                letterSpacing: "-0.02em",
-                margin: 0,
-              }}
-            >
-              TRADIÇÃO.
-            </motion.h2>
-          </div>
-          <div style={{ overflow: "hidden", marginBottom: "2rem" }}>
-            <motion.h2
-              custom={0.34}
-              variants={fadeUp}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(52px, 7.5vw, 105px)",
-                color: "rgb(62,4,9)",
-                lineHeight: 0.88,
-                letterSpacing: "-0.02em",
-                margin: 0,
-              }}
-            >
-              BRASIL.
-            </motion.h2>
-          </div>
+          {["FIRE.", "TRADITION.", "BRASIL."].map((word, i) => (
+            <div key={word} style={{ overflow: "hidden", marginBottom: "0.1rem" }}>
+              <motion.h2
+                custom={0.1 + i * 0.12}
+                variants={fadeUp}
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+                style={{
+                  fontFamily: "'Heebo', sans-serif",
+                  fontWeight: 900,
+                  fontSize: "clamp(52px, 7.5vw, 105px)",
+                  color: "rgb(62,4,9)",
+                  lineHeight: 0.88,
+                  letterSpacing: "-0.02em",
+                  margin: 0,
+                }}
+              >
+                {word}
+              </motion.h2>
+            </div>
+          ))}
 
           {/* Gold rule */}
           <motion.div
@@ -221,7 +162,7 @@ export default function CasaVibesSection() {
               width: "clamp(120px, 18vw, 260px)",
               height: "1px",
               background: "rgb(185,161,103)",
-              marginBottom: "1.8rem",
+              margin: "2rem 0 1.8rem",
             }}
           />
 
@@ -289,27 +230,13 @@ export default function CasaVibesSection() {
             ))}
           </motion.div>
 
-          {/* CTA */}
-          <motion.div
-            custom={0.85}
-            variants={fadeUp}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-          >
-            <VibesCTA />
+          <motion.div custom={0.85} variants={fadeUp} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+            <VibesButton href="#story" label="READ OUR STORY" />
           </motion.div>
         </div>
 
         {/* RIGHT — Picanha cutout floating */}
-        <div
-          style={{
-            position: "relative",
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "flex-start",
-          }}
-        >
-          {/* Percentage label — editorial detail like reference */}
+        <div style={{ position: "relative", display: "flex", justifyContent: "flex-end", alignItems: "flex-start" }}>
           <motion.div
             custom={0.3}
             variants={fadeIn}
@@ -322,7 +249,7 @@ export default function CasaVibesSection() {
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 900,
               fontSize: "clamp(36px, 4vw, 56px)",
-              color: "rgba(62,4,9,0.07)",
+              color: "rgba(62,4,9,0.06)",
               letterSpacing: "-0.03em",
               lineHeight: 1,
               userSelect: "none",
@@ -351,7 +278,7 @@ export default function CasaVibesSection() {
         </div>
       </div>
 
-      {/* ── DIVIDER LINE ── */}
+      {/* ── DIVIDER ── */}
       <motion.div
         variants={drawLine}
         initial="hidden"
@@ -360,14 +287,11 @@ export default function CasaVibesSection() {
           transformOrigin: "left",
           height: "1px",
           background: "rgba(62,4,9,0.08)",
-          marginLeft: "clamp(2rem, 6vw, 7rem)",
-          marginRight: "clamp(2rem, 6vw, 7rem)",
-          marginTop: "1rem",
-          marginBottom: "0",
+          margin: "1rem clamp(2rem, 6vw, 7rem) 0",
         }}
       />
 
-      {/* ── BOTTOM ROW — Experience + Carnival ── */}
+      {/* ── BOTTOM ROW — Experience + Churrasco Carnival ── */}
       <div
         style={{
           display: "grid",
@@ -387,12 +311,7 @@ export default function CasaVibesSection() {
             variants={fadeIn}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "1rem",
-              marginBottom: "1.2rem",
-            }}
+            style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.2rem" }}
           >
             <div style={{ width: "24px", height: "1px", background: "rgb(185,161,103)" }} />
             <span
@@ -405,7 +324,7 @@ export default function CasaVibesSection() {
                 color: "rgb(185,161,103)",
               }}
             >
-              GALERIA
+              GALLERY
             </span>
           </motion.div>
 
@@ -453,26 +372,13 @@ export default function CasaVibesSection() {
             music, and the finest cuts — all under one roof.
           </motion.p>
 
-          <motion.div
-            custom={0.5}
-            variants={fadeUp}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-          >
-            <GalleryButton />
+          <motion.div custom={0.5} variants={fadeUp} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+            <VibesButton href="#gallery" label="VIEW FULL GALLERY" />
           </motion.div>
         </div>
 
-        {/* RIGHT — Carnival dancer cutout */}
-        <div
-          style={{
-            position: "relative",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "flex-end",
-          }}
-        >
-          {/* Percentage label */}
+        {/* RIGHT — Churrasco + Carnival composite cutout */}
+        <div style={{ position: "relative", display: "flex", justifyContent: "center", alignItems: "flex-end" }}>
           <motion.div
             custom={0.15}
             variants={fadeIn}
@@ -485,7 +391,7 @@ export default function CasaVibesSection() {
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 900,
               fontSize: "clamp(36px, 4vw, 56px)",
-              color: "rgba(62,4,9,0.07)",
+              color: "rgba(62,4,9,0.06)",
               letterSpacing: "-0.03em",
               lineHeight: 1,
               userSelect: "none",
@@ -495,14 +401,14 @@ export default function CasaVibesSection() {
           </motion.div>
 
           <motion.img
-            src={CARNIVAL_URL}
-            alt="Carnival Dancer"
+            src={CHURRASCO_CARNIVAL_URL}
+            alt="Churrasco with Carnival Vibes"
             custom={0.25}
             variants={scaleIn}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             style={{
-              width: "clamp(200px, 32vw, 420px)",
+              width: "clamp(200px, 34vw, 440px)",
               height: "auto",
               objectFit: "contain",
               filter: "drop-shadow(0 20px 50px rgba(62,4,9,0.15))",
@@ -510,43 +416,9 @@ export default function CasaVibesSection() {
               zIndex: 2,
             }}
           />
-
-          {/* Skewer — floating accent behind dancer */}
-          <motion.img
-            src={SKEWER_URL}
-            alt="Churrasco Skewer"
-            custom={0.4}
-            variants={slideLeft}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            style={{
-              position: "absolute",
-              bottom: "10%",
-              left: "-5%",
-              width: "clamp(100px, 14vw, 190px)",
-              height: "auto",
-              objectFit: "contain",
-              filter: "drop-shadow(0 10px 30px rgba(62,4,9,0.2))",
-              zIndex: 1,
-              transform: "rotate(-15deg)",
-            }}
-          />
         </div>
       </div>
     </section>
-  );
-}
-
-/* ── Read Our Story Button ── */
-function VibesCTA() {
-  return (
-    <VibesButton href="#story" label="READ OUR STORY" />
-  );
-}
-
-function GalleryButton() {
-  return (
-    <VibesButton href="#gallery" label="VIEW FULL GALLERY" />
   );
 }
 
@@ -558,7 +430,6 @@ function VibesButton({ href, label }: { href: string; label: string }) {
         display: "inline-flex",
         alignItems: "center",
         gap: "0.5rem",
-        padding: "0",
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 700,
         fontSize: "0.7rem",
@@ -568,7 +439,7 @@ function VibesButton({ href, label }: { href: string; label: string }) {
         color: "rgb(62,4,9)",
         borderBottom: "1px solid rgb(185,161,103)",
         paddingBottom: "4px",
-        transition: "color 0.25s ease, border-color 0.25s ease",
+        transition: "color 0.25s ease",
       }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLAnchorElement).style.color = "rgb(185,161,103)";
