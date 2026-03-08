@@ -84,7 +84,7 @@ export default function CasaVibesSection() {
 
         {/* LEFT — Text */}
         <div>
-          {["FIRE.", "TRADITION.", "BRASIL."].map((word, i) => (
+          {["MEAT.", "MUSIC.", "BRASIL."].map((word, i) => (
             <div key={word} style={{ overflow: "hidden" }}>
               <motion.h2 custom={0.1 + i * 0.12} variants={fadeUp} initial="hidden" animate={isInView ? "visible" : "hidden"}
                 style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(44px, 6.5vw, 90px)", color: BORDEAUX, lineHeight: 0.88, letterSpacing: "-0.02em", margin: 0 }}>

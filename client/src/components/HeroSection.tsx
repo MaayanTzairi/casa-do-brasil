@@ -295,7 +295,7 @@ export default function HeroSection() {
             fontStyle: "italic",
           }}
         >
-          Onde o Brasil vive
+          Brazilian Grill - Music & Churrascaria
         </motion.p>
 
         {/* CTA Buttons */}
