@@ -1,14 +1,10 @@
 /**
  * CASA DO BRASIL — Section Divider
- *
- * The illustration has a transparent background (PNG with alpha).
- * Display it exactly as provided — full width, natural height,
- * no masks, no blend modes, no cropping.
- * The organic fade at the edges is already baked into the image itself.
+ * Transparent PNG illustration, full width, no background, no repeat.
  */
 
 const DIVIDER_IMG =
-  "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/XyWSsKeXDfkpaDTT.png?Expires=1804531959&Signature=kvklJ7EoaRIhCP--B8kbyIEK1qQE7tbEQp3OJWx3dMK5CCgQDDSwRq6jUZP5hwMThoyzTw0KxKuXcaWMRIGsOgpEHkWklBxUY49r9rn7TET-eFgGHbtkbh4yjnYh9Oxaj9G8xK9CS9RsKRHwNYC1QljhZQaSvFX0hY~7saMa3cAr8UycoiU0kNbrn9Zc0IY9wg8LPJmjc9laqrVKI2G02DYCl7YxGge5vfbLtL-G4EvrU-zew9aQXowDoz4MHMTZQ-GwixEVLpsjfP44lvUI-xAlPKD80Y5JEVO-IoNqkLJ7wOrpJUfHMHG73vZJFehV2fxVmnTqaN0k7FO27G7RfA__&Key-Pair-Id=K2HSFNDJXOU9YS";
+  "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/UuiecIbUJllQZdqI.png?Expires=1804532496&Signature=F5nvB2kvBUWWeqxhP~GyEq2CLKsggSLXz1PYL3QK8daIiP4keV-cbqzyyFiU2~527ca-xcXNsfYihqs3zYotCaaybD6F79lw-WEwh3LiOr6mgw~Fqn0W-gYrL9dZ4r6fdktxhXGYJ32bq1YGTOFVpRzD1Zt7nSOMjCQGt5ahdrcjRZU3l9mravg3vt35qsLzgTyOTR23qh~tpyy3yARIv~vMY6v8JVpkzJSYquTeutfAADdiY6bzsG87qdNBEjvHbidNv748Ggf~gpJtGa9SR3RiJrxvZl1m39MLzpXZyN9K7hAkuNEJGqMjGHWmSeYPZ5In9sg3xFGW0GMl724feg__&Key-Pair-Id=K2HSFNDJXOU9YS";
 
 export default function SectionDivider() {
   return (
