@@ -3,7 +3,6 @@
  * Design: Editorial white canvas — asymmetric layout, cutout images floating
  * Colors: White background · Bordeaux text · Gold accents
  * Font: Heebo Black/Bold/Regular/Light — English only
- * Inspired by: Reference design — NOSSA HISTORIA / FOGO. TRADIÇÃO. BRASIL.
  */
 
 import { useRef } from "react";
@@ -14,6 +13,9 @@ const PICANHA_URL =
 
 const CHURRASCO_CARNIVAL_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/vibes-churrasco-carnival-oJNcnUKGKjzM3kBVm6vcXz.png";
+
+const CARNIVAL_CROWN_URL =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/vibes-carnival-crown-68JaN6b4HJEBjTUtikamUC.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 50 },
@@ -80,11 +82,7 @@ export default function CasaVibesSection() {
   return (
     <section
       ref={sectionRef}
-      style={{
-        background: "#FFFFFF",
-        overflow: "hidden",
-        position: "relative",
-      }}
+      style={{ background: "#FFFFFF", overflow: "hidden", position: "relative" }}
     >
       {/* ── TOP LABEL ── */}
       <div
@@ -117,12 +115,11 @@ export default function CasaVibesSection() {
         </motion.div>
       </div>
 
-      {/* ── MAIN GRID ── */}
+      {/* ── MAIN GRID — Top Row ── */}
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
-          gap: "0",
           paddingLeft: "clamp(2rem, 6vw, 7rem)",
           paddingRight: "clamp(2rem, 6vw, 7rem)",
           alignItems: "start",
@@ -152,7 +149,6 @@ export default function CasaVibesSection() {
             </div>
           ))}
 
-          {/* Gold rule */}
           <motion.div
             variants={drawLine}
             initial="hidden"
@@ -166,7 +162,6 @@ export default function CasaVibesSection() {
             }}
           />
 
-          {/* Body text */}
           <motion.p
             custom={0.55}
             variants={fadeUp}
@@ -188,7 +183,7 @@ export default function CasaVibesSection() {
             all the senses.
           </motion.p>
 
-          {/* Stats row */}
+          {/* Stats */}
           <motion.div
             custom={0.7}
             variants={fadeUp}
@@ -209,7 +204,6 @@ export default function CasaVibesSection() {
                     fontSize: "clamp(22px, 2.5vw, 32px)",
                     color: "rgb(185,161,103)",
                     lineHeight: 1,
-                    letterSpacing: "-0.01em",
                   }}
                 >
                   {stat.num}
@@ -235,7 +229,7 @@ export default function CasaVibesSection() {
           </motion.div>
         </div>
 
-        {/* RIGHT — Picanha cutout floating */}
+        {/* RIGHT — Picanha cutout */}
         <div style={{ position: "relative", display: "flex", justifyContent: "flex-end", alignItems: "flex-start" }}>
           <motion.div
             custom={0.3}
@@ -291,20 +285,20 @@ export default function CasaVibesSection() {
         }}
       />
 
-      {/* ── BOTTOM ROW — Experience + Churrasco Carnival ── */}
+      {/* ── BOTTOM ROW — Experience text + Churrasco + Carnival Crown ── */}
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
-          gap: "0",
           paddingLeft: "clamp(2rem, 6vw, 7rem)",
           paddingRight: "clamp(2rem, 6vw, 7rem)",
           paddingTop: "3rem",
           paddingBottom: "5rem",
           alignItems: "end",
+          gap: "0",
         }}
       >
-        {/* LEFT — Experience text block */}
+        {/* LEFT — Experience text */}
         <div style={{ paddingRight: "3rem" }}>
           <motion.div
             custom={0.1}
@@ -377,8 +371,17 @@ export default function CasaVibesSection() {
           </motion.div>
         </div>
 
-        {/* RIGHT — Churrasco + Carnival composite cutout */}
-        <div style={{ position: "relative", display: "flex", justifyContent: "center", alignItems: "flex-end" }}>
+        {/* RIGHT — Churrasco + Carnival Crown side by side */}
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            alignItems: "flex-end",
+            justifyContent: "center",
+            gap: "0",
+          }}
+        >
+          {/* Ghost percentage */}
           <motion.div
             custom={0.15}
             variants={fadeIn}
@@ -400,6 +403,7 @@ export default function CasaVibesSection() {
             55%
           </motion.div>
 
+          {/* Churrasco + Carnival composite — left of pair */}
           <motion.img
             src={CHURRASCO_CARNIVAL_URL}
             alt="Churrasco with Carnival Vibes"
@@ -408,12 +412,34 @@ export default function CasaVibesSection() {
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             style={{
-              width: "clamp(200px, 34vw, 440px)",
+              width: "clamp(130px, 18vw, 240px)",
               height: "auto",
               objectFit: "contain",
-              filter: "drop-shadow(0 20px 50px rgba(62,4,9,0.15))",
+              filter: "drop-shadow(0 20px 45px rgba(62,4,9,0.15))",
               position: "relative",
               zIndex: 2,
+              flexShrink: 0,
+            }}
+          />
+
+          {/* Carnival Crown — right of pair, slightly overlapping */}
+          <motion.img
+            src={CARNIVAL_CROWN_URL}
+            alt="Brazilian Carnival Crown"
+            custom={0.4}
+            variants={scaleIn}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            style={{
+              width: "clamp(130px, 18vw, 240px)",
+              height: "auto",
+              objectFit: "contain",
+              filter: "drop-shadow(0 20px 45px rgba(62,4,9,0.15))",
+              position: "relative",
+              zIndex: 3,
+              marginLeft: "-2rem",
+              marginBottom: "1rem",
+              flexShrink: 0,
             }}
           />
         </div>
