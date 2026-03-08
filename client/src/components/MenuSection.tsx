@@ -2,16 +2,11 @@
  * CASA DO BRASIL — MENU — Section 3
  *
  * Layout (desktop):
- *   LEFT 55%  → Two stacked/side-by-side menu cards (Churrascaria + Classic)
- *   RIGHT 45% → Vertical centered text block:
- *                 label "OUR MENU"
- *                 big headline "AUTHENTIC\nBRAZILIAN\nEXPERIENCE"
- *                 gold rule
- *                 short description
- *                 VIEW FULL MENU CTA
+ *   LEFT 55%  → Two side-by-side tall image cards with cinematic treatment
+ *   RIGHT 45% → Vertical centered text block
  *
- * The entire section fits in one viewport height — no scroll needed.
- * Mobile: stacks vertically, title first then cards.
+ * Spacing: paddingTop adds breathing room below the SectionDivider above.
+ * Cards: tall aspect ratio, strong gradient overlays, hover zoom, gold accents.
  */
 
 import { useRef, useState, useEffect } from "react";
@@ -23,14 +18,15 @@ const CLASSIC_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-classic-KrHBQJp2Ar2RgqSpD4t4tj.webp";
 
 const GOLD = "rgb(185,161,103)";
+const GOLD_LIGHT = "rgba(185,161,103,0.35)";
 const BORDEAUX = "rgb(62,4,9)";
-const BORDEAUX_DEEP = "rgb(40,2,6)";
+const BORDEAUX_DEEP = "rgb(28,1,4)";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 30 },
   visible: (d = 0) => ({
     opacity: 1, y: 0,
-    transition: { duration: 0.85, delay: d, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
+    transition: { duration: 0.9, delay: d, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
   }),
 };
 
@@ -52,7 +48,10 @@ export default function MenuSection() {
       style={{
         background: "#ffffff",
         width: "100%",
-        minHeight: mobile ? "auto" : "100vh",
+        /* Top padding creates breathing room below the SectionDivider */
+        paddingTop: mobile ? "2rem" : "3.5rem",
+        paddingBottom: mobile ? "4rem" : "0",
+        minHeight: mobile ? "auto" : "calc(100vh - 3.5rem)",
         display: "flex",
         alignItems: "stretch",
         overflow: "hidden",
@@ -66,7 +65,7 @@ export default function MenuSection() {
           display: "flex",
           flexDirection: mobile ? "column" : "row",
           alignItems: "stretch",
-          padding: mobile ? "3rem 1.5rem 4rem" : "0",
+          padding: mobile ? "0 1.5rem" : "0",
           gap: mobile ? "3rem" : "0",
         }}
       >
@@ -76,9 +75,10 @@ export default function MenuSection() {
           style={{
             flex: mobile ? "none" : "0 0 56%",
             display: "flex",
-            flexDirection: mobile ? "column" : "row",
-            gap: mobile ? "1.5rem" : "0",
+            flexDirection: "row",
+            gap: "0",
             order: mobile ? 2 : 1,
+            minHeight: mobile ? "500px" : "auto",
           }}
         >
           {/* CARD 1: CHURRASCARIA */}
@@ -100,52 +100,78 @@ export default function MenuSection() {
               style={{
                 position: "absolute", inset: 0,
                 width: "100%", height: "100%",
-                objectFit: "cover", objectPosition: "center 30%",
-                transition: "transform 1.4s ease",
+                objectFit: "cover", objectPosition: "center 25%",
+                transition: "transform 1.6s cubic-bezier(0.25,0.46,0.45,0.94)",
               }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.06)"; }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.08)"; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
             />
-            {/* Dark overlay */}
+
+            {/* Rich cinematic overlay: dark at bottom, slight vignette */}
             <div style={{
               position: "absolute", inset: 0,
-              background: "linear-gradient(to top, rgba(40,2,6,0.96) 0%, rgba(40,2,6,0.55) 50%, rgba(40,2,6,0.15) 100%)",
+              background: `
+                linear-gradient(to top,
+                  rgba(28,1,4,0.97) 0%,
+                  rgba(28,1,4,0.72) 35%,
+                  rgba(28,1,4,0.25) 65%,
+                  rgba(28,1,4,0.08) 100%
+                )
+              `,
               pointerEvents: "none",
+            }} />
+
+            {/* Top label */}
+            <div style={{
+              position: "absolute", top: "1.6rem", left: "1.8rem", zIndex: 3,
+              display: "flex", alignItems: "center", gap: "0.6rem",
+            }}>
+              <div style={{ width: "18px", height: "1px", background: GOLD }} />
+              <span style={{
+                fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+                fontSize: "0.5rem", letterSpacing: "0.42em",
+                textTransform: "uppercase", color: GOLD,
+              }}>THE EXPERIENCE</span>
+            </div>
+
+            {/* Gold corner accent — top right */}
+            <div style={{
+              position: "absolute", top: "1.2rem", right: "1.2rem", zIndex: 3,
+              width: "22px", height: "22px",
+              borderTop: `1.5px solid ${GOLD}`,
+              borderRight: `1.5px solid ${GOLD}`,
+              opacity: 0.7,
             }} />
 
             {/* Content pinned to bottom */}
             <div style={{
               position: "relative", zIndex: 2,
               marginTop: "auto",
-              padding: mobile ? "1.8rem 1.5rem" : "2rem 2rem 2.5rem",
+              padding: mobile ? "1.8rem 1.5rem 2rem" : "2rem 2rem 2.8rem",
             }}>
               <div style={{
-                fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                fontSize: "0.52rem", letterSpacing: "0.38em",
-                textTransform: "uppercase", color: GOLD,
-                marginBottom: "0.7rem",
-              }}>THE EXPERIENCE</div>
-
-              <div style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-                fontSize: mobile ? "clamp(28px, 7vw, 38px)" : "clamp(26px, 2.4vw, 40px)",
-                color: "#fff", lineHeight: 0.9, letterSpacing: "0.02em",
-                marginBottom: "0.35rem",
-              }}>CHURRASCARIA</div>
+                fontSize: mobile ? "clamp(28px, 7vw, 38px)" : "clamp(24px, 2.2vw, 38px)",
+                color: "#fff", lineHeight: 0.88, letterSpacing: "0.02em",
+                marginBottom: "0.4rem",
+              }}>CHURRAS-<br />CARIA</div>
 
               <div style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-                fontStyle: "italic", fontSize: "clamp(13px, 1vw, 14px)",
+                fontStyle: "italic", fontSize: "clamp(12.5px, 0.9vw, 14px)",
                 color: GOLD, marginBottom: "1rem",
               }}>All You Can Eat</div>
 
-              <div style={{ width: "32px", height: "1px", background: GOLD, marginBottom: "1rem" }} />
+              <div style={{
+                width: "28px", height: "1px",
+                background: `linear-gradient(to right, ${GOLD}, transparent)`,
+                marginBottom: "1rem",
+              }} />
 
               <p style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-                fontSize: "clamp(13px, 0.9vw, 14.5px)", color: "rgba(255,255,255,0.68)",
-                lineHeight: 1.75, marginBottom: "1.4rem",
-                maxWidth: "280px",
+                fontSize: "clamp(12.5px, 0.85vw, 14px)", color: "rgba(255,255,255,0.62)",
+                lineHeight: 1.8, marginBottom: "1.6rem",
               }}>
                 Unlimited fire-roasted cuts served tableside by our gauchos.
                 Picanha, Fraldinha, Costela — until you say stop.
@@ -156,12 +182,12 @@ export default function MenuSection() {
                 style={{
                   display: "inline-flex", alignItems: "center", gap: "0.5rem",
                   fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                  fontSize: "0.55rem", letterSpacing: "0.22em",
+                  fontSize: "0.52rem", letterSpacing: "0.22em",
                   textTransform: "uppercase", textDecoration: "none",
-                  color: GOLD, borderBottom: `1px solid ${GOLD}`, paddingBottom: "2px",
-                  transition: "opacity 0.2s",
+                  color: GOLD, borderBottom: `1px solid rgba(185,161,103,0.5)`,
+                  paddingBottom: "2px", transition: "opacity 0.2s",
                 }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "0.6"; }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "0.55"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "1"; }}
               >
                 VIEW MENU <span style={{ fontSize: "0.85rem" }}>→</span>
@@ -169,18 +195,20 @@ export default function MenuSection() {
             </div>
           </motion.div>
 
+          {/* Thin gold divider between cards */}
+          <div style={{ width: "1px", background: GOLD_LIGHT, flexShrink: 0 }} />
+
           {/* CARD 2: CLASSIC MENU */}
           <motion.div
             custom={0.28} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
             style={{
               flex: 1,
-              background: "#F5F0E8",
+              background: "#F7F2EA",
               overflow: "hidden",
               display: "flex",
               flexDirection: "column",
               position: "relative",
               cursor: "pointer",
-              borderLeft: mobile ? "none" : `1px solid rgba(185,161,103,0.18)`,
             }}
           >
             <img
@@ -189,52 +217,78 @@ export default function MenuSection() {
               style={{
                 position: "absolute", inset: 0,
                 width: "100%", height: "100%",
-                objectFit: "cover", objectPosition: "center 50%",
-                transition: "transform 1.4s ease",
+                objectFit: "cover", objectPosition: "center 40%",
+                transition: "transform 1.6s cubic-bezier(0.25,0.46,0.45,0.94)",
               }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.06)"; }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.08)"; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
             />
-            {/* Light overlay */}
+
+            {/* Warm light overlay */}
             <div style={{
               position: "absolute", inset: 0,
-              background: "linear-gradient(to top, rgba(245,240,232,0.97) 0%, rgba(245,240,232,0.6) 50%, rgba(245,240,232,0.1) 100%)",
+              background: `
+                linear-gradient(to top,
+                  rgba(247,242,234,0.98) 0%,
+                  rgba(247,242,234,0.75) 35%,
+                  rgba(247,242,234,0.2) 65%,
+                  rgba(247,242,234,0.0) 100%
+                )
+              `,
               pointerEvents: "none",
+            }} />
+
+            {/* Top label */}
+            <div style={{
+              position: "absolute", top: "1.6rem", left: "1.8rem", zIndex: 3,
+              display: "flex", alignItems: "center", gap: "0.6rem",
+            }}>
+              <div style={{ width: "18px", height: "1px", background: GOLD }} />
+              <span style={{
+                fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+                fontSize: "0.5rem", letterSpacing: "0.42em",
+                textTransform: "uppercase", color: GOLD,
+              }}>À LA CARTE</span>
+            </div>
+
+            {/* Gold corner accent — top right */}
+            <div style={{
+              position: "absolute", top: "1.2rem", right: "1.2rem", zIndex: 3,
+              width: "22px", height: "22px",
+              borderTop: `1.5px solid ${GOLD}`,
+              borderRight: `1.5px solid ${GOLD}`,
+              opacity: 0.7,
             }} />
 
             {/* Content pinned to bottom */}
             <div style={{
               position: "relative", zIndex: 2,
               marginTop: "auto",
-              padding: mobile ? "1.8rem 1.5rem" : "2rem 2rem 2.5rem",
+              padding: mobile ? "1.8rem 1.5rem 2rem" : "2rem 2rem 2.8rem",
             }}>
               <div style={{
-                fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                fontSize: "0.52rem", letterSpacing: "0.38em",
-                textTransform: "uppercase", color: GOLD,
-                marginBottom: "0.7rem",
-              }}>À LA CARTE</div>
-
-              <div style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-                fontSize: mobile ? "clamp(28px, 7vw, 38px)" : "clamp(26px, 2.4vw, 40px)",
-                color: BORDEAUX, lineHeight: 0.9, letterSpacing: "0.02em",
-                marginBottom: "0.35rem",
+                fontSize: mobile ? "clamp(28px, 7vw, 38px)" : "clamp(24px, 2.2vw, 38px)",
+                color: BORDEAUX, lineHeight: 0.88, letterSpacing: "0.02em",
+                marginBottom: "0.4rem",
               }}>CLASSIC<br />MENU</div>
 
               <div style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-                fontStyle: "italic", fontSize: "clamp(13px, 1vw, 14px)",
+                fontStyle: "italic", fontSize: "clamp(12.5px, 0.9vw, 14px)",
                 color: GOLD, marginBottom: "1rem",
               }}>Individual Selections</div>
 
-              <div style={{ width: "32px", height: "1px", background: GOLD, marginBottom: "1rem" }} />
+              <div style={{
+                width: "28px", height: "1px",
+                background: `linear-gradient(to right, ${GOLD}, transparent)`,
+                marginBottom: "1rem",
+              }} />
 
               <p style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-                fontSize: "clamp(13px, 0.9vw, 14.5px)", color: "rgba(62,4,9,0.65)",
-                lineHeight: 1.75, marginBottom: "1.4rem",
-                maxWidth: "280px",
+                fontSize: "clamp(12.5px, 0.85vw, 14px)", color: "rgba(62,4,9,0.62)",
+                lineHeight: 1.8, marginBottom: "1.6rem",
               }}>
                 Handpicked cuts and Brazilian signatures, ordered à la carte.
                 The full flavour of Brasil, at your own pace.
@@ -245,12 +299,12 @@ export default function MenuSection() {
                 style={{
                   display: "inline-flex", alignItems: "center", gap: "0.5rem",
                   fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                  fontSize: "0.55rem", letterSpacing: "0.22em",
+                  fontSize: "0.52rem", letterSpacing: "0.22em",
                   textTransform: "uppercase", textDecoration: "none",
-                  color: BORDEAUX, borderBottom: `1px solid ${GOLD}`, paddingBottom: "2px",
-                  transition: "opacity 0.2s",
+                  color: BORDEAUX, borderBottom: `1px solid rgba(185,161,103,0.5)`,
+                  paddingBottom: "2px", transition: "opacity 0.2s",
                 }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "0.6"; }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "0.55"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "1"; }}
               >
                 VIEW MENU <span style={{ fontSize: "0.85rem" }}>→</span>
@@ -266,7 +320,7 @@ export default function MenuSection() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            padding: mobile ? "0" : "4rem 5vw 4rem 4vw",
+            padding: mobile ? "0" : "4rem 5vw 4rem 4.5vw",
             order: mobile ? 1 : 2,
           }}
         >
@@ -275,21 +329,26 @@ export default function MenuSection() {
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.7, delay: 0.05 }}
             style={{
+              display: "flex", alignItems: "center", gap: "0.8rem",
+              marginBottom: "1.4rem",
+            }}
+          >
+            <div style={{ width: "24px", height: "1px", background: GOLD }} />
+            <span style={{
               fontFamily: "'Heebo', sans-serif", fontWeight: 700,
               fontSize: "0.58rem", letterSpacing: "0.44em",
               textTransform: "uppercase", color: GOLD,
-              marginBottom: "1.2rem",
-            }}
-          >OUR MENU</motion.div>
+            }}>OUR MENU</span>
+          </motion.div>
 
           <motion.h2
-            initial={{ opacity: 0, y: 22 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.15 }}
+            transition={{ duration: 0.95, delay: 0.15 }}
             style={{
               fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-              fontSize: mobile ? "clamp(36px, 10vw, 52px)" : "clamp(40px, 4.2vw, 68px)",
-              color: BORDEAUX, margin: 0, lineHeight: 0.92,
+              fontSize: mobile ? "clamp(38px, 10vw, 54px)" : "clamp(42px, 4.4vw, 72px)",
+              color: BORDEAUX, margin: 0, lineHeight: 0.9,
               letterSpacing: "0.01em",
             }}
           >
@@ -300,22 +359,23 @@ export default function MenuSection() {
           <motion.div
             initial={{ scaleX: 0 }}
             animate={inView ? { scaleX: 1 } : {}}
-            transition={{ duration: 0.9, delay: 0.3 }}
+            transition={{ duration: 1, delay: 0.32 }}
             style={{
-              width: "56px", height: "1.5px", background: GOLD,
-              margin: "1.8rem 0", transformOrigin: "left",
+              width: "60px", height: "1.5px",
+              background: `linear-gradient(to right, ${GOLD}, rgba(185,161,103,0.3))`,
+              margin: "2rem 0", transformOrigin: "left",
             }}
           />
 
           <motion.p
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.38 }}
+            transition={{ duration: 0.85, delay: 0.4 }}
             style={{
               fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-              fontSize: "clamp(14px, 1.05vw, 16px)", color: "rgba(62,4,9,0.65)",
-              lineHeight: 1.85, maxWidth: "360px",
-              marginBottom: "2.2rem",
+              fontSize: "clamp(14px, 1.05vw, 16px)", color: "rgba(62,4,9,0.6)",
+              lineHeight: 1.9, maxWidth: "340px",
+              marginBottom: "2.5rem",
             }}
           >
             Two paths to the same passion — choose the experience that speaks to you.
@@ -325,19 +385,19 @@ export default function MenuSection() {
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.48 }}
+            transition={{ duration: 0.85, delay: 0.5 }}
           >
             <a
               href="#menu"
               style={{
-                display: "inline-flex", alignItems: "center", gap: "0.7rem",
+                display: "inline-flex", alignItems: "center", gap: "0.8rem",
                 fontFamily: "'Heebo', sans-serif", fontWeight: 700,
                 fontSize: "0.6rem", letterSpacing: "0.28em",
                 textTransform: "uppercase", textDecoration: "none",
                 color: BORDEAUX,
-                padding: "0.9rem 2.4rem",
+                padding: "0.95rem 2.4rem",
                 border: `1.5px solid ${GOLD}`,
-                transition: "background 0.25s, color 0.25s",
+                transition: "background 0.28s, color 0.28s",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLAnchorElement;
