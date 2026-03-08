@@ -1,85 +1,35 @@
 /**
  * CASA DO BRASIL — Section Divider
  *
- * Layout: [── ornament ──] [illustration] [── ornament ──]
+ * Layout: [──── gold line ────] [picanha skewer illustration] [──── gold line ────]
  *
- * The illustration is displayed at ~60% of viewport width, centered.
- * On both sides: an elegant SVG ornament — a thin horizontal gold line
- * with a small smoke/wisp curl and a diamond accent — that fills the
- * remaining space and fades to transparent at the outer edges.
+ * The skewer illustration is displayed at a constrained width (~420px),
+ * centered. The gold lines on each side extend to the viewport edges
+ * and fade to transparent. The whole strip is ~120px tall.
  *
- * The whole strip is ~100px tall, sitting cleanly between sections.
+ * The image has a white/cream background so we use mixBlendMode: multiply
+ * to make the background invisible against the white page.
  */
 
-const DIVIDER_IMG =
-  "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/UuiecIbUJllQZdqI.png?Expires=1804532496&Signature=F5nvB2kvBUWWeqxhP~GyEq2CLKsggSLXz1PYL3QK8daIiP4keV-cbqzyyFiU2~527ca-xcXNsfYihqs3zYotCaaybD6F79lw-WEwh3LiOr6mgw~Fqn0W-gYrL9dZ4r6fdktxhXGYJ32bq1YGTOFVpRzD1Zt7nSOMjCQGt5ahdrcjRZU3l9mravg3vt35qsLzgTyOTR23qh~tpyy3yARIv~vMY6v8JVpkzJSYquTeutfAADdiY6bzsG87qdNBEjvHbidNv748Ggf~gpJtGa9SR3RiJrxvZl1m39MLzpXZyN9K7hAkuNEJGqMjGHWmSeYPZ5In9sg3xFGW0GMl724feg__&Key-Pair-Id=K2HSFNDJXOU9YS";
+const SKEWER_IMG =
+  "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/rgkGxyINFsjHLfmV.png?Expires=1804533115&Signature=cs-Xh6NOzIPkwUq~Z8cQq6UADLr2qoVmUpeaypyn1v6E2MXL0-1YzUV2IQuqeduccN8HymjHv3VnDcre2dSfBojnXkZCegOPzhrRc~P6QNaaQZ5YatcHzP-Bbly~7dV9SUPFXE0b0tgepZzRRouhxNJJHNL32xz1gwBuycRCKscdBn1S8nh6KGtkkRzSUD9B2d3uX3dEvzlIrjLLepriIOEFgjqbsAH6w3xXzJVV0NWwYu1MxJbkFD6bPRpUxuFwLKDtc7BiIzFikjVh1zTVinQ5JWqdb81F3pFhSbn3KbZaOjluXa0oJLI4yFSdMhN7ghU5x4LSHMC-kXhkgLGxKA__&Key-Pair-Id=K2HSFNDJXOU9YS";
 
 const GOLD = "rgba(185,161,103,";
 
-/* SVG ornament: thin line → diamond → wispy curl → fades out */
-function SideOrnament({ flip = false }: { flip?: boolean }) {
+function GoldLine({ side }: { side: "left" | "right" }) {
+  const isLeft = side === "left";
   return (
-    <svg
-      viewBox="0 0 320 40"
-      preserveAspectRatio="xMidYMid meet"
+    <div
       style={{
         flex: 1,
-        height: "40px",
-        display: "block",
-        transform: flip ? "scaleX(-1)" : "none",
-        overflow: "visible",
+        minWidth: 0,
+        height: "1px",
+        background: isLeft
+          ? `linear-gradient(to right, transparent 0%, ${GOLD}0.25) 20%, ${GOLD}0.65) 100%)`
+          : `linear-gradient(to left, transparent 0%, ${GOLD}0.25) 20%, ${GOLD}0.65) 100%)`,
+        alignSelf: "center",
       }}
-      aria-hidden="true"
-    >
-      <defs>
-        {/* Fade: opaque near center (right side), transparent at outer edge (left) */}
-        <linearGradient id={flip ? "grad-right" : "grad-left"} x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor={`${GOLD}0)`} />
-          <stop offset="40%" stopColor={`${GOLD}0.45)`} />
-          <stop offset="100%" stopColor={`${GOLD}0.75)`} />
-        </linearGradient>
-      </defs>
-
-      {/* Main horizontal line */}
-      <line
-        x1="0" y1="20" x2="270" y2="20"
-        stroke={`url(#${flip ? "grad-right" : "grad-left"})`}
-        strokeWidth="0.8"
-      />
-
-      {/* Diamond accent near the illustration end */}
-      <g transform="translate(270,20)" fill="none">
-        <rect
-          x="-4" y="-4" width="8" height="8"
-          transform="rotate(45)"
-          stroke={`${GOLD}0.8)`}
-          strokeWidth="0.9"
-          fill="none"
-        />
-        {/* Inner dot */}
-        <circle cx="0" cy="0" r="1.2" fill={`${GOLD}0.7)`} />
-      </g>
-
-      {/* Wispy smoke curl rising from the diamond */}
-      <g transform="translate(270,20)" fill="none" stroke={`${GOLD}0.45)`} strokeWidth="0.7" strokeLinecap="round">
-        {/* Curl 1 */}
-        <path d="M 0,-6 C 3,-12 -2,-18 2,-24" />
-        {/* Curl 2 — offset */}
-        <path d="M 2,-8 C 6,-14 1,-20 5,-26" opacity="0.55" />
-        {/* Curl 3 — thin wisp */}
-        <path d="M -1,-7 C -4,-13 0,-19 -3,-23" opacity="0.35" />
-      </g>
-
-      {/* Small tick marks along the line */}
-      {[60, 120, 180, 230].map((x) => (
-        <line
-          key={x}
-          x1={x} y1="17" x2={x} y2="23"
-          stroke={`${GOLD}0.3)`}
-          strokeWidth="0.6"
-        />
-      ))}
-    </svg>
+    />
   );
 }
 
@@ -92,41 +42,40 @@ export default function SectionDivider() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "1.2rem 0",
+        padding: "0.5rem 3vw",
         pointerEvents: "none",
         userSelect: "none",
         gap: "0",
+        overflow: "hidden",
       }}
     >
-      {/* Left ornament */}
-      <div style={{ flex: 1, display: "flex", alignItems: "center", minWidth: 0 }}>
-        <SideOrnament />
-      </div>
+      {/* Left gold line */}
+      <GoldLine side="left" />
 
-      {/* Illustration — constrained width */}
+      {/* Skewer illustration — centered, constrained */}
       <div
         style={{
           flexShrink: 0,
-          width: "clamp(280px, 48vw, 680px)",
+          width: "clamp(220px, 36vw, 480px)",
           lineHeight: 0,
+          position: "relative",
         }}
       >
         <img
-          src={DIVIDER_IMG}
+          src={SKEWER_IMG}
           alt=""
           aria-hidden="true"
           style={{
             display: "block",
             width: "100%",
             height: "auto",
+            mixBlendMode: "multiply",
           }}
         />
       </div>
 
-      {/* Right ornament (mirrored) */}
-      <div style={{ flex: 1, display: "flex", alignItems: "center", minWidth: 0 }}>
-        <SideOrnament flip />
-      </div>
+      {/* Right gold line */}
+      <GoldLine side="right" />
     </div>
   );
 }
