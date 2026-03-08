@@ -9,7 +9,11 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-const HERO_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main-Xjsh9uMVYH6frhxTU2HJ4c.webp";
+const HERO_IMAGE =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main-Xjsh9uMVYH6frhxTU2HJ4c.webp";
+
+const LOGO_URL =
+  "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/SGZsVQkMnbZUWBMv.png?Expires=1804519394&Signature=qVpecNzXMClsnySPgDZke0xWIHLlQTDZmVmrImQgoQJ1RUHtQGbaNx3T6-ptVaGbie5FNLk6JsfN63v29kWBc3rJpGvxbu4-1Jtr7ypvXSoT48xQumwFHXHSdkaF83aa40ON-U4--CH9Ybs8303JXJwXKJ88zV2hckjgoAlZ~pC2sCVfJ7Z8aWBI9MyiMzAt94UzLcYKoDutg7XFcCRUuVxd~SHaFjHRo6~78FbTRmSxEkKFmi1dkJ98zIZwyv51akarjGUYwUvRylSxJT9iUoWh1nrxVnWwaXMl3haUKBK88M8sxx6EL5ywMQ98L5BpfG7WV1gVb6HTJbYYtdFkYw__&Key-Pair-Id=K2HSFNDJXOU9YS";
 
 const navLinks = [
   { label: "MENU", href: "#menu" },
@@ -22,32 +26,23 @@ const navLinksRight = [
   { label: "CONTACT", href: "#contact" },
 ];
 
-// Framer Motion variants
 const containerVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.15, delayChildren: 0.3 },
+    transition: { staggerChildren: 0.15, delayChildren: 0.4 },
   },
 };
 
 const wordVariants = {
-  hidden: { opacity: 0, y: 60 },
+  hidden: { opacity: 0, y: 70 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.9,
-      ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number],
+      duration: 0.95,
+      ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
     },
   },
-};
-
-const fadeInVariants = {
-  hidden: { opacity: 0 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    transition: { duration: 0.9, delay },
-  }),
 };
 
 const slideUpVariants = {
@@ -55,7 +50,11 @@ const slideUpVariants = {
   visible: (delay: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, delay, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] },
+    transition: {
+      duration: 0.8,
+      delay,
+      ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+    },
   }),
 };
 
@@ -63,7 +62,11 @@ const lineVariants = {
   hidden: { scaleX: 0 },
   visible: {
     scaleX: 1,
-    transition: { duration: 1.2, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] },
+    transition: {
+      duration: 1.2,
+      delay: 0.9,
+      ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+    },
   },
 };
 
@@ -77,7 +80,7 @@ export default function HeroSection() {
   });
 
   const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.6], [0.55, 0.85]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 1]);
   const titleY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
 
   useEffect(() => {
@@ -90,20 +93,25 @@ export default function HeroSection() {
     <section
       ref={heroRef}
       className="relative w-full overflow-hidden"
-      style={{ height: "100svh", minHeight: "600px" }}
+      style={{ height: "100svh", minHeight: "640px" }}
     >
       {/* ── Background Image with Ken Burns + Parallax ── */}
       <motion.div
         className="absolute inset-0 w-full h-full"
         style={{ y: imageY }}
-        initial={{ scale: 1.05 }}
-        animate={loaded ? { scale: 1 } : { scale: 1.05 }}
+        initial={{ scale: 1.06 }}
+        animate={loaded ? { scale: 1 } : { scale: 1.06 }}
         transition={{ duration: 1.8, ease: "easeOut" }}
       >
         <motion.div
           className="w-full h-full"
-          animate={{ scale: [1, 1.06] }}
-          transition={{ duration: 30, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
+          animate={{ scale: [1, 1.07] }}
+          transition={{
+            duration: 30,
+            ease: "linear",
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
         >
           <div
             className="w-full h-full bg-cover bg-center"
@@ -115,57 +123,70 @@ export default function HeroSection() {
         </motion.div>
       </motion.div>
 
-      {/* ── Cinematic Overlay ── */}
+      {/* ── Cinematic Overlay — darker on left for text legibility ── */}
       <motion.div
         className="absolute inset-0"
-        style={{
-          background: "linear-gradient(to right, rgba(62,4,9,0.82) 0%, rgba(62,4,9,0.55) 50%, rgba(20,4,6,0.45) 100%)",
-          opacity: overlayOpacity,
-        }}
-      />
+        style={{ opacity: overlayOpacity }}
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(110deg, rgba(40,3,6,0.88) 0%, rgba(62,4,9,0.72) 45%, rgba(20,4,6,0.50) 100%)",
+          }}
+        />
+      </motion.div>
 
       {/* ── Bottom Gradient Fade ── */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
+        className="absolute bottom-0 left-0 right-0 h-56 pointer-events-none"
         style={{
-          background: "linear-gradient(to top, rgba(62,4,9,0.6) 0%, transparent 100%)",
+          background:
+            "linear-gradient(to top, rgba(40,3,6,0.75) 0%, transparent 100%)",
         }}
       />
 
       {/* ── Gold Inset Frame ── */}
       <div className="absolute inset-5 pointer-events-none" style={{ zIndex: 2 }}>
-        {/* Top line */}
         <motion.div
           className="absolute top-0 left-0 right-0 h-px"
-          style={{ background: "rgba(185,161,103,0.5)", transformOrigin: "left" }}
+          style={{ background: "rgba(185,161,103,0.55)", transformOrigin: "left" }}
           variants={lineVariants}
           initial="hidden"
           animate="visible"
         />
-        {/* Bottom line */}
         <motion.div
           className="absolute bottom-0 left-0 right-0 h-px"
-          style={{ background: "rgba(185,161,103,0.5)", transformOrigin: "left" }}
-          variants={lineVariants}
-          initial="hidden"
-          animate="visible"
-          transition={{ delay: 1.0 }}
+          style={{ background: "rgba(185,161,103,0.55)", transformOrigin: "left" }}
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{
+            duration: 1.2,
+            delay: 1.1,
+            ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+          }}
         />
-        {/* Left line */}
         <motion.div
           className="absolute top-0 bottom-0 left-0 w-px"
-          style={{ background: "rgba(185,161,103,0.5)", transformOrigin: "top" }}
+          style={{ background: "rgba(185,161,103,0.55)", transformOrigin: "top" }}
           initial={{ scaleY: 0 }}
           animate={{ scaleY: 1 }}
-          transition={{ duration: 1.2, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }}
+          transition={{
+            duration: 1.2,
+            delay: 0.9,
+            ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+          }}
         />
-        {/* Right line */}
         <motion.div
           className="absolute top-0 bottom-0 right-0 w-px"
-          style={{ background: "rgba(185,161,103,0.5)", transformOrigin: "top" }}
+          style={{ background: "rgba(185,161,103,0.55)", transformOrigin: "top" }}
           initial={{ scaleY: 0 }}
           animate={{ scaleY: 1 }}
-          transition={{ duration: 1.2, delay: 1.0, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }}
+          transition={{
+            duration: 1.2,
+            delay: 1.05,
+            ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+          }}
         />
       </div>
 
@@ -185,19 +206,24 @@ export default function HeroSection() {
           ))}
         </div>
 
-        {/* Center logo mark */}
+        {/* Center — Real Logo */}
         <motion.div
-          className="flex flex-col items-center gap-1"
-          initial={{ opacity: 0, scale: 0.8 }}
+          className="flex flex-col items-center"
+          initial={{ opacity: 0, scale: 0.75 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+          transition={{ duration: 0.9, delay: 0.5, ease: "easeOut" }}
         >
-          {/* Bull skull SVG — minimal, gold */}
-          <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 35 C5 35 2 20 10 15 C5 10 8 2 18 5 C22 2 28 2 30 6 C35 2 42 2 50 5 C58 2 65 2 70 6 C72 2 78 2 82 5 C92 2 95 10 90 15 C98 20 95 35 85 35 C80 40 75 45 70 48 L70 60 C70 65 65 68 60 65 L55 62 L55 72 C55 75 52 77 50 77 C48 77 45 75 45 72 L45 62 L40 65 C35 68 30 65 30 60 L30 48 C25 45 20 40 15 35 Z" fill="rgba(185,161,103,0.9)" />
-            <circle cx="32" cy="30" r="6" fill="rgba(62,4,9,0.8)" />
-            <circle cx="68" cy="30" r="6" fill="rgba(62,4,9,0.8)" />
-          </svg>
+          <img
+            src={LOGO_URL}
+            alt="Casa do Brasil"
+            style={{
+              width: "52px",
+              height: "52px",
+              objectFit: "contain",
+              filter:
+                "brightness(0) saturate(100%) invert(1) sepia(1) saturate(2) hue-rotate(5deg) brightness(1.1)",
+            }}
+          />
         </motion.div>
 
         {/* Right nav */}
@@ -220,67 +246,32 @@ export default function HeroSection() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="mb-4"
+          className="mb-5"
         >
-          {/* CASA */}
-          <div className="overflow-hidden">
-            <motion.h1
-              variants={wordVariants}
-              className="block leading-none select-none"
-              style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(72px, 12vw, 160px)",
-                color: "#FFFFFF",
-                letterSpacing: "-0.02em",
-                lineHeight: 0.88,
-              }}
-            >
-              CASA
-            </motion.h1>
-          </div>
-
-          {/* DO */}
-          <div className="overflow-hidden">
-            <motion.h1
-              variants={wordVariants}
-              className="block leading-none select-none"
-              style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(72px, 12vw, 160px)",
-                color: "#FFFFFF",
-                letterSpacing: "-0.02em",
-                lineHeight: 0.88,
-              }}
-            >
-              DO
-            </motion.h1>
-          </div>
-
-          {/* BRASIL */}
-          <div className="overflow-hidden">
-            <motion.h1
-              variants={wordVariants}
-              className="block leading-none select-none"
-              style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(72px, 12vw, 160px)",
-                color: "#FFFFFF",
-                letterSpacing: "-0.02em",
-                lineHeight: 0.88,
-              }}
-            >
-              BRASIL
-            </motion.h1>
-          </div>
+          {["CASA", "DO", "BRASIL"].map((word) => (
+            <div key={word} className="overflow-hidden">
+              <motion.h1
+                variants={wordVariants}
+                className="block select-none"
+                style={{
+                  fontFamily: "'Heebo', sans-serif",
+                  fontWeight: 900,
+                  fontSize: "clamp(68px, 11.5vw, 155px)",
+                  color: "#FFFFFF",
+                  letterSpacing: "-0.02em",
+                  lineHeight: 0.88,
+                }}
+              >
+                {word}
+              </motion.h1>
+            </div>
+          ))}
         </motion.div>
 
         {/* Gold rule */}
         <motion.div
           className="mb-5"
-          style={{ width: "clamp(200px, 30vw, 480px)" }}
+          style={{ width: "clamp(180px, 28vw, 460px)", transformOrigin: "left" }}
           variants={lineVariants}
           initial="hidden"
           animate="visible"
@@ -290,16 +281,16 @@ export default function HeroSection() {
 
         {/* Subtitle */}
         <motion.p
-          custom={1.2}
+          custom={1.3}
           variants={slideUpVariants}
           initial="hidden"
           animate="visible"
           style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 300,
-            fontSize: "clamp(16px, 2vw, 22px)",
+            fontSize: "clamp(15px, 1.8vw, 21px)",
             color: "rgb(185,161,103)",
-            letterSpacing: "0.1em",
+            letterSpacing: "0.12em",
             marginBottom: "2.5rem",
             fontStyle: "italic",
           }}
@@ -309,37 +300,34 @@ export default function HeroSection() {
 
         {/* CTA Buttons */}
         <motion.div
-          custom={1.5}
+          custom={1.6}
           variants={slideUpVariants}
           initial="hidden"
           animate="visible"
-          className="flex items-center gap-4 flex-wrap"
+          className="flex items-center gap-5 flex-wrap"
         >
-          <a href="#reservations" className="btn-primary">
-            <span>RESERVE A TABLE</span>
-            <span style={{ fontSize: "1rem" }}>→</span>
-          </a>
-          <a href="#menu" className="btn-ghost">
-            <span>EXPLORE MENU</span>
-          </a>
+          {/* Reserve A Table — white border, white text, gold fill on hover */}
+          <ReserveButton />
+
+          {/* Explore Menu — gold border, gold text */}
+          <ExploreButton />
         </motion.div>
       </motion.div>
 
       {/* ── Scroll Indicator ── */}
       <motion.div
         className="absolute bottom-8 right-10 z-20 flex flex-col items-center gap-2"
-        custom={2.0}
-        variants={fadeInVariants}
-        initial="hidden"
-        animate="visible"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 2.2 }}
       >
         <span
           style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 700,
-            fontSize: "0.6rem",
+            fontSize: "0.58rem",
             letterSpacing: "0.3em",
-            color: "rgba(185,161,103,0.7)",
+            color: "rgba(185,161,103,0.65)",
             textTransform: "uppercase",
             writingMode: "vertical-rl",
             marginBottom: "8px",
@@ -348,11 +336,79 @@ export default function HeroSection() {
           SCROLL
         </span>
         <motion.div
-          style={{ width: "1px", height: "40px", background: "rgba(185,161,103,0.5)" }}
-          animate={{ scaleY: [1, 0.3, 1], opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            width: "1px",
+            height: "44px",
+            background: "rgba(185,161,103,0.45)",
+          }}
+          animate={{ scaleY: [1, 0.25, 1], opacity: [0.45, 1, 0.45] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
         />
       </motion.div>
     </section>
+  );
+}
+
+/* ── Reserve A Table Button ── */
+function ReserveButton() {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <a
+      href="#reservations"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "0.6rem",
+        padding: "0.8rem 2.2rem",
+        fontFamily: "'Heebo', sans-serif",
+        fontWeight: 700,
+        fontSize: "0.72rem",
+        letterSpacing: "0.22em",
+        textTransform: "uppercase" as const,
+        textDecoration: "none",
+        border: "1.5px solid #FFFFFF",
+        color: hovered ? "rgb(40,3,6)" : "#FFFFFF",
+        background: hovered ? "#FFFFFF" : "transparent",
+        transition: "all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        position: "relative" as const,
+      }}
+    >
+      RESERVE A TABLE
+      <span style={{ fontSize: "1rem", lineHeight: 1 }}>→</span>
+    </a>
+  );
+}
+
+/* ── Explore Menu Button ── */
+function ExploreButton() {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <a
+      href="#menu"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "0.6rem",
+        padding: "0.8rem 2.2rem",
+        fontFamily: "'Heebo', sans-serif",
+        fontWeight: 700,
+        fontSize: "0.72rem",
+        letterSpacing: "0.22em",
+        textTransform: "uppercase" as const,
+        textDecoration: "none",
+        border: "1.5px solid rgb(185,161,103)",
+        color: hovered ? "rgb(40,3,6)" : "rgb(185,161,103)",
+        background: hovered ? "rgb(185,161,103)" : "transparent",
+        transition: "all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+      }}
+    >
+      EXPLORE MENU
+    </a>
   );
 }
