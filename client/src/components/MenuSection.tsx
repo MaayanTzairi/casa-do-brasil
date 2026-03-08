@@ -1,12 +1,17 @@
 /**
  * CASA DO BRASIL — MENU — Section 3
  *
- * Design:
- * - Clean white background — no illustration (illustration is in standalone SectionDivider above)
- * - Heading "TWO WAYS TO EXPERIENCE BRASIL" centered at top
- * - Two menu tracks: Churrascaria (dark bordeaux) | Classic Menu (light)
- * - VIEW FULL MENU CTA at bottom
- * - Fully responsive
+ * Layout (desktop):
+ *   LEFT 55%  → Two stacked/side-by-side menu cards (Churrascaria + Classic)
+ *   RIGHT 45% → Vertical centered text block:
+ *                 label "OUR MENU"
+ *                 big headline "AUTHENTIC\nBRAZILIAN\nEXPERIENCE"
+ *                 gold rule
+ *                 short description
+ *                 VIEW FULL MENU CTA
+ *
+ * The entire section fits in one viewport height — no scroll needed.
+ * Mobile: stacks vertically, title first then cards.
  */
 
 import { useRef, useState, useEffect } from "react";
@@ -22,10 +27,10 @@ const BORDEAUX = "rgb(62,4,9)";
 const BORDEAUX_DEEP = "rgb(40,2,6)";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 28 },
   visible: (d = 0) => ({
     opacity: 1, y: 0,
-    transition: { duration: 0.8, delay: d, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
+    transition: { duration: 0.85, delay: d, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
   }),
 };
 
@@ -35,7 +40,7 @@ export default function MenuSection() {
   const [mobile, setMobile] = useState(false);
 
   useEffect(() => {
-    const fn = () => setMobile(window.innerWidth < 768);
+    const fn = () => setMobile(window.innerWidth < 900);
     fn();
     window.addEventListener("resize", fn);
     return () => window.removeEventListener("resize", fn);
@@ -46,236 +51,310 @@ export default function MenuSection() {
       ref={ref}
       style={{
         background: "#ffffff",
-        padding: mobile ? "3.5rem 1.5rem 4rem" : "4.5rem 5vw 5rem",
+        width: "100%",
+        minHeight: mobile ? "auto" : "100vh",
+        display: "flex",
+        alignItems: "stretch",
+        overflow: "hidden",
       }}
     >
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "1440px",
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: mobile ? "column" : "row",
+          alignItems: "stretch",
+          padding: mobile ? "3rem 1.5rem 4rem" : "0",
+          gap: mobile ? "3rem" : "0",
+        }}
+      >
 
-        {/* ── HEADING BLOCK ── */}
-        <div style={{ textAlign: "center", marginBottom: mobile ? "2.5rem" : "3.5rem" }}>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            style={{
-              fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-              fontSize: "0.6rem", letterSpacing: "0.42em",
-              textTransform: "uppercase", color: GOLD,
-              marginBottom: "0.9rem",
-            }}
-          >OUR MENU</motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 18 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.85, delay: 0.2 }}
-            style={{
-              fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-              fontSize: mobile ? "clamp(26px, 8vw, 40px)" : "clamp(28px, 3.2vw, 46px)",
-              color: BORDEAUX, margin: 0, lineHeight: 1.05,
-              letterSpacing: "0.02em",
-            }}
-          >
-            TWO WAYS TO<br />EXPERIENCE BRASIL
-          </motion.h2>
-
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={inView ? { scaleX: 1 } : {}}
-            transition={{ duration: 0.9, delay: 0.35 }}
-            style={{
-              width: "56px", height: "1.5px", background: GOLD,
-              margin: "1.2rem auto 0", transformOrigin: "center",
-            }}
-          />
-        </div>
-
-        {/* ── CARDS ── */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: mobile ? "1fr" : "1fr 1fr",
-          gap: mobile ? "1.8rem" : "2.5vw",
-        }}>
-
+        {/* ── LEFT: TWO CARDS ── */}
+        <div
+          style={{
+            flex: mobile ? "none" : "0 0 56%",
+            display: "flex",
+            flexDirection: mobile ? "column" : "row",
+            gap: mobile ? "1.5rem" : "0",
+            order: mobile ? 2 : 1,
+          }}
+        >
           {/* CARD 1: CHURRASCARIA */}
           <motion.div
-            custom={0.1} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
+            custom={0.15} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
             style={{
+              flex: 1,
               background: BORDEAUX_DEEP,
               overflow: "hidden",
-              boxShadow: "0 20px 60px rgba(62,4,9,0.32)",
-              display: "flex", flexDirection: "column",
+              display: "flex",
+              flexDirection: "column",
+              position: "relative",
+              cursor: "pointer",
             }}
           >
-            <div style={{ position: "relative", overflow: "hidden", height: mobile ? "240px" : "300px" }}>
-              <img
-                src={CHURRASCARIA_IMG} alt="Churrascaria"
-                style={{
-                  width: "100%", height: "100%", objectFit: "cover",
-                  objectPosition: "center 30%", display: "block",
-                  transition: "transform 1.2s ease",
-                }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
-              />
-              <div style={{
+            <img
+              src={CHURRASCARIA_IMG}
+              alt="Churrascaria"
+              style={{
                 position: "absolute", inset: 0,
-                background: "linear-gradient(to bottom, transparent 40%, rgba(40,2,6,0.92) 100%)",
-                pointerEvents: "none",
-              }} />
+                width: "100%", height: "100%",
+                objectFit: "cover", objectPosition: "center 30%",
+                transition: "transform 1.4s ease",
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.06)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
+            />
+            {/* Dark overlay */}
+            <div style={{
+              position: "absolute", inset: 0,
+              background: "linear-gradient(to top, rgba(40,2,6,0.96) 0%, rgba(40,2,6,0.55) 50%, rgba(40,2,6,0.15) 100%)",
+              pointerEvents: "none",
+            }} />
+
+            {/* Content pinned to bottom */}
+            <div style={{
+              position: "relative", zIndex: 2,
+              marginTop: "auto",
+              padding: mobile ? "1.8rem 1.5rem" : "2rem 2rem 2.5rem",
+            }}>
               <div style={{
-                position: "absolute", top: "1.2rem", left: "1.4rem",
                 fontFamily: "'Heebo', sans-serif", fontWeight: 700,
                 fontSize: "0.52rem", letterSpacing: "0.38em",
                 textTransform: "uppercase", color: GOLD,
+                marginBottom: "0.7rem",
               }}>THE EXPERIENCE</div>
-            </div>
 
-            <div style={{ padding: mobile ? "1.6rem 1.5rem 2rem" : "1.8rem 2rem 2.2rem", flex: 1, display: "flex", flexDirection: "column" }}>
               <div style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-                fontSize: mobile ? "clamp(26px, 7vw, 36px)" : "clamp(26px, 2.6vw, 38px)",
-                color: "#fff", lineHeight: 0.92, letterSpacing: "0.02em",
-                marginBottom: "0.4rem",
+                fontSize: mobile ? "clamp(28px, 7vw, 38px)" : "clamp(26px, 2.4vw, 40px)",
+                color: "#fff", lineHeight: 0.9, letterSpacing: "0.02em",
+                marginBottom: "0.35rem",
               }}>CHURRASCARIA</div>
+
               <div style={{
-                fontFamily: "'Heebo', sans-serif", fontWeight: 400,
-                fontStyle: "italic", fontSize: "clamp(13px, 1vw, 14.5px)",
+                fontFamily: "'Heebo', sans-serif", fontWeight: 300,
+                fontStyle: "italic", fontSize: "clamp(13px, 1vw, 14px)",
                 color: GOLD, marginBottom: "1rem",
               }}>All You Can Eat</div>
-              <div style={{ width: "36px", height: "1px", background: GOLD, marginBottom: "1rem" }} />
+
+              <div style={{ width: "32px", height: "1px", background: GOLD, marginBottom: "1rem" }} />
+
               <p style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-                fontSize: "clamp(13.5px, 1vw, 15px)", color: "rgba(255,255,255,0.7)",
-                lineHeight: 1.8, marginBottom: "1.6rem", flex: 1,
+                fontSize: "clamp(13px, 0.9vw, 14.5px)", color: "rgba(255,255,255,0.68)",
+                lineHeight: 1.75, marginBottom: "1.4rem",
+                maxWidth: "280px",
               }}>
                 Unlimited fire-roasted cuts served tableside by our gauchos.
-                Picanha, Fraldinha, Costela, Alcatra and more — until you say stop.
+                Picanha, Fraldinha, Costela — until you say stop.
               </p>
+
               <a
                 href="#churrascaria"
                 style={{
                   display: "inline-flex", alignItems: "center", gap: "0.5rem",
                   fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                  fontSize: "0.58rem", letterSpacing: "0.22em",
+                  fontSize: "0.55rem", letterSpacing: "0.22em",
                   textTransform: "uppercase", textDecoration: "none",
                   color: GOLD, borderBottom: `1px solid ${GOLD}`, paddingBottom: "2px",
-                  alignSelf: "flex-start", transition: "opacity 0.2s",
+                  transition: "opacity 0.2s",
                 }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "0.65"; }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "0.6"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "1"; }}
               >
-                VIEW CHURRASCARIA <span style={{ fontSize: "0.9rem" }}>→</span>
+                VIEW MENU <span style={{ fontSize: "0.85rem" }}>→</span>
               </a>
             </div>
           </motion.div>
 
           {/* CARD 2: CLASSIC MENU */}
           <motion.div
-            custom={0.22} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
+            custom={0.28} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
             style={{
-              background: "#FAFAF8",
-              border: `1px solid rgba(185,161,103,0.22)`,
+              flex: 1,
+              background: "#F5F0E8",
               overflow: "hidden",
-              boxShadow: "0 20px 60px rgba(62,4,9,0.10)",
-              display: "flex", flexDirection: "column",
+              display: "flex",
+              flexDirection: "column",
+              position: "relative",
+              cursor: "pointer",
+              borderLeft: mobile ? "none" : `1px solid rgba(185,161,103,0.18)`,
             }}
           >
-            <div style={{ position: "relative", overflow: "hidden", height: mobile ? "240px" : "300px" }}>
-              <img
-                src={CLASSIC_IMG} alt="Classic Menu"
-                style={{
-                  width: "100%", height: "100%", objectFit: "cover",
-                  objectPosition: "center 50%", display: "block",
-                  transition: "transform 1.2s ease",
-                }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
-              />
-              <div style={{
+            <img
+              src={CLASSIC_IMG}
+              alt="Classic Menu"
+              style={{
                 position: "absolute", inset: 0,
-                background: "linear-gradient(to bottom, transparent 40%, rgba(250,250,248,0.95) 100%)",
-                pointerEvents: "none",
-              }} />
+                width: "100%", height: "100%",
+                objectFit: "cover", objectPosition: "center 50%",
+                transition: "transform 1.4s ease",
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.06)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
+            />
+            {/* Light overlay */}
+            <div style={{
+              position: "absolute", inset: 0,
+              background: "linear-gradient(to top, rgba(245,240,232,0.97) 0%, rgba(245,240,232,0.6) 50%, rgba(245,240,232,0.1) 100%)",
+              pointerEvents: "none",
+            }} />
+
+            {/* Content pinned to bottom */}
+            <div style={{
+              position: "relative", zIndex: 2,
+              marginTop: "auto",
+              padding: mobile ? "1.8rem 1.5rem" : "2rem 2rem 2.5rem",
+            }}>
               <div style={{
-                position: "absolute", top: "1.2rem", left: "1.4rem",
                 fontFamily: "'Heebo', sans-serif", fontWeight: 700,
                 fontSize: "0.52rem", letterSpacing: "0.38em",
                 textTransform: "uppercase", color: GOLD,
+                marginBottom: "0.7rem",
               }}>À LA CARTE</div>
-            </div>
 
-            <div style={{ padding: mobile ? "1.6rem 1.5rem 2rem" : "1.8rem 2rem 2.2rem", flex: 1, display: "flex", flexDirection: "column" }}>
               <div style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-                fontSize: mobile ? "clamp(26px, 7vw, 36px)" : "clamp(26px, 2.6vw, 38px)",
-                color: BORDEAUX, lineHeight: 0.92, letterSpacing: "0.02em",
-                marginBottom: "0.4rem",
-              }}>CLASSIC MENU</div>
+                fontSize: mobile ? "clamp(28px, 7vw, 38px)" : "clamp(26px, 2.4vw, 40px)",
+                color: BORDEAUX, lineHeight: 0.9, letterSpacing: "0.02em",
+                marginBottom: "0.35rem",
+              }}>CLASSIC<br />MENU</div>
+
               <div style={{
-                fontFamily: "'Heebo', sans-serif", fontWeight: 400,
-                fontStyle: "italic", fontSize: "clamp(13px, 1vw, 14.5px)",
+                fontFamily: "'Heebo', sans-serif", fontWeight: 300,
+                fontStyle: "italic", fontSize: "clamp(13px, 1vw, 14px)",
                 color: GOLD, marginBottom: "1rem",
               }}>Individual Selections</div>
-              <div style={{ width: "36px", height: "1px", background: GOLD, marginBottom: "1rem" }} />
+
+              <div style={{ width: "32px", height: "1px", background: GOLD, marginBottom: "1rem" }} />
+
               <p style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-                fontSize: "clamp(13.5px, 1vw, 15px)", color: "rgba(62,4,9,0.62)",
-                lineHeight: 1.8, marginBottom: "1.6rem", flex: 1,
+                fontSize: "clamp(13px, 0.9vw, 14.5px)", color: "rgba(62,4,9,0.65)",
+                lineHeight: 1.75, marginBottom: "1.4rem",
+                maxWidth: "280px",
               }}>
-                Unlimited fire-roasted cuts served tableside by our gauchos.
-                Picanha, Fraldinha, Costela, Alcatra and more — until you say stop.
+                Handpicked cuts and Brazilian signatures, ordered à la carte.
+                The full flavour of Brasil, at your own pace.
               </p>
+
               <a
                 href="#classic"
                 style={{
                   display: "inline-flex", alignItems: "center", gap: "0.5rem",
                   fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                  fontSize: "0.58rem", letterSpacing: "0.22em",
+                  fontSize: "0.55rem", letterSpacing: "0.22em",
                   textTransform: "uppercase", textDecoration: "none",
                   color: BORDEAUX, borderBottom: `1px solid ${GOLD}`, paddingBottom: "2px",
-                  alignSelf: "flex-start", transition: "opacity 0.2s",
+                  transition: "opacity 0.2s",
                 }}
                 onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "0.6"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "1"; }}
               >
-                VIEW CLASSIC MENU <span style={{ fontSize: "0.9rem" }}>→</span>
+                VIEW MENU <span style={{ fontSize: "0.85rem" }}>→</span>
               </a>
             </div>
           </motion.div>
         </div>
 
-        {/* ── VIEW FULL MENU ── */}
-        <motion.div
-          custom={0.5} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
-          style={{ textAlign: "center", marginTop: "2.8rem" }}
+        {/* ── RIGHT: TITLE BLOCK ── */}
+        <div
+          style={{
+            flex: mobile ? "none" : "0 0 44%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            padding: mobile ? "0" : "4rem 5vw 4rem 4vw",
+            order: mobile ? 1 : 2,
+          }}
         >
-          <a
-            href="#menu"
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.7, delay: 0.05 }}
             style={{
-              display: "inline-flex", alignItems: "center", gap: "0.7rem",
               fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-              fontSize: "0.62rem", letterSpacing: "0.28em",
-              textTransform: "uppercase", textDecoration: "none",
-              color: BORDEAUX,
-              padding: "0.85rem 2.2rem",
-              border: `1.5px solid ${GOLD}`,
-              transition: "background 0.25s, color 0.25s",
+              fontSize: "0.58rem", letterSpacing: "0.44em",
+              textTransform: "uppercase", color: GOLD,
+              marginBottom: "1.2rem",
             }}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget as HTMLAnchorElement;
-              el.style.background = BORDEAUX;
-              el.style.color = "#fff";
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget as HTMLAnchorElement;
-              el.style.background = "transparent";
-              el.style.color = BORDEAUX;
+          >OUR MENU</motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 22 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.9, delay: 0.15 }}
+            style={{
+              fontFamily: "'Heebo', sans-serif", fontWeight: 900,
+              fontSize: mobile ? "clamp(36px, 10vw, 52px)" : "clamp(40px, 4.2vw, 68px)",
+              color: BORDEAUX, margin: 0, lineHeight: 0.92,
+              letterSpacing: "0.01em",
             }}
           >
-            VIEW FULL MENU <span style={{ fontSize: "1rem" }}>→</span>
-          </a>
-        </motion.div>
+            AUTHENTIC<br />BRAZILIAN<br />EXPERIENCE
+          </motion.h2>
+
+          {/* Gold rule */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={inView ? { scaleX: 1 } : {}}
+            transition={{ duration: 0.9, delay: 0.3 }}
+            style={{
+              width: "56px", height: "1.5px", background: GOLD,
+              margin: "1.8rem 0", transformOrigin: "left",
+            }}
+          />
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.38 }}
+            style={{
+              fontFamily: "'Heebo', sans-serif", fontWeight: 300,
+              fontSize: "clamp(14px, 1.05vw, 16px)", color: "rgba(62,4,9,0.65)",
+              lineHeight: 1.85, maxWidth: "360px",
+              marginBottom: "2.2rem",
+            }}
+          >
+            Two paths to the same passion — choose the experience that speaks to you.
+            Every cut tells the story of the Brazilian pampas.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.48 }}
+          >
+            <a
+              href="#menu"
+              style={{
+                display: "inline-flex", alignItems: "center", gap: "0.7rem",
+                fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+                fontSize: "0.6rem", letterSpacing: "0.28em",
+                textTransform: "uppercase", textDecoration: "none",
+                color: BORDEAUX,
+                padding: "0.9rem 2.4rem",
+                border: `1.5px solid ${GOLD}`,
+                transition: "background 0.25s, color 0.25s",
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget as HTMLAnchorElement;
+                el.style.background = BORDEAUX;
+                el.style.color = "#fff";
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLAnchorElement;
+                el.style.background = "transparent";
+                el.style.color = BORDEAUX;
+              }}
+            >
+              VIEW FULL MENU <span style={{ fontSize: "1rem" }}>→</span>
+            </a>
+          </motion.div>
+        </div>
+
       </div>
     </div>
   );
