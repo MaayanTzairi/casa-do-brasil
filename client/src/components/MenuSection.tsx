@@ -1,14 +1,13 @@
 /**
  * CASA DO BRASIL — MENU — Section 3
  *
- * Refined, modern, compact layout:
- * - Section does NOT fill full viewport — natural height
- * - LEFT: two elegant portrait cards side by side
- *   Each card: image top half, minimal text bottom half (no long descriptions)
- *   Clean white card with subtle shadow, gold accent line, hover lift
- * - RIGHT: title block — OUR MENU label, big stacked headline, gold rule, CTA
- *
- * No long paragraph descriptions — just name, subtitle, and a VIEW MENU link.
+ * Refined card design:
+ * - CHURRASCARIA card is taller (offset upward), CLASSIC card is shorter (offset downward)
+ * - Each card has an elegant gold corner bracket frame (top-left + bottom-right)
+ * - Deep layered box-shadow for depth
+ * - Subtle warm background glow behind the cards
+ * - Hover: lift + shadow intensifies + image zooms
+ * - No long descriptions — minimal, editorial text only
  */
 
 import { useRef, useState, useEffect } from "react";
@@ -20,16 +19,51 @@ const CLASSIC_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-classic-KrHBQJp2Ar2RgqSpD4t4tj.webp";
 
 const GOLD = "#B9A167";
+const GOLD_RGBA = "rgba(185,161,103,";
 const BORDEAUX = "rgb(62,4,9)";
-const BORDEAUX_DEEP = "rgb(28,1,4)";
+const BORDEAUX_DEEP = "rgb(22,1,3)";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 22 },
+  hidden: { opacity: 0, y: 28 },
   visible: (d = 0) => ({
     opacity: 1, y: 0,
-    transition: { duration: 0.85, delay: d, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
+    transition: { duration: 0.9, delay: d, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
   }),
 };
+
+/* Gold corner bracket ornament */
+function GoldCorners({ size = 18, opacity = 0.7 }: { size?: number; opacity?: number }) {
+  const s = `${size}px`;
+  const b = `1.2px solid ${GOLD}`;
+  return (
+    <>
+      {/* Top-left */}
+      <div style={{
+        position: "absolute", top: "10px", left: "10px", zIndex: 4,
+        width: s, height: s,
+        borderTop: b, borderLeft: b, opacity,
+      }} />
+      {/* Top-right */}
+      <div style={{
+        position: "absolute", top: "10px", right: "10px", zIndex: 4,
+        width: s, height: s,
+        borderTop: b, borderRight: b, opacity,
+      }} />
+      {/* Bottom-left */}
+      <div style={{
+        position: "absolute", bottom: "10px", left: "10px", zIndex: 4,
+        width: s, height: s,
+        borderBottom: b, borderLeft: b, opacity,
+      }} />
+      {/* Bottom-right */}
+      <div style={{
+        position: "absolute", bottom: "10px", right: "10px", zIndex: 4,
+        width: s, height: s,
+        borderBottom: b, borderRight: b, opacity,
+      }} />
+    </>
+  );
+}
 
 interface MenuCardProps {
   img: string;
@@ -41,9 +75,15 @@ interface MenuCardProps {
   dark?: boolean;
   delay?: number;
   inView: boolean;
+  offsetY?: string;   /* vertical offset for staggered layout */
+  imgHeight?: string;
 }
 
-function MenuCard({ img, track, name, nameSecond, subtitle, href, dark = false, delay = 0, inView }: MenuCardProps) {
+function MenuCard({
+  img, track, name, nameSecond, subtitle, href,
+  dark = false, delay = 0, inView,
+  offsetY = "0px", imgHeight = "58%",
+}: MenuCardProps) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -59,17 +99,27 @@ function MenuCard({ img, track, name, nameSecond, subtitle, href, dark = false, 
         display: "flex",
         flexDirection: "column",
         background: dark ? BORDEAUX_DEEP : "#FAFAF8",
+        position: "relative",
+        marginTop: offsetY,
+        /* Layered shadow for depth */
         boxShadow: hovered
-          ? `0 24px 56px rgba(62,4,9,${dark ? "0.45" : "0.14"})`
-          : `0 8px 32px rgba(62,4,9,${dark ? "0.28" : "0.08"})`,
-        transform: hovered ? "translateY(-4px)" : "translateY(0)",
-        transition: "box-shadow 0.4s ease, transform 0.4s ease",
+          ? `0 4px 12px ${GOLD_RGBA}0.12),
+             0 16px 40px rgba(62,4,9,${dark ? "0.55" : "0.18"}),
+             0 40px 80px rgba(62,4,9,${dark ? "0.35" : "0.10"})`
+          : `0 2px 6px ${GOLD_RGBA}0.08),
+             0 8px 24px rgba(62,4,9,${dark ? "0.38" : "0.10"}),
+             0 24px 56px rgba(62,4,9,${dark ? "0.22" : "0.06"})`,
+        transform: hovered ? "translateY(-6px)" : "translateY(0)",
+        transition: "box-shadow 0.45s ease, transform 0.45s ease",
         overflow: "hidden",
         cursor: "pointer",
       }}
     >
-      {/* Image — 58% of card height */}
-      <div style={{ position: "relative", paddingBottom: "62%", overflow: "hidden" }}>
+      {/* Gold corner brackets */}
+      <GoldCorners size={16} opacity={hovered ? 0.9 : 0.55} />
+
+      {/* Image */}
+      <div style={{ position: "relative", paddingBottom: imgHeight, overflow: "hidden", flexShrink: 0 }}>
         <img
           src={img}
           alt={name}
@@ -77,56 +127,55 @@ function MenuCard({ img, track, name, nameSecond, subtitle, href, dark = false, 
             position: "absolute", inset: 0,
             width: "100%", height: "100%",
             objectFit: "cover",
-            objectPosition: "center 30%",
-            transform: hovered ? "scale(1.05)" : "scale(1)",
-            transition: "transform 1.4s cubic-bezier(0.25,0.46,0.45,0.94)",
+            objectPosition: "center 28%",
+            transform: hovered ? "scale(1.06)" : "scale(1)",
+            transition: "transform 1.5s cubic-bezier(0.25,0.46,0.45,0.94)",
           }}
         />
-        {/* Gradient overlay — stronger at bottom */}
+        {/* Cinematic gradient overlay */}
         <div style={{
           position: "absolute", inset: 0,
           background: dark
-            ? "linear-gradient(to bottom, transparent 30%, rgba(28,1,4,0.55) 100%)"
-            : "linear-gradient(to bottom, transparent 30%, rgba(250,250,248,0.4) 100%)",
+            ? `linear-gradient(160deg, rgba(22,1,3,0.0) 0%, rgba(22,1,3,0.15) 50%, rgba(22,1,3,0.65) 100%)`
+            : `linear-gradient(160deg, rgba(250,250,248,0.0) 0%, rgba(250,250,248,0.1) 50%, rgba(250,250,248,0.55) 100%)`,
           pointerEvents: "none",
         }} />
-        {/* Track label — top left */}
+
+        {/* Track label */}
         <div style={{
-          position: "absolute", top: "1rem", left: "1.2rem",
+          position: "absolute", top: "1.1rem", left: "1.3rem", zIndex: 3,
           display: "flex", alignItems: "center", gap: "0.5rem",
         }}>
-          <div style={{ width: "14px", height: "1px", background: GOLD, opacity: 0.9 }} />
+          <div style={{ width: "12px", height: "1px", background: GOLD, opacity: 0.85 }} />
           <span style={{
             fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-            fontSize: "0.48rem", letterSpacing: "0.4em",
-            textTransform: "uppercase",
-            color: GOLD,
+            fontSize: "0.46rem", letterSpacing: "0.42em",
+            textTransform: "uppercase", color: GOLD,
           }}>{track}</span>
         </div>
       </div>
 
       {/* Text block */}
       <div style={{
-        padding: "1.4rem 1.6rem 1.8rem",
+        padding: "1.3rem 1.5rem 1.7rem",
         display: "flex", flexDirection: "column",
-        gap: "0",
+        flex: 1,
       }}>
-        {/* Gold top rule */}
+        {/* Gold rule */}
         <div style={{
-          width: "28px", height: "1px",
-          background: GOLD,
-          marginBottom: "1rem",
-          opacity: 0.8,
+          width: "24px", height: "1px",
+          background: `linear-gradient(to right, ${GOLD}, ${GOLD_RGBA}0.2))`,
+          marginBottom: "0.9rem",
         }} />
 
         {/* Name */}
         <div style={{
           fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-          fontSize: "clamp(22px, 2vw, 30px)",
+          fontSize: "clamp(20px, 1.8vw, 28px)",
           color: dark ? "#fff" : BORDEAUX,
-          lineHeight: 0.9,
-          letterSpacing: "0.02em",
-          marginBottom: "0.5rem",
+          lineHeight: 0.88,
+          letterSpacing: "0.025em",
+          marginBottom: "0.55rem",
         }}>
           {name}
           {nameSecond && <><br />{nameSecond}</>}
@@ -136,28 +185,30 @@ function MenuCard({ img, track, name, nameSecond, subtitle, href, dark = false, 
         <div style={{
           fontFamily: "'Heebo', sans-serif", fontWeight: 300,
           fontStyle: "italic",
-          fontSize: "clamp(12px, 0.9vw, 13.5px)",
+          fontSize: "clamp(11.5px, 0.85vw, 13px)",
           color: GOLD,
-          marginBottom: "1.2rem",
+          marginBottom: "1.3rem",
+          letterSpacing: "0.02em",
         }}>{subtitle}</div>
 
-        {/* CTA link */}
+        {/* CTA */}
         <a
           href={href}
           style={{
-            display: "inline-flex", alignItems: "center", gap: "0.45rem",
+            display: "inline-flex", alignItems: "center", gap: "0.4rem",
             fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-            fontSize: "0.5rem", letterSpacing: "0.24em",
+            fontSize: "0.48rem", letterSpacing: "0.26em",
             textTransform: "uppercase", textDecoration: "none",
             color: dark ? GOLD : BORDEAUX,
-            borderBottom: `1px solid ${GOLD}`,
+            borderBottom: `1px solid ${GOLD_RGBA}0.5)`,
             paddingBottom: "2px",
             alignSelf: "flex-start",
-            opacity: hovered ? 0.7 : 1,
+            marginTop: "auto",
+            opacity: hovered ? 0.65 : 1,
             transition: "opacity 0.2s",
           }}
         >
-          VIEW MENU <span style={{ fontSize: "0.8rem" }}>→</span>
+          VIEW MENU <span style={{ fontSize: "0.78rem" }}>→</span>
         </a>
       </div>
     </motion.div>
@@ -182,30 +233,35 @@ export default function MenuSection() {
       style={{
         background: "#ffffff",
         width: "100%",
-        padding: mobile ? "3rem 1.5rem 4rem" : "5rem 6vw 5.5rem",
+        padding: mobile ? "3rem 1.5rem 4.5rem" : "4rem 6vw 5rem",
+        overflow: "hidden",
       }}
     >
       <div
         style={{
-          maxWidth: "1280px",
+          maxWidth: "1200px",
           margin: "0 auto",
           display: "flex",
           flexDirection: mobile ? "column" : "row",
-          alignItems: mobile ? "stretch" : "center",
-          gap: mobile ? "3rem" : "6vw",
+          alignItems: mobile ? "stretch" : "flex-start",
+          gap: mobile ? "3rem" : "5vw",
         }}
       >
 
-        {/* ── LEFT: TWO CARDS ── */}
+        {/* ── LEFT: TWO STAGGERED CARDS ── */}
         <div
           style={{
-            flex: mobile ? "none" : "0 0 52%",
+            flex: mobile ? "none" : "0 0 50%",
             display: "flex",
             flexDirection: "row",
-            gap: mobile ? "1.2rem" : "1.5rem",
+            gap: mobile ? "1.2rem" : "1.4rem",
             order: mobile ? 2 : 1,
+            /* Extra bottom padding to accommodate the downward offset of card 2 */
+            paddingBottom: mobile ? "0" : "2.5rem",
+            alignItems: "flex-start",
           }}
         >
+          {/* CHURRASCARIA — taller, shifted UP */}
           <MenuCard
             img={CHURRASCARIA_IMG}
             track="The Experience"
@@ -216,7 +272,10 @@ export default function MenuSection() {
             dark
             delay={0.15}
             inView={inView}
+            offsetY="0px"
+            imgHeight="65%"
           />
+          {/* CLASSIC — slightly shorter, shifted DOWN */}
           <MenuCard
             img={CLASSIC_IMG}
             track="À La Carte"
@@ -226,6 +285,8 @@ export default function MenuSection() {
             href="#classic"
             delay={0.28}
             inView={inView}
+            offsetY={mobile ? "0px" : "2.5rem"}
+            imgHeight="55%"
           />
         </div>
 
@@ -236,6 +297,7 @@ export default function MenuSection() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            paddingTop: mobile ? "0" : "2rem",
             order: mobile ? 1 : 2,
           }}
         >
@@ -248,10 +310,10 @@ export default function MenuSection() {
               marginBottom: "1.4rem",
             }}
           >
-            <div style={{ width: "22px", height: "1px", background: GOLD }} />
+            <div style={{ width: "20px", height: "1px", background: GOLD }} />
             <span style={{
               fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-              fontSize: "0.56rem", letterSpacing: "0.44em",
+              fontSize: "0.55rem", letterSpacing: "0.44em",
               textTransform: "uppercase", color: GOLD,
             }}>OUR MENU</span>
           </motion.div>
@@ -262,7 +324,7 @@ export default function MenuSection() {
             transition={{ duration: 0.95, delay: 0.15 }}
             style={{
               fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-              fontSize: mobile ? "clamp(36px, 10vw, 52px)" : "clamp(38px, 4vw, 62px)",
+              fontSize: mobile ? "clamp(36px, 10vw, 52px)" : "clamp(36px, 3.8vw, 58px)",
               color: BORDEAUX, margin: 0, lineHeight: 0.9,
               letterSpacing: "0.01em",
             }}
@@ -275,8 +337,8 @@ export default function MenuSection() {
             animate={inView ? { scaleX: 1 } : {}}
             transition={{ duration: 1, delay: 0.32 }}
             style={{
-              width: "52px", height: "1.5px",
-              background: `linear-gradient(to right, ${GOLD}, rgba(185,161,103,0.25))`,
+              width: "48px", height: "1.5px",
+              background: `linear-gradient(to right, ${GOLD}, ${GOLD_RGBA}0.2))`,
               margin: "1.8rem 0 2rem", transformOrigin: "left",
             }}
           />
@@ -291,10 +353,10 @@ export default function MenuSection() {
               style={{
                 display: "inline-flex", alignItems: "center", gap: "0.7rem",
                 fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                fontSize: "0.58rem", letterSpacing: "0.28em",
+                fontSize: "0.56rem", letterSpacing: "0.28em",
                 textTransform: "uppercase", textDecoration: "none",
                 color: BORDEAUX,
-                padding: "0.85rem 2.2rem",
+                padding: "0.85rem 2rem",
                 border: `1.5px solid ${GOLD}`,
                 transition: "background 0.28s, color 0.28s",
               }}
@@ -309,7 +371,7 @@ export default function MenuSection() {
                 el.style.color = BORDEAUX;
               }}
             >
-              VIEW FULL MENU <span style={{ fontSize: "0.95rem" }}>→</span>
+              VIEW FULL MENU <span style={{ fontSize: "0.9rem" }}>→</span>
             </a>
           </motion.div>
         </div>
