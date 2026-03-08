@@ -1,15 +1,16 @@
 /**
  * CASA DO BRASIL — Home Page
- * Design: Cinematic Asymmetric Luxury
- * Currently renders: Hero Section only (Phase 1)
+ * Sections: Hero → CASA VIBES
  */
 
 import HeroSection from "@/components/HeroSection";
+import CasaVibesSection from "@/components/CasaVibesSection";
 
 export default function Home() {
   return (
     <main className="w-full">
       <HeroSection />
+      <CasaVibesSection />
     </main>
   );
 }
