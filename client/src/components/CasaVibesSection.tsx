@@ -104,7 +104,7 @@ export default function CasaVibesSection() {
               fontFamily: "'Heebo', sans-serif", fontWeight: 700,
               fontSize: "0.65rem", letterSpacing: "0.38em",
               textTransform: "uppercase", color: GOLD,
-            }}>NOSSA HISTORIA</span>
+            }}>OUR STORY</span>
           </motion.div>
 
           {/* Big headline */}
