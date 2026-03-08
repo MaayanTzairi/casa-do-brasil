@@ -154,7 +154,7 @@ export default function CasaVibesSection() {
       style={{
         background: "#FFFFFF",
         overflow: "hidden",
-        padding: isMobile ? "3rem 1.4rem 3.5rem" : "4.5rem clamp(2rem, 6vw, 7rem)",
+        padding: isMobile ? "3rem 1.4rem 3.5rem" : "4.5rem clamp(2rem, 4vw, 5rem)",
       }}
     >
       {/* ── LABEL ── */}
@@ -172,7 +172,7 @@ export default function CasaVibesSection() {
       <div style={{
         display: "grid",
         gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-        gap: isMobile ? "3rem 0" : "0 5rem",
+        gap: isMobile ? "3rem 0" : "0 3.5rem",
         alignItems: "center",
         position: "relative",
       }}>
