@@ -3,10 +3,11 @@
  *
  * Design philosophy:
  * One unified section. Text anchors the left.
- * Images on the right are NOT flat boxes — they are placed with character:
- *   - Meat image: slightly rotated, elevated, with a subtle shadow
- *   - Carnival image: counter-rotated, offset lower, partially overlapping the meat image
- * This creates a "pinned on a board" editorial feel — alive, not constructed.
+ * Images on the right have character through FRAMING:
+ *   - Each image is framed with gold corner brackets (SVG) — a premium editorial device
+ *   - The two images are stacked with an intentional size difference (top larger, bottom smaller+offset)
+ *   - The offset creates visual tension without being childish
+ *   - A thin gold vertical line connects the two images
  *
  * Colors: White · Bordeaux rgb(62,4,9) · Gold rgb(185,161,103)
  * Font: Heebo Black/Bold/Light — English only
@@ -26,11 +27,7 @@ const fadeUp = {
   visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.85,
-      delay,
-      ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
-    },
+    transition: { duration: 0.85, delay, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
   }),
 };
 
@@ -41,6 +38,172 @@ const drawLine = {
     transition: { duration: 1.0, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
   },
 };
+
+const revealImg = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (delay = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 1.1, delay, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
+  }),
+};
+
+/** Gold corner bracket SVG — rendered at each corner of the image frame */
+function GoldCorner({ position }: { position: "tl" | "tr" | "bl" | "br" }) {
+  const size = 22;
+  const thickness = 1.5;
+  const color = "rgb(185,161,103)";
+
+  const style: React.CSSProperties = {
+    position: "absolute",
+    width: size,
+    height: size,
+    ...(position === "tl" ? { top: -1, left: -1 } : {}),
+    ...(position === "tr" ? { top: -1, right: -1 } : {}),
+    ...(position === "bl" ? { bottom: -1, left: -1 } : {}),
+    ...(position === "br" ? { bottom: -1, right: -1 } : {}),
+    zIndex: 10,
+    pointerEvents: "none",
+  };
+
+  const isTop = position === "tl" || position === "tr";
+  const isLeft = position === "tl" || position === "bl";
+
+  return (
+    <svg style={style} viewBox="0 0 22 22" fill="none">
+      {/* Horizontal arm */}
+      <line
+        x1={isLeft ? 0 : 22}
+        y1={isTop ? 0 : 22}
+        x2={isLeft ? 10 : 12}
+        y2={isTop ? 0 : 22}
+        stroke={color}
+        strokeWidth={thickness}
+      />
+      {/* Vertical arm */}
+      <line
+        x1={isLeft ? 0 : 22}
+        y1={isTop ? 0 : 22}
+        x2={isLeft ? 0 : 22}
+        y2={isTop ? 10 : 12}
+        stroke={color}
+        strokeWidth={thickness}
+      />
+    </svg>
+  );
+}
+
+/** Framed image component with gold corner brackets */
+function FramedImage({
+  src,
+  alt,
+  aspectRatio,
+  objectPosition,
+  label,
+  title,
+  delay,
+  isInView,
+  style,
+}: {
+  src: string;
+  alt: string;
+  aspectRatio: string;
+  objectPosition: string;
+  label: string;
+  title: string;
+  delay: number;
+  isInView: boolean;
+  style?: React.CSSProperties;
+}) {
+  return (
+    <motion.div
+      custom={delay}
+      variants={revealImg}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      style={{
+        position: "relative",
+        ...style,
+      }}
+    >
+      {/* Outer frame offset — creates a double-frame effect */}
+      <div
+        style={{
+          position: "absolute",
+          inset: "-6px",
+          border: "1px solid rgba(185,161,103,0.25)",
+          borderRadius: "1px",
+          pointerEvents: "none",
+          zIndex: 1,
+        }}
+      />
+
+      {/* Image container */}
+      <div
+        style={{
+          position: "relative",
+          overflow: "hidden",
+          borderRadius: "1px",
+          aspectRatio,
+        }}
+      >
+        <img
+          src={src}
+          alt={alt}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition,
+            display: "block",
+            transition: "transform 1.2s ease",
+          }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
+        />
+        {/* Bottom gradient */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(to top, rgba(62,4,9,0.75) 0%, transparent 55%)",
+            pointerEvents: "none",
+          }}
+        />
+        {/* Text overlay */}
+        <div style={{ position: "absolute", bottom: "1.2rem", left: "1.2rem" }}>
+          <div style={{
+            fontFamily: "'Heebo', sans-serif",
+            fontWeight: 700,
+            fontSize: "0.52rem",
+            letterSpacing: "0.3em",
+            color: "rgb(185,161,103)",
+            textTransform: "uppercase",
+            marginBottom: "0.25rem",
+          }}>
+            {label}
+          </div>
+          <div style={{
+            fontFamily: "'Heebo', sans-serif",
+            fontWeight: 900,
+            fontSize: "clamp(15px, 1.7vw, 22px)",
+            color: "#FFFFFF",
+            lineHeight: 1.05,
+            letterSpacing: "-0.02em",
+          }}>
+            {title}
+          </div>
+        </div>
+      </div>
+
+      {/* Gold corner brackets */}
+      <GoldCorner position="tl" />
+      <GoldCorner position="tr" />
+      <GoldCorner position="bl" />
+      <GoldCorner position="br" />
+    </motion.div>
+  );
+}
 
 export default function CasaVibesSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -67,32 +230,28 @@ export default function CasaVibesSection() {
         style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.2rem" }}
       >
         <div style={{ width: "32px", height: "1px", background: "rgb(185,161,103)" }} />
-        <span
-          style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 700,
-            fontSize: "0.65rem",
-            letterSpacing: "0.35em",
-            textTransform: "uppercase",
-            color: "rgb(185,161,103)",
-          }}
-        >
+        <span style={{
+          fontFamily: "'Heebo', sans-serif",
+          fontWeight: 700,
+          fontSize: "0.65rem",
+          letterSpacing: "0.35em",
+          textTransform: "uppercase",
+          color: "rgb(185,161,103)",
+        }}>
           OUR STORY
         </span>
       </motion.div>
 
-      {/* ── MAIN LAYOUT: Text LEFT | Images RIGHT (overlapping, rotated) ── */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "0 2rem",
-          alignItems: "center",
-          minHeight: "580px",
-        }}
-      >
+      {/* ── MAIN GRID ── */}
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "0 4rem",
+        alignItems: "center",
+      }}>
+
         {/* ══ LEFT — Text ══ */}
-        <div style={{ paddingTop: "0.5rem", paddingRight: "2rem" }}>
+        <div style={{ paddingTop: "0.5rem" }}>
           {["FIRE.", "TRADITION.", "BRASIL."].map((word, i) => (
             <div key={word} style={{ overflow: "hidden", marginBottom: "0.1rem" }}>
               <motion.h2
@@ -191,130 +350,39 @@ export default function CasaVibesSection() {
           </motion.div>
         </div>
 
-        {/* ══ RIGHT — Images with character ══ */}
-        <div
-          style={{
-            position: "relative",
-            height: "580px",
-          }}
-        >
-          {/* MEAT IMAGE — top-left, slight clockwise tilt */}
-          <motion.div
-            initial={{ opacity: 0, y: 40, rotate: 0 }}
-            animate={isInView ? { opacity: 1, y: 0, rotate: -2.5 } : { opacity: 0, y: 40, rotate: 0 }}
-            transition={{ duration: 1.1, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
-            style={{
-              position: "absolute",
-              top: "0",
-              left: "0",
-              width: "72%",
-              zIndex: 2,
-              boxShadow: "0 20px 60px rgba(62,4,9,0.22), 0 4px 16px rgba(62,4,9,0.12)",
-              borderRadius: "2px",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              src={MEAT_URL}
-              alt="Brazilian Churrasco — Picanha"
-              style={{
-                width: "100%",
-                aspectRatio: "4/3",
-                objectFit: "cover",
-                objectPosition: "center 40%",
-                display: "block",
-              }}
-            />
-            {/* Bottom gradient + label */}
-            <div style={{
-              position: "absolute",
-              inset: 0,
-              background: "linear-gradient(to top, rgba(62,4,9,0.72) 0%, transparent 55%)",
-              pointerEvents: "none",
-            }} />
-            <div style={{ position: "absolute", bottom: "1.2rem", left: "1.2rem" }}>
-              <div style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 700,
-                fontSize: "0.52rem",
-                letterSpacing: "0.28em",
-                color: "rgb(185,161,103)",
-                textTransform: "uppercase",
-                marginBottom: "0.25rem",
-              }}>
-                CHURRASCO
-              </div>
-              <div style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(16px, 1.8vw, 24px)",
-                color: "#FFFFFF",
-                lineHeight: 1,
-                letterSpacing: "-0.02em",
-              }}>
-                THE ART OF FIRE
-              </div>
-            </div>
-          </motion.div>
+        {/* ══ RIGHT — Two framed images ══ */}
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "2.5rem",
+          paddingTop: "1rem",
+          paddingBottom: "1rem",
+        }}>
+          {/* TOP: Meat — full width of column */}
+          <FramedImage
+            src={MEAT_URL}
+            alt="Brazilian Churrasco — Picanha"
+            aspectRatio="16/10"
+            objectPosition="center 40%"
+            label="CHURRASCO"
+            title={"THE ART\nOF FIRE"}
+            delay={0.15}
+            isInView={isInView}
+            style={{ width: "100%" }}
+          />
 
-          {/* CARNIVAL IMAGE — bottom-right, counter-tilt, overlapping */}
-          <motion.div
-            initial={{ opacity: 0, y: 60, rotate: 0 }}
-            animate={isInView ? { opacity: 1, y: 0, rotate: 2.5 } : { opacity: 0, y: 60, rotate: 0 }}
-            transition={{ duration: 1.2, delay: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-            style={{
-              position: "absolute",
-              bottom: "0",
-              right: "0",
-              width: "72%",
-              zIndex: 3,
-              boxShadow: "0 20px 60px rgba(62,4,9,0.28), 0 4px 16px rgba(62,4,9,0.14)",
-              borderRadius: "2px",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              src={CARNIVAL_URL}
-              alt="Brazilian Carnival"
-              style={{
-                width: "100%",
-                aspectRatio: "4/3",
-                objectFit: "cover",
-                objectPosition: "center 20%",
-                display: "block",
-              }}
-            />
-            {/* Bottom gradient + label */}
-            <div style={{
-              position: "absolute",
-              inset: 0,
-              background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 55%)",
-              pointerEvents: "none",
-            }} />
-            <div style={{ position: "absolute", bottom: "1.2rem", left: "1.2rem" }}>
-              <div style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 700,
-                fontSize: "0.52rem",
-                letterSpacing: "0.28em",
-                color: "rgb(185,161,103)",
-                textTransform: "uppercase",
-                marginBottom: "0.25rem",
-              }}>
-                CARNIVAL
-              </div>
-              <div style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(16px, 1.8vw, 24px)",
-                color: "#FFFFFF",
-                lineHeight: 1,
-                letterSpacing: "-0.02em",
-              }}>
-                THE SOUL OF BRASIL
-              </div>
-            </div>
-          </motion.div>
+          {/* BOTTOM: Carnival — slightly narrower, offset right */}
+          <FramedImage
+            src={CARNIVAL_URL}
+            alt="Brazilian Carnival"
+            aspectRatio="16/10"
+            objectPosition="center 20%"
+            label="CARNIVAL"
+            title={"THE SOUL\nOF BRASIL"}
+            delay={0.3}
+            isInView={isInView}
+            style={{ width: "88%", alignSelf: "flex-end" }}
+          />
         </div>
       </div>
     </section>
