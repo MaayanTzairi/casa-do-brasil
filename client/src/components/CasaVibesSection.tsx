@@ -1,11 +1,9 @@
 /**
  * CASA DO BRASIL — CASA VIBES Section 2
- * Layout: Asymmetric editorial — large meat image anchors left,
- *         carnival image is smaller, elevated and offset to the right,
- *         text flows naturally between the two images.
- * Inspired by: High-end magazine spreads, Framer award sites
- * Colors: White background · Bordeaux · Gold
- * Font: Heebo Black/Bold/Light — English only
+ * Layout: Original text LEFT unchanged | Right column: two images stacked smartly
+ * Top-right: Meat image (taller, portrait) | Bottom-right: Carnival image (shorter, landscape)
+ * Colors: White background · Bordeaux text · Gold accents
+ * Font: Heebo Black/Bold/Regular/Light — English only
  */
 
 import { useRef } from "react";
@@ -18,36 +16,36 @@ const CARNIVAL_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/section2-carnival-cpA5t7SkhMGYiXQYXTmtnv.png";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 36 },
+  hidden: { opacity: 0, y: 45 },
   visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.9,
+      duration: 0.85,
       delay,
       ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
     },
   }),
 };
 
-const revealImg = (fromY = 20) => ({
-  hidden: { opacity: 0, y: fromY },
+const revealImg = {
+  hidden: { opacity: 0, y: 24 },
   visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
     transition: {
-      duration: 1.2,
+      duration: 1.15,
       delay,
       ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
     },
   }),
-});
+};
 
 const drawLine = {
   hidden: { scaleX: 0 },
   visible: {
     scaleX: 1,
-    transition: { duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
+    transition: { duration: 1.0, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
   },
 };
 
@@ -73,133 +71,48 @@ export default function CasaVibesSection() {
         variants={fadeUp}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "3rem" }}
+        style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.2rem" }}
       >
-        <div style={{ width: "28px", height: "1px", background: "rgb(185,161,103)" }} />
+        <div style={{ width: "32px", height: "1px", background: "rgb(185,161,103)" }} />
         <span
           style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 700,
-            fontSize: "0.62rem",
+            fontSize: "0.65rem",
             letterSpacing: "0.35em",
             textTransform: "uppercase",
             color: "rgb(185,161,103)",
           }}
         >
-          CASA VIBES
+          OUR STORY
         </span>
       </motion.div>
 
-      {/*
-        ── MAIN COMPOSITION ──
-        CSS Grid: 3 columns, 2 rows
-        Col 1 (55%): Large meat image spans both rows
-        Col 2 (auto): Text block top row, stats bottom row
-        Col 3 (38%): Carnival image — smaller, starts from row 1, ends mid-row 2
-      */}
+      {/* ── TWO-COLUMN GRID: Text LEFT | Images RIGHT ── */}
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "55fr 1fr 38fr",
-          gridTemplateRows: "auto auto",
-          gap: "1.5rem 2.5rem",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "0 3rem",
           alignItems: "start",
         }}
       >
-        {/* ── LARGE MEAT IMAGE — col 1, spans 2 rows ── */}
-        <motion.div
-          custom={0.05}
-          variants={revealImg(30)}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          style={{
-            gridColumn: "1",
-            gridRow: "1 / 3",
-            position: "relative",
-            overflow: "hidden",
-            borderRadius: "2px",
-            aspectRatio: "3/4",
-          }}
-        >
-          <img
-            src={MEAT_URL}
-            alt="Brazilian Churrasco — Picanha"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "center",
-              display: "block",
-              transition: "transform 1s ease",
-            }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
-          />
-          {/* Bottom gradient */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "linear-gradient(to top, rgba(62,4,9,0.75) 0%, transparent 50%)",
-              pointerEvents: "none",
-            }}
-          />
-          {/* Label bottom-left */}
-          <motion.div
-            custom={0.4}
-            variants={fadeUp}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            style={{ position: "absolute", bottom: "1.8rem", left: "1.8rem" }}
-          >
-            <div style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 700,
-              fontSize: "0.58rem",
-              letterSpacing: "0.3em",
-              color: "rgb(185,161,103)",
-              textTransform: "uppercase",
-              marginBottom: "0.4rem",
-            }}>
-              CHURRASCO
-            </div>
-            <div style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 900,
-              fontSize: "clamp(20px, 2.5vw, 34px)",
-              color: "#FFFFFF",
-              lineHeight: 1,
-              letterSpacing: "-0.02em",
-            }}>
-              THE ART
-              <br />
-              OF FIRE
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* ── TEXT BLOCK — col 3 (skip col 2), row 1 ── */}
-        <div
-          style={{
-            gridColumn: "3",
-            gridRow: "1",
-            paddingTop: "0.5rem",
-          }}
-        >
+        {/* ══ LEFT — Text (unchanged from original) ══ */}
+        <div style={{ paddingTop: "0.5rem" }}>
           {["FIRE.", "TRADITION.", "BRASIL."].map((word, i) => (
-            <div key={word} style={{ overflow: "hidden" }}>
+            <div key={word} style={{ overflow: "hidden", marginBottom: "0.1rem" }}>
               <motion.h2
-                custom={0.15 + i * 0.1}
+                custom={0.1 + i * 0.12}
                 variants={fadeUp}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
                 style={{
                   fontFamily: "'Heebo', sans-serif",
                   fontWeight: 900,
-                  fontSize: "clamp(32px, 4vw, 58px)",
-                  color: i === 1 ? "rgb(185,161,103)" : "rgb(62,4,9)",
-                  lineHeight: 0.9,
-                  letterSpacing: "-0.025em",
+                  fontSize: "clamp(52px, 7.5vw, 105px)",
+                  color: "rgb(62,4,9)",
+                  lineHeight: 0.88,
+                  letterSpacing: "-0.02em",
                   margin: 0,
                 }}
               >
@@ -208,154 +121,230 @@ export default function CasaVibesSection() {
             </div>
           ))}
 
+          {/* Gold rule */}
           <motion.div
             variants={drawLine}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             style={{
               transformOrigin: "left",
-              width: "clamp(80px, 10vw, 160px)",
+              width: "clamp(120px, 18vw, 260px)",
               height: "1px",
               background: "rgb(185,161,103)",
-              margin: "1.5rem 0 1.2rem",
+              margin: "2rem 0 1.8rem",
             }}
           />
 
+          {/* Body text */}
           <motion.p
-            custom={0.5}
+            custom={0.55}
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 300,
-              fontSize: "clamp(12px, 1vw, 15px)",
+              fontSize: "clamp(14px, 1.2vw, 17px)",
               color: "rgb(80, 30, 30)",
-              lineHeight: 1.85,
-              marginBottom: "1.8rem",
+              lineHeight: 1.75,
+              maxWidth: "380px",
+              marginBottom: "2.5rem",
             }}
           >
-            Casa do Brasil is more than a meal — it is a celebration.
-            Authentic Brazilian churrasco, carved tableside by our gauchos,
-            paired with the rhythm, color and soul of carnival.
+            Casa do Brasil is more than a meal — it is a celebration. Authentic
+            Brazilian churrasco, carved tableside by our gauchos, paired with
+            the rhythm, color and soul of carnival. Every visit is a feast for
+            all the senses.
           </motion.p>
 
-          <motion.div custom={0.65} variants={fadeUp} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-            <VibesButton href="#story" label="READ OUR STORY" />
-          </motion.div>
-        </div>
-
-        {/* ── CARNIVAL IMAGE — col 3, row 2 — smaller, below text ── */}
-        <motion.div
-          custom={0.3}
-          variants={revealImg(20)}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          style={{
-            gridColumn: "3",
-            gridRow: "2",
-            position: "relative",
-            overflow: "hidden",
-            borderRadius: "2px",
-            aspectRatio: "4/3",
-          }}
-        >
-          <img
-            src={CARNIVAL_URL}
-            alt="Brazilian Carnival"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "center 30%",
-              display: "block",
-              transition: "transform 1s ease",
-            }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.06)"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
-          />
-          {/* Bottom gradient */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "linear-gradient(to top, rgba(62,4,9,0.8) 0%, transparent 55%)",
-              pointerEvents: "none",
-            }}
-          />
-          {/* Label */}
+          {/* Stats */}
           <motion.div
-            custom={0.55}
+            custom={0.7}
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            style={{ position: "absolute", bottom: "1.4rem", left: "1.4rem" }}
+            style={{ display: "flex", gap: "2.5rem", marginBottom: "2.5rem" }}
           >
-            <div style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 700,
-              fontSize: "0.55rem",
-              letterSpacing: "0.3em",
-              color: "rgb(185,161,103)",
-              textTransform: "uppercase",
-              marginBottom: "0.3rem",
-            }}>
-              CARNIVAL
-            </div>
-            <div style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 900,
-              fontSize: "clamp(16px, 1.8vw, 26px)",
-              color: "#FFFFFF",
-              lineHeight: 1,
-              letterSpacing: "-0.02em",
-            }}>
-              THE SOUL
-              <br />
-              OF BRASIL
-            </div>
-          </motion.div>
-
-          {/* Stats — right side */}
-          <motion.div
-            custom={0.6}
-            variants={fadeUp}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            style={{
-              position: "absolute",
-              top: "1.2rem",
-              right: "1.2rem",
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.6rem",
-              alignItems: "flex-end",
-            }}
-          >
-            {[{ num: "25+", label: "CUTS" }, { num: "LIVE", label: "MUSIC" }, { num: "RODIZIO", label: "ALL-IN" }].map((s) => (
-              <div key={s.label} style={{ textAlign: "right" }}>
-                <div style={{
-                  fontFamily: "'Heebo', sans-serif",
-                  fontWeight: 900,
-                  fontSize: "clamp(11px, 1.2vw, 16px)",
-                  color: "rgb(185,161,103)",
-                  lineHeight: 1,
-                }}>
-                  {s.num}
+            {[
+              { num: "25+", label: "CUTS OF MEAT" },
+              { num: "LIVE", label: "MUSIC" },
+              { num: "RODIZIO", label: "ALL-INCLUSIVE" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <div
+                  style={{
+                    fontFamily: "'Heebo', sans-serif",
+                    fontWeight: 900,
+                    fontSize: "clamp(22px, 2.5vw, 32px)",
+                    color: "rgb(185,161,103)",
+                    lineHeight: 1,
+                    letterSpacing: "-0.01em",
+                  }}
+                >
+                  {stat.num}
                 </div>
-                <div style={{
-                  fontFamily: "'Heebo', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "0.45rem",
-                  letterSpacing: "0.15em",
-                  color: "rgba(255,255,255,0.65)",
-                }}>
-                  {s.label}
+                <div
+                  style={{
+                    fontFamily: "'Heebo', sans-serif",
+                    fontWeight: 700,
+                    fontSize: "0.6rem",
+                    letterSpacing: "0.2em",
+                    color: "rgb(62,4,9)",
+                    marginTop: "4px",
+                  }}
+                >
+                  {stat.label}
                 </div>
               </div>
             ))}
           </motion.div>
-        </motion.div>
+
+          <motion.div custom={0.85} variants={fadeUp} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+            <VibesButton href="#story" label="READ OUR STORY" />
+          </motion.div>
+        </div>
+
+        {/* ══ RIGHT — Two images stacked ══ */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.75rem",
+            marginTop: "-1rem",
+          }}
+        >
+          {/* TOP: Meat image — taller portrait */}
+          <motion.div
+            custom={0.15}
+            variants={revealImg}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            style={{
+              position: "relative",
+              overflow: "hidden",
+              borderRadius: "2px",
+              aspectRatio: "4/3",
+            }}
+          >
+            <img
+              src={MEAT_URL}
+              alt="Brazilian Churrasco — Picanha"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: "center 40%",
+                display: "block",
+                transition: "transform 1s ease",
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(to top, rgba(62,4,9,0.7) 0%, transparent 55%)",
+                pointerEvents: "none",
+              }}
+            />
+            <motion.div
+              custom={0.4}
+              variants={fadeUp}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              style={{ position: "absolute", bottom: "1.4rem", left: "1.4rem" }}
+            >
+              <div style={{
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 700,
+                fontSize: "0.55rem",
+                letterSpacing: "0.3em",
+                color: "rgb(185,161,103)",
+                textTransform: "uppercase",
+                marginBottom: "0.3rem",
+              }}>
+                CHURRASCO
+              </div>
+              <div style={{
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 900,
+                fontSize: "clamp(18px, 2vw, 28px)",
+                color: "#FFFFFF",
+                lineHeight: 1,
+                letterSpacing: "-0.02em",
+              }}>
+                THE ART OF FIRE
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* BOTTOM: Carnival image — shorter landscape */}
+          <motion.div
+            custom={0.3}
+            variants={revealImg}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            style={{
+              position: "relative",
+              overflow: "hidden",
+              borderRadius: "2px",
+              aspectRatio: "16/9",
+            }}
+          >
+            <img
+              src={CARNIVAL_URL}
+              alt="Brazilian Carnival"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: "center 25%",
+                display: "block",
+                transition: "transform 1s ease",
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(to top, rgba(62,4,9,0.75) 0%, transparent 60%)",
+                pointerEvents: "none",
+              }}
+            />
+            <motion.div
+              custom={0.5}
+              variants={fadeUp}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              style={{ position: "absolute", bottom: "1.2rem", left: "1.4rem" }}
+            >
+              <div style={{
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 700,
+                fontSize: "0.55rem",
+                letterSpacing: "0.3em",
+                color: "rgb(185,161,103)",
+                textTransform: "uppercase",
+                marginBottom: "0.3rem",
+              }}>
+                CARNIVAL
+              </div>
+              <div style={{
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 900,
+                fontSize: "clamp(18px, 2vw, 28px)",
+                color: "#FFFFFF",
+                lineHeight: 1,
+                letterSpacing: "-0.02em",
+              }}>
+                THE SOUL OF BRASIL
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -371,7 +360,7 @@ function VibesButton({ href, label }: { href: string; label: string }) {
         gap: "0.5rem",
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 700,
-        fontSize: "0.65rem",
+        fontSize: "0.7rem",
         letterSpacing: "0.2em",
         textTransform: "uppercase" as const,
         textDecoration: "none",
