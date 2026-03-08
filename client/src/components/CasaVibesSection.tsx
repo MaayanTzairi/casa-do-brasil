@@ -3,13 +3,14 @@
  *
  * Design philosophy:
  * - Single viewport, no overflow
- * - Text LEFT, right side: two images with a Brazilian botanical illustration
- *   placed BETWEEN them as a living divider/connector
- * - The illustration (toucan, monstera, heliconia, bird of paradise) floats
- *   between the two photos, overlapping both slightly — giving the composition
- *   depth, character and Brazilian soul
- * - Colors: White · Bordeaux rgb(62,4,9) · Gold rgb(185,161,103)
- * - Font: Heebo Black/Bold/Light — English only
+ * - Text LEFT
+ * - RIGHT: two images at different heights (staggered) — left image taller,
+ *   right image shorter and pushed down — creating visual rhythm
+ * - Behind both images: a large soft bordeaux geometric block (rectangle)
+ *   that sits slightly offset, creating depth without noise
+ * - Clean, modern, premium — no extra illustrations
+ * - Colors: White · Bordeaux · Gold
+ * - Font: Heebo — English only
  */
 
 import { useRef } from "react";
@@ -20,9 +21,6 @@ const MEAT_URL =
 
 const CARNIVAL_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/section2-carnival-cpA5t7SkhMGYiXQYXTmtnv.png";
-
-const DIVIDER_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/section2-divider-H23PfzfYctMfucRiYwwzbS.webp";
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(62,4,9)";
@@ -41,14 +39,6 @@ const drawLine = {
     scaleX: 1,
     transition: { duration: 1.0, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] },
   },
-};
-
-const revealImg = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (delay = 0) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 1.1, delay, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] },
-  }),
 };
 
 export default function CasaVibesSection() {
@@ -85,7 +75,7 @@ export default function CasaVibesSection() {
         </span>
       </motion.div>
 
-      {/* ── MAIN GRID: Text LEFT | Composition RIGHT ── */}
+      {/* ── MAIN GRID ── */}
       <div style={{
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
@@ -214,24 +204,77 @@ export default function CasaVibesSection() {
           </motion.div>
         </div>
 
-        {/* ══ RIGHT — Two images + botanical divider ══ */}
+        {/* ══ RIGHT — Staggered images with background block ══ */}
         <div
           style={{
             position: "relative",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "0 1rem",
-            alignItems: "stretch",
-            padding: "1rem 0",
+            height: "480px",
           }}
         >
-          {/* LEFT image — Churrasco */}
+          {/* Background geometric block — bordeaux, offset behind images */}
           <motion.div
-            custom={0.15}
-            variants={revealImg}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            style={{ position: "relative", overflow: "hidden", borderRadius: "1px" }}
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.96 }}
+            transition={{ duration: 1.0, delay: 0.05, ease: [0.25, 0.46, 0.45, 0.94] }}
+            style={{
+              position: "absolute",
+              bottom: "-1.5rem",
+              right: "-2rem",
+              width: "62%",
+              height: "72%",
+              background: BORDEAUX,
+              borderRadius: "1px",
+              zIndex: 0,
+            }}
+          />
+
+          {/* Gold thin line accent — top left */}
+          <motion.div
+            initial={{ opacity: 0, scaleY: 0 }}
+            animate={isInView ? { opacity: 1, scaleY: 1 } : { opacity: 0, scaleY: 0 }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "1px",
+              height: "45%",
+              background: GOLD,
+              transformOrigin: "top",
+              zIndex: 1,
+            }}
+          />
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={isInView ? { opacity: 1, scaleX: 1 } : { opacity: 0, scaleX: 0 }}
+            transition={{ duration: 0.9, delay: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "28%",
+              height: "1px",
+              background: GOLD,
+              transformOrigin: "left",
+              zIndex: 1,
+            }}
+          />
+
+          {/* LEFT image — taller, starts from top */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 1.1, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+            style={{
+              position: "absolute",
+              top: "1.5rem",
+              left: "0",
+              width: "52%",
+              zIndex: 2,
+              overflow: "hidden",
+              borderRadius: "1px",
+              boxShadow: "0 16px 48px rgba(62,4,9,0.2)",
+            }}
           >
             <img
               src={MEAT_URL}
@@ -249,37 +292,45 @@ export default function CasaVibesSection() {
             />
             <div style={{
               position: "absolute", inset: 0,
-              background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 52%)",
+              background: "linear-gradient(to top, rgba(62,4,9,0.75) 0%, transparent 50%)",
               pointerEvents: "none",
             }} />
             <div style={{ position: "absolute", bottom: "1rem", left: "1rem" }}>
               <div style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                fontSize: "0.5rem", letterSpacing: "0.3em",
+                fontSize: "0.48rem", letterSpacing: "0.3em",
                 color: GOLD, textTransform: "uppercase", marginBottom: "0.2rem",
               }}>CHURRASCO</div>
               <div style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-                fontSize: "clamp(13px, 1.4vw, 18px)", color: "#FFFFFF",
+                fontSize: "clamp(13px, 1.4vw, 17px)", color: "#FFFFFF",
                 lineHeight: 1.1, letterSpacing: "-0.02em",
               }}>THE ART<br />OF FIRE</div>
             </div>
           </motion.div>
 
-          {/* RIGHT image — Carnival */}
+          {/* RIGHT image — shorter, pushed down, overlapping the bordeaux block */}
           <motion.div
-            custom={0.3}
-            variants={revealImg}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            style={{ position: "relative", overflow: "hidden", borderRadius: "1px" }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            transition={{ duration: 1.1, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+            style={{
+              position: "absolute",
+              bottom: "0",
+              right: "0",
+              width: "52%",
+              zIndex: 3,
+              overflow: "hidden",
+              borderRadius: "1px",
+              boxShadow: "0 16px 48px rgba(62,4,9,0.25)",
+            }}
           >
             <img
               src={CARNIVAL_URL}
               alt="Brazilian Carnival"
               style={{
                 width: "100%",
-                aspectRatio: "3/4",
+                aspectRatio: "4/5",
                 objectFit: "cover",
                 objectPosition: "center 20%",
                 display: "block",
@@ -290,44 +341,21 @@ export default function CasaVibesSection() {
             />
             <div style={{
               position: "absolute", inset: 0,
-              background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 52%)",
+              background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 50%)",
               pointerEvents: "none",
             }} />
             <div style={{ position: "absolute", bottom: "1rem", left: "1rem" }}>
               <div style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                fontSize: "0.5rem", letterSpacing: "0.3em",
+                fontSize: "0.48rem", letterSpacing: "0.3em",
                 color: GOLD, textTransform: "uppercase", marginBottom: "0.2rem",
               }}>CARNIVAL</div>
               <div style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-                fontSize: "clamp(13px, 1.4vw, 18px)", color: "#FFFFFF",
+                fontSize: "clamp(13px, 1.4vw, 17px)", color: "#FFFFFF",
                 lineHeight: 1.1, letterSpacing: "-0.02em",
               }}>THE SOUL<br />OF BRASIL</div>
             </div>
-          </motion.div>
-
-          {/* ── BOTANICAL DIVIDER — floats between the two images ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 1.2, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "clamp(80px, 10vw, 130px)",
-              zIndex: 10,
-              pointerEvents: "none",
-              filter: "drop-shadow(0 4px 16px rgba(62,4,9,0.18))",
-            }}
-          >
-            <img
-              src={DIVIDER_URL}
-              alt="Brazilian botanical illustration"
-              style={{ width: "100%", display: "block" }}
-            />
           </motion.div>
         </div>
       </div>
