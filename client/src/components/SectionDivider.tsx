@@ -33,6 +33,8 @@ export default function SectionDivider() {
         style={{
           width: "100%",
           height: "auto",
+          maxHeight: "120px",
+          objectFit: "cover",
           display: "block",
           mixBlendMode: "multiply",
           opacity: 0.95,
