@@ -15,7 +15,7 @@ export default function SectionDivider() {
     <div
       style={{
         width: "100%",
-        background: "#ffffff",
+        background: "transparent",
         lineHeight: 0,
         pointerEvents: "none",
         userSelect: "none",
