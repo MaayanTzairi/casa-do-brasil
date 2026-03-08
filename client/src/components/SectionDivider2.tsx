@@ -2,19 +2,16 @@
  * CASA DO BRASIL — Section Divider 2
  *
  * Sits between MENU section and Reservations section.
- * Same VISUAL HEIGHT as SectionDivider (skewer).
+ * Identical design and sizing to SectionDivider (skewer).
  *
- * The carnival dancer image is very wide (1920×241, ratio 8:1).
- * The skewer image is squarish (2048×868, ratio 2.4:1).
- * To match heights, the carnival image is displayed at a fixed height
- * (matching the skewer's rendered height) with object-fit: cover.
+ * carnival_full.png: 1909×813 px, ratio 0.426 — almost identical to
+ * skewer (2048×868, ratio 0.424). So we use the exact same clamp values.
  *
  * Layout: [──── gold line ────] [carnival dancer] [──── gold line ────]
- * The illustration takes ~36vw width (same as skewer), fixed height.
  */
 
 const CARNIVAL_IMG =
-  "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/mLGjburmUvErzfQW.jpg?Expires=1804533999&Signature=L7mWuTlIZRpEi8qXajA-plaVmEGHU~PWCqsMfFNcaHJOgjQecSPRlHvwQoh6QllXGqXxtka-U0x5dFIepLdBAEYZzvPWyhUwFQPVk-iJ9yS4LzdO-0aHIodfbFOmVC8nj~pvlsc3G-EwSEbhV10DCqieESU5H1U-McnTk~s31-vftIgrEoxp14eTkKJkQ3u9epedMO0UPyqOHy2MTkBNYA8h6GuR5Lzr5bxNjv3wlj7kam8GNlDfNprxue9UP-clBLr8EN4obQGzux743yuXkhk-Wv0pHE4lyy9idiXubGPjQwzsksPc72zFXcZE918gcgKrB3ylQUK10KrD0BUrDw__&Key-Pair-Id=K2HSFNDJXOU9YS";
+  "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/bJXauwhzIPqhxrRc.png?Expires=1804534167&Signature=G~3dHXaswz6IA4ehqZWDlhKLX7kzxWvIVFwYVu-nnvwTogJXwe1QROnK6sJpnXz-QJ5wNlK73VLc2l3CahSLvVQjQT~ovabz8~iRFUEaOo0ileXcRYNah6ZQeMODOoMFVsJeWCsRNbkLh2UHicKi~ufgihrOQ9DT9~4kJYRSsKfpK3c18kyC6FAxuEchs4NKfVVLvcODeJl1Qa4ng-MwzJTqKYFzfF5Z9J7f0zb8qHQQblWc-~4-3sSTP1ImmhxqzjbMc6vgJKDEWn4CHLJtpmy7TsFSoEOuoUYkkgs~DbTboRQOyAj82vrYdznNSkPm7xr2WKcjmlVZVWUlVr4HQA__&Key-Pair-Id=K2HSFNDJXOU9YS";
 
 const GOLD = "rgba(185,161,103,";
 
@@ -47,27 +44,19 @@ export default function SectionDivider2() {
         padding: "0.5rem 3vw",
         pointerEvents: "none",
         userSelect: "none",
+        gap: "0",
         overflow: "hidden",
       }}
     >
       <GoldLine side="left" />
 
-      {/*
-        The skewer at clamp(220px, 36vw, 480px) renders ~203px tall at 1440px viewport.
-        We give the carnival the same width but a fixed height matching the skewer,
-        using object-fit: cover so the full dancer is visible (centered).
-      */}
+      {/* Same exact sizing as SectionDivider (skewer) — ratios are nearly identical */}
       <div
         style={{
           flexShrink: 0,
           width: "clamp(220px, 36vw, 480px)",
-          /* Match skewer's natural height: width × (868/2048) ≈ width × 0.424 */
-          height: "clamp(93px, 15.3vw, 204px)",
           lineHeight: 0,
-          overflow: "hidden",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          position: "relative",
         }}
       >
         <img
@@ -75,13 +64,10 @@ export default function SectionDivider2() {
           alt=""
           aria-hidden="true"
           style={{
-            /* Scale up to fill the height, let width overflow and get clipped */
-            width: "auto",
-            height: "100%",
-            maxWidth: "none",
+            display: "block",
+            width: "100%",
+            height: "auto",
             mixBlendMode: "multiply",
-            objectFit: "cover",
-            objectPosition: "center center",
           }}
         />
       </div>
