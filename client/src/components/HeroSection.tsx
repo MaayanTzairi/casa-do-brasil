@@ -142,7 +142,7 @@ export default function HeroSection() {
       {/* ── Bottom Gradient Fade ── */}
       <div
         className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ height: "clamp(120px, 20vw, 260px)", background: "linear-gradient(to top, rgb(40,3,6) 0%, rgba(40,3,6,0.85) 25%, rgba(40,3,6,0.4) 65%, transparent 100%)" }}
+        style={{ height: "clamp(100px, 18vw, 220px)", background: "linear-gradient(to top, rgba(40,3,6,0.75) 0%, transparent 100%)" }}
       />
 
       {/* ── Gold Inset Frame — hidden on mobile ── */}
