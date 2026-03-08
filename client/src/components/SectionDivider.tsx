@@ -7,7 +7,7 @@
  */
 
 const DIVIDER_IMG =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider-engraving-NL9EyAEmsSEASNWmeGeoti.webp";
+  "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/tAjKIDaFqzSWADVm.png?Expires=1804530261&Signature=mEdO7L4OLPu96waN2E1tSyU2sGzIahqORoDkiqdSxx3ZF57Aigh97LJaqzwXIX4QDvB3X4KBIFa7j8HWGR1X4fNwHme3Tb1vYRGuKFJseBlugfh~5zYOdD14fNw0uEEvSQhhEJJ5gkKsh3nXXxQQ7PkOIXpHRkEAw2D4PR6wJWx2rVpjcc26yccc8yYdlRZCzDtA-i5q-di7lB693vhOE3eAih9Gf1kXWjFehBkk6A5VO4FZSpM9OuYShw3qnNenrrNYMJhsF8wxWrDXNC7ggC4cocwhsGSjRuEIPYHr5~81SjTNEKxun0VHV3Zkx1tQQJhWXGOcWaO2fDxTIMnv3g__&Key-Pair-Id=K2HSFNDJXOU9YS";
 
 export default function SectionDivider() {
   return (
@@ -15,7 +15,7 @@ export default function SectionDivider() {
       style={{
         position: "relative",
         width: "100%",
-        height: "220px",
+        height: "280px",
         overflow: "hidden",
         background: "#ffffff",
         pointerEvents: "none",
@@ -33,7 +33,7 @@ export default function SectionDivider() {
           height: "100%",
           objectFit: "cover",
           objectPosition: "center 45%",
-          opacity: 0.28,
+          opacity: 0.85,
           mixBlendMode: "multiply",
         }}
       />
