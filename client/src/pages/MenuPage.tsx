@@ -693,34 +693,96 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
         padding: "3rem 0 2.5rem",
         borderBottom: `1px solid ${GOLD_R}0.2)`,
         marginBottom: "0.5rem",
-        position: "relative",
-        overflow: "hidden",
         textAlign: isHe ? "right" : "left",
       }}>
-        {/* Illustration — absolute, right side on desktop, center bg on mobile */}
-        {category.illustration && (
-          <img
-            src={category.illustration}
-            alt=""
-            aria-hidden="true"
-            className="illus-desktop"
-            style={{
-              position: "absolute",
-              top: "50%",
-              right: isHe ? "auto" : "0",
-              left: isHe ? "0" : "auto",
-              transform: "translateY(-50%)",
-              height: "100%",
-              width: "auto",
-              maxWidth: "40%",
-              objectFit: "contain",
-              opacity: 0.92,
-              filter: "drop-shadow(0 4px 16px rgba(62,4,9,0.12))",
-              pointerEvents: "none",
-              zIndex: 0,
-            }}
-          />
-        )}
+        {/* Grid: text | illustration */}
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: category.illustration ? (isHe ? "auto 1fr" : "1fr auto") : "1fr",
+          alignItems: "center",
+          gap: "2rem",
+        }}>
+          {/* Illustration — desktop only, same grid row as text */}
+          {category.illustration && isHe && (
+            <img
+              src={category.illustration}
+              alt=""
+              aria-hidden="true"
+              className="illus-desktop"
+              style={{
+                width: "clamp(100px, 14vw, 200px)",
+                height: "clamp(100px, 14vw, 200px)",
+                objectFit: "contain",
+                opacity: 0.92,
+                filter: "drop-shadow(0 4px 16px rgba(62,4,9,0.12))",
+                pointerEvents: "none",
+                order: 0,
+              }}
+            />
+          )}
+
+          {/* Text block */}
+          <div style={{ order: 1 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row" }}>
+              <div style={{ width: "22px", height: "1px", background: GOLD }} />
+              <span style={{
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 700,
+                fontSize: "0.52rem",
+                letterSpacing: isHe ? "0.06em" : "0.38em",
+                textTransform: "uppercase",
+                color: GOLD,
+              }}>
+                {subtitle}
+              </span>
+            </div>
+
+            <h2 style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 900,
+              fontSize: "clamp(32px, 4.5vw, 62px)",
+              color: BORDEAUX,
+              lineHeight: 0.9,
+              letterSpacing: isHe ? "0.01em" : "0.02em",
+              margin: "0 0 1.2rem",
+            }}>
+              {label}
+            </h2>
+
+            <p style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 300,
+              fontSize: "clamp(14px, 1.1vw, 16px)",
+              color: "rgb(90,35,35)",
+              lineHeight: 1.75,
+              maxWidth: "540px",
+              margin: 0,
+            }}>
+              {description}
+            </p>
+          </div>
+
+          {/* Illustration — LTR: right side */}
+          {category.illustration && !isHe && (
+            <img
+              src={category.illustration}
+              alt=""
+              aria-hidden="true"
+              className="illus-desktop"
+              style={{
+                width: "clamp(100px, 14vw, 200px)",
+                height: "clamp(100px, 14vw, 200px)",
+                objectFit: "contain",
+                opacity: 0.92,
+                filter: "drop-shadow(0 4px 16px rgba(62,4,9,0.12))",
+                pointerEvents: "none",
+                order: 2,
+              }}
+            />
+          )}
+        </div>
+
+        {/* Mobile background illustration */}
         {category.illustration && (
           <div
             aria-hidden="true"
@@ -728,47 +790,6 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
             style={{ backgroundImage: `url(${category.illustration})` }}
           />
         )}
-
-        {/* Text block — sits above illustration */}
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row" }}>
-            <div style={{ width: "22px", height: "1px", background: GOLD }} />
-            <span style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 700,
-              fontSize: "0.52rem",
-              letterSpacing: isHe ? "0.06em" : "0.38em",
-              textTransform: "uppercase",
-              color: GOLD,
-            }}>
-              {subtitle}
-            </span>
-          </div>
-
-          <h2 style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 900,
-            fontSize: "clamp(32px, 4.5vw, 62px)",
-            color: BORDEAUX,
-            lineHeight: 0.9,
-            letterSpacing: isHe ? "0.01em" : "0.02em",
-            margin: "0 0 1.2rem",
-          }}>
-            {label}
-          </h2>
-
-          <p style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 300,
-            fontSize: "clamp(14px, 1.1vw, 16px)",
-            color: "rgb(90,35,35)",
-            lineHeight: 1.75,
-            maxWidth: "540px",
-            margin: 0,
-          }}>
-            {description}
-          </p>
-        </div>
 
         {/* Rodízio — Appetizers + Dual Track */}
         {isRodizio && category.appetizers && (
