@@ -1,24 +1,27 @@
 /**
- * HistorySection — Churrasco Skewer Timeline
+ * HistorySection — Churrasco Skewer Timeline with Embers Base
  * Layout per column (top → bottom):
  *   1. Year (large) + label
- *   2. Skewer axis (SVG, full width, shared across all columns)
- *   3. Image card
- *   4. Title + body text
+ *   2. Skewer SVG axis (shared, full width)
+ *   3. Image card (always visible, no hover state)
+ *   4. Title + body text (always visible)
  *
- * The skewer SVG spans the full section width at the axis row.
- * A glowing dot on the skewer marks each chapter's position.
- * All text English. Hover reveals full body text.
+ * Embers/fire illustration sits at the bottom of the section,
+ * spanning full width, blending behind the images via multiply.
+ * No hover interactions — everything always shown.
  *
  * Colors: dark bordeaux #130406, gold #b9a167, cream #f5f0e8
  */
 
-import { useState, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const GOLD = "#b9a167";
 const CREAM = "#f5f0e8";
 const DARK = "#130406";
+
+const EMBERS_URL =
+  "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/tBGHyAGFLFaSMmba.png?Expires=1804591931&Signature=kmIwfNQyVVRv5lmDRV0QdYHzFEkLVW3POG6Fl8rj93sS8DZtUQbUBQzFhZ7G7TGZofzdFQgwTVwhmvrX3yIQRC9v5CtlHlO7gpsAPU0oxpSx1zVFwUvPtGWRFJm6lAIZxfwOQfTiAnC6dGHw3qGbUH0M-bLb9R9cohqqb8fVacx2AV1u7qrm31k~kxC9LnonY8gJ~LsvnNDP-PRSbKSAplIg5G63xsThb729cB1gkoYO1GPna2AG4JAIKe0fLOvnbfsA3MVMDVkj9xRda1NESfRWf7kK8vfjgOw5UmfIvrxxXyUpsIuh~Hz5hZR54ml3VF-XWyy5eNoWyzA-KFmoyg__&Key-Pair-Id=K2HSFNDJXOU9YS";
 
 const MILESTONES = [
   {
@@ -51,10 +54,7 @@ const MILESTONES = [
   },
 ];
 
-// SVG skewer that spans full width — handle on left, tip on right
 function SkewerAxis({ progress }: { progress: import("framer-motion").MotionValue<number> }) {
-  const fillWidth = useTransform(progress, [0, 1], ["0%", "100%"]);
-
   return (
     <div style={{ position: "relative", width: "100%", height: 48, display: "flex", alignItems: "center" }}>
       <svg
@@ -64,17 +64,14 @@ function SkewerAxis({ progress }: { progress: import("framer-motion").MotionValu
       >
         {/* Handle (left) */}
         <g transform="translate(0, 24)">
-          {/* Handle grip rings */}
           <rect x="0" y="-9" width="52" height="18" rx="9" fill="none" stroke={GOLD} strokeWidth="1.2" opacity="0.5" />
           <rect x="6" y="-6" width="40" height="12" rx="6" fill="none" stroke={GOLD} strokeWidth="0.8" opacity="0.35" />
           <line x1="16" y1="-9" x2="16" y2="9" stroke={GOLD} strokeWidth="0.7" opacity="0.3" />
           <line x1="26" y1="-9" x2="26" y2="9" stroke={GOLD} strokeWidth="0.7" opacity="0.3" />
           <line x1="36" y1="-9" x2="36" y2="9" stroke={GOLD} strokeWidth="0.7" opacity="0.3" />
         </g>
-
         {/* Rod background (dim) */}
         <line x1="52" y1="24" x2="1188" y2="24" stroke={GOLD} strokeWidth="1" opacity="0.12" />
-
         {/* Rod animated fill */}
         <motion.line
           x1="52" y1="24" x2="1188" y2="24"
@@ -82,19 +79,43 @@ function SkewerAxis({ progress }: { progress: import("framer-motion").MotionValu
           style={{ pathLength: progress }}
           strokeLinecap="round"
         />
-
         {/* Tip (right) */}
         <g transform="translate(1188, 24)">
           <line x1="0" y1="0" x2="12" y2="0" stroke={GOLD} strokeWidth="1.5" opacity="0.6" />
           <polygon points="12,0 6,-3 6,3" fill={GOLD} opacity="0.5" />
         </g>
       </svg>
+
+      {/* Glowing dots at each chapter position */}
+      <div style={{
+        position: "absolute", top: "50%", left: 0, right: 0,
+        transform: "translateY(-50%)",
+        display: "grid", gridTemplateColumns: "repeat(4, 1fr)",
+        pointerEvents: "none",
+      }}>
+        {MILESTONES.map((m, i) => (
+          <div key={m.year + "-dot"} style={{ display: "flex", justifyContent: "center" }}>
+            <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 + i * 0.1, duration: 0.4 }}
+              style={{
+                width: 10, height: 10,
+                borderRadius: "50%",
+                background: GOLD,
+                border: `1px solid ${GOLD}`,
+                boxShadow: `0 0 8px rgba(185,161,103,0.5), 0 0 16px rgba(185,161,103,0.2)`,
+              }}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
 export default function HistorySection() {
-  const [hovered, setHovered] = useState<number | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -107,14 +128,14 @@ export default function HistorySection() {
       ref={ref}
       style={{
         background: `linear-gradient(160deg, ${DARK} 0%, #1c0407 100%)`,
-        padding: "100px 0 90px",
+        padding: "100px 0 0",
         overflow: "hidden",
         position: "relative",
       }}
     >
       {/* Ambient glow */}
       <div style={{
-        position: "absolute", top: "50%", left: "50%",
+        position: "absolute", top: "40%", left: "50%",
         transform: "translate(-50%,-50%)",
         width: "80%", height: "60%",
         background: "radial-gradient(ellipse, rgba(185,161,103,0.04) 0%, transparent 70%)",
@@ -151,9 +172,9 @@ export default function HistorySection() {
       </motion.div>
 
       {/* ── Main grid ── */}
-      <div style={{ padding: "0 48px" }}>
+      <div style={{ padding: "0 48px", position: "relative" }}>
 
-        {/* ROW 1: Year + label (above skewer) */}
+        {/* ROW 1: Year + label */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 0, marginBottom: 16 }}>
           {MILESTONES.map((m, i) => (
             <motion.div
@@ -164,86 +185,56 @@ export default function HistorySection() {
               transition={{ duration: 0.55, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "0 20px" }}
             >
-              <motion.p
-                animate={{ color: hovered === i ? GOLD : "rgba(185,161,103,0.4)" }}
-                transition={{ duration: 0.3 }}
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: 9, letterSpacing: "0.22em",
-                  textTransform: "uppercase", marginBottom: 4, textAlign: "center",
-                }}
-              >
+              <p style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: 9, letterSpacing: "0.22em",
+                textTransform: "uppercase", marginBottom: 4, textAlign: "center",
+                color: "rgba(185,161,103,0.55)",
+              }}>
                 {m.label}
-              </motion.p>
-              <motion.div
-                animate={{ color: hovered === i ? CREAM : "rgba(245,240,232,0.55)" }}
-                transition={{ duration: 0.3 }}
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "clamp(30px, 3.2vw, 44px)",
-                  fontWeight: 800,
-                  lineHeight: 1,
-                  letterSpacing: "-0.02em",
-                  textAlign: "center",
-                }}
-              >
+              </p>
+              <div style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "clamp(30px, 3.2vw, 44px)",
+                fontWeight: 800,
+                lineHeight: 1,
+                letterSpacing: "-0.02em",
+                textAlign: "center",
+                color: CREAM,
+              }}>
                 {m.year}
-              </motion.div>
+              </div>
             </motion.div>
           ))}
         </div>
 
-        {/* ROW 2: Skewer axis (full width, shared) */}
-        <div style={{ position: "relative", marginBottom: 24 }}>
+        {/* ROW 2: Skewer axis */}
+        <div style={{ marginBottom: 24 }}>
           <SkewerAxis progress={scrollYProgress} />
-
-          {/* Glowing dots on skewer at each chapter position */}
-          <div style={{
-            position: "absolute", top: "50%", left: 0, right: 0,
-            transform: "translateY(-50%)",
-            display: "grid", gridTemplateColumns: "repeat(4, 1fr)",
-            pointerEvents: "none",
-          }}>
-            {MILESTONES.map((m, i) => (
-              <div key={m.year + "-dot"} style={{ display: "flex", justifyContent: "center" }}>
-                <motion.div
-                  animate={{
-                    scale: hovered === i ? 1.6 : 1,
-                    boxShadow: hovered === i
-                      ? `0 0 0 4px rgba(185,161,103,0.2), 0 0 16px rgba(185,161,103,0.4)`
-                      : `0 0 0 2px rgba(185,161,103,0.1)`,
-                    backgroundColor: hovered === i ? GOLD : "rgba(185,161,103,0.5)",
-                  }}
-                  transition={{ duration: 0.3 }}
-                  style={{
-                    width: 10, height: 10,
-                    borderRadius: "50%",
-                    border: `1px solid ${GOLD}`,
-                  }}
-                />
-              </div>
-            ))}
-          </div>
         </div>
 
-        {/* ROW 3 + 4: Image + text (below skewer) */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 0 }}>
+        {/* ROW 3+4: Image + text — always visible, no hover */}
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gap: 0,
+          position: "relative",
+          zIndex: 2,
+        }}>
           {MILESTONES.map((m, i) => (
             <motion.div
               key={m.year + "-bottom"}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              onHoverStart={() => setHovered(i)}
-              onHoverEnd={() => setHovered(null)}
-              style={{ padding: "0 20px", display: "flex", flexDirection: "column", gap: 16 }}
+              transition={{ duration: 0.65, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              style={{ padding: "0 20px", display: "flex", flexDirection: "column", gap: 14 }}
             >
               {/* Image */}
               <div style={{
                 width: "100%", height: 180,
                 overflow: "hidden", borderRadius: 2,
-                border: `1px solid rgba(185,161,103,0.1)`,
+                border: `1px solid rgba(185,161,103,0.15)`,
                 position: "relative",
               }}>
                 <img
@@ -252,81 +243,72 @@ export default function HistorySection() {
                   style={{
                     width: "100%", height: "100%",
                     objectFit: "cover", display: "block",
-                    filter: hovered === i ? "none" : "grayscale(55%) brightness(0.5)",
-                    transform: hovered === i ? "scale(1.05)" : "scale(1)",
-                    transition: "filter 0.6s ease, transform 0.7s ease",
+                    filter: "brightness(0.7) saturate(0.8)",
                   }}
                 />
                 <div style={{
                   position: "absolute", inset: 0,
-                  background: hovered === i
-                    ? "linear-gradient(to top, rgba(19,4,6,0.55) 0%, transparent 60%)"
-                    : "linear-gradient(to top, rgba(19,4,6,0.75) 0%, rgba(19,4,6,0.2) 100%)",
-                  transition: "background 0.5s ease",
+                  background: "linear-gradient(to top, rgba(19,4,6,0.7) 0%, transparent 60%)",
                 }} />
               </div>
 
               {/* Text */}
               <div>
-                <motion.div
-                  animate={{ scaleX: hovered === i ? 1 : 0.4, opacity: hovered === i ? 0.6 : 0.2 }}
-                  transition={{ duration: 0.35 }}
-                  style={{ width: 24, height: 1, background: GOLD, marginBottom: 8, transformOrigin: "left" }}
-                />
-                <motion.h4
-                  animate={{ color: hovered === i ? CREAM : "rgba(245,240,232,0.4)" }}
-                  transition={{ duration: 0.3 }}
-                  style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: "clamp(13px, 1.1vw, 16px)",
-                    fontWeight: 600, lineHeight: 1.35,
-                    marginBottom: 8,
-                  }}
-                >
+                <div style={{
+                  width: 24, height: 1,
+                  background: GOLD, opacity: 0.5,
+                  marginBottom: 8,
+                }} />
+                <h4 style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: "clamp(13px, 1.1vw, 16px)",
+                  fontWeight: 600, lineHeight: 1.35,
+                  color: CREAM,
+                  marginBottom: 8,
+                }}>
                   {m.title}
-                </motion.h4>
-
-                <AnimatePresence>
-                  {hovered === i && (
-                    <motion.p
-                      initial={{ opacity: 0, y: 6, height: 0 }}
-                      animate={{ opacity: 1, y: 0, height: "auto" }}
-                      exit={{ opacity: 0, y: 4, height: 0 }}
-                      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                      style={{
-                        fontFamily: "'Cormorant Garamond', serif",
-                        fontSize: 15,
-                        color: "rgba(245,240,232,0.58)",
-                        lineHeight: 1.75,
-                        overflow: "hidden",
-                      }}
-                    >
-                      {m.body}
-                    </motion.p>
-                  )}
-                </AnimatePresence>
+                </h4>
+                <p style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: 15,
+                  color: "rgba(245,240,232,0.55)",
+                  lineHeight: 1.75,
+                }}>
+                  {m.body}
+                </p>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Bottom hint */}
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.9 }}
-        style={{
-          textAlign: "center", marginTop: 52,
-          fontFamily: "'Cormorant Garamond', serif",
-          fontSize: 10, letterSpacing: "0.18em",
-          color: "rgba(185,161,103,0.28)",
-          textTransform: "uppercase",
-        }}
-      >
-        Hover to discover each chapter
-      </motion.p>
+      {/* ── Embers illustration at the bottom — blends behind images ── */}
+      <div style={{
+        position: "relative",
+        width: "100%",
+        marginTop: -60,
+        zIndex: 1,
+        pointerEvents: "none",
+      }}>
+        <img
+          src={EMBERS_URL}
+          alt=""
+          style={{
+            width: "100%",
+            display: "block",
+            mixBlendMode: "multiply",
+            opacity: 0.22,
+            filter: "brightness(1.4) sepia(0.3)",
+          }}
+        />
+        {/* Dark gradient overlay so embers fade into section bottom */}
+        <div style={{
+          position: "absolute",
+          bottom: 0, left: 0, right: 0,
+          height: "40%",
+          background: `linear-gradient(to bottom, transparent, ${DARK})`,
+        }} />
+      </div>
     </section>
   );
 }
