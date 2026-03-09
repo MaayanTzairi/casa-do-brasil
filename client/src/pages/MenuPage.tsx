@@ -69,6 +69,8 @@ interface MenuCategory {
   lunchTiers?: LunchTier[];
   lunchFooterNotes?: string[];
   lunchFooterNotesHe?: string[];
+  // Illustration
+  illustration?: string;
   // Rodizio-specific
   appetizers?: { name: string; nameHe: string; price?: string }[];
   appetizersNote?: string;
@@ -88,6 +90,7 @@ const MENU_DATA: MenuCategory[] = [
     description: "Served to the center of the table — as much as you want. Choose your track and enjoy an endless parade of the finest Brazilian cuts.",
     descriptionHe: "מוגש למרכז השולחן — כמה שרוצים. בחרו את המסלול שלכם והתפנקו במצעד אינסופי של הנתחים הברזילאיים הטובים ביותר.",
     type: "rodizio",
+    illustration: "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/HMRVuUjlFKodUuZd.png?Expires=1804609840&Signature=nsbwKVwTfPdNOvsATDYlk1859fQuVTXiFTE-tBYNx9UyOvzzZeZc-Dacwqdtp4DOT~46A~Qd0lEEGoP6-va9dXEXSJFE4SQXeeHbszp7P511PsEe3KZiEjpGCSqdpkhF5TTW3xmabIL7BdC-XUUePKhLYoN0djrCbfumhaZYtRNvmrnhOJP6SSXIn07aH5RMX~-pn48egGMpP9zW3cTqy38c7ulLwHpB1bm3OCsfhNQIN2~-OS9TCeFAmwudgetjfZMlAPe0SpaApgTt~Tw2Tb5Wtx24lDhA96ZRFa8XQgTp6tod~rNUXj3SXB6GN3HKy9UcmKUyRF1pbGJPL4WE1Q__&Key-Pair-Id=K2HSFNDJXOU9YS",
     items: [],
     appetizers: [
       { name: "Brazilian white rice", nameHe: "אורז לבן ברזילאי" },
@@ -706,17 +709,34 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
           </span>
         </div>
 
-        <h2 style={{
-          fontFamily: "'Heebo', sans-serif",
-          fontWeight: 900,
-          fontSize: "clamp(32px, 4.5vw, 62px)",
-          color: BORDEAUX,
-          lineHeight: 0.9,
-          letterSpacing: isHe ? "0.01em" : "0.02em",
-          margin: "0 0 1.2rem",
-        }}>
-          {label}
-        </h2>
+        {/* Title row with optional illustration */}
+        <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start" }}>
+          <h2 style={{
+            fontFamily: "'Heebo', sans-serif",
+            fontWeight: 900,
+            fontSize: "clamp(32px, 4.5vw, 62px)",
+            color: BORDEAUX,
+            lineHeight: 0.9,
+            letterSpacing: isHe ? "0.01em" : "0.02em",
+            margin: "0 0 1.2rem",
+          }}>
+            {label}
+          </h2>
+          {category.illustration && (
+            <img
+              src={category.illustration}
+              alt={label}
+              style={{
+                width: "clamp(70px, 8vw, 110px)",
+                height: "clamp(70px, 8vw, 110px)",
+                objectFit: "contain",
+                flexShrink: 0,
+                marginBottom: "1rem",
+                filter: "drop-shadow(0 2px 8px rgba(62,4,9,0.12))",
+              }}
+            />
+          )}
+        </div>
 
         <p style={{
           fontFamily: "'Heebo', sans-serif",
