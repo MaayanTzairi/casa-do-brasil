@@ -90,7 +90,7 @@ const MENU_DATA: MenuCategory[] = [
     description: "Served to the center of the table — as much as you want. Choose your track and enjoy an endless parade of the finest Brazilian cuts.",
     descriptionHe: "מוגש למרכז השולחן — כמה שרוצים. בחרו את המסלול שלכם והתפנקו במצעד אינסופי של הנתחים הברזילאיים הטובים ביותר.",
     type: "rodizio",
-    illustration: "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/HMRVuUjlFKodUuZd.png?Expires=1804609840&Signature=nsbwKVwTfPdNOvsATDYlk1859fQuVTXiFTE-tBYNx9UyOvzzZeZc-Dacwqdtp4DOT~46A~Qd0lEEGoP6-va9dXEXSJFE4SQXeeHbszp7P511PsEe3KZiEjpGCSqdpkhF5TTW3xmabIL7BdC-XUUePKhLYoN0djrCbfumhaZYtRNvmrnhOJP6SSXIn07aH5RMX~-pn48egGMpP9zW3cTqy38c7ulLwHpB1bm3OCsfhNQIN2~-OS9TCeFAmwudgetjfZMlAPe0SpaApgTt~Tw2Tb5Wtx24lDhA96ZRFa8XQgTp6tod~rNUXj3SXB6GN3HKy9UcmKUyRF1pbGJPL4WE1Q__&Key-Pair-Id=K2HSFNDJXOU9YS",
+    illustration: "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/AAtMXxhoNZlWkIZY.png?Expires=1804610453&Signature=EHlLurSdlP4Ywwp9bTaKmwjP-~AOX6hBqKG6DwEgHocYokY58QaENqfqJxci-KCv0uEaiESlFy-Z6Png92qjjlXDfF2MOUpynAZoDPci823WcNA-qGmwOCFUUJTIX4qOgiVsH1UYmHXMCx95zieb~70o3V4D8N-f8-spWCTnoWFB9QzQoPK0jbpD8F44pgrLRt~tr4Uvain0wPDQMajdsB7PKExKAhJS33g89ylEMrIF7tHIBVVlItpTCUizaKq1TEQtP7c1MFE809RvJuwjdMWpF3snZz0FAZDybi1VoqCCk95dvkuKFwBeXiukr1WNgb0LANSINIo9s7Fn0BXchg__&Key-Pair-Id=K2HSFNDJXOU9YS",
     items: [],
     appetizers: [
       { name: "Brazilian white rice", nameHe: "אורז לבן ברזילאי" },
@@ -693,70 +693,68 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
         padding: "3rem 0 2.5rem",
         borderBottom: `1px solid ${GOLD_R}0.2)`,
         marginBottom: "0.5rem",
-        textAlign: isHe ? "right" : "left",
-        position: "relative",
-        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: "2rem",
+        flexDirection: isHe ? "row-reverse" : "row",
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row" }}>
-          <div style={{ width: "22px", height: "1px", background: GOLD }} />
-          <span style={{
+        {/* Text block */}
+        <div style={{ flex: 1, minWidth: 0, textAlign: isHe ? "right" : "left" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row" }}>
+            <div style={{ width: "22px", height: "1px", background: GOLD }} />
+            <span style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 700,
+              fontSize: "0.52rem",
+              letterSpacing: isHe ? "0.06em" : "0.38em",
+              textTransform: "uppercase",
+              color: GOLD,
+            }}>
+              {subtitle}
+            </span>
+          </div>
+          <h2 style={{
             fontFamily: "'Heebo', sans-serif",
-            fontWeight: 700,
-            fontSize: "0.52rem",
-            letterSpacing: isHe ? "0.06em" : "0.38em",
-            textTransform: "uppercase",
-            color: GOLD,
+            fontWeight: 900,
+            fontSize: "clamp(32px, 4.5vw, 62px)",
+            color: BORDEAUX,
+            lineHeight: 0.9,
+            letterSpacing: isHe ? "0.01em" : "0.02em",
+            margin: "0 0 1.2rem",
           }}>
-            {subtitle}
-          </span>
+            {label}
+          </h2>
+          <p style={{
+            fontFamily: "'Heebo', sans-serif",
+            fontWeight: 300,
+            fontSize: "clamp(14px, 1.1vw, 16px)",
+            color: "rgb(90,35,35)",
+            lineHeight: 1.75,
+            maxWidth: "540px",
+            margin: 0,
+          }}>
+            {description}
+          </p>
         </div>
 
-        {/* Illustration — absolute, background right, no layout impact */}
+        {/* Illustration — horizontal, right side */}
         {category.illustration && (
           <img
             src={category.illustration}
             alt=""
             aria-hidden="true"
             style={{
-              position: "absolute",
-              top: "2.5rem",
-              right: "0",
-              width: "clamp(140px, 16vw, 210px)",
-              height: "clamp(140px, 16vw, 210px)",
+              flexShrink: 0,
+              width: "clamp(180px, 22vw, 320px)",
+              height: "auto",
               objectFit: "contain",
-              opacity: 0.92,
-              filter: "drop-shadow(0 4px 20px rgba(62,4,9,0.18))",
+              opacity: 0.95,
+              filter: "drop-shadow(0 4px 16px rgba(62,4,9,0.14))",
               pointerEvents: "none",
-              zIndex: 0,
             }}
           />
         )}
-
-        <h2 style={{
-          fontFamily: "'Heebo', sans-serif",
-          fontWeight: 900,
-          fontSize: "clamp(32px, 4.5vw, 62px)",
-          color: BORDEAUX,
-          lineHeight: 0.9,
-          letterSpacing: isHe ? "0.01em" : "0.02em",
-          margin: "0 0 1.2rem",
-          position: "relative",
-          zIndex: 1,
-        }}>
-          {label}
-        </h2>
-
-        <p style={{
-          fontFamily: "'Heebo', sans-serif",
-          fontWeight: 300,
-          fontSize: "clamp(14px, 1.1vw, 16px)",
-          color: "rgb(90,35,35)",
-          lineHeight: 1.75,
-          maxWidth: "540px",
-          margin: 0,
-        }}>
-          {description}
-        </p>
 
         {/* Rodízio — Appetizers + Dual Track */}
         {isRodizio && category.appetizers && (
