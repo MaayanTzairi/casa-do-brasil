@@ -227,6 +227,8 @@ export default function Navbar() {
                   <a
                     key={link.label}
                     href={link.href}
+                    target={link.href.startsWith('http') ? '_blank' : undefined}
+                    rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     style={{
                       fontFamily: isHe ? "'Heebo', sans-serif" : "'Heebo', sans-serif",
                       fontWeight: 700,
@@ -291,6 +293,8 @@ export default function Navbar() {
               <motion.a
                 key={link.label}
                 href={link.href}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 onClick={() => setMenuOpen(false)}
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
