@@ -29,22 +29,29 @@ const RIGHT_LINKS = [
 ];
 const ALL_LINKS = [...LEFT_LINKS, ...RIGHT_LINKS];
 
-/* ── Logo Badge — original colors + gold circle background ── */
-function LogoBadge({ size }: { size: number }) {
-  const pad = size * 0.12;
+/* ── Logo Badge — clean white pill with thin gold border ── */
+function LogoBadge({ size, scrolled }: { size: number; scrolled: boolean }) {
+  const pad = size * 0.1;
   return (
     <div
       style={{
-        width: size,
-        height: size,
-        borderRadius: "50%",
-        background: `radial-gradient(circle at 40% 40%, #e8d9b0 0%, #c9a84c 45%, #8b6914 100%)`,
-        boxShadow: `0 2px 12px rgba(185,161,103,0.45), inset 0 1px 2px rgba(255,240,180,0.5)`,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         flexShrink: 0,
-        border: `1.5px solid rgba(185,161,103,0.7)`,
+        // On hero (dark bg): white bg + gold border so logo is readable
+        // On scroll (white bg): just a subtle gold border
+        background: scrolled ? "transparent" : "rgba(255,255,255,0.92)",
+        border: `1px solid ${scrolled ? "rgba(185,161,103,0.45)" : "rgba(185,161,103,0.6)"}`,
+        borderRadius: "50%",
+        width: size,
+        height: size,
+        backdropFilter: scrolled ? "none" : "blur(4px)",
+        WebkitBackdropFilter: scrolled ? "none" : "blur(4px)",
+        boxShadow: scrolled
+          ? "none"
+          : "0 2px 16px rgba(0,0,0,0.18)",
+        transition: "background 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease",
       }}
     >
       <img
@@ -116,7 +123,7 @@ export default function Navbar() {
           /* ── MOBILE ── */
           <>
             <a href="/" style={{ display: "flex", alignItems: "center" }}>
-              <LogoBadge size={44} />
+              <LogoBadge size={44} scrolled={scrolled} />
             </a>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -155,7 +162,7 @@ export default function Navbar() {
             {/* Center logo */}
             <a href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
               <motion.div whileHover={{ scale: 1.06 }} transition={{ duration: 0.25 }}>
-                <LogoBadge size={56} />
+                <LogoBadge size={56} scrolled={scrolled} />
               </motion.div>
             </a>
 
