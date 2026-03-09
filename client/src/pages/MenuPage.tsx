@@ -757,15 +757,14 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               fontSize: "clamp(14px, 1.1vw, 16px)",
               color: "rgb(90,35,35)",
               lineHeight: 1.75,
-              maxWidth: "540px",
               margin: 0,
             }}>
               {description}
             </p>
           </div>
 
-          {/* Illustration — always right column in grid (direction:ltr keeps it right regardless of page RTL) */}
-          {category.illustration && (
+          {/* Illustration — English: right column (after text block) */}
+          {category.illustration && !isHe && (
             <img
               src={category.illustration}
               alt=""
