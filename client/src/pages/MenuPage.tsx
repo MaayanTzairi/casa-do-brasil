@@ -1263,12 +1263,22 @@ function MenuHero({ isHe }: { isHe: boolean }) {
         background: "linear-gradient(110deg, rgba(22,1,3,0.88) 0%, rgba(62,4,9,0.72) 45%, rgba(20,4,6,0.45) 100%)",
       }} />
 
-      {/* Bottom fade */}
+      {/* Top fade — subtle bright vignette */}
+      <div style={{
+        position: "absolute", top: 0, left: 0, right: 0,
+        height: "180px",
+        background: "linear-gradient(to bottom, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 35%, transparent 100%)",
+        pointerEvents: "none",
+        zIndex: 2,
+      }} />
+
+      {/* Bottom fade — smooth multi-stop to white */}
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0,
-        height: "120px",
-        background: "linear-gradient(to top, #ffffff 0%, transparent 100%)",
+        height: "180px",
+        background: "linear-gradient(to top, #ffffff 0%, rgba(255,255,255,0.82) 30%, rgba(255,255,255,0.38) 60%, rgba(255,255,255,0.08) 82%, transparent 100%)",
         pointerEvents: "none",
+        zIndex: 2,
       }} />
 
       {/* Gold inset frame */}
