@@ -710,7 +710,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
         </div>
 
         {/* Title row with optional illustration */}
-        <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start" }}>
+        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem" }}>
           <h2 style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 900,
@@ -727,12 +727,12 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               src={category.illustration}
               alt={label}
               style={{
-                width: "clamp(70px, 8vw, 110px)",
-                height: "clamp(70px, 8vw, 110px)",
+                width: "clamp(120px, 14vw, 190px)",
+                height: "clamp(120px, 14vw, 190px)",
                 objectFit: "contain",
                 flexShrink: 0,
-                marginBottom: "1rem",
-                filter: "drop-shadow(0 2px 8px rgba(62,4,9,0.12))",
+                marginBottom: "0.5rem",
+                filter: "drop-shadow(0 4px 16px rgba(62,4,9,0.15))",
               }}
             />
           )}
