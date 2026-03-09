@@ -675,6 +675,16 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
   const subtitle = isHe ? category.subtitleHe : category.subtitle;
   const description = isHe ? category.descriptionHe : category.description;
 
+  // Reactive mobile check
+  const [isMobileView, setIsMobileView] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth <= 640 : false
+  );
+  useEffect(() => {
+    const handler = () => setIsMobileView(window.innerWidth <= 640);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
+
   const isRodizio = category.type === "rodizio";
   const isDeal = category.type === "deal";
 
@@ -793,7 +803,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
             alt=""
             aria-hidden="true"
             style={{
-              display: typeof window !== "undefined" && window.innerWidth > 640 ? "none" : "block",
+              display: isMobileView ? "block" : "none",
               position: "absolute",
               top: 0,
               left: 0,
