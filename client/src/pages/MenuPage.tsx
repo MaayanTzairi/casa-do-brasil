@@ -694,6 +694,8 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
         borderBottom: `1px solid ${GOLD_R}0.2)`,
         marginBottom: "0.5rem",
         textAlign: isHe ? "right" : "left",
+        position: "relative",
+        overflow: "hidden",
       }}>
         {/* Grid: illustration LEFT of text in Hebrew, RIGHT in English */}
         <div style={{
