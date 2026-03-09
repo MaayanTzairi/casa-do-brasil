@@ -480,7 +480,7 @@ function MenuItemRow({ item, isHe, type, index }: { item: MenuItem; isHe: boolea
       transition={{ duration: 0.5, delay: index * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
       style={{
         display: "flex",
-        flexDirection: isHe ? "row-reverse" : "row",
+        flexDirection: "row",
         alignItems: "flex-start",
         justifyContent: "space-between",
         gap: "1.5rem",
@@ -489,9 +489,9 @@ function MenuItemRow({ item, isHe, type, index }: { item: MenuItem; isHe: boolea
         position: "relative",
       }}
     >
-      {/* Left/Right: name + desc + tag */}
-      <div style={{ flex: 1, textAlign: isHe ? "right" : "left" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexDirection: isHe ? "row-reverse" : "row", marginBottom: "0.35rem" }}>
+      {/* Name + desc + tag — inherits dir from parent */}
+      <div style={{ flex: 1 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.35rem" }}>
           <span style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 800,
@@ -510,7 +510,6 @@ function MenuItemRow({ item, isHe, type, index }: { item: MenuItem; isHe: boolea
           color: "rgb(100,50,50)",
           lineHeight: 1.65,
           margin: 0,
-          maxWidth: "520px",
         }}>
           {desc}
         </p>
@@ -595,8 +594,6 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
           lineHeight: 1.75,
           maxWidth: "540px",
           margin: 0,
-          marginRight: isHe ? 0 : undefined,
-          marginLeft: isHe ? "auto" : undefined,
         }}>
           {description}
         </p>
@@ -1073,7 +1070,7 @@ export default function MenuPage() {
   }, []);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#fff" }}>
+    <div dir={isHe ? "rtl" : "ltr"} style={{ minHeight: "100vh", background: "#fff" }}>
       <Navbar />
 
       {/* Hero */}
@@ -1097,6 +1094,8 @@ export default function MenuPage() {
           maxWidth: "1200px",
           margin: "0 auto",
           padding: "0 6vw 6rem",
+          direction: isHe ? "rtl" : "ltr",
+          textAlign: isHe ? "right" : "left",
         }}
       >
         <AnimatePresence mode="wait">
