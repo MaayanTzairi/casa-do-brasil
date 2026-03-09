@@ -694,6 +694,8 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
         borderBottom: `1px solid ${GOLD_R}0.2)`,
         marginBottom: "0.5rem",
         textAlign: isHe ? "right" : "left",
+        position: "relative",
+        overflow: "hidden",
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row" }}>
           <div style={{ width: "22px", height: "1px", background: GOLD }} />
@@ -709,34 +711,40 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
           </span>
         </div>
 
-        {/* Title row with optional illustration */}
-        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem" }}>
-          <h2 style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 900,
-            fontSize: "clamp(32px, 4.5vw, 62px)",
-            color: BORDEAUX,
-            lineHeight: 0.9,
-            letterSpacing: isHe ? "0.01em" : "0.02em",
-            margin: "0 0 1.2rem",
-          }}>
-            {label}
-          </h2>
-          {category.illustration && (
-            <img
-              src={category.illustration}
-              alt={label}
-              style={{
-                width: "clamp(120px, 14vw, 190px)",
-                height: "clamp(120px, 14vw, 190px)",
-                objectFit: "contain",
-                flexShrink: 0,
-                marginBottom: "0.5rem",
-                filter: "drop-shadow(0 4px 16px rgba(62,4,9,0.15))",
-              }}
-            />
-          )}
-        </div>
+        {/* Illustration — absolute, background right, no layout impact */}
+        {category.illustration && (
+          <img
+            src={category.illustration}
+            alt=""
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              top: "2.5rem",
+              right: "0",
+              width: "clamp(140px, 16vw, 210px)",
+              height: "clamp(140px, 16vw, 210px)",
+              objectFit: "contain",
+              opacity: 0.92,
+              filter: "drop-shadow(0 4px 20px rgba(62,4,9,0.18))",
+              pointerEvents: "none",
+              zIndex: 0,
+            }}
+          />
+        )}
+
+        <h2 style={{
+          fontFamily: "'Heebo', sans-serif",
+          fontWeight: 900,
+          fontSize: "clamp(32px, 4.5vw, 62px)",
+          color: BORDEAUX,
+          lineHeight: 0.9,
+          letterSpacing: isHe ? "0.01em" : "0.02em",
+          margin: "0 0 1.2rem",
+          position: "relative",
+          zIndex: 1,
+        }}>
+          {label}
+        </h2>
 
         <p style={{
           fontFamily: "'Heebo', sans-serif",
