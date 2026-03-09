@@ -695,34 +695,16 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
         marginBottom: "0.5rem",
         textAlign: isHe ? "right" : "left",
       }}>
-        {/* Grid: text | illustration */}
+        {/* Grid: text | illustration — illustration always last in DOM, CSS order flips for RTL */}
         <div style={{
           display: "grid",
-          gridTemplateColumns: category.illustration ? (isHe ? "auto 1fr" : "1fr auto") : "1fr",
+          gridTemplateColumns: category.illustration ? "1fr auto" : "1fr",
           alignItems: "center",
           gap: "2rem",
+          direction: "ltr",
         }}>
-          {/* Illustration — desktop only, same grid row as text */}
-          {category.illustration && isHe && (
-            <img
-              src={category.illustration}
-              alt=""
-              aria-hidden="true"
-              className="illus-desktop"
-              style={{
-                width: "clamp(100px, 14vw, 200px)",
-                height: "clamp(100px, 14vw, 200px)",
-                objectFit: "contain",
-                opacity: 0.92,
-                filter: "drop-shadow(0 4px 16px rgba(62,4,9,0.12))",
-                pointerEvents: "none",
-                order: 0,
-              }}
-            />
-          )}
-
           {/* Text block */}
-          <div style={{ order: 1 }}>
+          <div style={{ textAlign: isHe ? "right" : "left" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row" }}>
               <div style={{ width: "22px", height: "1px", background: GOLD }} />
               <span style={{
@@ -762,8 +744,8 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
             </p>
           </div>
 
-          {/* Illustration — LTR: right side */}
-          {category.illustration && !isHe && (
+          {/* Illustration — always right column in grid (direction:ltr keeps it right regardless of page RTL) */}
+          {category.illustration && (
             <img
               src={category.illustration}
               alt=""
@@ -776,7 +758,6 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                 opacity: 0.92,
                 filter: "drop-shadow(0 4px 16px rgba(62,4,9,0.12))",
                 pointerEvents: "none",
-                order: 2,
               }}
             />
           )}
