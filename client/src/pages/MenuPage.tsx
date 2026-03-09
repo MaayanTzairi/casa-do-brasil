@@ -90,7 +90,7 @@ const MENU_DATA: MenuCategory[] = [
     description: "Served to the center of the table — as much as you want. Choose your track and enjoy an endless parade of the finest Brazilian cuts.",
     descriptionHe: "מוגש למרכז השולחן — כמה שרוצים. בחרו את המסלול שלכם והתפנקו במצעד אינסופי של הנתחים הברזילאיים הטובים ביותר.",
     type: "rodizio",
-    illustration: "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/BBydaVCQUlIguusN.png?Expires=1804611213&Signature=risG3i3x~s4ZSr-KCax997znQrB1NbrpbvTVl1c8liP1De81p~Vm6QJUlfs17ovHEKDpGRvgFhG94qO91R7yKU55OQ3yaqXYJ7i1hurdUs2xiIM-CNmTd3H7U4VLtrTlnb9Wh7N16soqzlAro3yw8DoUZPlXF-sScBmq~YpMrqm28fxN4QrrAnYs4taf0RblgZVzswngKL~-9baDrTELHofwhpDEwZG06SsVGIyB94dGhWz1GASaATR7aZwtJ~4ejgmIuziSzUffr-ChE0zMtHKHmGYF-h2UnWwaY-BbOkF-bHf93SPwKdP8onOBE5exKLy8Ka8j~L56LDI8xoURSA__&Key-Pair-Id=K2HSFNDJXOU9YS",
+    illustration: "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/AnHQPnQeFEMOPWWF.png?Expires=1804616480&Signature=d-edyC4jO1Q4JQBfAHSO-FNaX0zT7T~WTFzVJi39fVKcgQZkUZvv3uiCl0Obk6wb811VGd56QX7iUNKCoj2luZm-hzOnPN2GMDjEE8vnwYBCH40xmioc68fsNU-P9r0vECQCGK6O7bzbCcCMDXBYAqSwsC7FNZ3FJUm2JLrPthZGsFc1cfITGH2ILkUiIFwBjracTyWCniMB2S4UOZIai50WJRedfHQxiQwpQvlLpXCpFix56Eh6mE9icegW9tsvAauafqnXaiV5RsLucIHS4OukZBYAZ40Fk-ShtVqGNK8lTIau88Eolnqs1iJz63wDIbuwf-hr5R3WjwRJx0M-Ag__&Key-Pair-Id=K2HSFNDJXOU9YS",
     items: [],
     appetizers: [
       { name: "Brazilian white rice", nameHe: "אורז לבן ברזילאי" },
