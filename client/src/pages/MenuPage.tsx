@@ -706,6 +706,8 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
           alignItems: "center",
           gap: "2rem",
           direction: "ltr",
+          position: "relative",
+          zIndex: 1,
         }}>
           {/* Illustration — Hebrew: first child = left column */}
           {category.illustration && isHe && (

@@ -317,8 +317,8 @@
     inset: 0;
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: center right;
-    opacity: 0.08;
+    background-position: center;
+    opacity: 0.18;
     pointer-events: none;
     z-index: 0;
   }
