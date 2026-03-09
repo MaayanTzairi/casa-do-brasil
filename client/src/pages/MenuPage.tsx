@@ -738,7 +738,28 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
           )}
 
           {/* Text block */}
-          <div style={{ textAlign: isHe ? "right" : "left" }}>
+          <div style={{ textAlign: isHe ? "right" : "left", position: "relative", overflow: "hidden" }}>
+            {/* Mobile background illustration — inside text block so it matches its exact area */}
+            {category.illustration && isMobileView && (
+              <img
+                src={category.illustration}
+                alt=""
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                  objectPosition: "center",
+                  opacity: 0.18,
+                  pointerEvents: "none",
+                  zIndex: 0,
+                }}
+              />
+            )}
+            <div style={{ position: "relative", zIndex: 1 }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row" }}>
               <div style={{ width: "22px", height: "1px", background: GOLD }} />
               <span style={{
@@ -775,6 +796,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
             }}>
               {description}
             </p>
+            </div>{/* end relative z-index wrapper */}
           </div>
 
           {/* Illustration — English: right column (after text block) */}
@@ -796,27 +818,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
           )}
         </div>
 
-        {/* Mobile background illustration — actual img tag, hidden on desktop via JS window check */}
-        {category.illustration && (
-          <img
-            src={category.illustration}
-            alt=""
-            aria-hidden="true"
-            style={{
-              display: isMobileView ? "block" : "none",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "contain",
-              objectPosition: "center",
-              opacity: 0.22,
-              pointerEvents: "none",
-              zIndex: 0,
-            }}
-          />
-        )}
+
 
         {/* Rodízio — Appetizers + Dual Track */}
         {isRodizio && category.appetizers && (
