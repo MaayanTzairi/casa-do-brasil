@@ -4,6 +4,7 @@
  */
 
 import HeroSection from "@/components/HeroSection";
+import Navbar from "@/components/Navbar";
 import CasaVibesSection from "@/components/CasaVibesSection";
 import SectionDivider from "@/components/SectionDivider";
 import MenuSection from "@/components/MenuSection";
@@ -12,13 +13,16 @@ import GallerySection from "@/components/GallerySection";
 
 export default function Home() {
   return (
-    <main className="w-full">
+    <>
+      <Navbar />
+      <main className="w-full">
       <HeroSection />
       <CasaVibesSection />
       <SectionDivider />
       <MenuSection />
       <SectionDivider2 />
       <GallerySection />
-    </main>
+      </main>
+    </>
   );
 }
