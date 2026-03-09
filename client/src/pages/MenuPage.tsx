@@ -398,12 +398,28 @@ function TabBar({
   sticky: boolean;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [showScrollHint, setShowScrollHint] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   // Scroll active tab into view
   useEffect(() => {
     const el = scrollRef.current?.querySelector(`[data-tab="${activeId}"]`) as HTMLElement;
     if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
   }, [activeId]);
+
+  // Hide scroll hint after first scroll interaction
+  const handleScroll = () => {
+    if (scrollRef.current && scrollRef.current.scrollLeft > 10) {
+      setShowScrollHint(false);
+    }
+  };
 
   return (
     <div
@@ -417,20 +433,58 @@ function TabBar({
         borderBottom: `1px solid ${GOLD_R}0.22)`,
         boxShadow: sticky ? `0 4px 24px rgba(62,4,9,0.07)` : "none",
         transition: "box-shadow 0.3s ease",
+        overflow: "hidden",
       }}
     >
+      {/* Mobile scroll hint — animated arrow on right edge */}
+      {isMobile && showScrollHint && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 1, 0.7, 1] }}
+          transition={{ duration: 1.2, delay: 0.6, repeat: 3, repeatType: "reverse" }}
+          style={{
+            position: "absolute",
+            right: 0, top: 0, bottom: 0,
+            width: "52px",
+            zIndex: 5,
+            pointerEvents: "none",
+            background: "linear-gradient(to right, transparent, rgba(255,255,255,0.96))",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            paddingRight: "8px",
+          }}
+        >
+          <motion.div
+            animate={{ x: [0, 5, 0] }}
+            transition={{ duration: 0.9, repeat: Infinity, ease: "easeInOut" }}
+            style={{ display: "flex", alignItems: "center", gap: "2px" }}
+          >
+            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.42rem", letterSpacing: "0.1em", color: GOLD, textTransform: "uppercase" }}>
+              {isHe ? "עוד" : "more"}
+            </span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2.2" strokeLinecap="round">
+              <polyline points="9,18 15,12 9,6"/>
+            </svg>
+          </motion.div>
+        </motion.div>
+      )}
+
       <div
         ref={scrollRef}
         dir={isHe ? "rtl" : "ltr"}
+        onScroll={handleScroll}
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
-          padding: "0 6vw",
+          padding: isMobile ? "0 1rem" : "0 6vw",
           display: "flex",
           gap: 0,
           overflowX: "auto",
           scrollbarWidth: "none",
           msOverflowStyle: "none",
+          /* Center tabs on desktop when they fit */
+          justifyContent: isMobile ? "flex-start" : "center",
         }}
       >
         {categories.map((cat) => {
@@ -446,12 +500,14 @@ function TabBar({
                 background: "none",
                 border: "none",
                 borderBottom: isActive ? `2px solid ${GOLD}` : "2px solid transparent",
-                padding: "1.1rem 1.4rem",
+                padding: isMobile ? "1rem 0.9rem" : "1.1rem 1.6rem",
                 cursor: "pointer",
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: isActive ? 800 : 500,
-                fontSize: isHe ? "clamp(11px, 1.1vw, 14px)" : "clamp(9px, 0.75vw, 11px)",
-                letterSpacing: isHe ? "0.03em" : "0.2em",
+                fontSize: isHe
+                  ? (isMobile ? "clamp(12px, 3.5vw, 15px)" : "clamp(11px, 1.05vw, 14px)")
+                  : (isMobile ? "clamp(9px, 2.5vw, 11px)" : "clamp(9px, 0.72vw, 11px)"),
+                letterSpacing: isHe ? "0.03em" : "0.18em",
                 textTransform: "uppercase",
                 color: isActive ? BORDEAUX : "rgba(62,4,9,0.45)",
                 transition: "all 0.25s ease",
