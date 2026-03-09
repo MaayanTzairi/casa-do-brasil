@@ -296,3 +296,30 @@
 .delay-1000 { animation-delay: 1.0s; }
 .delay-1200 { animation-delay: 1.2s; }
 .delay-1400 { animation-delay: 1.4s; }
+
+/* ── Menu Page Illustration Responsive ── */
+.illus-desktop {
+  display: flex;
+}
+
+.illus-mobile-bg {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .illus-desktop {
+    display: none !important;
+  }
+
+  .illus-mobile-bg {
+    display: block !important;
+    position: absolute;
+    inset: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center right;
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+  }
+}
