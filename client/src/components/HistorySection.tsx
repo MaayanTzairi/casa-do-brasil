@@ -1,11 +1,10 @@
 /**
- * HistorySection — Horizontal Story Timeline
- * Design: A cinematic horizontal track. The gold line draws itself left-to-right
- * as the user scrolls. Each chapter node pulses into view, and clicking/hovering
- * opens a rich panel above/below with image + text.
+ * HistorySection — Flowing Horizontal Story Timeline
+ * Design: Large chapter numbers as anchors, smooth horizontal reveal,
+ * alternating card layout above/below the central axis.
+ * All English text. Clean, modern, high-end.
  *
- * Layout: sticky section, internal horizontal scroll driven by vertical page scroll.
- * Colors: dark bordeaux #1a0608, gold #b9a167, cream #f5f0e8
+ * Colors: dark bordeaux #130406, gold #b9a167, cream #f5f0e8
  */
 
 import { useRef, useState } from "react";
@@ -19,343 +18,294 @@ const MILESTONES = [
   {
     year: "1998",
     label: "THE VISION",
-    title: "החזון נולד",
-    body: "אבי כראל מגיע לאילת עם חזון ברור — להביא את חוויית הבשר הברזילאית האותנטית לישראל. אש אמיתית, בשר אמיתי, רוח ברזילאית אמיתית.",
+    title: "A Dream Arrives in Eilat",
+    body: "Avi Kral arrives in Eilat with a clear vision — to bring authentic Brazilian churrasco to Israel. Real fire, real meat, real Brazilian spirit.",
     image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80",
-    above: true,
   },
   {
     year: "2002",
     label: "THE FOUNDING",
-    title: "המסעדה מוקמת",
-    body: "Casa do Brasil נפתחת רשמית. הגאוצ'וס הראשונים מגיעים מברזיל, האש מוצתת — ולא כבתה מאז.",
+    title: "Casa do Brasil Opens Its Doors",
+    body: "The restaurant officially opens. The first gauchos arrive from Brazil, the fire is lit — and has never gone out since.",
     image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
-    above: false,
   },
   {
     year: "2006",
     label: "THE DESTINATION",
-    title: "מוקד הבשר של אילת",
-    body: "Casa do Brasil הופכת למוקד הבשר המוביל באילת. תיירים ומקומיים כאחד מגיעים לחוות את הפיקניה והחוויה הייחודית.",
+    title: "Eilat's Premier Meat Destination",
+    body: "Casa do Brasil becomes the leading meat destination in Eilat. Tourists and locals alike come to experience the Picanha and the one-of-a-kind atmosphere.",
     image: "https://images.unsplash.com/photo-1558030006-450675393462?w=800&q=80",
-    above: true,
   },
   {
     year: "2026",
     label: "THE NEW ERA",
-    title: "עידן חדש",
-    body: "המסעדה מתרחבת ומתחדשת — הופכת למסעדת פרימיום ענקית עם חוויה מורחבת ותפריט שמכבד את המסורת.",
+    title: "A Grand New Chapter",
+    body: "The restaurant expands and reinvents itself — becoming a grand premium dining destination with an extended experience and a menu that honours tradition while pushing forward.",
     image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",
-    above: false,
   },
 ];
 
-// Each chapter node on the timeline
-function ChapterNode({
-  milestone,
-  index,
-  active,
-  onToggle,
-  lineProgress,
-}: {
-  milestone: (typeof MILESTONES)[0];
-  index: number;
-  active: boolean;
-  onToggle: () => void;
-  lineProgress: import("framer-motion").MotionValue<number>;
-}) {
-  const threshold = index / (MILESTONES.length - 1);
-  const nodeOpacity = useTransform(lineProgress, [threshold - 0.05, threshold + 0.05], [0.25, 1]);
-  const nodeScale = useTransform(lineProgress, [threshold - 0.05, threshold + 0.05], [0.7, 1]);
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        position: "relative",
-        flex: "0 0 auto",
-        width: 220,
-      }}
-    >
-      {/* Connector stub above/below */}
-      <div style={{ height: 48, display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
-        {milestone.above && (
-          <motion.div
-            style={{ width: 1, height: 48, background: `linear-gradient(to bottom, transparent, ${GOLD})`, opacity: nodeOpacity }}
-          />
-        )}
-      </div>
-
-      {/* Node dot */}
-      <motion.button
-        onClick={onToggle}
-        style={{
-          width: 52,
-          height: 52,
-          borderRadius: "50%",
-          border: `1.5px solid ${GOLD}`,
-          background: active ? GOLD : DARK,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          position: "relative",
-          zIndex: 10,
-          opacity: nodeOpacity,
-          scale: nodeScale,
-          boxShadow: active ? `0 0 0 8px rgba(185,161,103,0.15), 0 0 32px rgba(185,161,103,0.3)` : `0 0 0 4px rgba(185,161,103,0.08)`,
-          transition: "background 0.3s, box-shadow 0.3s",
-        }}
-        whileHover={{ scale: 1.12 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <span style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: 10,
-          fontWeight: 700,
-          color: active ? DARK : GOLD,
-          letterSpacing: "0.04em",
-        }}>
-          {milestone.year.slice(2)}
-        </span>
-      </motion.button>
-
-      {/* Connector stub below/above */}
-      <div style={{ height: 48, display: "flex", alignItems: "flex-start", justifyContent: "center" }}>
-        {!milestone.above && (
-          <motion.div
-            style={{ width: 1, height: 48, background: `linear-gradient(to top, transparent, ${GOLD})`, opacity: nodeOpacity }}
-          />
-        )}
-      </div>
-
-      {/* Year label */}
-      <motion.div style={{ opacity: nodeOpacity, textAlign: "center" }}>
-        <div style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: 22,
-          fontWeight: 800,
-          color: active ? GOLD : CREAM,
-          letterSpacing: "0.02em",
-          transition: "color 0.3s",
-        }}>
-          {milestone.year}
-        </div>
-        <div style={{
-          fontFamily: "'Cormorant Garamond', serif",
-          fontSize: 9,
-          letterSpacing: "0.2em",
-          color: GOLD,
-          textTransform: "uppercase",
-          marginTop: 4,
-          opacity: 0.7,
-        }}>
-          {milestone.label}
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
 export default function HistorySection() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState<number | null>(0);
+  const [active, setActive] = useState<number>(0);
 
-  // Drive line drawing from page scroll
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 0.8", "end 0.4"],
+    offset: ["start 0.85", "end 0.3"],
   });
 
-  const lineWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-
-  const toggle = (i: number) => setActive(active === i ? null : i);
+  const lineScaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
     <section
       ref={containerRef}
       style={{
         background: `linear-gradient(170deg, ${DARK} 0%, #1e0509 100%)`,
-        padding: "90px 0 80px",
+        padding: "100px 0 90px",
         overflow: "hidden",
         position: "relative",
       }}
     >
-      {/* Ambient radial glow */}
+      {/* Ambient glow */}
       <div style={{
         position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        width: "70%",
-        height: "60%",
+        top: "50%", left: "50%",
+        transform: "translate(-50%,-50%)",
+        width: "80%", height: "60%",
         background: "radial-gradient(ellipse, rgba(185,161,103,0.04) 0%, transparent 70%)",
         pointerEvents: "none",
       }} />
 
-      {/* Header */}
+      {/* ── Header ── */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        style={{ textAlign: "center", marginBottom: 56, padding: "0 40px" }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+        style={{ textAlign: "center", marginBottom: 72, padding: "0 40px" }}
       >
         <p style={{
           fontFamily: "'Cormorant Garamond', serif",
-          fontSize: 11,
-          letterSpacing: "0.22em",
-          color: GOLD,
-          textTransform: "uppercase",
-          marginBottom: 10,
+          fontSize: 11, letterSpacing: "0.24em",
+          color: GOLD, textTransform: "uppercase", marginBottom: 12,
         }}>
           Since 1998
         </p>
         <h2 style={{
           fontFamily: "'Playfair Display', serif",
-          fontSize: "clamp(34px, 4vw, 54px)",
-          fontWeight: 700,
-          color: CREAM,
-          lineHeight: 1.1,
-          marginBottom: 18,
+          fontSize: "clamp(36px, 4.5vw, 58px)",
+          fontWeight: 700, color: CREAM, lineHeight: 1.05, marginBottom: 20,
         }}>
           OUR STORY
         </h2>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
-          <div style={{ width: 40, height: 1, background: `linear-gradient(to right, transparent, ${GOLD})` }} />
-          <div style={{ width: 4, height: 4, borderRadius: "50%", background: GOLD }} />
-          <div style={{ width: 40, height: 1, background: `linear-gradient(to left, transparent, ${GOLD})` }} />
+          <div style={{ width: 48, height: 1, background: `linear-gradient(to right, transparent, ${GOLD})` }} />
+          <div style={{ width: 5, height: 5, borderRadius: "50%", background: GOLD }} />
+          <div style={{ width: 48, height: 1, background: `linear-gradient(to left, transparent, ${GOLD})` }} />
         </div>
       </motion.div>
 
-      {/* ── Expanded chapter panel ── */}
-      <div style={{ padding: "0 60px", marginBottom: 0, minHeight: 260 }}>
-        <AnimatePresence mode="wait">
-          {active !== null && (
+      {/* ── Main layout: left panel + right timeline ── */}
+      <div style={{
+        display: "flex",
+        gap: 0,
+        maxWidth: 1200,
+        margin: "0 auto",
+        padding: "0 60px",
+        alignItems: "flex-start",
+      }}>
+
+        {/* LEFT: Animated chapter panel */}
+        <div style={{ flex: "0 0 420px", position: "sticky", top: 80 }}>
+          <AnimatePresence mode="wait">
             <motion.div
               key={active}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                display: "flex",
-                gap: 48,
-                alignItems: "center",
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(185,161,103,0.12)",
-                borderRadius: 3,
-                overflow: "hidden",
-                maxWidth: 900,
-                margin: "0 auto",
-              }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
               {/* Image */}
-              <div style={{ width: 320, height: 220, flexShrink: 0, overflow: "hidden" }}>
+              <div style={{
+                width: "100%", height: 260,
+                overflow: "hidden", borderRadius: 2,
+                marginBottom: 28,
+                border: `1px solid rgba(185,161,103,0.15)`,
+              }}>
                 <motion.img
                   key={active + "-img"}
                   src={MILESTONES[active].image}
                   alt={MILESTONES[active].title}
-                  initial={{ scale: 1.08 }}
+                  initial={{ scale: 1.06 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                   style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                 />
               </div>
 
-              {/* Text */}
-              <div style={{ padding: "32px 40px 32px 0", flex: 1 }}>
-                {/* Ghost year */}
-                <div style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: 72,
-                  fontWeight: 800,
-                  color: "rgba(185,161,103,0.08)",
-                  lineHeight: 1,
-                  marginBottom: -12,
-                  userSelect: "none",
-                }}>
-                  {MILESTONES[active].year}
-                </div>
-
-                <p style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: 10,
-                  letterSpacing: "0.22em",
-                  color: GOLD,
-                  textTransform: "uppercase",
-                  marginBottom: 8,
-                }}>
-                  {MILESTONES[active].label}
-                </p>
-
-                <div style={{ width: 32, height: 1, background: GOLD, marginBottom: 12, opacity: 0.6 }} />
-
-                <h3 style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "clamp(20px, 2.2vw, 28px)",
-                  fontWeight: 700,
-                  color: CREAM,
-                  lineHeight: 1.2,
-                  marginBottom: 12,
-                }}>
-                  {MILESTONES[active].title}
-                </h3>
-
-                <p style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: 17,
-                  color: "rgba(245,240,232,0.68)",
-                  lineHeight: 1.8,
-                  direction: "rtl",
-                }}>
-                  {MILESTONES[active].body}
-                </p>
+              {/* Ghost year */}
+              <div style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: 80, fontWeight: 800,
+                color: "rgba(185,161,103,0.07)",
+                lineHeight: 1, marginBottom: -10,
+                userSelect: "none", letterSpacing: "-0.02em",
+              }}>
+                {MILESTONES[active].year}
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
 
-      {/* ── Timeline track ── */}
-      <div style={{ padding: "0 60px", marginTop: 40 }}>
-        <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          {/* Background track */}
+              <p style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: 10, letterSpacing: "0.22em",
+                color: GOLD, textTransform: "uppercase", marginBottom: 10,
+              }}>
+                {MILESTONES[active].label}
+              </p>
+
+              <div style={{ width: 36, height: 1, background: GOLD, marginBottom: 14, opacity: 0.5 }} />
+
+              <h3 style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "clamp(20px, 2vw, 26px)",
+                fontWeight: 700, color: CREAM, lineHeight: 1.25, marginBottom: 14,
+              }}>
+                {MILESTONES[active].title}
+              </h3>
+
+              <p style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: 17, color: "rgba(245,240,232,0.65)",
+                lineHeight: 1.85,
+              }}>
+                {MILESTONES[active].body}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* RIGHT: Vertical timeline */}
+        <div style={{ flex: 1, paddingLeft: 72, paddingTop: 8, position: "relative" }}>
+          {/* Vertical line */}
           <div style={{
             position: "absolute",
-            top: "50%",
-            left: 0,
-            right: 0,
-            height: 1,
-            background: "rgba(185,161,103,0.15)",
-            transform: "translateY(-50%)",
+            left: 71, top: 0, bottom: 0,
+            width: 1,
+            background: "rgba(185,161,103,0.12)",
           }} />
+          <motion.div
+            style={{
+              position: "absolute",
+              left: 71, top: 0,
+              width: 1,
+              background: `linear-gradient(to bottom, ${GOLD}, rgba(185,161,103,0.3))`,
+              scaleY: lineScaleX,
+              transformOrigin: "top",
+              height: "100%",
+            }}
+          />
 
-          {/* Animated gold line */}
-          <motion.div style={{
-            position: "absolute",
-            top: "50%",
-            left: 0,
-            width: lineWidth,
-            height: 1,
-            background: `linear-gradient(to right, ${GOLD}, rgba(185,161,103,0.6))`,
-            transform: "translateY(-50%)",
-            transformOrigin: "left",
-          }} />
+          {/* Chapter entries */}
+          {MILESTONES.map((m, i) => {
+            const isActive = active === i;
+            return (
+              <motion.div
+                key={m.year}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                onClick={() => setActive(i)}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: 28,
+                  marginBottom: i < MILESTONES.length - 1 ? 52 : 0,
+                  cursor: "pointer",
+                  position: "relative",
+                }}
+              >
+                {/* Node */}
+                <motion.div
+                  animate={{
+                    scale: isActive ? 1.2 : 1,
+                    backgroundColor: isActive ? GOLD : "transparent",
+                    boxShadow: isActive
+                      ? `0 0 0 6px rgba(185,161,103,0.15), 0 0 24px rgba(185,161,103,0.25)`
+                      : `0 0 0 0px transparent`,
+                  }}
+                  transition={{ duration: 0.35 }}
+                  style={{
+                    width: 14, height: 14,
+                    borderRadius: "50%",
+                    border: `1.5px solid ${GOLD}`,
+                    flexShrink: 0,
+                    marginTop: 6,
+                    position: "relative",
+                    zIndex: 2,
+                  }}
+                />
 
-          {/* Chapter nodes */}
-          {MILESTONES.map((m, i) => (
-            <ChapterNode
-              key={m.year}
-              milestone={m}
-              index={i}
-              active={active === i}
-              onToggle={() => toggle(i)}
-              lineProgress={scrollYProgress}
-            />
-          ))}
+                {/* Text */}
+                <div>
+                  <motion.p
+                    animate={{ color: isActive ? GOLD : "rgba(185,161,103,0.45)" }}
+                    transition={{ duration: 0.3 }}
+                    style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: 10, letterSpacing: "0.2em",
+                      textTransform: "uppercase", marginBottom: 4,
+                    }}
+                  >
+                    {m.label}
+                  </motion.p>
+
+                  <motion.h4
+                    animate={{ color: isActive ? CREAM : "rgba(245,240,232,0.35)" }}
+                    transition={{ duration: 0.3 }}
+                    style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontSize: "clamp(22px, 2.2vw, 30px)",
+                      fontWeight: 800,
+                      lineHeight: 1.1,
+                      marginBottom: 6,
+                      letterSpacing: "-0.01em",
+                    }}
+                  >
+                    {m.year}
+                  </motion.h4>
+
+                  <motion.p
+                    animate={{ color: isActive ? "rgba(245,240,232,0.6)" : "rgba(245,240,232,0.2)" }}
+                    transition={{ duration: 0.3 }}
+                    style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: 15, lineHeight: 1.5,
+                    }}
+                  >
+                    {m.title}
+                  </motion.p>
+
+                  {/* Active indicator bar */}
+                  <AnimatePresence>
+                    {isActive && (
+                      <motion.div
+                        initial={{ scaleX: 0, opacity: 0 }}
+                        animate={{ scaleX: 1, opacity: 1 }}
+                        exit={{ scaleX: 0, opacity: 0 }}
+                        transition={{ duration: 0.4 }}
+                        style={{
+                          width: 32, height: 1.5,
+                          background: GOLD,
+                          marginTop: 10,
+                          transformOrigin: "left",
+                        }}
+                      />
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
