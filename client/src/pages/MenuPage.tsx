@@ -602,13 +602,13 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
         {isRodizio && category.appetizers && (
           <div style={{ marginTop: "2rem" }}>
             {/* Appetizers block */}
-            <div style={{
+            <div dir={isHe ? "rtl" : "ltr"} style={{
               padding: "1.4rem 1.8rem",
               background: "rgba(185,161,103,0.05)",
               border: `1px solid ${GOLD_R}0.18)`,
               marginBottom: "2rem",
             }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}>
                 <div style={{ width: "16px", height: "1px", background: GOLD }} />
                 <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.46rem", letterSpacing: isHe ? "0.06em" : "0.3em", textTransform: "uppercase", color: GOLD }}>
                   {isHe ? "מנות פתיחה" : "Appetizers"}
@@ -620,8 +620,6 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                     display: "flex",
                     alignItems: "flex-start",
                     gap: "0.6rem",
-                    flexDirection: isHe ? "row-reverse" : "row",
-                    textAlign: isHe ? "right" : "left",
                   }}>
                     <span style={{ color: GOLD, fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
                     <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(12px, 0.9vw, 14px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
@@ -646,18 +644,18 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                 marginBottom: "1.5rem",
               }}>
                 {category.tracks.map((track, ti) => (
-                  <div key={ti} style={{
+                  <div key={ti} dir={isHe ? "rtl" : "ltr"} style={{
                     border: `1px solid ${ti === 1 ? GOLD : GOLD_R + "0.35)"}`,
                     background: ti === 1 ? BORDEAUX : "#fff",
                     padding: "1.6rem 1.8rem",
                     position: "relative",
                   }}>
                     {/* Track header */}
-                    <div style={{ marginBottom: "1.2rem", textAlign: isHe ? "right" : "left" }}>
+                    <div style={{ marginBottom: "1.2rem" }}>
                       <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.44rem", letterSpacing: "0.28em", color: ti === 1 ? GOLD : GOLD, textTransform: "uppercase", marginBottom: "0.4rem" }}>
                         {isHe ? track.countHe : track.count}
                       </div>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: "0.3rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start" }}>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "0.3rem" }}>
                         <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(28px, 3vw, 40px)", color: ti === 1 ? "#fff" : BORDEAUX, lineHeight: 1 }}>
                           ₪{track.price}
                         </span>
@@ -677,10 +675,9 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                           display: "flex",
                           alignItems: "flex-start",
                           gap: "0.55rem",
-                          flexDirection: isHe ? "row-reverse" : "row",
                         }}>
                           <span style={{ color: GOLD, fontSize: "0.5rem", marginTop: "4px", flexShrink: 0 }}>▪</span>
-                          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(12px, 0.88vw, 14px)", color: ti === 1 ? "rgba(255,255,255,0.88)" : "rgb(70,25,25)", lineHeight: 1.5, textAlign: isHe ? "right" : "left" }}>
+                          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(12px, 0.88vw, 14px)", color: ti === 1 ? "rgba(255,255,255,0.88)" : "rgb(70,25,25)", lineHeight: 1.5 }}>
                             {item}
                           </span>
                         </li>
