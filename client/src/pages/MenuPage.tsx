@@ -786,12 +786,25 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
           )}
         </div>
 
-        {/* Mobile background illustration */}
+        {/* Mobile background illustration — actual img tag, hidden on desktop via JS window check */}
         {category.illustration && (
-          <div
+          <img
+            src={category.illustration}
+            alt=""
             aria-hidden="true"
-            className="illus-mobile-bg"
-            style={{ backgroundImage: `url(${category.illustration})` }}
+            style={{
+              display: typeof window !== "undefined" && window.innerWidth > 640 ? "none" : "block",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+              objectPosition: "center",
+              opacity: 0.22,
+              pointerEvents: "none",
+              zIndex: 0,
+            }}
           />
         )}
 

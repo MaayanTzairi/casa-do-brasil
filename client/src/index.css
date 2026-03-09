@@ -298,33 +298,35 @@
 .delay-1400 { animation-delay: 1.4s; }
 
 /* ── Menu Page Illustration Responsive ── */
-.illus-desktop {
-  display: flex;
-}
-
-.illus-mobile-bg {
-  display: none;
-}
-
-@media (max-width: 640px) {
+@layer utilities {
   .illus-desktop {
-    display: none !important;
+    display: flex;
   }
 
   .illus-mobile-bg {
-    display: block !important;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-    opacity: 0.22;
-    pointer-events: none;
-    z-index: 0;
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .illus-desktop {
+      display: none !important;
+    }
+
+    .illus-mobile-bg {
+      display: block !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      opacity: 0.22;
+      pointer-events: none;
+      z-index: 0;
+    }
   }
 }
