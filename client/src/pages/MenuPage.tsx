@@ -33,6 +33,17 @@ interface MenuItem {
   tagHe?: string;
 }
 
+interface RodizioTrack {
+  price: string;
+  priceHe: string;
+  count: string;
+  countHe: string;
+  items: string[];
+  itemsHe: string[];
+  note?: string;
+  noteHe?: string;
+}
+
 interface MenuCategory {
   id: string;
   label: string;
@@ -43,6 +54,13 @@ interface MenuCategory {
   descriptionHe: string;
   items: MenuItem[];
   type: "rodizio" | "ala-carte" | "kids" | "weight" | "dessert" | "deal";
+  // Rodizio-specific
+  appetizers?: { name: string; nameHe: string; price?: string }[];
+  appetizersNote?: string;
+  appetizersNoteHe?: string;
+  tracks?: RodizioTrack[];
+  footerNotes?: string[];
+  footerNotesHe?: string[];
 }
 
 const MENU_DATA: MenuCategory[] = [
@@ -52,18 +70,95 @@ const MENU_DATA: MenuCategory[] = [
     labelHe: "צ'וראסקריה",
     subtitle: "All You Can Eat",
     subtitleHe: "כל כלול",
-    description: "An endless parade of prime cuts, carved tableside by our gauchos. The full rodízio experience — meat, sides, salad bar, and live music.",
-    descriptionHe: "מצעד אינסופי של נתחי בשר פרמיום, הנחתכים ליד השולחן על ידי הגאושוס שלנו. חוויית הרודיזיו המלאה — בשר, תוספות, סלט בר ומוזיקה חיה.",
+    description: "Served to the center of the table — as much as you want. Choose your track and enjoy an endless parade of the finest Brazilian cuts.",
+    descriptionHe: "מוגש למרכז השולחן — כמה שרוצים. בחרו את המסלול שלכם והתפנקו במצעד אינסופי של הנתחים הברזילאיים הטובים ביותר.",
     type: "rodizio",
-    items: [
-      { name: "Picanha", nameHe: "פיקאניה", description: "The crown jewel of Brazilian BBQ — top sirloin cap, seasoned with coarse salt", descriptionHe: "תכשיט הכתר של הברביקיו הברזילאי — כובע סינטה עליון, מתובל במלח גס", tag: "Signature", tagHe: "חתימה" },
-      { name: "Fraldinha", nameHe: "פראלדיניה", description: "Bottom sirloin flap, marinated and slow-roasted over open flame", descriptionHe: "פלפ סינטה תחתון, מושרה ומבושל לאט מעל להבה פתוחה" },
-      { name: "Costela", nameHe: "קוסטלה", description: "Beef short ribs, 12-hour slow cooked until fall-off-the-bone tender", descriptionHe: "צלעות בקר קצרות, מבושלות לאט 12 שעות עד לרכות מושלמת", tag: "Slow Cooked", tagHe: "בישול איטי" },
-      { name: "Maminha", nameHe: "מאמיניה", description: "Tri-tip sirloin with a perfect crust and juicy center", descriptionHe: "סינטה תלת-קצה עם קראסט מושלם ומרכז עסיסי" },
-      { name: "Frango", nameHe: "פראנגו", description: "Chicken hearts marinated in garlic, lemon and herbs — a Brazilian classic", descriptionHe: "לבבות עוף מושרים בשום, לימון ועשבי תיבול — קלאסיקה ברזילאית" },
-      { name: "Linguiça", nameHe: "לינגויסה", description: "House-made Brazilian pork sausage with smoked paprika and garlic", descriptionHe: "נקניק חזיר ברזילאי תוצרת בית עם פפריקה מעושנת ושום" },
-      { name: "Cordeiro", nameHe: "קורדיירו", description: "Lamb chops seasoned with rosemary and coarse sea salt", descriptionHe: "צלעות כבש מתובלות בעשב רוזמרין ומלח ים גס", tag: "Chef's Pick", tagHe: "בחירת השף" },
-      { name: "Alcatra", nameHe: "אלקאטרה", description: "Top sirloin, lean and tender, seasoned simply with salt and pepper", descriptionHe: "סינטה עליונה, רזה ורכה, מתובלת פשוט במלח ופלפל" },
+    items: [],
+    appetizers: [
+      { name: "Brazilian white rice", nameHe: "אורז לבן ברזילאי" },
+      { name: "Chili Con Carne — meat, black beans and peppers cooked on traditional low heat", nameHe: "צ'ילי קון קרנה — בשר, שעועית שחורה ופלפלים בבישול מסורתי ואיטי" },
+      { name: "Herb seasoned roasted potatoes", nameHe: "תפוחי אדמה צלויים בעשבי תיבול" },
+      { name: "House salad with mustard vinaigrette", nameHe: "סלט בית עם וויניגרט חרדל" },
+      { name: "Chimichurri sauce", nameHe: "רוטב צ'ימיצ'ורי" },
+      { name: "Homemade bread with dipping sauces — 28 NIS", nameHe: "לחם ביתי עם רטבים — 28 שקל" },
+    ],
+    appetizersNote: "Served to the center of the table — as much as you want!",
+    appetizersNoteHe: "מוגש למרכז השולחן — כמה שרוצים!",
+    tracks: [
+      {
+        price: "259",
+        priceHe: "259",
+        count: "11 KINDS OF MEAT",
+        countHe: "11 סוגי בשר",
+        items: [
+          "Veal asado",
+          "Lamb shin",
+          "Picanha",
+          "Capa de file",
+          "Maminha",
+          "Pullet in soy, honey and white wine marinade",
+          "Chuck steak",
+          "Chicken wings in chili sauce",
+          "Boliniho — Brazilian meat patties",
+          "South American Chorizo sausages",
+          "Chicken hearts",
+        ],
+        itemsHe: [
+          "אסאדו עגל",
+          "שוק כבש",
+          "פיקאניה",
+          "קאפה דה פילה",
+          "מאמיניה",
+          "פרגית במרינדת סויה, דבש ויין לבן",
+          "צ'אק סטיק",
+          "כנפי עוף ברוטב צ'ילי",
+          "בוליניו — קציצות בשר ברזילאיות",
+          "נקניקי צ'וריסו דרום אמריקאי",
+          "לבבות עוף",
+        ],
+      },
+      {
+        price: "289",
+        priceHe: "289",
+        count: "12 KINDS OF MEAT",
+        countHe: "12 סוגי בשר",
+        items: [
+          "Entrecote (rib eye)",
+          "Veal asado",
+          "Lamb shank",
+          "Picanha",
+          "Capa de file",
+          "Maminha",
+          "Pullet in soy, honey and white wine marinade",
+          "Chuck steak",
+          "Chicken wings in chili sauce",
+          "Boliniho — Brazilian meat patties",
+          "South American Chorizo sausages",
+          "Chicken hearts",
+        ],
+        itemsHe: [
+          "אנטריקוט (ריב אי)",
+          "אסאדו עגל",
+          "שוק כבש",
+          "פיקאניה",
+          "קאפה דה פילה",
+          "מאמיניה",
+          "פרגית במרינדת סויה, דבש ויין לבן",
+          "צ'אק סטיק",
+          "כנפי עוף ברוטב צ'ילי",
+          "בוליניו — קציצות בשר ברזילאיות",
+          "נקניקי צ'וריסו דרום אמריקאי",
+          "לבבות עוף",
+        ],
+        note: "*Obliged by choosing the same route for all the table sitters",
+        noteHe: "*בחירת מסלול זה מחייבת את כל היושבים בשולחן",
+      },
+    ],
+    footerNotes: [
+      "*A diner who does not order a main course will be charged for the appetizers — 68 NIS",
+    ],
+    footerNotesHe: [
+      "*סועד שלא יזמין מנה עיקרית יחוייב בתשלום עבור המנות הפתיחה — 68 שקל",
     ],
   },
   {
@@ -310,29 +405,116 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
           {description}
         </p>
 
-        {/* Rodízio price badge */}
-        {isRodizio && (
-          <div style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "1rem",
-            marginTop: "1.5rem",
-            padding: "0.9rem 1.8rem",
-            background: BORDEAUX,
-            border: `1px solid ${GOLD_R}0.3)`,
-          }}>
-            <div>
-              <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.44rem", letterSpacing: "0.3em", color: GOLD, textTransform: "uppercase", marginBottom: "2px" }}>
-                {isHe ? "מחיר לאדם" : "Per Person"}
+        {/* Rodízio — Appetizers + Dual Track */}
+        {isRodizio && category.appetizers && (
+          <div style={{ marginTop: "2rem" }}>
+            {/* Appetizers block */}
+            <div style={{
+              padding: "1.4rem 1.8rem",
+              background: "rgba(185,161,103,0.05)",
+              border: `1px solid ${GOLD_R}0.18)`,
+              marginBottom: "2rem",
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row" }}>
+                <div style={{ width: "16px", height: "1px", background: GOLD }} />
+                <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.46rem", letterSpacing: isHe ? "0.06em" : "0.3em", textTransform: "uppercase", color: GOLD }}>
+                  {isHe ? "מנות פתיחה" : "Appetizers"}
+                </span>
               </div>
-              <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(22px, 2vw, 28px)", color: "#fff", lineHeight: 1 }}>
-                ₪189
+              <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+                {category.appetizers.map((a, i) => (
+                  <li key={i} style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "0.6rem",
+                    flexDirection: isHe ? "row-reverse" : "row",
+                    textAlign: isHe ? "right" : "left",
+                  }}>
+                    <span style={{ color: GOLD, fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
+                    <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(12px, 0.9vw, 14px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
+                      {isHe ? a.nameHe : a.name}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              {category.appetizersNote && (
+                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.8vw, 13px)", color: GOLD, margin: "0.9rem 0 0", fontStyle: "italic", textAlign: isHe ? "right" : "left" }}>
+                  {isHe ? category.appetizersNoteHe : category.appetizersNote}
+                </p>
+              )}
+            </div>
+
+            {/* Two tracks side by side */}
+            {category.tracks && (
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                gap: "1.2rem",
+                marginBottom: "1.5rem",
+              }}>
+                {category.tracks.map((track, ti) => (
+                  <div key={ti} style={{
+                    border: `1px solid ${ti === 1 ? GOLD : GOLD_R + "0.35)"}`,
+                    background: ti === 1 ? BORDEAUX : "#fff",
+                    padding: "1.6rem 1.8rem",
+                    position: "relative",
+                  }}>
+                    {/* Track header */}
+                    <div style={{ marginBottom: "1.2rem", textAlign: isHe ? "right" : "left" }}>
+                      <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.44rem", letterSpacing: "0.28em", color: ti === 1 ? GOLD : GOLD, textTransform: "uppercase", marginBottom: "0.4rem" }}>
+                        {isHe ? track.countHe : track.count}
+                      </div>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "0.3rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start" }}>
+                        <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(28px, 3vw, 40px)", color: ti === 1 ? "#fff" : BORDEAUX, lineHeight: 1 }}>
+                          ₪{track.price}
+                        </span>
+                        <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.65rem", color: ti === 1 ? "rgba(255,255,255,0.65)" : "rgba(62,4,9,0.55)" }}>
+                          {isHe ? "לסועד" : "per diner"}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Divider */}
+                    <div style={{ height: "1px", background: ti === 1 ? `${GOLD_R}0.3)` : `${GOLD_R}0.18)`, marginBottom: "1.1rem" }} />
+
+                    {/* Meat list */}
+                    <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.38rem" }}>
+                      {(isHe ? track.itemsHe : track.items).map((item, ii) => (
+                        <li key={ii} style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: "0.55rem",
+                          flexDirection: isHe ? "row-reverse" : "row",
+                        }}>
+                          <span style={{ color: GOLD, fontSize: "0.5rem", marginTop: "4px", flexShrink: 0 }}>▪</span>
+                          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(12px, 0.88vw, 14px)", color: ti === 1 ? "rgba(255,255,255,0.88)" : "rgb(70,25,25)", lineHeight: 1.5, textAlign: isHe ? "right" : "left" }}>
+                            {item}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Track note */}
+                    {track.note && (
+                      <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(10px, 0.75vw, 12px)", color: ti === 1 ? "rgba(255,255,255,0.55)" : "rgba(62,4,9,0.5)", margin: "1rem 0 0", fontStyle: "italic", textAlign: isHe ? "right" : "left" }}>
+                        {isHe ? track.noteHe : track.note}
+                      </p>
+                    )}
+                  </div>
+                ))}
               </div>
-            </div>
-            <div style={{ width: "1px", height: "36px", background: `${GOLD_R}0.3)` }} />
-            <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.65rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.5 }}>
-              {isHe ? "כולל סלט בר\nותוספות" : "Includes salad bar\n& sides"}
-            </div>
+            )}
+
+            {/* Footer notes */}
+            {category.footerNotes && (
+              <div style={{ padding: "0.8rem 0", textAlign: isHe ? "right" : "left" }}>
+                {(isHe ? category.footerNotesHe! : category.footerNotes).map((note, i) => (
+                  <p key={i} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(11px, 0.78vw, 13px)", color: "rgba(62,4,9,0.55)", margin: "0.25rem 0", fontStyle: "italic" }}>
+                    {note}
+                  </p>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
