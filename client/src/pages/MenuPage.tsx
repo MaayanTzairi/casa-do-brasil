@@ -183,6 +183,7 @@ const MENU_DATA: MenuCategory[] = [
     id: "specials",
     label: "Specials",
     labelHe: "מנות מיוחדות",
+    illustration: "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/iLHNugmfTpeQtJBJ.png?Expires=1804617660&Signature=UvkB8b30aBD74iCH1nP1eOvMLdPzAbQUdCjMjwsDLrkNiNw0RPMe00BiSdElhlqZSz2OzdZgHspCwSKVtl~t3ibLr3NoH4RGKU3~SeOCywkU9yabyUwccL46fUb4K5d4stk3p7etuTc8qwVy9ZfWjdZxZwShpdzzIQxTtxy-VpIXPTFFRKcpWbC7MockHoC0bdc0mNlrRDM9lBW21ulAfL7uMr-SgDCLEKklONSqRp2oniKRVh5EjPLMA73QpCDd6zWkZssE~S6Wk~rkTjRWZL2-kfgtQfD~cZ81QMm7Fx1k2enA-GCh9gckuOSJu7yoCv8xAG4qM-w5R8wmBt9wmQ__&Key-Pair-Id=K2HSFNDJXOU9YS",
     subtitle: "Selected & Aged In-House",
     subtitleHe: "בשר נבחר ומיושן בבית",
     description: "The cuts of meat are selected, aged in the house butchery. Includes the appetizers served to the center of the table — as much as you want!",
