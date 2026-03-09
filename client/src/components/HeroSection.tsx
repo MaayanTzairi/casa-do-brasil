@@ -245,7 +245,9 @@ function ReserveButton({ isMobile }: { isMobile: boolean }) {
   const { isHe } = useLanguage();
   return (
     <a
-      href="#reservations"
+      href="https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73"
+      target="_blank"
+      rel="noopener noreferrer"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{

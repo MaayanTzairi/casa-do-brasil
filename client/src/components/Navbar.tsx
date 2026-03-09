@@ -23,7 +23,7 @@ const LINKS_EN = {
     { label: "GALLERY",    href: "/gallery" },
   ],
   right: [
-    { label: "RESERVATIONS", href: "#reservations", cta: true },
+    { label: "RESERVATIONS", href: "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73", cta: true },
     { label: "CONTACT",      href: "#contact" },
   ],
 };
@@ -35,7 +35,7 @@ const LINKS_HE = {
     { label: "גלריה",    href: "/gallery" },
   ],
   right: [
-    { label: "הזמנת מקום", href: "#reservations", cta: true },
+    { label: "הזמנת מקום", href: "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73", cta: true },
     { label: "צור קשר",   href: "#contact" },
   ],
 };
