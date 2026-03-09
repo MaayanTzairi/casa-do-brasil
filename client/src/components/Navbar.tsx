@@ -10,6 +10,23 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
+/** Navigate to a hash link, handling cross-page navigation */
+function navigateToHash(href: string, e: React.MouseEvent) {
+  if (href.startsWith("#")) {
+    const isHome = window.location.pathname === "/";
+    if (isHome) {
+      // Same page: smooth scroll
+      e.preventDefault();
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      // Different page: navigate to /#hash
+      e.preventDefault();
+      window.location.href = "/" + href;
+    }
+  }
+}
+
 const LOGO_URL =
   "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/uHTuTZMyDxkuiNst.png?Expires=1804585555&Signature=BCE5XCJ9GXizch-hUtg295kLcRrHFMmNVcefcdjko~3jqWGICbaQ6y2PXweZX2aGIpeGXXsfR9kESKWGVuAmwvB-aFtb5YUw3oDTEsT8OU~62QeeMf177EyXpfgZ27fH9OccohAE9tymaFpKRRtKPNJSIamZGco0NskAT5ZiT2Bb-oYxsyw9teOvUc9LVOAmcSjilinB5b-bTkdd9o18s9JhzDNF8USGg4FnDKbmHLf9rC7DxT-SgQnnO4TyXqAGSOKvtxdEjRBTKLOyKpv2rZMVoy1-IXuTfdVZxTeqaIsXBsLH~zE1EyWq0edtjfGDjXpW8-Gt0Tymq4irfOnYyA__&Key-Pair-Id=K2HSFNDJXOU9YS";
 
@@ -295,7 +312,7 @@ export default function Navbar() {
                 href={link.href}
                 target={link.href.startsWith('http') ? '_blank' : undefined}
                 rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                onClick={() => setMenuOpen(false)}
+                onClick={(e) => { navigateToHash(link.href, e); setMenuOpen(false); }}
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.05 + i * 0.07, duration: 0.4 }}
@@ -338,6 +355,7 @@ function NavLink({
   return (
     <a
       href={href}
+      onClick={(e) => navigateToHash(href, e)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{

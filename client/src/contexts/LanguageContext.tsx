@@ -9,9 +9,9 @@ interface LanguageContextType {
 }
 
 const LanguageContext = createContext<LanguageContextType>({
-  lang: "he",
+  lang: "en",
   setLang: () => {},
-  isHe: true,
+  isHe: false,
 });
 
 const STORAGE_KEY = "cdb_lang";
@@ -22,7 +22,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored === "en" || stored === "he") return stored;
     } catch {}
-    return "he";
+    return "en";
   });
 
   const setLang = (l: Lang) => {

@@ -77,6 +77,7 @@ export default function CasaVibesSection() {
 
   return (
     <section
+      id="experience"
       ref={ref}
       style={{
         background: "#fff",
