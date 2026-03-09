@@ -343,6 +343,7 @@ const MENU_DATA: MenuCategory[] = [
     id: "under12",
     label: "Under 12",
     labelHe: "עד גיל 12",
+    illustration: "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/ynrTaMAzhewaHmqc.png?Expires=1804618921&Signature=BV~ULiH5ZYqeZZNVhNic-5~VmwcdE3xU2BZuXze5N6G69lNg6MctsMtnp9uakQZ80cIXwWmi5cfu8s4Bw8ixLJoqDknH2QHROw4Ql250i7cLDOR9H1iR0OVxf0LvTmbbkHjHL7FOfy7s4wx7ULYflEF0gODSiPv6L7MtpP4I1vew-qof46ZpGMvTQlTY0dZrWEOpqYyl4gNK3CXnLdEzyPIVmIYp6ysx~StQdKEiGgSTjsXbKUubuwsdZ1U3PSq9E-XSLbG9wdve9q~n7RXuVt3jYW~viX2q-RoifaIh4N1d6gNou0Mk3BPyEsY03mdhfp2~UvJi1eGylrGC8ltwxA__&Key-Pair-Id=K2HSFNDJXOU9YS",
     subtitle: "Kids Team",
     subtitleHe: "קידס טים",
     description: "A special menu for children up to age 12. All dishes marked with * are served with French fries.",
