@@ -1,229 +1,238 @@
 /**
- * HistorySection — "Our Story" animated timeline
- * Design: dark bordeaux background, gold vertical line, scroll-triggered
- * milestone cards with staggered Framer Motion reveals.
- * Each milestone slides in from alternating sides with a year counter.
+ * HistorySection — Cinematic "Our Story" experience
+ * Design: sticky section with internal scroll, each milestone fills the viewport
+ * with a full bleed image on one side and animated text on the other.
+ * Uses Framer Motion useScroll + useTransform for parallax and reveal effects.
+ *
+ * Colors: dark bordeaux #1a0608, gold #b9a167, cream #f5f0e8
  */
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+
+const GOLD = "#b9a167";
+const CREAM = "#f5f0e8";
 
 const MILESTONES = [
   {
     year: "1998",
+    label: "THE VISION",
     title: "החזון נולד",
-    subtitle: "A Vision is Born",
-    body: "אבי כראל מגיע לאילת עם חזון ברור: להביא את חוויית הבשר הברזילאית האותנטית לישראל. הוא מזהה שחסר משהו — אש אמיתית, בשר אמיתי, רוח ברזילאית אמיתית.",
-    side: "right",
+    body: "אבי כראל מגיע לאילת עם חזון ברור — להביא את חוויית הבשר הברזילאית האותנטית לישראל. אש אמיתית, בשר אמיתי, רוח ברזילאית אמיתית.",
+    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&q=80",
+    imageAlt: "Restaurant vision",
+    flip: false,
   },
   {
     year: "2002",
-    title: "הקמת המסעדה",
-    subtitle: "The Restaurant is Founded",
+    label: "THE FOUNDING",
+    title: "המסעדה מוקמת",
     body: "Casa do Brasil נפתחת רשמית עם חזון להיות המקום לבשר פרימיום אותנטי. הגאוצ'וס הראשונים מגיעים מברזיל, האש מוצתת — ולא כבתה מאז.",
-    side: "left",
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=80",
+    imageAlt: "Churrasco founding",
+    flip: true,
   },
   {
     year: "2006",
+    label: "THE DESTINATION",
     title: "מוקד הבשר של אילת",
-    subtitle: "Eilat's Meat Destination",
     body: "Casa do Brasil הופכת למוקד הבשר המוביל באילת. תיירים ומקומיים כאחד מגיעים לחוות את הפיקניה, הפרלדינה והחוויה הייחודית שאין כמוה.",
-    side: "right",
+    image: "https://images.unsplash.com/photo-1558030006-450675393462?w=900&q=80",
+    imageAlt: "Eilat meat destination",
+    flip: false,
   },
   {
     year: "2026",
+    label: "THE NEW ERA",
     title: "עידן חדש",
-    subtitle: "A New Era",
     body: "המסעדה מתרחבת ומתחדשת — הופכת למסעדת פרימיום ענקית עם חוויה מורחבת, אולם חדש, ותפריט שמכבד את המסורת ומחדש אותה.",
-    side: "left",
+    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80",
+    imageAlt: "New era premium restaurant",
+    flip: true,
   },
 ];
 
-const GOLD = "#b9a167";
-const DARK_BG = "#1a0608";
-const CARD_BG = "rgba(255,255,255,0.04)";
-
-function MilestoneCard({
+function MilestoneSlide({
   milestone,
-  index,
+  progress,
 }: {
   milestone: (typeof MILESTONES)[0];
-  index: number;
+  progress: import("framer-motion").MotionValue<number>;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const isRight = milestone.side === "right";
+  const opacity = useTransform(progress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
+  const yText = useTransform(progress, [0, 0.15, 0.85, 1], [40, 0, 0, -40]);
+  const scale = useTransform(progress, [0, 0.15, 0.85, 1], [1.08, 1, 1, 0.96]);
+  const xImg = useTransform(
+    progress,
+    [0, 0.15, 0.85, 1],
+    milestone.flip ? [-30, 0, 0, 30] : [30, 0, 0, -30]
+  );
 
   return (
-    <div
-      ref={ref}
-      className="relative flex items-center"
-      style={{ minHeight: 160 }}
+    <motion.div
+      style={{ opacity }}
+      className="absolute inset-0 flex"
     >
-      {/* ── Year bubble on the center line ── */}
+      {/* Image side */}
       <motion.div
-        initial={{ scale: 0, opacity: 0 }}
-        animate={inView ? { scale: 1, opacity: 1 } : {}}
-        transition={{ duration: 0.5, delay: index * 0.15, ease: "backOut" }}
         style={{
-          position: "absolute",
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 10,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 4,
-        }}
-      >
-        {/* Outer ring */}
-        <div
-          style={{
-            width: 72,
-            height: 72,
-            borderRadius: "50%",
-            border: `1.5px solid ${GOLD}`,
-            background: DARK_BG,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: `0 0 0 6px rgba(185,161,103,0.08), 0 0 24px rgba(185,161,103,0.18)`,
-          }}
-        >
-          <span
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 13,
-              fontWeight: 700,
-              color: GOLD,
-              letterSpacing: "0.04em",
-            }}
-          >
-            {milestone.year}
-          </span>
-        </div>
-      </motion.div>
-
-      {/* ── Content card ── */}
-      <motion.div
-        initial={{ opacity: 0, x: isRight ? 60 : -60 }}
-        animate={inView ? { opacity: 1, x: 0 } : {}}
-        transition={{
-          duration: 0.7,
-          delay: index * 0.15 + 0.1,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        style={{
-          width: "calc(50% - 56px)",
-          marginLeft: isRight ? "calc(50% + 56px)" : undefined,
-          marginRight: !isRight ? "calc(50% + 56px)" : undefined,
-          background: CARD_BG,
-          border: `1px solid rgba(185,161,103,0.15)`,
-          borderRadius: 2,
-          padding: "28px 32px",
+          width: "55%",
+          order: milestone.flip ? 2 : 1,
+          overflow: "hidden",
           position: "relative",
         }}
       >
-        {/* Gold accent line */}
-        <div
+        <motion.img
+          src={milestone.image}
+          alt={milestone.imageAlt}
           style={{
-            position: "absolute",
-            top: 0,
-            [isRight ? "left" : "right"]: 0,
-            width: 3,
+            width: "100%",
             height: "100%",
-            background: `linear-gradient(to bottom, transparent, ${GOLD}, transparent)`,
-            borderRadius: 2,
+            objectFit: "cover",
+            scale,
+            x: xImg,
           }}
         />
-
-        {/* Arrow pointing to center line */}
+        {/* Dark vignette overlay */}
         <div
           style={{
             position: "absolute",
-            top: "50%",
-            [isRight ? "left" : "right"]: -10,
-            transform: "translateY(-50%)",
-            width: 0,
-            height: 0,
-            borderTop: "10px solid transparent",
-            borderBottom: "10px solid transparent",
-            [isRight ? "borderRight" : "borderLeft"]: `10px solid rgba(185,161,103,0.15)`,
+            inset: 0,
+            background: milestone.flip
+              ? "linear-gradient(to left, #1a0608 0%, rgba(26,6,8,0.3) 40%, transparent 100%)"
+              : "linear-gradient(to right, #1a0608 0%, rgba(26,6,8,0.3) 40%, transparent 100%)",
           }}
         />
+      </motion.div>
 
+      {/* Text side */}
+      <motion.div
+        style={{
+          width: "45%",
+          order: milestone.flip ? 1 : 2,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          padding: "0 60px",
+          y: yText,
+        }}
+      >
+        {/* Year */}
+        <div
+          style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "clamp(72px, 8vw, 110px)",
+            fontWeight: 800,
+            color: "rgba(185,161,103,0.12)",
+            lineHeight: 1,
+            marginBottom: -20,
+            letterSpacing: "-0.02em",
+            userSelect: "none",
+          }}
+        >
+          {milestone.year}
+        </div>
+
+        {/* Label */}
         <p
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontSize: 11,
-            letterSpacing: "0.18em",
+            letterSpacing: "0.22em",
             color: GOLD,
             textTransform: "uppercase",
-            marginBottom: 6,
-            opacity: 0.8,
+            marginBottom: 14,
           }}
         >
-          {milestone.subtitle}
+          {milestone.label}
         </p>
+
+        {/* Gold line */}
+        <div
+          style={{
+            width: 48,
+            height: 1,
+            background: GOLD,
+            marginBottom: 20,
+            opacity: 0.7,
+          }}
+        />
+
+        {/* Title */}
         <h3
           style={{
             fontFamily: "'Playfair Display', serif",
-            fontSize: 22,
+            fontSize: "clamp(26px, 3vw, 40px)",
             fontWeight: 700,
-            color: "#fff",
-            marginBottom: 10,
+            color: CREAM,
             lineHeight: 1.2,
+            marginBottom: 20,
           }}
         >
           {milestone.title}
         </h3>
+
+        {/* Body */}
         <p
           style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 16,
-            color: "rgba(255,255,255,0.65)",
-            lineHeight: 1.7,
+            fontSize: 18,
+            color: "rgba(245,240,232,0.7)",
+            lineHeight: 1.8,
             direction: "rtl",
+            maxWidth: 380,
           }}
         >
           {milestone.body}
         </p>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }
 
 export default function HistorySection() {
-  const headerRef = useRef<HTMLDivElement>(null);
-  const headerInView = useInView(headerRef, { once: true });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // The container is 500vh tall — sticky panel stays for the full scroll
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  // Each milestone occupies 1/4 of the total scroll range
+  const p0 = useTransform(scrollYProgress, [0, 0.25], [0, 1]);
+  const p1 = useTransform(scrollYProgress, [0.25, 0.5], [0, 1]);
+  const p2 = useTransform(scrollYProgress, [0.5, 0.75], [0, 1]);
+  const p3 = useTransform(scrollYProgress, [0.75, 1.0], [0, 1]);
+  const progresses = [p0, p1, p2, p3];
+
+  // Progress indicator dots
+  const dotProgress = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [0, 1, 2, 3, 3]);
 
   return (
-    <section
-      style={{
-        background: DARK_BG,
-        padding: "100px 0 120px",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      {/* Subtle background texture */}
+    /* Outer: tall scroll container */
+    <div ref={containerRef} style={{ height: "500vh", position: "relative" }}>
+      {/* Sticky panel */}
       <div
         style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: `radial-gradient(ellipse 60% 40% at 50% 0%, rgba(185,161,103,0.06) 0%, transparent 70%)`,
-          pointerEvents: "none",
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          background: "#1a0608",
+          overflow: "hidden",
         }}
-      />
-
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 40px" }}>
-        {/* ── Header ── */}
+      >
+        {/* Section header — fades out as user scrolls */}
         <motion.div
-          ref={headerRef}
-          initial={{ opacity: 0, y: 30 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          style={{ textAlign: "center", marginBottom: 80 }}
+          style={{
+            position: "absolute",
+            top: 48,
+            left: 0,
+            right: 0,
+            textAlign: "center",
+            zIndex: 20,
+            opacity: useTransform(scrollYProgress, [0, 0.08], [1, 0]),
+          }}
         >
           <p
             style={{
@@ -232,7 +241,7 @@ export default function HistorySection() {
               letterSpacing: "0.22em",
               color: GOLD,
               textTransform: "uppercase",
-              marginBottom: 16,
+              marginBottom: 8,
             }}
           >
             Since 1998
@@ -240,57 +249,83 @@ export default function HistorySection() {
           <h2
             style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: "clamp(36px, 5vw, 64px)",
+              fontSize: "clamp(32px, 4vw, 52px)",
               fontWeight: 700,
-              color: "#fff",
-              lineHeight: 1.1,
-              marginBottom: 20,
+              color: CREAM,
             }}
           >
             OUR STORY
           </h2>
-          {/* Gold divider */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 12,
-            }}
-          >
-            <div style={{ width: 60, height: 1, background: `linear-gradient(to right, transparent, ${GOLD})` }} />
-            <div style={{ width: 5, height: 5, borderRadius: "50%", background: GOLD }} />
-            <div style={{ width: 60, height: 1, background: `linear-gradient(to left, transparent, ${GOLD})` }} />
-          </div>
         </motion.div>
 
-        {/* ── Timeline ── */}
-        <div style={{ position: "relative" }}>
-          {/* Vertical gold line */}
-          <motion.div
-            initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              position: "absolute",
-              left: "50%",
-              top: 0,
-              bottom: 0,
-              width: 1,
-              background: `linear-gradient(to bottom, transparent, ${GOLD} 10%, ${GOLD} 90%, transparent)`,
-              transformOrigin: "top",
-            }}
-          />
-
-          {/* Milestones */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 64 }}>
-            {MILESTONES.map((m, i) => (
-              <MilestoneCard key={m.year} milestone={m} index={i} />
-            ))}
-          </div>
+        {/* Milestone slides — stacked, each fades in/out */}
+        <div style={{ position: "absolute", inset: 0 }}>
+          {MILESTONES.map((m, i) => (
+            <MilestoneSlide key={m.year} milestone={m} progress={progresses[i]} />
+          ))}
         </div>
+
+        {/* Progress dots */}
+        <div
+          style={{
+            position: "absolute",
+            right: 32,
+            top: "50%",
+            transform: "translateY(-50%)",
+            display: "flex",
+            flexDirection: "column",
+            gap: 12,
+            zIndex: 30,
+          }}
+        >
+          {MILESTONES.map((m, i) => (
+            <motion.div
+              key={m.year}
+              style={{
+                width: 6,
+                height: 6,
+                borderRadius: "50%",
+                background: useTransform(
+                  dotProgress,
+                  [i - 0.4, i, i + 0.4],
+                  ["rgba(185,161,103,0.3)", GOLD, "rgba(185,161,103,0.3)"]
+                ),
+                boxShadow: useTransform(
+                  dotProgress,
+                  [i - 0.4, i, i + 0.4],
+                  ["none", `0 0 8px ${GOLD}`, "none"]
+                ),
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Year counter — large background number */}
+        <motion.div
+          style={{
+            position: "absolute",
+            bottom: 32,
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 5,
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
+          }}
+        >
+          <div style={{ width: 40, height: 1, background: `rgba(185,161,103,0.4)` }} />
+          <p style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: 11,
+            letterSpacing: "0.2em",
+            color: "rgba(185,161,103,0.5)",
+            textTransform: "uppercase",
+          }}>
+            SCROLL TO EXPLORE
+          </p>
+          <div style={{ width: 40, height: 1, background: `rgba(185,161,103,0.4)` }} />
+        </motion.div>
       </div>
-    </section>
+    </div>
   );
 }
