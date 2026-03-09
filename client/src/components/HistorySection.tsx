@@ -1,367 +1,341 @@
 /**
- * HistorySection — Clean Skewer Timeline
+ * HistorySection — Premium Horizontal Accordion Timeline
  *
- * Layout:
- *   Header (OUR STORY)
- *   ─────────────────────────────────────────
- *   [img]  [img]  [img]  [img]   ← above skewer (alternating: 1st & 3rd above)
- *   ═══════════════════════════  ← skewer PNG (the axis)
- *   [img]  [img]  [img]  [img]   ← below skewer (2nd & 4th below)
- *   ─────────────────────────────────────────
- *
- * Actually: odd chapters have image ABOVE skewer, even chapters have image BELOW.
- * Year + short title always on the skewer side (closest to rod).
- * Very tight, clean, no excess padding.
+ * 4 chapters side-by-side. One is always "active" (expanded).
+ * Active panel: wide, shows full image + year overlay + title + 2-line description.
+ * Inactive panels: narrow strips showing only the year rotated vertically.
+ * Smooth Framer Motion layout animation.
+ * Dark bordeaux background, gold accents.
  */
 
-import { useRef } from "react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const GOLD = "#b9a167";
 const CREAM = "#f5f0e8";
 const DARK = "#130406";
 
-const SKEWER_URL =
-  "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/ysZCJWVFHuUachix.png?Expires=1804592544&Signature=RROywFiJ29~7Mu51k47X6igTWlQur1d6LpfQ7G3qyPz-t7~~7y03M12ff4O-zDh6DqZob37DguVaWHqv7MpnLonAiILyMl5RiR8OO7vpNJBUS29SSgGhDHrbYVbg6va~kFBq~oOwDoIG0abfF4t1l9IWJjfTKrdy9zGx-z-VfFfmKYh-kZH1RJJC~QJ7mL3VIGOsdIhFbNdc2-0UKCTsPX0Jqe8n-g7csYWC-qEKPD0RJgJ8RSqjwkgz5Rdcbh~zXyKU1qa6FXhmFPHIBLj1GU2V6n2bsUClmdRcd8zpamRUauzpNW7nBr96-C25sYBH5F9KtmNp0-TEF7iR~YTAHA__&Key-Pair-Id=K2HSFNDJXOU9YS";
-
 const MILESTONES = [
   {
     year: "1998",
-    label: "THE VISION",
-    title: "A Dream Arrives",
-    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
-    above: true,
+    label: "The Vision",
+    title: "A Dream Arrives in Eilat",
+    body: "Avi Kral travels from Brazil with a single mission: to bring the true art of churrasco to Israel. A fire is about to be lit.",
+    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&q=85",
   },
   {
     year: "2002",
-    label: "THE FOUNDING",
-    title: "Casa do Brasil Opens",
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80",
-    above: false,
+    label: "The Founding",
+    title: "Casa do Brasil Opens Its Doors",
+    body: "The first gauchos arrive from São Paulo. The smell of wood fire and Picanha fills the streets of Eilat for the first time.",
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=85",
   },
   {
     year: "2006",
-    label: "THE DESTINATION",
-    title: "Eilat's #1 Grill",
-    image: "https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80",
-    above: true,
+    label: "The Destination",
+    title: "Eilat's #1 Meat Experience",
+    body: "Word spreads. Tourists and locals alike make Casa do Brasil their first stop. The Picanha becomes legendary.",
+    image: "https://images.unsplash.com/photo-1558030006-450675393462?w=900&q=85",
   },
   {
     year: "2026",
-    label: "THE NEW ERA",
-    title: "A Grand New Chapter",
-    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80",
-    above: false,
+    label: "The New Era",
+    title: "A Grand New Chapter Begins",
+    body: "Casa do Brasil expands into a landmark premium dining destination — bigger fire, bolder flavours, the same soul.",
+    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=85",
   },
 ];
 
-// Chapter positions along the rod (fraction of total width)
-// Handle ends ~12%, tip ~95%
-const ROD_START = 0.12;
-const ROD_END = 0.95;
-const POSITIONS = MILESTONES.map((_, i) => {
-  const span = ROD_END - ROD_START;
-  return ROD_START + (i / (MILESTONES.length - 1)) * span;
-});
-
-const IMG_HEIGHT = 160; // px — compact portrait images
-const IMG_WIDTH = 140;  // px
-const LINE_HEIGHT = 28; // px — connector line length
-
-function ChapterCard({
-  m,
-  pos,
-  idx,
-}: {
-  m: (typeof MILESTONES)[0];
-  pos: number;
-  idx: number;
-}) {
-  const above = m.above;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: above ? -12 : 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.55, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      style={{
-        position: "absolute",
-        left: `${pos * 100}%`,
-        transform: "translateX(-50%)",
-        display: "flex",
-        flexDirection: above ? "column-reverse" : "column",
-        alignItems: "center",
-        gap: 0,
-        // Position: bottom of card aligns to skewer center if above; top aligns if below
-        ...(above
-          ? { bottom: 0 }
-          : { top: 0 }),
-      }}
-    >
-      {/* Image */}
-      <div
-        style={{
-          width: IMG_WIDTH,
-          height: IMG_HEIGHT,
-          overflow: "hidden",
-          borderRadius: 2,
-          border: `1px solid rgba(185,161,103,0.18)`,
-          position: "relative",
-          flexShrink: 0,
-        }}
-      >
-        <img
-          src={m.image}
-          alt={m.title}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            display: "block",
-            filter: "brightness(0.6) saturate(0.7)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: above
-              ? "linear-gradient(to bottom, rgba(19,4,6,0.6) 0%, transparent 50%)"
-              : "linear-gradient(to top, rgba(19,4,6,0.6) 0%, transparent 50%)",
-          }}
-        />
-      </div>
-
-      {/* Text label — between image and connector line */}
-      <div
-        style={{
-          textAlign: "center",
-          padding: above ? "0 0 6px" : "6px 0 0",
-          width: IMG_WIDTH,
-        }}
-      >
-        <div
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: 11,
-            fontWeight: 700,
-            color: CREAM,
-            letterSpacing: "0.04em",
-            lineHeight: 1.2,
-          }}
-        >
-          {m.year}
-        </div>
-        <div
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 9,
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: "rgba(185,161,103,0.55)",
-            marginTop: 1,
-          }}
-        >
-          {m.label}
-        </div>
-      </div>
-
-      {/* Connector line */}
-      <motion.div
-        initial={{ scaleY: 0 }}
-        whileInView={{ scaleY: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.4 + idx * 0.08, duration: 0.4 }}
-        style={{
-          width: 1,
-          height: LINE_HEIGHT,
-          background: `linear-gradient(${above ? "to top" : "to bottom"}, rgba(185,161,103,0.15), ${GOLD})`,
-          transformOrigin: above ? "bottom" : "top",
-          flexShrink: 0,
-        }}
-      />
-
-      {/* Dot on skewer */}
-      <motion.div
-        initial={{ scale: 0 }}
-        whileInView={{ scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.5 + idx * 0.1, type: "spring", stiffness: 260 }}
-        style={{
-          width: 8,
-          height: 8,
-          borderRadius: "50%",
-          background: GOLD,
-          boxShadow: `0 0 0 2px rgba(185,161,103,0.2), 0 0 10px rgba(185,161,103,0.45)`,
-          flexShrink: 0,
-        }}
-      />
-    </motion.div>
-  );
-}
-
 export default function HistorySection() {
-  const ref = useRef<HTMLDivElement>(null);
-
-  // Heights for above/below zones
-  const ABOVE_ZONE = IMG_HEIGHT + 40 + LINE_HEIGHT + 4; // image + text + line + dot
-  const BELOW_ZONE = IMG_HEIGHT + 40 + LINE_HEIGHT + 4;
+  const [active, setActive] = useState(0);
 
   return (
     <section
-      ref={ref}
       style={{
-        background: `linear-gradient(160deg, ${DARK} 0%, #1c0407 100%)`,
-        padding: "80px 0 72px",
+        background: `linear-gradient(160deg, ${DARK} 0%, #1e0508 100%)`,
+        padding: "88px 0 80px",
         overflow: "hidden",
         position: "relative",
       }}
     >
       {/* Ambient glow */}
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%,-50%)",
-          width: "70%",
-          height: "50%",
-          background:
-            "radial-gradient(ellipse, rgba(185,161,103,0.04) 0%, transparent 70%)",
-          pointerEvents: "none",
-        }}
-      />
+      <div style={{
+        position: "absolute", top: "50%", left: "50%",
+        transform: "translate(-50%,-50%)",
+        width: "60%", height: "60%",
+        background: "radial-gradient(ellipse, rgba(185,161,103,0.05) 0%, transparent 70%)",
+        pointerEvents: "none",
+      }} />
 
       {/* ── Header ── */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        style={{ textAlign: "center", marginBottom: 48, padding: "0 40px" }}
+        transition={{ duration: 0.65 }}
+        style={{ textAlign: "center", marginBottom: 52, padding: "0 40px" }}
       >
-        <p
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 10,
-            letterSpacing: "0.26em",
-            color: GOLD,
-            textTransform: "uppercase",
-            marginBottom: 10,
-          }}
-        >
+        <p style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: 10, letterSpacing: "0.28em",
+          color: GOLD, textTransform: "uppercase", marginBottom: 10,
+        }}>
           Since 1998
         </p>
-        <h2
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: "clamp(32px, 4vw, 52px)",
-            fontWeight: 700,
-            color: CREAM,
-            lineHeight: 1.05,
-            marginBottom: 18,
-          }}
-        >
+        <h2 style={{
+          fontFamily: "'Playfair Display', serif",
+          fontSize: "clamp(34px, 4vw, 54px)",
+          fontWeight: 700, color: CREAM, lineHeight: 1.05, marginBottom: 20,
+        }}>
           OUR STORY
         </h2>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 10,
-          }}
-        >
-          <div
-            style={{
-              width: 40,
-              height: 1,
-              background: `linear-gradient(to right, transparent, ${GOLD})`,
-            }}
-          />
-          <div
-            style={{
-              width: 4,
-              height: 4,
-              borderRadius: "50%",
-              background: GOLD,
-            }}
-          />
-          <div
-            style={{
-              width: 40,
-              height: 1,
-              background: `linear-gradient(to left, transparent, ${GOLD})`,
-            }}
-          />
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
+          <div style={{ width: 44, height: 1, background: `linear-gradient(to right, transparent, ${GOLD})` }} />
+          <div style={{ width: 4, height: 4, borderRadius: "50%", background: GOLD }} />
+          <div style={{ width: 44, height: 1, background: `linear-gradient(to left, transparent, ${GOLD})` }} />
         </div>
       </motion.div>
 
-      {/* ── Timeline ── */}
-      <div style={{ padding: "0 48px" }}>
-        {/* Outer wrapper: above zone + skewer + below zone */}
-        <div
-          style={{
-            position: "relative",
-            height: ABOVE_ZONE + BELOW_ZONE,
-          }}
-        >
-          {/* ABOVE zone (top half) */}
-          <div
+      {/* ── Accordion ── */}
+      <div style={{
+        display: "flex",
+        height: "clamp(340px, 42vw, 520px)",
+        margin: "0 48px",
+        gap: 3,
+        borderRadius: 3,
+        overflow: "hidden",
+      }}>
+        {MILESTONES.map((m, i) => {
+          const isActive = i === active;
+          return (
+            <motion.div
+              key={m.year}
+              layout
+              onClick={() => setActive(i)}
+              animate={{ flex: isActive ? 5 : 1 }}
+              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                position: "relative",
+                overflow: "hidden",
+                cursor: isActive ? "default" : "pointer",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            >
+              {/* Background image */}
+              <motion.img
+                src={m.image}
+                alt={m.title}
+                animate={{ scale: isActive ? 1.0 : 1.08 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  position: "absolute", inset: 0,
+                  width: "100%", height: "100%",
+                  objectFit: "cover",
+                  filter: isActive
+                    ? "brightness(0.45) saturate(0.7)"
+                    : "brightness(0.25) saturate(0.4)",
+                  transition: "filter 0.6s ease",
+                }}
+              />
+
+              {/* Gradient overlay */}
+              <div style={{
+                position: "absolute", inset: 0,
+                background: isActive
+                  ? "linear-gradient(to top, rgba(19,4,6,0.88) 0%, rgba(19,4,6,0.2) 55%, transparent 100%)"
+                  : "linear-gradient(to top, rgba(19,4,6,0.7) 0%, transparent 100%)",
+                transition: "background 0.5s ease",
+              }} />
+
+              {/* Gold left border accent on active */}
+              <motion.div
+                animate={{ opacity: isActive ? 1 : 0, scaleY: isActive ? 1 : 0.4 }}
+                transition={{ duration: 0.5 }}
+                style={{
+                  position: "absolute", left: 0, top: "10%", bottom: "10%",
+                  width: 2,
+                  background: `linear-gradient(to bottom, transparent, ${GOLD}, transparent)`,
+                  transformOrigin: "center",
+                }}
+              />
+
+              {/* ── Inactive: vertical year label ── */}
+              <AnimatePresence>
+                {!isActive && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 8,
+                    }}
+                  >
+                    <div style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontSize: "clamp(13px, 1.4vw, 18px)",
+                      fontWeight: 700,
+                      color: "rgba(245,240,232,0.7)",
+                      writingMode: "vertical-rl",
+                      textOrientation: "mixed",
+                      transform: "rotate(180deg)",
+                      letterSpacing: "0.06em",
+                    }}>
+                      {m.year}
+                    </div>
+                    <div style={{
+                      width: 1, height: 24,
+                      background: `linear-gradient(to bottom, ${GOLD}, transparent)`,
+                    }} />
+                    <div style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: 8,
+                      letterSpacing: "0.2em",
+                      textTransform: "uppercase",
+                      color: "rgba(185,161,103,0.5)",
+                      writingMode: "vertical-rl",
+                      textOrientation: "mixed",
+                      transform: "rotate(180deg)",
+                    }}>
+                      {m.label}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* ── Active: full content ── */}
+              <AnimatePresence>
+                {isActive && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    style={{
+                      position: "absolute",
+                      bottom: 0, left: 0, right: 0,
+                      padding: "0 36px 36px",
+                    }}
+                  >
+                    {/* Year large */}
+                    <div style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontSize: "clamp(52px, 6vw, 88px)",
+                      fontWeight: 800,
+                      lineHeight: 1,
+                      color: "rgba(245,240,232,0.08)",
+                      letterSpacing: "-0.03em",
+                      marginBottom: -8,
+                      userSelect: "none",
+                    }}>
+                      {m.year}
+                    </div>
+
+                    {/* Gold label */}
+                    <p style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: 10,
+                      letterSpacing: "0.24em",
+                      textTransform: "uppercase",
+                      color: GOLD,
+                      marginBottom: 8,
+                    }}>
+                      {m.label}
+                    </p>
+
+                    {/* Title */}
+                    <h3 style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontSize: "clamp(18px, 2vw, 26px)",
+                      fontWeight: 700,
+                      color: CREAM,
+                      lineHeight: 1.2,
+                      marginBottom: 12,
+                    }}>
+                      {m.title}
+                    </h3>
+
+                    {/* Gold divider */}
+                    <div style={{
+                      width: 32, height: 1,
+                      background: GOLD,
+                      opacity: 0.5,
+                      marginBottom: 12,
+                    }} />
+
+                    {/* Body */}
+                    <p style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: "clamp(14px, 1.2vw, 16px)",
+                      color: "rgba(245,240,232,0.6)",
+                      lineHeight: 1.65,
+                      margin: 0,
+                      maxWidth: 420,
+                    }}>
+                      {m.body}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Chapter number top-right */}
+              <div style={{
+                position: "absolute", top: 18, right: 18,
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: 10,
+                letterSpacing: "0.18em",
+                color: isActive ? `rgba(185,161,103,0.6)` : "rgba(185,161,103,0.25)",
+                transition: "color 0.4s",
+              }}>
+                {String(i + 1).padStart(2, "0")}
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* ── Chapter dots navigation ── */}
+      <div style={{
+        display: "flex", justifyContent: "center",
+        gap: 10, marginTop: 28,
+      }}>
+        {MILESTONES.map((m, i) => (
+          <button
+            key={m.year}
+            onClick={() => setActive(i)}
             style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              height: ABOVE_ZONE,
+              background: "none", border: "none", cursor: "pointer",
+              padding: "4px 8px",
+              display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
             }}
           >
-            {MILESTONES.filter((m) => m.above).map((m, _) => {
-              const idx = MILESTONES.indexOf(m);
-              return (
-                <ChapterCard key={m.year} m={m} pos={POSITIONS[idx]} idx={idx} />
-              );
-            })}
-          </div>
-
-          {/* SKEWER — sits at the boundary between above and below zones */}
-          <motion.img
-            src={SKEWER_URL}
-            alt="churrasco skewer"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.0 }}
-            style={{
-              position: "absolute",
-              top: ABOVE_ZONE - 2,
-              left: 0,
-              width: "100%",
-              display: "block",
-              mixBlendMode: "screen",
-              zIndex: 4,
-            }}
-          />
-
-          {/* BELOW zone (bottom half) */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: BELOW_ZONE,
-            }}
-          >
-            {MILESTONES.filter((m) => !m.above).map((m, _) => {
-              const idx = MILESTONES.indexOf(m);
-              return (
-                <ChapterCard key={m.year} m={m} pos={POSITIONS[idx]} idx={idx} />
-              );
-            })}
-          </div>
-        </div>
+            <motion.div
+              animate={{
+                width: i === active ? 24 : 6,
+                background: i === active ? GOLD : "rgba(185,161,103,0.3)",
+              }}
+              transition={{ duration: 0.35 }}
+              style={{ height: 2, borderRadius: 2 }}
+            />
+            <span style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: 9,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: i === active ? GOLD : "rgba(185,161,103,0.35)",
+              transition: "color 0.3s",
+            }}>
+              {m.year}
+            </span>
+          </button>
+        ))}
       </div>
     </section>
   );
