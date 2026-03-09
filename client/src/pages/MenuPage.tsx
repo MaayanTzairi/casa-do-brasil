@@ -44,6 +44,14 @@ interface RodizioTrack {
   noteHe?: string;
 }
 
+interface LunchTier {
+  price: string;
+  items: string[];
+  itemsHe: string[];
+  addons?: string[];
+  addonsHe?: string[];
+}
+
 interface MenuCategory {
   id: string;
   label: string;
@@ -54,6 +62,13 @@ interface MenuCategory {
   descriptionHe: string;
   items: MenuItem[];
   type: "rodizio" | "ala-carte" | "kids" | "weight" | "dessert" | "deal";
+  // Deal-specific
+  lunchStarters?: { name: string; nameHe: string }[];
+  lunchStartersNote?: string;
+  lunchStartersNoteHe?: string;
+  lunchTiers?: LunchTier[];
+  lunchFooterNotes?: string[];
+  lunchFooterNotesHe?: string[];
   // Rodizio-specific
   appetizers?: { name: string; nameHe: string; price?: string }[];
   appetizersNote?: string;
@@ -462,17 +477,103 @@ const MENU_DATA: MenuCategory[] = [
     id: "lunch",
     label: "Lunch Deal",
     labelHe: "מבצע צהריים",
-    subtitle: "Weekdays 12:00–16:00",
-    subtitleHe: "ימי חול 12:00–16:00",
-    description: "A curated lunch experience at a special price — choose your main, side, and drink. Available Monday to Friday.",
-    descriptionHe: "חוויית צהריים מאוצרת במחיר מיוחד — בחר עיקרית, תוספת ושתייה. זמין ראשון עד שישי.",
+    subtitle: "Sunday–Saturday 12:00–15:00",
+    subtitleHe: "ראשון–שבת 12:00–15:00",
+    description: "Lunch deals include shared starters and your choice of a main course. Available every day 12:00–15:00.",
+    descriptionHe: "מבצעי הצהריים כוללים מנות פתיחה משותפות ועיקרית לבחירתכם. בכל יום 12:00–15:00.",
     type: "deal",
-    items: [
-      { name: "Rodízio Express", nameHe: "רודיזיו אקספרס", description: "45-minute rodízio with 6 cuts, salad bar and soft drink", descriptionHe: "רודיזיו של 45 דקות עם 6 נתחים, סלט בר ושתייה קלה", price: "₪99", tag: "Best Value", tagHe: "הכי משתלם" },
-      { name: "Picanha Plate", nameHe: "צלחת פיקאניה", description: "200g picanha with rice, farofa and vinaigrette", descriptionHe: "200 גרם פיקאניה עם אורז, פארופה וויניגרט", price: "₪79" },
-      { name: "Frango Grelhado", nameHe: "פראנגו גרלאדו", description: "Grilled chicken breast with chimichurri, rice and salad", descriptionHe: "חזה עוף על הגריל עם צ'ימיצ'ורי, אורז וסלט", price: "₪65" },
-      { name: "Misto Lunch", nameHe: "מיסטו צהריים", description: "Mixed grill plate: picanha, frango, linguiça with sides", descriptionHe: "צלחת גריל מעורב: פיקאניה, פראנגו, לינגויסה עם תוספות", price: "₪89", tag: "Popular", tagHe: "פופולרי" },
-      { name: "Vegetarian Lunch", nameHe: "צהריים צמחוני", description: "Grilled vegetables, heart of palm, rice and black beans", descriptionHe: "ירקות על הגריל, לב דקל, אורז ושעועית שחורה", price: "₪58", tag: "Vegetarian", tagHe: "צמחוני" },
+    items: [],
+    lunchStarters: [
+      { name: "White Brazilian rice", nameHe: "אורז לבן ברזילאי" },
+      { name: "Chilli con carne — meat, beans and peppers, slow cooked for 3 hours", nameHe: "צ'ילי קון קרנה — בשר, שעועית ופלפלים, בישול איטי 3 שעות" },
+      { name: "Baked potatoes in spice herbs", nameHe: "תפוחי אדמה אפויים בעשבי תיבול" },
+      { name: "Home-made salad in mustard-vinaigrette dressing", nameHe: "סלט ביתי בויניגרט חרדל" },
+      { name: "Chimichurri sauce", nameHe: "רוטב צ'ימיצ'ורי" },
+      { name: "Barbecue sauce", nameHe: "רוטב ברביקיו" },
+    ],
+    lunchStartersNote: "All that you can eat!",
+    lunchStartersNoteHe: "כמה שרוצים!",
+    lunchTiers: [
+      {
+        price: "₪89",
+        items: [
+          "Casa do Brasil Burger — 300g",
+        ],
+        itemsHe: [
+          "בורגר קאסה דו ברזיל — 300 גרם",
+        ],
+        addons: ["+₪10 Sunny-side-up / mushrooms / onions", "+₪70 Goose liver medallion"],
+        addonsHe: ["+10 שקל ביצת עין / פטריות / בצל", "+70 שקל מדליון כבד אווז"],
+      },
+      {
+        price: "₪99",
+        items: [
+          "Spring chicken marinated in honey, soy and white wine",
+          "— OR — Bolinho (Brazilian meat patties)",
+        ],
+        itemsHe: [
+          "פרגית מושרית בדבש, סויה ויין לבן",
+          "— או — בוליניו (קציצות בשר ברזילאיות)",
+        ],
+      },
+      {
+        price: "₪215",
+        items: [
+          "Running skewer — 11 types — All you can eat!",
+          "Veal asado, chuck steak, capa de filet, lamb leg, Picanha, Maminha, spring chicken, chicken wings, Bolinho, Chorizo and chicken hearts",
+        ],
+        itemsHe: [
+          "שיפוד רץ — 11 סוגים — כמה שרוצים!",
+          "אסאדו עגל, צ'אק סטייק, קאפה דה פילה, כרע כבש, פיקאניה, מאמינייה, פרגית, כנפי עוף, בוליניו, צ'וריסו ולבבות עוף",
+        ],
+      },
+      {
+        price: "₪119",
+        items: [
+          "South American Chorizo sausages",
+          "— OR — Salmon fillet (oven baked with cream)",
+          "— OR — Whole sea bream fish (grilled)",
+        ],
+        itemsHe: [
+          "נקניקיות צ'וריסו דרום אמריקאיות",
+          "— או — פילה סלמון (אפוי בתנור עם שמנת)",
+          "— או — דניס שלם (על הגריל)",
+        ],
+      },
+      {
+        price: "₪255",
+        items: [
+          "Running skewer — 12 types — All you can eat!",
+          "Entrecote, lamb leg, veal asado, Picanha, Maminha, spring chicken, chicken wings, chuck steak, capa de filet, Bolinho, Chorizo and chicken hearts",
+        ],
+        itemsHe: [
+          "שיפוד רץ — 12 סוגים — כמה שרוצים!",
+          "אנטריקוט, כרע כבש, אסאדו עגל, פיקאניה, מאמינייה, פרגית, כנפי עוף, צ'אק סטייק, קאפה דה פילה, בוליניו, צ'וריסו ולבבות עוף",
+        ],
+      },
+      {
+        price: "₪159",
+        items: [
+          "Dry aged lamb chops — 450g, grilled",
+          "— OR — Entrecote — 320g, dry aged marbled",
+          "— OR — Picanha — 300g",
+          "— OR — Dry-aged sirloin — 300g",
+        ],
+        itemsHe: [
+          "צלעות כבש יבשות — 450 גרם, על הגריל",
+          "— או — אנטריקוט — 320 גרם, יבש ומרמר",
+          "— או — פיקאניה — 300 גרם",
+          "— או — סירלוין יבש — 300 גרם",
+        ],
+      },
+    ],
+    lunchFooterNotes: [
+      "House wine glass — ₪25",
+      "Lunch deals are not valid with Hever credit card, Kranot Hashotrim credit card, vouchers or coupons. Not valid with any other offer.",
+    ],
+    lunchFooterNotesHe: [
+      "כוס יין הבית — 25 שקל",
+      "מבצעי הצהריים אינם תקפים עם כרטיס אשראי חבר, כרטיס קרנות השוטרים, שוברים וקופונים. לא בשילוב עם מבצע אחר.",
     ],
   },
 ];
@@ -753,13 +854,102 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               <circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/>
             </svg>
             <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.52rem", letterSpacing: "0.15em", color: GOLD, textTransform: "uppercase" }}>
-              {isHe ? "ימי חול 12:00–16:00" : "Weekdays 12:00–16:00"}
+              {isHe ? category.subtitleHe : category.subtitle}
             </span>
           </div>
         )}
       </div>
 
-      {/* Items */}
+      {/* Lunch Deal — starters + tiers */}
+      {isDeal && category.lunchStarters && (
+        <div style={{ marginTop: "2rem" }}>
+          {/* Shared starters */}
+          <div dir={isHe ? "rtl" : "ltr"} style={{
+            padding: "1.4rem 1.8rem",
+            background: "rgba(185,161,103,0.05)",
+            border: `1px solid ${GOLD_R}0.18)`,
+            marginBottom: "2rem",
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}>
+              <div style={{ width: "16px", height: "1px", background: GOLD }} />
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.46rem", letterSpacing: isHe ? "0.06em" : "0.3em", textTransform: "uppercase", color: GOLD }}>
+                {isHe ? "מנות פתיחה משותפות" : "Shared Starters"}
+              </span>
+            </div>
+            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              {category.lunchStarters.map((s, i) => (
+                <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
+                  <span style={{ color: GOLD, fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
+                  <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(12px, 0.9vw, 14px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
+                    {isHe ? s.nameHe : s.name}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            {category.lunchStartersNote && (
+              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.8vw, 13px)", color: GOLD, margin: "0.9rem 0 0", fontStyle: "italic" }}>
+                {isHe ? category.lunchStartersNoteHe : category.lunchStartersNote}
+              </p>
+            )}
+          </div>
+
+          {/* Price tiers */}
+          {category.lunchTiers && (
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem", marginBottom: "2rem" }}>
+              {category.lunchTiers.map((tier, ti) => (
+                <div key={ti} dir={isHe ? "rtl" : "ltr"} style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "1.5rem",
+                  padding: "1.2rem 1.5rem",
+                  border: `1px solid ${GOLD_R}0.18)`,
+                  background: "#fff",
+                }}>
+                  {/* Price badge */}
+                  <div style={{ flexShrink: 0, textAlign: "center", minWidth: "60px" }}>
+                    <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(20px, 2.2vw, 28px)", color: BORDEAUX, lineHeight: 1 }}>
+                      {tier.price}
+                    </div>
+                    <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.55rem", color: "rgba(62,4,9,0.5)", letterSpacing: "0.06em" }}>
+                      {isHe ? "לסועד" : "per diner"}
+                    </div>
+                  </div>
+                  {/* Separator */}
+                  <div style={{ width: "1px", alignSelf: "stretch", background: `${GOLD_R}0.2)`, flexShrink: 0 }} />
+                  {/* Items */}
+                  <div style={{ flex: 1 }}>
+                    {(isHe ? tier.itemsHe : tier.items).map((item, ii) => (
+                      <p key={ii} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: ii === 0 ? 700 : 300, fontSize: "clamp(12px, 0.95vw, 15px)", color: ii === 0 ? BORDEAUX : "rgb(90,40,40)", lineHeight: 1.55, margin: ii === 0 ? "0 0 0.3rem" : "0" }}>
+                        {item}
+                      </p>
+                    ))}
+                    {tier.addons && (
+                      <div style={{ marginTop: "0.5rem", display: "flex", flexDirection: "column", gap: "0.15rem" }}>
+                        {(isHe ? tier.addonsHe! : tier.addons).map((a, ai) => (
+                          <span key={ai} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(11px, 0.78vw, 12px)", color: GOLD, fontStyle: "italic" }}>{a}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Footer notes */}
+          {category.lunchFooterNotes && (
+            <div dir={isHe ? "rtl" : "ltr"} style={{ padding: "0.8rem 0", borderTop: `1px solid ${GOLD_R}0.15)` }}>
+              {(isHe ? category.lunchFooterNotesHe! : category.lunchFooterNotes).map((note, i) => (
+                <p key={i} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: i === 0 ? 600 : 300, fontSize: "clamp(11px, 0.78vw, 13px)", color: i === 0 ? GOLD : "rgba(62,4,9,0.5)", margin: "0.3rem 0", fontStyle: i === 1 ? "italic" : "normal" }}>
+                  {note}
+                </p>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Items (non-deal categories) */}
       <div>
         {category.items.map((item, i) => (
           <MenuItemRow key={item.name} item={item} isHe={isHe} type={category.type} index={i} />
