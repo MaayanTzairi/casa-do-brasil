@@ -1,6 +1,6 @@
 /**
  * CASA DO BRASIL — Home Page
- * Sections: Hero → OUR STORY → [SectionDivider] → MENU → [SectionDivider2] → GALLERY
+ * Sections: Hero → OUR STORY → [SectionDivider] → MENU → [SectionDivider2] → GALLERY → HISTORY
  */
 
 import HeroSection from "@/components/HeroSection";
@@ -10,18 +10,20 @@ import SectionDivider from "@/components/SectionDivider";
 import MenuSection from "@/components/MenuSection";
 import SectionDivider2 from "@/components/SectionDivider2";
 import GallerySection from "@/components/GallerySection";
+import HistorySection from "@/components/HistorySection";
 
 export default function Home() {
   return (
     <>
       <Navbar />
       <main className="w-full">
-      <HeroSection />
-      <CasaVibesSection />
-      <SectionDivider />
-      <MenuSection />
-      <SectionDivider2 />
-      <GallerySection />
+        <HeroSection />
+        <CasaVibesSection />
+        <SectionDivider />
+        <MenuSection />
+        <SectionDivider2 />
+        <GallerySection />
+        <HistorySection />
       </main>
     </>
   );
