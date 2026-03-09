@@ -91,15 +91,16 @@ export default function CasaVibesSection() {
         alignItems: "center",
         maxWidth: "1280px",
         margin: "0 auto",
+        direction: isHe ? "rtl" : "ltr",
       }}>
 
-        {/* ══════════ LEFT — TEXT ══════════ */}
-        <div style={{ paddingRight: mobile ? 0 : "2vw" }}>
+        {/* ══════════ TEXT COLUMN ══════════ */}
+        <div style={{ paddingRight: (!mobile && !isHe) ? "2vw" : 0, paddingLeft: (!mobile && isHe) ? "2vw" : 0, textAlign: isHe ? "right" : "left" }}>
 
           {/* Label */}
           <motion.div
             custom={0} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
-            style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.4rem" }}
+            style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.4rem", flexDirection: isHe ? "row-reverse" : "row" }}
           >
             <div style={{ width: "28px", height: "1px", background: GOLD }} />
             <span style={{
@@ -131,7 +132,7 @@ export default function CasaVibesSection() {
           {/* Gold rule */}
           <motion.div
             custom={0.42} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
-            style={{ width: mobile ? "120px" : "160px", margin: "1.5rem 0 1.4rem" }}
+            style={{ width: mobile ? "120px" : "160px", margin: isHe ? "1.5rem 0 1.4rem auto" : "1.5rem auto 1.4rem 0" }}
           >
             <GoldLine delay={0.42} />
           </motion.div>
@@ -144,6 +145,8 @@ export default function CasaVibesSection() {
               fontSize: mobile ? "clamp(15px, 4vw, 17px)" : "clamp(15px, 1.2vw, 17px)",
               color: "rgb(90,35,35)", lineHeight: 1.85,
               maxWidth: "380px", marginBottom: "2rem",
+              marginRight: isHe ? 0 : undefined,
+              marginLeft: isHe ? "auto" : undefined,
             }}
           >
             {isHe
@@ -155,7 +158,7 @@ export default function CasaVibesSection() {
           {/* Stats row */}
           <motion.div
             custom={0.64} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
-            style={{ display: "flex", gap: "2.2rem", marginBottom: "2.2rem", flexWrap: "wrap" }}
+            style={{ display: "flex", gap: "2.2rem", marginBottom: "2.2rem", flexWrap: "wrap", justifyContent: isHe ? "flex-end" : "flex-start" }}
           >
             {(isHe ? [
               { num: "25+", label: "קטעים" },
@@ -196,7 +199,7 @@ export default function CasaVibesSection() {
               onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = GOLD; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = BORDEAUX; }}
             >
-              {isHe ? "קרא את הסיפור שלנו" : "READ OUR STORY"} <span style={{ fontSize: "0.85rem" }}>→</span>
+              {isHe ? (<><span style={{ fontSize: "0.85rem" }}>←</span> קרא את הסיפור שלנו</>) : (<>READ OUR STORY <span style={{ fontSize: "0.85rem" }}>→</span></>)}
             </a>
           </motion.div>
         </div>

@@ -255,6 +255,7 @@ export default function MenuSection() {
           flexDirection: mobile ? "column" : "row",
           alignItems: mobile ? "stretch" : "flex-start",
           gap: mobile ? "3rem" : "5vw",
+          direction: isHe ? "rtl" : "ltr",
         }}
       >
         {/* ── LEFT: TWO CARDS ── */}
@@ -264,7 +265,7 @@ export default function MenuSection() {
             display: "flex",
             flexDirection: "row",
             gap: mobile ? "1.2rem" : "1.4rem",
-            order: mobile ? 2 : 1,
+            order: mobile ? 2 : (isHe ? 2 : 1),
             /* Extra bottom space to accommodate the elevated card's upward shift */
             paddingTop: mobile ? "0" : "2.5rem",
             paddingBottom: mobile ? "0" : "0.5rem",
@@ -298,20 +299,22 @@ export default function MenuSection() {
           />
         </div>
 
-        {/* ── RIGHT: TITLE BLOCK ── */}
+        {/* ── TITLE BLOCK ── */}
         <div
           style={{
             flex: mobile ? "none" : "1",
             display: "flex", flexDirection: "column", justifyContent: "center",
             paddingTop: mobile ? "0" : "2rem",
-            order: mobile ? 1 : 2,
+            order: mobile ? 1 : (isHe ? 1 : 2),
+            textAlign: isHe ? "right" : "left",
+            alignItems: isHe ? "flex-end" : "flex-start",
           }}
         >
           <motion.div
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.7, delay: 0.05 }}
-            style={{ display:"flex", alignItems:"center", gap:"0.7rem", marginBottom:"1.4rem" }}
+            style={{ display:"flex", alignItems:"center", gap:"0.7rem", marginBottom:"1.4rem", flexDirection: isHe ? "row-reverse" : "row" }}
           >
             <div style={{ width:"20px", height:"1px", background:GOLD }} />
             <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.55rem", letterSpacing: isHe ? "0.08em" : "0.44em", textTransform:"uppercase", color:GOLD }}>{isHe ? "התפריט שלנו" : "OUR MENU"}</span>
@@ -337,7 +340,7 @@ export default function MenuSection() {
             style={{
               width:"48px", height:"1.5px",
               background:`linear-gradient(to right, ${GOLD}, ${GOLD_R}0.2))`,
-              margin:"1.8rem 0 2rem", transformOrigin:"left",
+              margin:"1.8rem 0 2rem", transformOrigin: isHe ? "right" : "left",
             }}
           />
 
@@ -360,7 +363,7 @@ export default function MenuSection() {
               onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background=BORDEAUX; el.style.color="#fff"; }}
               onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background="transparent"; el.style.color=BORDEAUX; }}
             >
-              {isHe ? "צפה בתפריט המלא" : "VIEW FULL MENU"} <span style={{ fontSize:"0.9rem" }}>→</span>
+              {isHe ? (<><span style={{ fontSize:"0.9rem" }}>←</span> צפה בתפריט המלא</>) : (<>VIEW FULL MENU <span style={{ fontSize:"0.9rem" }}>→</span></>)}
             </a>
           </motion.div>
         </div>

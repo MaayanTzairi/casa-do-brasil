@@ -205,7 +205,7 @@ export default function GallerySection() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.7 }}
-          style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1.4rem" }}
+          style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1.4rem", flexDirection: isHe ? "row-reverse" : "row" }}
         >
           <div style={{ width: "20px", height: "1px", background: GOLD }} />
           <span style={{
@@ -217,7 +217,7 @@ export default function GallerySection() {
             {isHe ? "גלריה" : "GALLERY"}</span>
         </motion.div>
 
-        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
+        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem", direction: isHe ? "rtl" : "ltr" }}>
           <motion.h2
             initial={{ opacity: 0, y: 22 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -251,7 +251,7 @@ export default function GallerySection() {
                 onMouseEnter={e => { const el = e.currentTarget as HTMLSpanElement; el.style.background = BORDEAUX; el.style.color = "#fff"; }}
                 onMouseLeave={e => { const el = e.currentTarget as HTMLSpanElement; el.style.background = "transparent"; el.style.color = BORDEAUX; }}
               >
-                {isHe ? "צפה בגלריה המלאה" : "VIEW FULL GALLERY"} <span style={{ fontSize: "0.9rem" }}>→</span>
+                {isHe ? (<><span style={{ fontSize: "0.9rem" }}>←</span> צפה בגלריה המלאה</>) : (<>VIEW FULL GALLERY <span style={{ fontSize: "0.9rem" }}>→</span></>)}
               </span>
             </Link>
           </motion.div>
@@ -266,7 +266,7 @@ export default function GallerySection() {
             width: "48px", height: "1.5px",
             background: `linear-gradient(to right, ${GOLD}, ${GOLD_R}0.2))`,
             margin: "1.8rem 0 0",
-            transformOrigin: "left",
+            transformOrigin: isHe ? "right" : "left",
           }}
         />
       </div>
