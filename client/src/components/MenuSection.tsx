@@ -15,6 +15,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const CHURRASCARIA_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-churrascaria-ijXuaBJJLFb4tBUQeN7cvj.webp";
@@ -218,7 +219,7 @@ function MenuCard({ img, track, name, nameLine2, subtitle, href, dark=false, del
             opacity: hovered ? 0.6 : 1, transition:"opacity 0.2s",
           }}
         >
-          VIEW MENU <span style={{ fontSize:"0.78rem" }}>→</span>
+          {"VIEW MENU"} <span style={{ fontSize:"0.78rem" }}>→</span>
         </a>
       </div>
     </motion.div>
@@ -229,6 +230,7 @@ export default function MenuSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });
   const [mobile, setMobile] = useState(false);
+  const { isHe } = useLanguage();
 
   useEffect(() => {
     const fn = () => setMobile(window.innerWidth < 900);
@@ -272,10 +274,10 @@ export default function MenuSection() {
           {/* CHURRASCARIA — elevated (shifted up) */}
           <MenuCard
             img={CHURRASCARIA_IMG}
-            track="The Experience"
-            name="CHURRAS-"
-            nameLine2="CARIA"
-            subtitle="All You Can Eat"
+            track={isHe ? "החווייה" : "The Experience"}
+            name={isHe ? "צ'וראס-" : "CHURRAS-"}
+            nameLine2={isHe ? "קריה" : "CARIA"}
+            subtitle={isHe ? "כל כלול" : "All You Can Eat"}
             href="#churrascaria"
             dark
             delay={0.15}
@@ -285,10 +287,10 @@ export default function MenuSection() {
           {/* CLASSIC — baseline */}
           <MenuCard
             img={CLASSIC_IMG}
-            track="À La Carte"
-            name="CLASSIC"
-            nameLine2="MENU"
-            subtitle="Individual Selections"
+            track={isHe ? "אלא קארט" : "À La Carte"}
+            name={isHe ? "תפריט" : "CLASSIC"}
+            nameLine2={isHe ? "קלאסי" : "MENU"}
+            subtitle={isHe ? "בחירות אישיות" : "Individual Selections"}
             href="#classic"
             delay={0.28}
             inView={inView}
@@ -312,7 +314,7 @@ export default function MenuSection() {
             style={{ display:"flex", alignItems:"center", gap:"0.7rem", marginBottom:"1.4rem" }}
           >
             <div style={{ width:"20px", height:"1px", background:GOLD }} />
-            <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.55rem", letterSpacing:"0.44em", textTransform:"uppercase", color:GOLD }}>OUR MENU</span>
+            <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.55rem", letterSpacing: isHe ? "0.08em" : "0.44em", textTransform:"uppercase", color:GOLD }}>{isHe ? "התפריט שלנו" : "OUR MENU"}</span>
           </motion.div>
 
           <motion.h2
@@ -325,7 +327,7 @@ export default function MenuSection() {
               color:BORDEAUX, margin:0, lineHeight:0.9, letterSpacing:"0.01em",
             }}
           >
-            AUTHENTIC<br />BRAZILIAN<br />EXPERIENCE
+            {isHe ? <>חווייה<br />ברזילאית<br />אותנטית</> : <>AUTHENTIC<br />BRAZILIAN<br />EXPERIENCE</>}
           </motion.h2>
 
           <motion.div
@@ -358,7 +360,7 @@ export default function MenuSection() {
               onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background=BORDEAUX; el.style.color="#fff"; }}
               onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background="transparent"; el.style.color=BORDEAUX; }}
             >
-              VIEW FULL MENU <span style={{ fontSize:"0.9rem" }}>→</span>
+              {isHe ? "צפה בתפריט המלא" : "VIEW FULL MENU"} <span style={{ fontSize:"0.9rem" }}>→</span>
             </a>
           </motion.div>
         </div>

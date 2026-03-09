@@ -12,6 +12,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const MEAT_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/section2-meat-ke9deE2CaiwVZ9ZoiEuQWQ.png";
@@ -66,6 +67,7 @@ export default function CasaVibesSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-6%" });
   const [mobile, setMobile] = useState(false);
+  const { isHe } = useLanguage();
 
   useEffect(() => {
     const fn = () => setMobile(window.innerWidth < 768);
@@ -102,13 +104,13 @@ export default function CasaVibesSection() {
             <div style={{ width: "28px", height: "1px", background: GOLD }} />
             <span style={{
               fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-              fontSize: "0.65rem", letterSpacing: "0.38em",
+              fontSize: "0.65rem", letterSpacing: isHe ? "0.08em" : "0.38em",
               textTransform: "uppercase", color: GOLD,
-            }}>OUR STORY</span>
+            }}>{isHe ? "הסיפור שלנו" : "OUR STORY"}</span>
           </motion.div>
 
           {/* Big headline */}
-          {["MEAT.", "MUSIC.", "BRASIL."].map((word, i) => (
+          {(isHe ? ["בשר.", "מוזיקה.", "ברזיל."] : ["MEAT.", "MUSIC.", "BRASIL."]).map((word, i) => (
             <div key={word} style={{ overflow: "hidden" }}>
               <motion.h2
                 custom={0.08 + i * 0.11} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
@@ -144,10 +146,10 @@ export default function CasaVibesSection() {
               maxWidth: "380px", marginBottom: "2rem",
             }}
           >
-            Casa do Brasil is more than a meal — it is a celebration. Authentic
-            Brazilian churrasco, carved tableside by our gauchos, paired with
-            the rhythm, color and soul of carnival. Every visit is a feast for
-            all the senses.
+            {isHe
+              ? "קאסה דו ברזיל היא יותר מארוחה — זו חגיגה. צ'וראסקו ברזילאי אותנטי, שנחתך ליד השולחן על ידי הגאושוס שלנו, בצירת הקצב, הצבע והנשמה של הקרנבל. כל ביקור הוא חג לכל החושים."
+              : "Casa do Brasil is more than a meal — it is a celebration. Authentic Brazilian churrasco, carved tableside by our gauchos, paired with the rhythm, color and soul of carnival. Every visit is a feast for all the senses."
+            }
           </motion.p>
 
           {/* Stats row */}
@@ -155,11 +157,15 @@ export default function CasaVibesSection() {
             custom={0.64} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
             style={{ display: "flex", gap: "2.2rem", marginBottom: "2.2rem", flexWrap: "wrap" }}
           >
-            {[
+            {(isHe ? [
+              { num: "25+", label: "קטעים" },
+              { num: "חי", label: "מוזיקה" },
+              { num: "רודיזיו", label: "כל כלול" },
+            ] : [
               { num: "25+", label: "CUTS" },
               { num: "LIVE", label: "MUSIC" },
               { num: "RODIZIO", label: "ALL-INCLUSIVE" },
-            ].map((s) => (
+            ]).map((s) => (
               <div key={s.label}>
                 <div style={{
                   fontFamily: "'Heebo', sans-serif", fontWeight: 900,
@@ -190,7 +196,7 @@ export default function CasaVibesSection() {
               onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = GOLD; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = BORDEAUX; }}
             >
-              READ OUR STORY <span style={{ fontSize: "0.85rem" }}>→</span>
+              {isHe ? "קרא את הסיפור שלנו" : "READ OUR STORY"} <span style={{ fontSize: "0.85rem" }}>→</span>
             </a>
           </motion.div>
         </div>

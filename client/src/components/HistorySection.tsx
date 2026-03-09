@@ -10,12 +10,13 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const GOLD = "#b9a167";
 const CREAM = "#f5f0e8";
 const DARK = "#130406";
 
-const MILESTONES = [
+const MILESTONES_EN = [
   {
     year: "1998",
     label: "The Vision",
@@ -46,11 +47,46 @@ const MILESTONES = [
   },
 ];
 
+const MILESTONES_HE = [
+  {
+    year: "1998",
+    label: "החזון",
+    title: "חלום מגיע לאילת",
+    body: "אבי קראל מגיע מברזיל עם משימה אחת: להביא את אמנות הצ'וראסקו האמיתית לישראל. אש עומדת להידלק.",
+    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&q=85",
+  },
+  {
+    year: "2002",
+    label: "הייסוד",
+    title: "קאסה דו ברזיל פותחת את שעריה",
+    body: "הגאושוס הראשונים מגיעים מסאו פאולו. ריח האש והפיקניה ממלא את רחובות אילת לראשונה.",
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=85",
+  },
+  {
+    year: "2006",
+    label: "היעד",
+    title: "חוויית הבשר מספר 1 באילת",
+    body: "השמועה מתפשטת. תיירים ומקומיים הופכים את קאסה דו ברזיל לתחנה הראשונה שלהם. הפיקניה הופכת לאגדה.",
+    image: "https://images.unsplash.com/photo-1558030006-450675393462?w=900&q=85",
+  },
+  {
+    year: "2026",
+    label: "עידן חדש",
+    title: "פרק חדש ומפואר מתחיל",
+    body: "קאסה דו ברזיל מתרחבת ליעד אוכל פרמיום מוביל — אש גדולה יותר, טעמים נועזים יותר, אותה נשמה.",
+    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=85",
+  },
+];
+
 export default function HistorySection() {
   const [active, setActive] = useState(0);
+  const { lang } = useLanguage();
+  const isHe = lang === "he";
+  const MILESTONES = isHe ? MILESTONES_HE : MILESTONES_EN;
 
   return (
     <section
+      dir={isHe ? "rtl" : "ltr"}
       style={{
         background: `linear-gradient(160deg, ${DARK} 0%, #1e0508 100%)`,
         padding: "88px 0 80px",
@@ -80,14 +116,14 @@ export default function HistorySection() {
           fontSize: 10, letterSpacing: "0.28em",
           color: GOLD, textTransform: "uppercase", marginBottom: 10,
         }}>
-          Since 1998
+          {isHe ? "מאז 1998" : "Since 1998"}
         </p>
         <h2 style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: "clamp(34px, 4vw, 54px)",
+          fontFamily: isHe ? "'Frank Ruhl Libre', serif" : "'Playfair Display', serif",
+          fontSize: "clamp(36px, 4vw, 56px)",
           fontWeight: 700, color: CREAM, lineHeight: 1.05, marginBottom: 20,
         }}>
-          OUR STORY
+          {isHe ? "הסיפור שלנו" : "OUR STORY"}
         </h2>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
           <div style={{ width: 44, height: 1, background: `linear-gradient(to right, transparent, ${GOLD})` }} />
@@ -99,11 +135,12 @@ export default function HistorySection() {
       {/* ── Accordion ── */}
       <div style={{
         display: "flex",
-        height: "clamp(340px, 42vw, 520px)",
+        height: "clamp(360px, 44vw, 540px)",
         margin: "0 48px",
         gap: 3,
         borderRadius: 3,
         overflow: "hidden",
+        direction: "ltr",
       }}>
         {MILESTONES.map((m, i) => {
           const isActive = i === active;
@@ -133,18 +170,18 @@ export default function HistorySection() {
                   width: "100%", height: "100%",
                   objectFit: "cover",
                   filter: isActive
-                    ? "brightness(0.45) saturate(0.7)"
-                    : "brightness(0.25) saturate(0.4)",
+                    ? "brightness(0.58) saturate(0.75)"
+                    : "brightness(0.28) saturate(0.4)",
                   transition: "filter 0.6s ease",
                 }}
               />
 
-              {/* Gradient overlay */}
+              {/* Gradient — brighter top, darker bottom */}
               <div style={{
                 position: "absolute", inset: 0,
                 background: isActive
-                  ? "linear-gradient(to top, rgba(19,4,6,0.88) 0%, rgba(19,4,6,0.2) 55%, transparent 100%)"
-                  : "linear-gradient(to top, rgba(19,4,6,0.7) 0%, transparent 100%)",
+                  ? "linear-gradient(to bottom, rgba(19,4,6,0.05) 0%, rgba(19,4,6,0.12) 40%, rgba(19,4,6,0.85) 100%)"
+                  : "linear-gradient(to top, rgba(19,4,6,0.75) 0%, rgba(19,4,6,0.1) 100%)",
                 transition: "background 0.5s ease",
               }} />
 
@@ -180,9 +217,9 @@ export default function HistorySection() {
                   >
                     <div style={{
                       fontFamily: "'Playfair Display', serif",
-                      fontSize: "clamp(13px, 1.4vw, 18px)",
+                      fontSize: "clamp(15px, 1.6vw, 20px)",
                       fontWeight: 700,
-                      color: "rgba(245,240,232,0.7)",
+                      color: "rgba(245,240,232,0.8)",
                       writingMode: "vertical-rl",
                       textOrientation: "mixed",
                       transform: "rotate(180deg)",
@@ -196,7 +233,7 @@ export default function HistorySection() {
                     }} />
                     <div style={{
                       fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: 8,
+                      fontSize: 9,
                       letterSpacing: "0.2em",
                       textTransform: "uppercase",
                       color: "rgba(185,161,103,0.5)",
@@ -221,18 +258,20 @@ export default function HistorySection() {
                     style={{
                       position: "absolute",
                       bottom: 0, left: 0, right: 0,
-                      padding: "0 36px 36px",
+                      padding: isHe ? "0 32px 36px 36px" : "0 36px 36px",
+                      direction: isHe ? "rtl" : "ltr",
+                      textAlign: isHe ? "right" : "left",
                     }}
                   >
                     {/* Year large */}
                     <div style={{
                       fontFamily: "'Playfair Display', serif",
-                      fontSize: "clamp(52px, 6vw, 88px)",
+                      fontSize: "clamp(64px, 7.5vw, 100px)",
                       fontWeight: 800,
                       lineHeight: 1,
-                      color: "rgba(245,240,232,0.08)",
+                      color: "rgba(245,240,232,0.07)",
                       letterSpacing: "-0.03em",
-                      marginBottom: -8,
+                      marginBottom: -12,
                       userSelect: "none",
                     }}>
                       {m.year}
@@ -240,24 +279,24 @@ export default function HistorySection() {
 
                     {/* Gold label */}
                     <p style={{
-                      fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: 10,
-                      letterSpacing: "0.24em",
+                      fontFamily: isHe ? "'Frank Ruhl Libre', serif" : "'Cormorant Garamond', serif",
+                      fontSize: 12,
+                      letterSpacing: isHe ? "0.06em" : "0.24em",
                       textTransform: "uppercase",
                       color: GOLD,
-                      marginBottom: 8,
+                      marginBottom: 10,
                     }}>
                       {m.label}
                     </p>
 
                     {/* Title */}
                     <h3 style={{
-                      fontFamily: "'Playfair Display', serif",
-                      fontSize: "clamp(18px, 2vw, 26px)",
+                      fontFamily: isHe ? "'Frank Ruhl Libre', serif" : "'Playfair Display', serif",
+                      fontSize: "clamp(21px, 2.3vw, 31px)",
                       fontWeight: 700,
                       color: CREAM,
                       lineHeight: 1.2,
-                      marginBottom: 12,
+                      marginBottom: 14,
                     }}>
                       {m.title}
                     </h3>
@@ -267,17 +306,20 @@ export default function HistorySection() {
                       width: 32, height: 1,
                       background: GOLD,
                       opacity: 0.5,
-                      marginBottom: 12,
+                      marginBottom: 14,
+                      marginLeft: isHe ? "auto" : 0,
+                      marginRight: isHe ? 0 : "auto",
                     }} />
 
                     {/* Body */}
                     <p style={{
-                      fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: "clamp(14px, 1.2vw, 16px)",
-                      color: "rgba(245,240,232,0.6)",
-                      lineHeight: 1.65,
+                      fontFamily: isHe ? "'Frank Ruhl Libre', serif" : "'Cormorant Garamond', serif",
+                      fontSize: "clamp(15px, 1.35vw, 18px)",
+                      color: "rgba(245,240,232,0.68)",
+                      lineHeight: 1.7,
                       margin: 0,
-                      maxWidth: 420,
+                      maxWidth: 440,
+                      marginLeft: isHe ? "auto" : 0,
                     }}>
                       {m.body}
                     </p>
@@ -318,7 +360,7 @@ export default function HistorySection() {
           >
             <motion.div
               animate={{
-                width: i === active ? 24 : 6,
+                width: i === active ? 28 : 6,
                 background: i === active ? GOLD : "rgba(185,161,103,0.3)",
               }}
               transition={{ duration: 0.35 }}

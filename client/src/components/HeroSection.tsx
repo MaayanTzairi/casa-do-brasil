@@ -9,6 +9,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const HERO_IMAGE =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main-Xjsh9uMVYH6frhxTU2HJ4c.webp";
@@ -64,6 +65,7 @@ export default function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null);
   const [loaded, setLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const { isHe } = useLanguage();
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -198,7 +200,7 @@ export default function HeroSection() {
             fontStyle: "italic",
           }}
         >
-          Brazilian Grill - Music & Churrascaria
+          {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקריה" : "Brazilian Grill - Music & Churrascaria"}
         </motion.p>
 
         {/* CTA Buttons */}
@@ -240,6 +242,7 @@ export default function HeroSection() {
 /* ── Reserve A Table Button ── */
 function ReserveButton({ isMobile }: { isMobile: boolean }) {
   const [hovered, setHovered] = useState(false);
+  const { isHe } = useLanguage();
   return (
     <a
       href="#reservations"
@@ -257,7 +260,7 @@ function ReserveButton({ isMobile }: { isMobile: boolean }) {
         transition: "all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
       }}
     >
-      RESERVE A TABLE <span style={{ fontSize: "1rem", lineHeight: 1 }}>→</span>
+      {isHe ? "הזמן שולחן" : "RESERVE A TABLE"} <span style={{ fontSize: "1rem", lineHeight: 1 }}>→</span>
     </a>
   );
 }
@@ -265,6 +268,7 @@ function ReserveButton({ isMobile }: { isMobile: boolean }) {
 /* ── Explore Menu Button ── */
 function ExploreButton({ isMobile }: { isMobile: boolean }) {
   const [hovered, setHovered] = useState(false);
+  const { isHe } = useLanguage();
   return (
     <a
       href="#menu"
@@ -282,7 +286,7 @@ function ExploreButton({ isMobile }: { isMobile: boolean }) {
         transition: "all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
       }}
     >
-      EXPLORE MENU
+      {isHe ? "לתפריט" : "EXPLORE MENU"}
     </a>
   );
 }

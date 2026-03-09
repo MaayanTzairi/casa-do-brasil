@@ -14,6 +14,7 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const GOLD = "#B9A167";
 const GOLD_R = "rgba(185,161,103,";
@@ -167,6 +168,7 @@ export default function GallerySection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-8%" });
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { isHe } = useLanguage();
 
   // Drag-to-scroll
   const isDragging = useRef(false);
@@ -210,9 +212,9 @@ export default function GallerySection() {
             fontFamily: "'Heebo', sans-serif", fontWeight: 700,
             fontSize: "0.55rem", letterSpacing: "0.44em",
             textTransform: "uppercase", color: GOLD,
-          }}>
-            GALLERY
-          </span>
+          }}
+          >
+            {isHe ? "גלריה" : "GALLERY"}</span>
         </motion.div>
 
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
@@ -226,7 +228,7 @@ export default function GallerySection() {
               color: BORDEAUX, margin: 0, lineHeight: 0.9, letterSpacing: "0.01em",
             }}
           >
-            FEEL THE<br />EXPERIENCE
+            {isHe ? <>חושו את<br />החווייה</> : <>FEEL THE<br />EXPERIENCE</>}
           </motion.h2>
 
           <motion.div
@@ -249,7 +251,7 @@ export default function GallerySection() {
                 onMouseEnter={e => { const el = e.currentTarget as HTMLSpanElement; el.style.background = BORDEAUX; el.style.color = "#fff"; }}
                 onMouseLeave={e => { const el = e.currentTarget as HTMLSpanElement; el.style.background = "transparent"; el.style.color = BORDEAUX; }}
               >
-                VIEW FULL GALLERY <span style={{ fontSize: "0.9rem" }}>→</span>
+                {isHe ? "צפה בגלריה המלאה" : "VIEW FULL GALLERY"} <span style={{ fontSize: "0.9rem" }}>→</span>
               </span>
             </Link>
           </motion.div>
