@@ -167,11 +167,18 @@ export default function Navbar() {
       >
         {isMobile ? (
           <>
-            <a href="/" style={{ display: "flex", alignItems: "center" }}>
+            {/* Left: language toggle */}
+            <div style={{ display: "flex", alignItems: "center", width: 60 }}>
+              <LangToggle scrolled={scrolled} />
+            </div>
+
+            {/* Center: logo */}
+            <a href="/" style={{ display: "flex", alignItems: "center", justifyContent: "center", flex: 1 }}>
               <LogoBadge size={44} scrolled={scrolled} />
             </a>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <LangToggle scrolled={scrolled} />
+
+            {/* Right: hamburger */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", width: 60 }}>
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label="Toggle menu"
