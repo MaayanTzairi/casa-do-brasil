@@ -9,7 +9,7 @@
  * - Mobile: logo left | hamburger right → full-screen overlay menu
  */
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const LOGO_URL =
@@ -28,6 +28,39 @@ const RIGHT_LINKS = [
   { label: "CONTACT",      href: "#contact" },
 ];
 const ALL_LINKS = [...LEFT_LINKS, ...RIGHT_LINKS];
+
+/* ── Logo Badge — original colors + gold circle background ── */
+function LogoBadge({ size }: { size: number }) {
+  const pad = size * 0.12;
+  return (
+    <div
+      style={{
+        width: size,
+        height: size,
+        borderRadius: "50%",
+        background: `radial-gradient(circle at 40% 40%, #e8d9b0 0%, #c9a84c 45%, #8b6914 100%)`,
+        boxShadow: `0 2px 12px rgba(185,161,103,0.45), inset 0 1px 2px rgba(255,240,180,0.5)`,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
+        border: `1.5px solid rgba(185,161,103,0.7)`,
+      }}
+    >
+      <img
+        src={LOGO_URL}
+        alt="Casa do Brasil"
+        style={{
+          width: size - pad * 2,
+          height: size - pad * 2,
+          objectFit: "contain",
+          filter: "none",
+          display: "block",
+        }}
+      />
+    </div>
+  );
+}
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -52,9 +85,6 @@ export default function Navbar() {
   }, [menuOpen]);
 
   const linkColor = scrolled ? BORDEAUX : "#FFFFFF";
-  const logoFilter = scrolled
-    ? "none"  // show original bordeaux/white logo
-    : "brightness(0) saturate(100%) invert(1) sepia(0.2) saturate(1.5) brightness(1.1)"; // white version on dark hero
 
   return (
     <>
@@ -86,16 +116,7 @@ export default function Navbar() {
           /* ── MOBILE ── */
           <>
             <a href="/" style={{ display: "flex", alignItems: "center" }}>
-              <img
-                src={LOGO_URL}
-                alt="Casa do Brasil"
-                style={{
-                  width: "42px", height: "42px",
-                  objectFit: "contain",
-                  filter: logoFilter,
-                  transition: "filter 0.4s ease",
-                }}
-              />
+              <LogoBadge size={44} />
             </a>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -133,18 +154,9 @@ export default function Navbar() {
 
             {/* Center logo */}
             <a href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
-              <motion.img
-                src={LOGO_URL}
-                alt="Casa do Brasil"
-                style={{
-                  width: "54px", height: "54px",
-                  objectFit: "contain",
-                  filter: logoFilter,
-                  transition: "filter 0.4s ease",
-                }}
-                whileHover={{ scale: 1.06 }}
-                transition={{ duration: 0.25 }}
-              />
+              <motion.div whileHover={{ scale: 1.06 }} transition={{ duration: 0.25 }}>
+                <LogoBadge size={56} />
+              </motion.div>
             </a>
 
             {/* Right links */}
