@@ -3,11 +3,11 @@
  * Design: Cinematic Asymmetric Luxury — matches site-wide system
  * Colors: Bordeaux (22,1,3) · Gold (185,161,103) · White · Deep Red (62,4,9)
  * Font: Heebo Black/Bold/Regular/Light only
- * Layout: Horizontal scroll-jacking on desktop, vertical snap on mobile
+ * Layout: Stacked-card scroll on desktop (each card slides up over previous), vertical snap on mobile
  * Chapters: 2002 (Roots) · 2008 (Spark) · 2016 (Growth) · 2026 (Peak)
  */
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -17,7 +17,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const GOLD = "rgb(185,161,103)";
 const GOLD_ALPHA = (a: number) => `rgba(185,161,103,${a})`;
 const BORDEAUX = "rgb(22,1,3)";
-const BORDEAUX_MID = "rgb(62,4,9)";
 
 /* ─── CHAPTER IMAGES ─── */
 const CH1_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/story-ch1-roots-buHiUahabKhA3izt6V7zDV.webp";
@@ -167,11 +166,11 @@ function EmberCanvas({ active }: { active: boolean }) {
   );
 }
 
-/* ─── PROGRESS BAR ─── */
-function ProgressBar({ current, total, chapters }: { current: number; total: number; chapters: Chapter[] }) {
+/* ─── PROGRESS BAR — sticky inside the scroll container ─── */
+function ProgressBar({ current, chapters }: { current: number; chapters: Chapter[] }) {
   return (
     <div style={{
-      position: "fixed",
+      position: "absolute",
       bottom: "2rem",
       left: "50%",
       transform: "translateX(-50%)",
@@ -184,6 +183,7 @@ function ProgressBar({ current, total, chapters }: { current: number; total: num
       border: `1px solid ${GOLD_ALPHA(0.25)}`,
       borderRadius: "100px",
       padding: "0.55rem 1.2rem",
+      pointerEvents: "none",
     }}>
       {chapters.map((ch, i) => (
         <div key={ch.year} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -215,8 +215,8 @@ function ProgressBar({ current, total, chapters }: { current: number; total: num
   );
 }
 
-/* ─── CHAPTER SLIDE (Desktop) ─── */
-function ChapterSlide({
+/* ─── CHAPTER CARD CONTENT ─── */
+function ChapterContent({
   chapter,
   index,
   isActive,
@@ -235,24 +235,14 @@ function ChapterSlide({
   const body = isHe ? chapter.bodyHe : chapter.bodyEn;
 
   return (
-    <div
-      style={{
-        position: "relative",
-        width: isMobile ? "100vw" : "100vw",
-        height: "100vh",
-        flexShrink: 0,
-        overflow: "hidden",
-      }}
-    >
-      {/* Background image with blur-up */}
-      <div
-        style={{
-          position: "absolute", inset: 0,
-          filter: imgLoaded ? "none" : "blur(20px)",
-          transform: imgLoaded ? "scale(1)" : "scale(1.05)",
-          transition: "filter 1.2s ease, transform 1.2s ease",
-        }}
-      >
+    <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}>
+      {/* Background image */}
+      <div style={{
+        position: "absolute", inset: 0,
+        filter: imgLoaded ? "none" : "blur(20px)",
+        transform: imgLoaded ? "scale(1)" : "scale(1.05)",
+        transition: "filter 1.2s ease, transform 1.2s ease",
+      }}>
         <motion.div
           style={{ width: "100%", height: "100%" }}
           animate={isActive ? { scale: [1, 1.06] } : { scale: 1 }}
@@ -262,11 +252,7 @@ function ChapterSlide({
             src={chapter.image}
             alt={chapter.year}
             onLoad={() => setImgLoaded(true)}
-            style={{
-              width: "100%", height: "100%",
-              objectFit: "cover", objectPosition: "center",
-              display: "block",
-            }}
+            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }}
           />
         </motion.div>
       </div>
@@ -283,19 +269,6 @@ function ChapterSlide({
       {/* Ember particles for chapter 2 */}
       {index === 1 && <EmberCanvas active={isActive} />}
 
-      {/* Mask reveal for chapter 3 — animated SVG wave */}
-      {index === 2 && isActive && (
-        <motion.div
-          initial={{ clipPath: "inset(0 100% 0 0)" }}
-          animate={{ clipPath: "inset(0 0% 0 0)" }}
-          transition={{ duration: 1.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
-          style={{
-            position: "absolute", inset: 0, zIndex: 2,
-            background: `linear-gradient(90deg, ${GOLD_ALPHA(0.06)} 0%, transparent 100%)`,
-          }}
-        />
-      )}
-
       {/* Gold shimmer for chapter 4 */}
       {chapter.isPeak && (
         <motion.div
@@ -309,20 +282,18 @@ function ChapterSlide({
       )}
 
       {/* Content */}
-      <div
-        style={{
-          position: "absolute", inset: 0, zIndex: 10,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-end",
-          padding: isMobile
-            ? "0 1.8rem 5rem"
-            : isHe
-              ? "0 6vw 5rem 3vw"
-              : "0 3vw 5rem 6vw",
-          direction: isHe ? "rtl" : "ltr",
-        }}
-      >
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 10,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        padding: isMobile
+          ? "0 1.8rem 5rem"
+          : isHe
+            ? "0 6vw 5rem 3vw"
+            : "0 3vw 5rem 6vw",
+        direction: isHe ? "rtl" : "ltr",
+      }}>
         {/* Chapter label */}
         <AnimatePresence>
           {isActive && (
@@ -331,23 +302,18 @@ function ChapterSlide({
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.65rem",
+                display: "flex", alignItems: "center", gap: "0.65rem",
                 marginBottom: "1.2rem",
                 flexDirection: isHe ? "row-reverse" : "row",
               }}
             >
               <div style={{ width: "24px", height: "1px", background: GOLD }} />
               <span style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 700,
-                fontSize: "0.58rem",
-                letterSpacing: isHe ? "0.08em" : "0.32em",
-                textTransform: "uppercase",
-                color: GOLD,
+                fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+                fontSize: "0.58rem", letterSpacing: isHe ? "0.08em" : "0.32em",
+                textTransform: "uppercase", color: GOLD,
               }}>{label}</span>
             </motion.div>
           )}
@@ -358,21 +324,17 @@ function ChapterSlide({
           {isActive && (
             <motion.div
               key="year"
-              initial={{ opacity: 0, y: 40, rotateX: 20 }}
-              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.9, delay: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
               style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 900,
+                fontFamily: "'Heebo', sans-serif", fontWeight: 900,
                 fontSize: isMobile ? "clamp(72px, 22vw, 120px)" : "clamp(100px, 14vw, 200px)",
                 color: chapter.isPeak ? GOLD : "rgba(255,255,255,0.08)",
-                lineHeight: 0.85,
-                letterSpacing: "-0.02em",
+                lineHeight: 0.85, letterSpacing: "-0.02em",
                 marginBottom: "0.4rem",
-                textShadow: chapter.isPeak
-                  ? `0 0 60px ${GOLD_ALPHA(0.4)}, 0 4px 24px rgba(0,0,0,0.5)`
-                  : "none",
+                textShadow: chapter.isPeak ? `0 0 60px ${GOLD_ALPHA(0.4)}, 0 4px 24px rgba(0,0,0,0.5)` : "none",
                 WebkitTextStroke: chapter.isPeak ? "0" : `1px ${GOLD_ALPHA(0.35)}`,
               }}
             >
@@ -389,13 +351,11 @@ function ChapterSlide({
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.85, delay: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.85, delay: 0.38, ease: [0.25, 0.46, 0.45, 0.94] }}
               style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 900,
+                fontFamily: "'Heebo', sans-serif", fontWeight: 900,
                 fontSize: isMobile ? "clamp(28px, 8vw, 44px)" : "clamp(32px, 3.8vw, 58px)",
-                color: "#fff",
-                lineHeight: 1.05,
+                color: "#fff", lineHeight: 1.05,
                 letterSpacing: isHe ? "0.02em" : "0.08em",
                 margin: "0 0 1.2rem",
                 textShadow: "0 2px 16px rgba(0,0,0,0.4)",
@@ -414,11 +374,9 @@ function ChapterSlide({
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               exit={{ scaleX: 0 }}
-              transition={{ duration: 0.9, delay: 0.5 }}
+              transition={{ duration: 0.9, delay: 0.52 }}
               style={{
-                width: "80px",
-                height: "1px",
-                background: GOLD,
+                width: "80px", height: "1px", background: GOLD,
                 transformOrigin: isHe ? "right" : "left",
                 marginBottom: "1.2rem",
                 marginLeft: isHe ? "auto" : 0,
@@ -436,15 +394,12 @@ function ChapterSlide({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.85, delay: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.85, delay: 0.62, ease: [0.25, 0.46, 0.45, 0.94] }}
               style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 300,
+                fontFamily: "'Heebo', sans-serif", fontWeight: 300,
                 fontSize: isMobile ? "clamp(14px, 3.8vw, 16px)" : "clamp(16px, 1.2vw, 19px)",
-                color: "rgba(255,255,255,0.82)",
-                lineHeight: 1.85,
-                maxWidth: "480px",
-                margin: 0,
+                color: "rgba(255,255,255,0.82)", lineHeight: 1.85,
+                maxWidth: "480px", margin: 0,
                 marginLeft: isHe ? "auto" : 0,
                 textAlign: isHe ? "right" : "left",
               }}
@@ -457,17 +412,13 @@ function ChapterSlide({
 
       {/* Chapter number corner */}
       <div style={{
-        position: "absolute",
-        top: "2rem",
+        position: "absolute", top: "2rem",
         right: isHe ? "auto" : "2.5rem",
         left: isHe ? "2.5rem" : "auto",
         zIndex: 10,
-        fontFamily: "'Heebo', sans-serif",
-        fontWeight: 900,
-        fontSize: "0.48rem",
-        letterSpacing: "0.3em",
-        color: GOLD_ALPHA(0.5),
-        textTransform: "uppercase",
+        fontFamily: "'Heebo', sans-serif", fontWeight: 900,
+        fontSize: "0.48rem", letterSpacing: "0.3em",
+        color: GOLD_ALPHA(0.5), textTransform: "uppercase",
       }}>
         {String(index + 1).padStart(2, "0")} / 04
       </div>
@@ -475,78 +426,118 @@ function ChapterSlide({
   );
 }
 
-/* ─── DESKTOP HORIZONTAL SCROLL ─── */
-function DesktopStory({ isHe, showProgress }: { isHe: boolean; showProgress: boolean }) {
+/* ─── STACKED CARD (Desktop) ─── */
+/**
+ * Each card is absolutely positioned and stacked.
+ * As you scroll, the next card slides up from below (translateY 100vh → 0).
+ * The previous card stays in place (it's underneath).
+ * ProgressBar is inside the sticky viewport so it never escapes the section.
+ */
+function StackedCard({
+  chapter,
+  index,
+  scrollYProgress,
+  totalChapters,
+  activeChapter,
+}: {
+  chapter: Chapter;
+  index: number;
+  scrollYProgress: any;
+  totalChapters: number;
+  activeChapter: number;
+}) {
+  // Each card occupies 1/totalChapters of the scroll range
+  const start = index / totalChapters;
+  const end = (index + 1) / totalChapters;
+
+  // Card slides up from 100vh to 0 during its entry window
+  const y = useTransform(
+    scrollYProgress,
+    [Math.max(0, start - 0.001), end],
+    index === 0 ? ["0%", "0%"] : ["100%", "0%"]
+  );
+
+  // Slight scale-down for cards that are "under" the current one
+  const scale = useTransform(
+    scrollYProgress,
+    [start, end],
+    index === 0 ? [1, 0.96] : [1, 1]
+  );
+
+  return (
+    <motion.div
+      style={{
+        position: "absolute",
+        inset: 0,
+        y,
+        scale,
+        zIndex: index + 1,
+        transformOrigin: "top center",
+        willChange: "transform",
+      }}
+    >
+      <ChapterContent
+        chapter={chapter}
+        index={index}
+        isActive={activeChapter === index}
+        isMobile={false}
+      />
+    </motion.div>
+  );
+}
+
+function DesktopStory({ isHe }: { isHe: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
   const [activeChapter, setActiveChapter] = useState(0);
 
   const { scrollYProgress } = useScroll({ target: containerRef });
 
-  const x = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["0vw", `-${(CHAPTERS.length - 1) * 100}vw`]
-  );
-
-  // Track active chapter
   useEffect(() => {
-    const unsub = scrollYProgress.on("change", (v) => {
-      const idx = Math.min(
-        CHAPTERS.length - 1,
-        Math.floor(v * CHAPTERS.length)
-      );
+    const unsub = scrollYProgress.on("change", (v: number) => {
+      const idx = Math.min(CHAPTERS.length - 1, Math.floor(v * CHAPTERS.length));
       setActiveChapter(idx);
     });
     return unsub;
   }, [scrollYProgress]);
 
   return (
-    <>
-      {/* Sticky scroll container — height = chapters × 100vh */}
-      <div
-        ref={containerRef}
-        style={{ height: `${CHAPTERS.length * 100}vh`, position: "relative" }}
-      >
-        <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
-          <motion.div
-            ref={trackRef}
-            dir="ltr"
-            style={{
-              display: "flex",
-              width: `${CHAPTERS.length * 100}vw`,
-              height: "100vh",
-              x,
-            }}
-          >
-            {CHAPTERS.map((ch, i) => (
-              <ChapterSlide
-                key={ch.year}
-                chapter={ch}
-                index={i}
-                isActive={i === activeChapter}
-                isMobile={false}
-              />
-            ))}
-          </motion.div>
-        </div>
-      </div>
+    /* Outer container: total scroll height = chapters × 100vh */
+    <div
+      ref={containerRef}
+      style={{ height: `${CHAPTERS.length * 100}vh`, position: "relative" }}
+    >
+      {/* Sticky viewport — ProgressBar lives here so it's bounded */}
+      <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
+        {/* Card stack */}
+        {CHAPTERS.map((ch, i) => (
+          <StackedCard
+            key={ch.year}
+            chapter={ch}
+            index={i}
+            scrollYProgress={scrollYProgress}
+            totalChapters={CHAPTERS.length}
+            activeChapter={activeChapter}
+          />
+        ))}
 
-      {showProgress && <ProgressBar current={activeChapter} total={CHAPTERS.length} chapters={CHAPTERS} />}
-    </>
+        {/* ProgressBar — inside sticky, never escapes into footer */}
+        <ProgressBar current={activeChapter} chapters={CHAPTERS} />
+      </div>
+    </div>
   );
 }
 
 /* ─── MOBILE VERTICAL SNAP ─── */
-function MobileStory({ isHe, showProgress }: { isHe: boolean; showProgress: boolean }) {
+function MobileStory({ isHe }: { isHe: boolean }) {
   const [activeChapter, setActiveChapter] = useState(0);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observers = CHAPTERS.map((_, i) => {
       const obs = new IntersectionObserver(
         ([entry]) => { if (entry.isIntersecting) setActiveChapter(i); },
-        { threshold: 0.55 }
+        { threshold: 0.55, root: containerRef.current }
       );
       if (sectionRefs.current[i]) obs.observe(sectionRefs.current[i]!);
       return obs;
@@ -555,25 +546,31 @@ function MobileStory({ isHe, showProgress }: { isHe: boolean; showProgress: bool
   }, []);
 
   return (
-    <>
-      <div style={{ scrollSnapType: "y mandatory", overflowY: "scroll", height: "100vh" }}>
-        {CHAPTERS.map((ch, i) => (
-          <div
-            key={ch.year}
-            ref={el => { sectionRefs.current[i] = el; }}
-            style={{ scrollSnapAlign: "start", height: "100vh" }}
-          >
-            <ChapterSlide
-              chapter={ch}
-              index={i}
-              isActive={i === activeChapter}
-              isMobile={true}
-            />
-          </div>
-        ))}
+    <div
+      ref={containerRef}
+      style={{ position: "relative", scrollSnapType: "y mandatory", overflowY: "scroll", height: "100vh" }}
+    >
+      {CHAPTERS.map((ch, i) => (
+        <div
+          key={ch.year}
+          ref={el => { sectionRefs.current[i] = el; }}
+          style={{ scrollSnapAlign: "start", height: "100vh", position: "relative" }}
+        >
+          <ChapterContent
+            chapter={ch}
+            index={i}
+            isActive={i === activeChapter}
+            isMobile={true}
+          />
+        </div>
+      ))}
+      {/* ProgressBar inside scroll container — bounded */}
+      <div style={{ position: "sticky", bottom: 0, height: 0, zIndex: 100 }}>
+        <div style={{ position: "absolute", bottom: "2rem", left: "50%", transform: "translateX(-50%)" }}>
+          <ProgressBar current={activeChapter} chapters={CHAPTERS} />
+        </div>
       </div>
-      {showProgress && <ProgressBar current={activeChapter} total={CHAPTERS.length} chapters={CHAPTERS} />}
-    </>
+    </div>
   );
 }
 
@@ -599,104 +596,75 @@ function StoryTitleSlide({ isHe }: { isHe: boolean }) {
         transform: loaded ? "scale(1)" : "scale(1.05)",
         transition: "filter 1.4s ease, transform 1.4s ease",
       }}>
-        <motion.div
-          style={{ width: "100%", height: "100%" }}
-          animate={{ scale: [1, 1.05] }}
-          transition={{ duration: 30, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
-        >
-          <img
-            src={TITLE_BG}
-            alt=""
-            onLoad={() => setLoaded(true)}
-            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", display: "block" }}
-          />
-        </motion.div>
+        <img
+          src={TITLE_BG}
+          alt="Casa do Brasil Story"
+          onLoad={() => setLoaded(true)}
+          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", display: "block" }}
+        />
       </div>
 
-      {/* Deep overlay */}
+      {/* Dark overlay */}
       <div style={{
         position: "absolute", inset: 0,
-        background: "linear-gradient(160deg, rgba(22,1,3,0.92) 0%, rgba(62,4,9,0.78) 50%, rgba(10,2,1,0.88) 100%)",
+        background: "linear-gradient(180deg, rgba(22,1,3,0.55) 0%, rgba(22,1,3,0.72) 60%, rgba(22,1,3,0.95) 100%)",
+        zIndex: 1,
       }} />
 
-      {/* Gold shimmer */}
-      <motion.div
-        animate={{ opacity: [0, 0.15, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        style={{
-          position: "absolute", inset: 0,
-          background: "radial-gradient(ellipse at 50% 50%, rgba(185,161,103,0.22) 0%, transparent 65%)",
-        }}
-      />
-
-      {/* Content — centered */}
-      <div style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 2rem" }}>
-        {/* Eyebrow */}
+      {/* Content */}
+      <div style={{
+        position: "relative", zIndex: 2,
+        display: "flex", flexDirection: "column", alignItems: "center",
+        gap: "1.8rem", textAlign: "center",
+        padding: "0 2rem",
+        direction: isHe ? "rtl" : "ltr",
+      }}>
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", marginBottom: "2rem" }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          style={{
+            display: "flex", alignItems: "center", gap: "1rem",
+            flexDirection: isHe ? "row-reverse" : "row",
+          }}
         >
-          <div style={{ width: "40px", height: "1px", background: GOLD_ALPHA(0.6) }} />
+          <div style={{ width: "40px", height: "1px", background: GOLD }} />
           <span style={{
             fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-            fontSize: "0.6rem", letterSpacing: isHe ? "0.1em" : "0.36em",
+            fontSize: "0.6rem", letterSpacing: isHe ? "0.1em" : "0.35em",
             textTransform: "uppercase", color: GOLD,
           }}>
-            {isHe ? "קאסה דו ברזיל" : "CASA DO BRASIL"}
+            {isHe ? "הסיפור שלנו" : "OUR STORY"}
           </span>
-          <div style={{ width: "40px", height: "1px", background: GOLD_ALPHA(0.6) }} />
+          <div style={{ width: "40px", height: "1px", background: GOLD }} />
         </motion.div>
 
-        {/* Main title */}
-        <div style={{ overflow: "hidden", marginBottom: "0.3rem" }}>
-          <motion.h1
-            initial={{ y: 80, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1.0, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-            style={{
-              fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-              fontSize: "clamp(42px, 8vw, 110px)",
-              color: "#fff", lineHeight: 1.0,
-              letterSpacing: isHe ? "0.02em" : "0.04em",
-              margin: 0,
-              textShadow: "0 4px 32px rgba(0,0,0,0.5)",
-            }}
-          >
-            {isHe ? "הסיפור" : "THE STORY"}
-          </motion.h1>
-        </div>
-        <div style={{ overflow: "hidden", marginBottom: "2.5rem" }}>
-          <motion.h1
-            initial={{ y: 80, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1.0, delay: 0.65, ease: [0.25, 0.46, 0.45, 0.94] }}
-            style={{
-              fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-              fontSize: "clamp(42px, 8vw, 110px)",
-              color: GOLD, lineHeight: 1.0,
-              letterSpacing: isHe ? "0.02em" : "0.04em",
-              margin: 0,
-            }}
-          >
-            {isHe ? "שלנו" : "OF US"}
-          </motion.h1>
-        </div>
-
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.85, delay: 0.9 }}
+          transition={{ duration: 1.1, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+          style={{
+            fontFamily: "'Heebo', sans-serif", fontWeight: 900,
+            fontSize: "clamp(52px, 10vw, 130px)",
+            color: "#fff", lineHeight: 0.9,
+            letterSpacing: isHe ? "0.02em" : "0.06em",
+            textShadow: "0 4px 32px rgba(0,0,0,0.5)",
+            margin: 0,
+          }}
+        >
+          {isHe ? "קאסה דו ברזיל" : "CASA DO BRASIL"}
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.9 }}
           style={{
             fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-            fontSize: "clamp(13px, 1.1vw, 16px)",
-            color: "rgba(255,255,255,0.55)",
-            letterSpacing: isHe ? "0.04em" : "0.14em",
+            fontSize: "clamp(14px, 1.5vw, 18px)",
+            color: "rgba(255,255,255,0.65)", letterSpacing: isHe ? "0.04em" : "0.12em",
             textTransform: isHe ? "none" : "uppercase",
-            margin: "0 auto 2.5rem",
-            maxWidth: "380px",
+            margin: 0,
           }}
         >
           {isHe ? "אבי כראל · 2002 עד 2026" : "Avi Carel · 2002 to 2026"}
@@ -734,8 +702,6 @@ function StoryTitleSlide({ isHe }: { isHe: boolean }) {
 export default function StoryPage() {
   const { isHe } = useLanguage();
   const [isMobile, setIsMobile] = useState(false);
-  const [showProgress, setShowProgress] = useState(true);
-  const storyWrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -744,28 +710,14 @@ export default function StoryPage() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Hide ProgressBar once the story section scrolls out of view (into footer)
-  useEffect(() => {
-    const el = storyWrapRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => setShowProgress(entry.isIntersecting),
-      { threshold: 0, rootMargin: "0px 0px -60px 0px" }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
   return (
     <div dir="ltr" style={{ background: BORDEAUX, minHeight: "100vh" }}>
       <Navbar />
       <StoryTitleSlide isHe={isHe} />
-      <div ref={storyWrapRef}>
-        {isMobile
-          ? <MobileStory isHe={isHe} showProgress={showProgress} />
-          : <DesktopStory isHe={isHe} showProgress={showProgress} />
-        }
-      </div>
+      {isMobile
+        ? <MobileStory isHe={isHe} />
+        : <DesktopStory isHe={isHe} />
+      }
       <Footer />
     </div>
   );
