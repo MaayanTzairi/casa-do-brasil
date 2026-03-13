@@ -198,6 +198,17 @@ export default function Footer() {
         >
           {isHe ? "הצהרת נגישות" : "Accessibility Statement"}
         </a>
+        <span style={{ width: "1px", height: "12px", background: "rgba(185,161,103,0.25)", display: "inline-block" }} />
+        <a
+          href="https://www.mt-mc.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "rgba(255,255,255,0.3)", textDecoration: "none", transition: "color 0.2s" }}
+          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GOLD; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.3)"; }}
+        >
+          {isHe ? "עוצב ופותח על ידי MTMC" : "Powered & Designed by MTMC"}
+        </a>
       </div>
     </footer>
   );
