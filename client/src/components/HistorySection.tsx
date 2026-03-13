@@ -112,16 +112,17 @@ export default function HistorySection() {
         style={{ textAlign: "center", marginBottom: 52, padding: "0 40px" }}
       >
         <p style={{
-          fontFamily: "'Cormorant Garamond', serif",
-          fontSize: 10, letterSpacing: "0.28em",
+          fontFamily: "'Heebo', sans-serif",
+          fontWeight: 700,
+          fontSize: "0.55rem", letterSpacing: "0.28em",
           color: GOLD, textTransform: "uppercase", marginBottom: 10,
         }}>
           {isHe ? "מאז 1998" : "Since 1998"}
         </p>
         <h2 style={{
-          fontFamily: isHe ? "'Frank Ruhl Libre', serif" : "'Playfair Display', serif",
+          fontFamily: "'Heebo', sans-serif",
           fontSize: "clamp(36px, 4vw, 56px)",
-          fontWeight: 700, color: CREAM, lineHeight: 1.05, marginBottom: 20,
+          fontWeight: 900, color: CREAM, lineHeight: 1.05, marginBottom: 20,
         }}>
           {isHe ? "הסיפור שלנו" : "OUR STORY"}
         </h2>
@@ -216,7 +217,7 @@ export default function HistorySection() {
                     }}
                   >
                     <div style={{
-                      fontFamily: "'Playfair Display', serif",
+                      fontFamily: "'Heebo', sans-serif",
                       fontSize: "clamp(15px, 1.6vw, 20px)",
                       fontWeight: 700,
                       color: "rgba(245,240,232,0.8)",
@@ -232,8 +233,9 @@ export default function HistorySection() {
                       background: `linear-gradient(to bottom, ${GOLD}, transparent)`,
                     }} />
                     <div style={{
-                      fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: 9,
+                      fontFamily: "'Heebo', sans-serif",
+                      fontWeight: 700,
+                      fontSize: "0.55rem",
                       letterSpacing: "0.2em",
                       textTransform: "uppercase",
                       color: "rgba(185,161,103,0.5)",
@@ -265,9 +267,9 @@ export default function HistorySection() {
                   >
                     {/* Year large */}
                     <div style={{
-                      fontFamily: "'Playfair Display', serif",
+                      fontFamily: "'Heebo', sans-serif",
                       fontSize: "clamp(64px, 7.5vw, 100px)",
-                      fontWeight: 800,
+                      fontWeight: 900,
                       lineHeight: 1,
                       color: "rgba(245,240,232,0.07)",
                       letterSpacing: "-0.03em",
@@ -279,8 +281,9 @@ export default function HistorySection() {
 
                     {/* Gold label */}
                     <p style={{
-                      fontFamily: isHe ? "'Frank Ruhl Libre', serif" : "'Cormorant Garamond', serif",
-                      fontSize: 12,
+                      fontFamily: "'Heebo', sans-serif",
+                      fontWeight: 700,
+                      fontSize: "0.55rem",
                       letterSpacing: isHe ? "0.06em" : "0.24em",
                       textTransform: "uppercase",
                       color: GOLD,
@@ -291,9 +294,9 @@ export default function HistorySection() {
 
                     {/* Title */}
                     <h3 style={{
-                      fontFamily: isHe ? "'Frank Ruhl Libre', serif" : "'Playfair Display', serif",
-                      fontSize: "clamp(21px, 2.3vw, 31px)",
-                      fontWeight: 700,
+                      fontFamily: "'Heebo', sans-serif",
+                      fontSize: "clamp(20px, 2vw, 28px)",
+                      fontWeight: 900,
                       color: CREAM,
                       lineHeight: 1.2,
                       marginBottom: 14,
@@ -313,8 +316,9 @@ export default function HistorySection() {
 
                     {/* Body */}
                     <p style={{
-                      fontFamily: isHe ? "'Frank Ruhl Libre', serif" : "'Cormorant Garamond', serif",
-                      fontSize: "clamp(15px, 1.35vw, 18px)",
+                      fontFamily: "'Heebo', sans-serif",
+                      fontWeight: 300,
+                      fontSize: "clamp(14px, 1.1vw, 17px)",
                       color: "rgba(245,240,232,0.68)",
                       lineHeight: 1.7,
                       margin: 0,
@@ -330,8 +334,9 @@ export default function HistorySection() {
               {/* Chapter number top-right */}
               <div style={{
                 position: "absolute", top: 18, right: 18,
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: 10,
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 700,
+                fontSize: "0.55rem",
                 letterSpacing: "0.18em",
                 color: isActive ? `rgba(185,161,103,0.6)` : "rgba(185,161,103,0.25)",
                 transition: "color 0.4s",
@@ -367,8 +372,9 @@ export default function HistorySection() {
               style={{ height: 2, borderRadius: 2 }}
             />
             <span style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 9,
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 700,
+              fontSize: "0.55rem",
               letterSpacing: "0.18em",
               textTransform: "uppercase",
               color: i === active ? GOLD : "rgba(185,161,103,0.35)",

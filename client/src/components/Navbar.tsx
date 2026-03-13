@@ -116,7 +116,7 @@ function LangToggle({ scrolled }: { scrolled: boolean }) {
       <span style={{
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 700,
-        fontSize: "0.48rem",
+        fontSize: "0.55rem",
         letterSpacing: "0.2em",
         color: color,
         textTransform: "uppercase",
@@ -254,7 +254,7 @@ export default function Navbar() {
                     style={{
                       fontFamily: isHe ? "'Heebo', sans-serif" : "'Heebo', sans-serif",
                       fontWeight: 700,
-                      fontSize: isHe ? "0.78rem" : "0.62rem",
+                      fontSize: "0.65rem",
                       letterSpacing: isHe ? "0.06em" : "0.2em",
                       textTransform: "uppercase",
                       textDecoration: "none",
@@ -366,7 +366,7 @@ function NavLink({
       style={{
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 700,
-        fontSize: isHe ? "0.78rem" : "0.62rem",
+        fontSize: "0.65rem",
         letterSpacing: isHe ? "0.04em" : "0.2em",
         textTransform: "uppercase",
         textDecoration: "none",

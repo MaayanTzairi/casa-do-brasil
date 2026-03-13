@@ -183,7 +183,7 @@ function MenuCard({ img, track, name, nameLine2, subtitle, href, dark=false, del
         {/* Track label */}
         <div style={{ position:"absolute", top:"1.1rem", left:"1.3rem", zIndex:3, display:"flex", alignItems:"center", gap:"0.5rem" }}>
           <div style={{ width:"12px", height:"1px", background:GOLD, opacity:0.85 }} />
-          <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.46rem", letterSpacing:"0.42em", textTransform:"uppercase", color:GOLD }}>{track}</span>
+          <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.55rem", letterSpacing:"0.42em", textTransform:"uppercase", color:GOLD }}>{track}</span>
         </div>
       </div>
 
@@ -211,7 +211,7 @@ function MenuCard({ img, track, name, nameLine2, subtitle, href, dark=false, del
           style={{
             display:"inline-flex", alignItems:"center", gap:"0.4rem",
             fontFamily:"'Heebo', sans-serif", fontWeight:700,
-            fontSize:"0.48rem", letterSpacing:"0.26em",
+            fontSize:"0.55rem", letterSpacing:"0.26em",
             textTransform:"uppercase", textDecoration:"none",
             color: dark ? GOLD : BORDEAUX,
             borderBottom:`1px solid ${GOLD_R}0.5)`,
@@ -354,7 +354,7 @@ export default function MenuSection() {
               style={{
                 display:"inline-flex", alignItems:"center", gap:"0.7rem",
                 fontFamily:"'Heebo', sans-serif", fontWeight:700,
-                fontSize:"0.56rem", letterSpacing:"0.28em",
+                fontSize:"0.55rem", letterSpacing:"0.28em",
                 textTransform:"uppercase", textDecoration:"none",
                 color:BORDEAUX, padding:"0.85rem 2rem",
                 border:`1.5px solid ${GOLD}`,

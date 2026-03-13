@@ -44,7 +44,7 @@ export default function Footer() {
           <div style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 700,
-            fontSize: "0.5rem",
+            fontSize: "0.55rem",
             letterSpacing: "0.3em",
             textTransform: "uppercase",
             color: GOLD,
@@ -128,7 +128,7 @@ export default function Footer() {
           <div style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 700,
-            fontSize: "0.5rem",
+            fontSize: "0.55rem",
             letterSpacing: "0.3em",
             textTransform: "uppercase",
             color: GOLD,
