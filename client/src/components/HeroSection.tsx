@@ -136,11 +136,17 @@ export default function HeroSection() {
       */}
       {!isMobile && (
         <div className="absolute pointer-events-none" style={{ zIndex: 2, top: 0, left: "20px", right: "20px", bottom: "20px" }}>
-          {/* Top line — at 35px = exact vertical center of navbar (70px / 2) */}
+          {/* Top line — full width, just below the navbar (70px height + 12px gap = 82px) */}
           <motion.div
             className="absolute left-0 right-0 h-px"
-            style={{ top: "35px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }}
-            variants={lineVariants} initial="hidden" animate="visible"
+            style={{
+              top: "82px",
+              background: "rgba(185,161,103,0.55)",
+              transformOrigin: "left",
+            }}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1.2, delay: 0.7, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }}
           />
           {/* Bottom line */}
           <motion.div
