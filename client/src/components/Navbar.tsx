@@ -185,7 +185,7 @@ export default function Navbar() {
         {isMobile ? (
           <>
             {/* Left: Reservation button */}
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
               <a
                 href="https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73"
                 target="_blank"
@@ -209,13 +209,19 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Center: logo */}
-            <a href="/" style={{ display: "flex", alignItems: "center", justifyContent: "center", flex: 1 }}>
+            {/* Center: logo — absolutely centered so left/right widths don't affect it */}
+            <a href="/" style={{
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
+              display: "flex", alignItems: "center",
+              zIndex: 1,
+            }}>
               <LogoBadge size={44} scrolled={scrolled} />
             </a>
 
             {/* Right: language toggle + hamburger */}
-            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", justifyContent: "flex-end" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", justifyContent: "flex-end", flex: 1 }}>
               <LangToggle scrolled={scrolled} />
               <button
                 onClick={() => setMenuOpen(!menuOpen)}

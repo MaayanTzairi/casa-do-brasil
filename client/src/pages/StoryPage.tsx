@@ -410,7 +410,8 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
         overflow: "hidden",
       }}>
         {/* Card stack container — cards are absolutely positioned inside */}
-        <div style={{ position: "relative", width: "88vw", height: "82vh" }}>
+        {/* Height: 100vh minus navbar (70px) minus top/bottom margins (2*1.5rem) ≈ 76vh */}
+        <div style={{ position: "relative", width: "88vw", height: "76vh", marginTop: "1.5rem" }}>
           {CHAPTERS.map((ch, i) => (
             <DeckCard
               key={ch.year}
@@ -448,7 +449,7 @@ function DeckCard({
 
   // Card enters from below (full card height below viewport) and slides to its settled position
   // Card 0 starts at 50% (half-visible in hero)
-  const CARD_H = typeof window !== "undefined" ? window.innerHeight * 0.82 : 800;
+  const CARD_H = typeof window !== "undefined" ? window.innerHeight * 0.76 : 700;
   const enterFrom = index === 0 ? CARD_H * 0.5 : CARD_H * 1.05;
 
   const y = useTransform(
