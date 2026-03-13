@@ -10,7 +10,6 @@ import SectionDivider from "@/components/SectionDivider";
 import MenuSection from "@/components/MenuSection";
 import SectionDivider2 from "@/components/SectionDivider2";
 import GallerySection from "@/components/GallerySection";
-import HistorySection from "@/components/HistorySection";
 import Footer from "@/components/Footer";
 export default function Home() {
   return (
@@ -23,7 +22,6 @@ export default function Home() {
         <MenuSection />
         <SectionDivider2 />
         <GallerySection />
-        <HistorySection />
       </main>
       <Footer />
     </>
