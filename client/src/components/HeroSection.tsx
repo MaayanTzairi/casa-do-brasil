@@ -249,11 +249,11 @@ export default function HeroSection() {
         </motion.div>
       </motion.div>
 
-      {/* ── Social Icons — left side, desktop only ── */}
+      {/* ── Social Icons — same side as SCROLL, above it, desktop only ── */}
       {!isMobile && (
         <motion.div
           className="absolute z-20 flex flex-col items-center gap-4"
-          style={{ bottom: "2rem", left: "2.5rem" }}
+          style={{ bottom: "9rem", right: isHe ? undefined : "2.5rem", left: isHe ? "2.5rem" : undefined }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 2.4 }}
@@ -298,7 +298,7 @@ export default function HeroSection() {
       {!isMobile && (
         <motion.div
           className="absolute z-20 flex flex-col items-center gap-2"
-          style={{ bottom: "2rem", right: "2.5rem" }}
+          style={{ bottom: "2rem", right: isHe ? undefined : "2.5rem", left: isHe ? "2.5rem" : undefined }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 2.2 }}
