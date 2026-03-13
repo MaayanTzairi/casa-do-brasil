@@ -476,7 +476,7 @@ function ChapterSlide({
 }
 
 /* ─── DESKTOP HORIZONTAL SCROLL ─── */
-function DesktopStory({ isHe }: { isHe: boolean }) {
+function DesktopStory({ isHe, showProgress }: { isHe: boolean; showProgress: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeChapter, setActiveChapter] = useState(0);
@@ -532,13 +532,13 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
         </div>
       </div>
 
-      <ProgressBar current={activeChapter} total={CHAPTERS.length} chapters={CHAPTERS} />
+      {showProgress && <ProgressBar current={activeChapter} total={CHAPTERS.length} chapters={CHAPTERS} />}
     </>
   );
 }
 
 /* ─── MOBILE VERTICAL SNAP ─── */
-function MobileStory({ isHe }: { isHe: boolean }) {
+function MobileStory({ isHe, showProgress }: { isHe: boolean; showProgress: boolean }) {
   const [activeChapter, setActiveChapter] = useState(0);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -572,7 +572,7 @@ function MobileStory({ isHe }: { isHe: boolean }) {
           </div>
         ))}
       </div>
-      <ProgressBar current={activeChapter} total={CHAPTERS.length} chapters={CHAPTERS} />
+      {showProgress && <ProgressBar current={activeChapter} total={CHAPTERS.length} chapters={CHAPTERS} />}
     </>
   );
 }
@@ -734,6 +734,8 @@ function StoryTitleSlide({ isHe }: { isHe: boolean }) {
 export default function StoryPage() {
   const { isHe } = useLanguage();
   const [isMobile, setIsMobile] = useState(false);
+  const [showProgress, setShowProgress] = useState(true);
+  const storyWrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -742,14 +744,28 @@ export default function StoryPage() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // Hide ProgressBar once the story section scrolls out of view (into footer)
+  useEffect(() => {
+    const el = storyWrapRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setShowProgress(entry.isIntersecting),
+      { threshold: 0, rootMargin: "0px 0px -60px 0px" }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <div dir="ltr" style={{ background: BORDEAUX, minHeight: "100vh" }}>
       <Navbar />
       <StoryTitleSlide isHe={isHe} />
-      {isMobile
-        ? <MobileStory isHe={isHe} />
-        : <DesktopStory isHe={isHe} />
-      }
+      <div ref={storyWrapRef}>
+        {isMobile
+          ? <MobileStory isHe={isHe} showProgress={showProgress} />
+          : <DesktopStory isHe={isHe} showProgress={showProgress} />
+        }
+      </div>
       <Footer />
     </div>
   );

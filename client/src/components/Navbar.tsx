@@ -36,7 +36,7 @@ const BORDEAUX = "rgb(62,4,9)";
 const LINKS_EN = {
   left: [
     { label: "MENU",       href: "/menu" },
-    { label: "EXPERIENCE", href: "/story" },
+    { label: "OUR STORY", href: "/story" },
     { label: "GALLERY",    href: "/gallery" },
   ],
   right: [
@@ -48,7 +48,7 @@ const LINKS_EN = {
 const LINKS_HE = {
   left: [
     { label: "תפריט",    href: "/menu" },
-    { label: "חווייה",    href: "/story" },
+    { label: "הסיפור שלנו", href: "/story" },
     { label: "גלריה",    href: "/gallery" },
   ],
   right: [
