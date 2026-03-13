@@ -401,6 +401,7 @@ const MENU_DATA: MenuCategory[] = [
     description: "All prices are per kilogram. Items marked * are without discount. Special offer: buy fresh meat for ₪600 and receive a set of starters for free!",
     descriptionHe: "כל המחירים הם לקילוגרם. פריטים המסומנים ב-* הם ללא הנחה. מבצע מיוחד: קנה בשר טרי ב-600 שקל וקבל סט פתיחות במתנה!",
     type: "weight",
+    illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/%D7%A2%D7%99%D7%A6%D7%95%D7%91%D7%9C%D7%9C%D7%90%D7%A9%D7%9D-2026-03-13T215252.800_6a195421.png",
     items: [
       { name: "Picanha", nameHe: "פיקאניה", description: "", descriptionHe: "", price: "₪269 / kg" },
       { name: "Spring Chicken", nameHe: "פרגית", description: "", descriptionHe: "", price: "₪139 / kg" },
