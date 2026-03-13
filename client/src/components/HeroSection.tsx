@@ -155,17 +155,17 @@ export default function HeroSection() {
             initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
             transition={{ duration: 1.2, delay: 1.1, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }}
           />
-          {/* Left line — starts from top line (35px) downward */}
+          {/* Left line — starts from top line (82px) downward */}
           <motion.div
             className="absolute left-0 w-px"
-            style={{ top: "35px", bottom: 0, background: "rgba(185,161,103,0.55)", transformOrigin: "top" }}
+            style={{ top: "82px", bottom: 0, background: "rgba(185,161,103,0.55)", transformOrigin: "top" }}
             initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
             transition={{ duration: 1.2, delay: 0.9, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }}
           />
-          {/* Right line — starts from top line (35px) downward */}
+          {/* Right line — starts from top line (82px) downward */}
           <motion.div
             className="absolute right-0 w-px"
-            style={{ top: "35px", bottom: 0, background: "rgba(185,161,103,0.55)", transformOrigin: "top" }}
+            style={{ top: "82px", bottom: 0, background: "rgba(185,161,103,0.55)", transformOrigin: "top" }}
             initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
             transition={{ duration: 1.2, delay: 1.05, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }}
           />
