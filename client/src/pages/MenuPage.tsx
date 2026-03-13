@@ -11,6 +11,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const GOLD = "#B9A167";
@@ -1423,22 +1424,7 @@ export default function MenuPage() {
         </AnimatePresence>
       </div>
 
-      {/* Footer strip */}
-      <div style={{
-        borderTop: `1px solid ${GOLD_R}0.2)`,
-        padding: "2.5rem 6vw",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "1rem",
-        background: "#faf9f7",
-      }}>
-        <div style={{ width: "28px", height: "1px", background: GOLD }} />
-        <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: GOLD }}>
-          {isHe ? "קאסה דו ברזיל — גריל ברזילאי" : "Casa do Brasil — Brazilian Grill"}
-        </span>
-        <div style={{ width: "28px", height: "1px", background: GOLD }} />
-      </div>
+      <Footer />
     </div>
   );
 }

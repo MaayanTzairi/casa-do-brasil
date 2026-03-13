@@ -249,8 +249,8 @@ export default function Navbar() {
                     style={{
                       fontFamily: isHe ? "'Heebo', sans-serif" : "'Heebo', sans-serif",
                       fontWeight: 700,
-                      fontSize: isHe ? "0.6rem" : "0.48rem",
-                      letterSpacing: isHe ? "0.08em" : "0.26em",
+                      fontSize: isHe ? "0.78rem" : "0.62rem",
+                      letterSpacing: isHe ? "0.06em" : "0.2em",
                       textTransform: "uppercase",
                       textDecoration: "none",
                       color: scrolled ? "#fff" : GOLD,
@@ -361,8 +361,8 @@ function NavLink({
       style={{
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 700,
-        fontSize: isHe ? "0.6rem" : "0.48rem",
-        letterSpacing: isHe ? "0.04em" : "0.26em",
+        fontSize: isHe ? "0.78rem" : "0.62rem",
+        letterSpacing: isHe ? "0.04em" : "0.2em",
         textTransform: "uppercase",
         textDecoration: "none",
         color: hovered ? GOLD : color,

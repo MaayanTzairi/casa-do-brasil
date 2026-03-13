@@ -162,13 +162,13 @@ export default function CasaVibesSection() {
             style={{ display: "flex", gap: "2.2rem", marginBottom: "2.2rem", flexWrap: "wrap", justifyContent: isHe ? "flex-end" : "flex-start" }}
           >
             {(isHe ? [
-              { num: "25+", label: "קטעים" },
-              { num: "חי", label: "מוזיקה" },
-              { num: "רודיזיו", label: "כל כלול" },
+              { num: "קצביה", label: "ביתית" },
+              { num: "רוח", label: "הקרנבל" },
+              { num: "צ׳וראס", label: "קריה" },
             ] : [
-              { num: "25+", label: "CUTS" },
-              { num: "LIVE", label: "MUSIC" },
-              { num: "RODIZIO", label: "ALL-INCLUSIVE" },
+              { num: "BUTCHER'S", label: "CUT" },
+              { num: "CARNIVAL", label: "SPIRIT" },
+              { num: "CHURRAS", label: "CARIA" },
             ]).map((s) => (
               <div key={s.label}>
                 <div style={{

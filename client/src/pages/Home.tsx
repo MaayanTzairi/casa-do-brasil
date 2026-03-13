@@ -11,7 +11,7 @@ import MenuSection from "@/components/MenuSection";
 import SectionDivider2 from "@/components/SectionDivider2";
 import GallerySection from "@/components/GallerySection";
 import HistorySection from "@/components/HistorySection";
-
+import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
@@ -25,6 +25,7 @@ export default function Home() {
         <GallerySection />
         <HistorySection />
       </main>
+      <Footer />
     </>
   );
 }

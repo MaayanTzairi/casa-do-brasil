@@ -105,8 +105,8 @@ export default function HeroSection() {
       >
         <motion.div
           className="w-full h-full"
-          animate={{ scale: [1, 1.07] }}
-          transition={{ duration: 30, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
+          animate={{ scale: [1, 1.08], x: ["0%", "1.5%"], y: ["0%", "-1%"] }}
+          transition={{ duration: 28, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
         >
           <div
             className="w-full h-full bg-cover bg-center"
