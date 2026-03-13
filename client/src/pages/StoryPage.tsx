@@ -368,13 +368,16 @@ function CardContent({
 /* ─── DESKTOP: STACKED FLOATING CARDS ─── */
 /**
  * Cards are centered with margins — Bordeaux background visible around them.
- * Each card slides up from below over the previous card.
+ * Each card slides up SLOWLY from below over the previous card.
+ * Previous card stays visible (scaled down slightly) so you see the deck effect.
+ * First card is already partially visible in the Hero (starts 30% visible).
  * Card dimensions: ~88vw × ~82vh, centered.
  */
 function DesktopStory({ isHe }: { isHe: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeChapter, setActiveChapter] = useState(0);
 
+  // Use the whole scroll container including the title slide overlap
   const { scrollYProgress } = useScroll({ target: containerRef });
 
   useEffect(() => {
@@ -386,9 +389,10 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
   }, [scrollYProgress]);
 
   return (
+    // Extra height for the title-slide overlap (30vh) so first card starts peeking
     <div
       ref={containerRef}
-      style={{ height: `${CHAPTERS.length * 100}vh`, position: "relative" }}
+      style={{ height: `${CHAPTERS.length * 100 + 30}vh`, position: "relative", marginTop: "-30vh" }}
     >
       {/* Sticky viewport */}
       <div style={{
@@ -427,21 +431,35 @@ function StackedFloatingCard({
   chapter: Chapter; index: number; scrollYProgress: any;
   totalChapters: number; activeChapter: number;
 }) {
-  const start = index / totalChapters;
-  const end = (index + 1) / totalChapters;
+  const CARD_HEIGHT = typeof window !== "undefined" ? window.innerHeight * 0.82 : 800;
+  const segSize = 1 / totalChapters;
+  const start = index * segSize;
+  const end = (index + 1) * segSize;
 
-  // Slide up from 100% to 0% during its entry window; first card starts at 0
+  // First card: peeks from 60% below, slides to 0 (settled)
+  // Other cards: slide up from full card height below, over 55% of their segment
   const y = useTransform(
     scrollYProgress,
-    [Math.max(0, start - 0.001), Math.min(1, start + 0.25 / totalChapters)],
-    index === 0 ? ["0%", "0%"] : ["100%", "0%"]
+    index === 0
+      ? [0, segSize * 0.4]
+      : [start, start + segSize * 0.55],
+    index === 0
+      ? [CARD_HEIGHT * 0.6, 0]
+      : [CARD_HEIGHT * 1.1, 0]
   );
 
-  // Cards underneath scale down slightly to show depth
+  // Previous card scales down gently as next card arrives — stays visible
   const scale = useTransform(
     scrollYProgress,
     [start, end],
-    [1, index < totalChapters - 1 ? 0.97 : 1]
+    index < totalChapters - 1 ? [1, 0.94] : [1, 1]
+  );
+
+  // Previous card fades very slightly (not fully) so you still see it
+  const opacity = useTransform(
+    scrollYProgress,
+    [start, end],
+    index < totalChapters - 1 ? [1, 0.7] : [1, 1]
   );
 
   return (
@@ -451,6 +469,7 @@ function StackedFloatingCard({
         inset: 0,
         y,
         scale,
+        opacity,
         zIndex: index + 1,
         transformOrigin: "top center",
         willChange: "transform",
@@ -542,11 +561,12 @@ function MobileStory({ isHe }: { isHe: boolean }) {
 }
 
 /* ─── STORY TITLE SLIDE ─── */
+// Title slide is 70vh — the first card peeks from below
 function StoryTitleSlide({ isHe }: { isHe: boolean }) {
   return (
     <div style={{
       width: "100vw",
-      height: "100vh",
+      height: "70vh",
       background: BORDEAUX,
       display: "flex",
       flexDirection: "column",
@@ -555,6 +575,8 @@ function StoryTitleSlide({ isHe }: { isHe: boolean }) {
       gap: "1.4rem",
       textAlign: "center",
       padding: "0 2rem",
+      position: "relative",
+      zIndex: 1,
     }}>
       {/* Thin gold line above */}
       <motion.div

@@ -184,9 +184,29 @@ export default function Navbar() {
       >
         {isMobile ? (
           <>
-            {/* Left: language toggle */}
-            <div style={{ display: "flex", alignItems: "center", width: 60 }}>
-              <LangToggle scrolled={scrolled} />
+            {/* Left: Reservation button */}
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <a
+                href="https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontFamily: "'Heebo', sans-serif",
+                  fontWeight: 700,
+                  fontSize: "0.55rem",
+                  letterSpacing: isHe ? "0.04em" : "0.14em",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                  color: scrolled ? "#fff" : GOLD,
+                  background: scrolled ? BORDEAUX : "transparent",
+                  border: `1.5px solid ${scrolled ? BORDEAUX : GOLD}`,
+                  padding: "0.35rem 0.7rem",
+                  whiteSpace: "nowrap",
+                  transition: "all 0.3s ease",
+                }}
+              >
+                {isHe ? "הזמנה" : "RESERVE"}
+              </a>
             </div>
 
             {/* Center: logo */}
@@ -194,8 +214,9 @@ export default function Navbar() {
               <LogoBadge size={44} scrolled={scrolled} />
             </a>
 
-            {/* Right: hamburger */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", width: 60 }}>
+            {/* Right: language toggle + hamburger */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", justifyContent: "flex-end" }}>
+              <LangToggle scrolled={scrolled} />
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label="Toggle menu"
