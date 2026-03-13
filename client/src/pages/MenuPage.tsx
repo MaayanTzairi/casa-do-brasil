@@ -490,6 +490,7 @@ const MENU_DATA: MenuCategory[] = [
     description: "Lunch deals include shared starters and your choice of a main course. Available every day 12:00–15:00.",
     descriptionHe: "מבצעי הצהריים כוללים מנות פתיחה משותפות ועיקרית לבחירתכם. בכל יום 12:00–15:00.",
     type: "deal",
+    illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/casa-deal-illustration_f775f415.webp",
     items: [],
     lunchStarters: [
       { name: "White Brazilian rice", nameHe: "אורז לבן ברזילאי" },
