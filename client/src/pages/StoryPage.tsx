@@ -440,7 +440,7 @@ function ChapterSlide({
               style={{
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 300,
-                fontSize: isMobile ? "clamp(14px, 3.8vw, 16px)" : "clamp(14px, 1.1vw, 17px)",
+                fontSize: isMobile ? "clamp(14px, 3.8vw, 16px)" : "clamp(16px, 1.2vw, 19px)",
                 color: "rgba(255,255,255,0.82)",
                 lineHeight: 1.85,
                 maxWidth: "480px",

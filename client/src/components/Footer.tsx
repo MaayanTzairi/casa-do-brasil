@@ -44,7 +44,7 @@ export default function Footer() {
           <div style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 700,
-            fontSize: "0.55rem",
+            fontSize: "0.65rem",
             letterSpacing: "0.3em",
             textTransform: "uppercase",
             color: GOLD,
@@ -114,7 +114,7 @@ export default function Footer() {
           <div style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 900,
-            fontSize: "0.55rem",
+            fontSize: "0.65rem",
             letterSpacing: "0.28em",
             textTransform: "uppercase",
             color: "rgba(255,255,255,0.5)",
@@ -128,7 +128,7 @@ export default function Footer() {
           <div style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 700,
-            fontSize: "0.55rem",
+            fontSize: "0.65rem",
             letterSpacing: "0.3em",
             textTransform: "uppercase",
             color: GOLD,
@@ -170,7 +170,7 @@ export default function Footer() {
         textAlign: "center",
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 300,
-        fontSize: "0.7rem",
+        fontSize: "0.75rem",
         letterSpacing: "0.12em",
         color: "rgba(255,255,255,0.3)",
       }}>

@@ -142,7 +142,7 @@ function GalleryCard({ img, delay, inView }: { img: typeof IMAGES[0]; delay: num
           <div style={{ width: "10px", height: "1px", background: GOLD }} />
           <span style={{
             fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-            fontSize: "0.55rem", letterSpacing: "0.38em",
+            fontSize: "0.65rem", letterSpacing: "0.38em",
             textTransform: "uppercase", color: GOLD,
           }}>
             {img.label}
@@ -210,7 +210,7 @@ export default function GallerySection() {
           <div style={{ width: "20px", height: "1px", background: GOLD }} />
           <span style={{
             fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-            fontSize: "0.55rem", letterSpacing: "0.44em",
+            fontSize: "0.65rem", letterSpacing: "0.44em",
             textTransform: "uppercase", color: GOLD,
           }}
           >
@@ -241,7 +241,7 @@ export default function GallerySection() {
                 style={{
                   display: "inline-flex", alignItems: "center", gap: "0.7rem",
                   fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                  fontSize: "0.55rem", letterSpacing: "0.28em",
+                  fontSize: "0.65rem", letterSpacing: "0.28em",
                   textTransform: "uppercase", textDecoration: "none",
                   color: BORDEAUX, padding: "0.85rem 2rem",
                   border: `1.5px solid ${GOLD}`,

@@ -47,7 +47,7 @@ export default function Gallery() {
         <Link href="/">
           <span style={{
             fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-            fontSize: "0.55rem", letterSpacing: "0.28em",
+            fontSize: "0.65rem", letterSpacing: "0.28em",
             textTransform: "uppercase", color: BORDEAUX,
             cursor: "pointer", textDecoration: "none",
             display: "flex", alignItems: "center", gap: "0.5rem",
@@ -77,7 +77,7 @@ export default function Gallery() {
           <div style={{ width: "20px", height: "1px", background: GOLD }} />
           <span style={{
             fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-            fontSize: "0.55rem", letterSpacing: "0.44em",
+            fontSize: "0.65rem", letterSpacing: "0.44em",
             textTransform: "uppercase", color: GOLD,
           }}>GALLERY</span>
         </div>
@@ -98,7 +98,7 @@ export default function Gallery() {
               onClick={() => setCat(c.id)}
               style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                fontSize: "0.55rem", letterSpacing: "0.28em",
+                fontSize: "0.65rem", letterSpacing: "0.28em",
                 textTransform: "uppercase",
                 padding: "0.55rem 1.4rem",
                 border: `1px solid ${cat === c.id ? BORDEAUX : GOLD_R + "0.4)"}`,
@@ -157,7 +157,7 @@ export default function Gallery() {
                   <div style={{ width: "8px", height: "1px", background: GOLD }} />
                   <span style={{
                     fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                    fontSize: "0.55rem", letterSpacing: "0.36em",
+                    fontSize: "0.65rem", letterSpacing: "0.36em",
                     textTransform: "uppercase", color: GOLD,
                   }}>{img.label}</span>
                 </div>

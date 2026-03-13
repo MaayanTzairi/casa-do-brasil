@@ -116,7 +116,7 @@ function LangToggle({ scrolled }: { scrolled: boolean }) {
       <span style={{
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 700,
-        fontSize: "0.55rem",
+        fontSize: "0.65rem",
         letterSpacing: "0.2em",
         color: color,
         textTransform: "uppercase",

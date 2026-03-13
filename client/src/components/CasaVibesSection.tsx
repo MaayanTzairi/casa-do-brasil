@@ -178,7 +178,7 @@ export default function CasaVibesSection() {
                 }}>{s.num}</div>
                 <div style={{
                   fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                  fontSize: "0.55rem", letterSpacing: "0.22em",
+                  fontSize: "0.65rem", letterSpacing: "0.22em",
                   color: BORDEAUX, marginTop: "4px",
                 }}>{s.label}</div>
               </div>
@@ -222,7 +222,7 @@ export default function CasaVibesSection() {
                   <img src={img.src} alt={img.label} style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover", objectPosition: img.pos, display: "block" }} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.75) 0%, transparent 55%)", pointerEvents: "none" }} />
                   <div style={{ position: "absolute", bottom: "1rem", left: "1rem" }}>
-                    <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.3em", color: GOLD, marginBottom: "0.2rem" }}>{img.label}</div>
+                    <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.3em", color: GOLD, marginBottom: "0.2rem" }}>{img.label}</div>
                     <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(15px, 4vw, 20px)", color: "#fff", lineHeight: 1.1 }}>{img.title}</div>
                   </div>
                 </div>
@@ -249,7 +249,7 @@ export default function CasaVibesSection() {
                 />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 52%)", pointerEvents: "none" }} />
                 <div style={{ position: "absolute", bottom: "1.2rem", left: "1.2rem" }}>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.32em", color: GOLD, marginBottom: "0.25rem" }}>CHURRASCO</div>
+                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.32em", color: GOLD, marginBottom: "0.25rem" }}>CHURRASCO</div>
                   <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(14px, 1.5vw, 19px)", color: "#fff", lineHeight: 1.1 }}>THE ART<br />OF FIRE</div>
                 </div>
               </div>
@@ -271,7 +271,7 @@ export default function CasaVibesSection() {
                 />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.80) 0%, transparent 52%)", pointerEvents: "none" }} />
                 <div style={{ position: "absolute", bottom: "1.2rem", left: "1.2rem" }}>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.32em", color: GOLD, marginBottom: "0.25rem" }}>CARNIVAL</div>
+                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.32em", color: GOLD, marginBottom: "0.25rem" }}>CARNIVAL</div>
                   <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(14px, 1.5vw, 19px)", color: "#fff", lineHeight: 1.1 }}>THE SOUL<br />OF BRASIL</div>
                 </div>
               </div>

@@ -114,7 +114,7 @@ export default function HistorySection() {
         <p style={{
           fontFamily: "'Heebo', sans-serif",
           fontWeight: 700,
-          fontSize: "0.55rem", letterSpacing: "0.28em",
+          fontSize: "0.65rem", letterSpacing: "0.28em",
           color: GOLD, textTransform: "uppercase", marginBottom: 10,
         }}>
           {isHe ? "מאז 1998" : "Since 1998"}
@@ -218,7 +218,7 @@ export default function HistorySection() {
                   >
                     <div style={{
                       fontFamily: "'Heebo', sans-serif",
-                      fontSize: "clamp(15px, 1.6vw, 20px)",
+                      fontSize: "clamp(16px, 1.6vw, 20px)",
                       fontWeight: 700,
                       color: "rgba(245,240,232,0.8)",
                       writingMode: "vertical-rl",
@@ -235,7 +235,7 @@ export default function HistorySection() {
                     <div style={{
                       fontFamily: "'Heebo', sans-serif",
                       fontWeight: 700,
-                      fontSize: "0.55rem",
+                      fontSize: "0.65rem",
                       letterSpacing: "0.2em",
                       textTransform: "uppercase",
                       color: "rgba(185,161,103,0.5)",
@@ -283,7 +283,7 @@ export default function HistorySection() {
                     <p style={{
                       fontFamily: "'Heebo', sans-serif",
                       fontWeight: 700,
-                      fontSize: "0.55rem",
+                      fontSize: "0.65rem",
                       letterSpacing: isHe ? "0.06em" : "0.24em",
                       textTransform: "uppercase",
                       color: GOLD,
@@ -318,7 +318,7 @@ export default function HistorySection() {
                     <p style={{
                       fontFamily: "'Heebo', sans-serif",
                       fontWeight: 300,
-                      fontSize: "clamp(14px, 1.1vw, 17px)",
+                      fontSize: "clamp(16px, 1.2vw, 19px)",
                       color: "rgba(245,240,232,0.68)",
                       lineHeight: 1.7,
                       margin: 0,
@@ -336,7 +336,7 @@ export default function HistorySection() {
                 position: "absolute", top: 18, right: 18,
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 700,
-                fontSize: "0.55rem",
+                fontSize: "0.65rem",
                 letterSpacing: "0.18em",
                 color: isActive ? `rgba(185,161,103,0.6)` : "rgba(185,161,103,0.25)",
                 transition: "color 0.4s",
@@ -374,7 +374,7 @@ export default function HistorySection() {
             <span style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 700,
-              fontSize: "0.55rem",
+              fontSize: "0.65rem",
               letterSpacing: "0.18em",
               textTransform: "uppercase",
               color: i === active ? GOLD : "rgba(185,161,103,0.35)",
