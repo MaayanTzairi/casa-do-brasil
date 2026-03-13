@@ -511,6 +511,7 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
         <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
           <motion.div
             ref={trackRef}
+            dir="ltr"
             style={{
               display: "flex",
               width: `${CHAPTERS.length * 100}vw`,
@@ -576,111 +577,155 @@ function MobileStory({ isHe }: { isHe: boolean }) {
   );
 }
 
-/* ─── STORY INTRO BANNER ─── */
-function StoryIntroBanner({ isHe }: { isHe: boolean }) {
+/* ─── STORY TITLE SLIDE ─── */
+const TITLE_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/story-ch1-roots-buHiUahabKhA3izt6V7zDV.webp";
+
+function StoryTitleSlide({ isHe }: { isHe: boolean }) {
+  const [loaded, setLoaded] = useState(false);
   return (
     <div style={{
-      background: BORDEAUX,
-      padding: "5rem 6vw 4rem",
-      textAlign: "center",
-      borderBottom: `1px solid ${GOLD_ALPHA(0.18)}`,
+      position: "relative",
+      width: "100vw",
+      height: "100vh",
+      overflow: "hidden",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
     }}>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "1rem",
-          marginBottom: "1.5rem",
-        }}
-      >
-        <div style={{ width: "40px", height: "1px", background: GOLD_ALPHA(0.5) }} />
-        <span style={{
-          fontFamily: "'Heebo', sans-serif",
-          fontWeight: 700,
-          fontSize: "0.58rem",
-          letterSpacing: isHe ? "0.1em" : "0.38em",
-          textTransform: "uppercase",
-          color: GOLD,
-        }}>
-          {isHe ? "הסיפור שלנו" : "OUR STORY"}
-        </span>
-        <div style={{ width: "40px", height: "1px", background: GOLD_ALPHA(0.5) }} />
-      </motion.div>
-
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, delay: 0.15 }}
-        style={{
-          fontFamily: "'Heebo', sans-serif",
-          fontWeight: 900,
-          fontSize: "clamp(32px, 5vw, 64px)",
-          color: "#fff",
-          lineHeight: 1.05,
-          letterSpacing: isHe ? "0.02em" : "0.04em",
-          margin: "0 0 1.2rem",
-        }}
-      >
-        {isHe ? "מסע של 24 שנה" : "A 24-Year Journey"}
-      </motion.h1>
-
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.85, delay: 0.3 }}
-        style={{
-          fontFamily: "'Heebo', sans-serif",
-          fontWeight: 300,
-          fontSize: "clamp(14px, 1.2vw, 17px)",
-          color: "rgba(255,255,255,0.65)",
-          lineHeight: 1.8,
-          maxWidth: "520px",
-          margin: "0 auto 1.5rem",
-        }}
-      >
-        {isHe
-          ? "מחזון אחד בשנת 2002 ועד לאחת המסעדות הגדולות בישראל. גללו כדי לחוות את הסיפור."
-          : "From one man's vision in 2002 to one of Israel's largest restaurants. Scroll to experience the journey."}
-      </motion.p>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.6 }}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "0.5rem",
-          color: GOLD_ALPHA(0.6),
-        }}
-      >
+      {/* Background */}
+      <div style={{
+        position: "absolute", inset: 0,
+        filter: loaded ? "none" : "blur(20px)",
+        transform: loaded ? "scale(1)" : "scale(1.05)",
+        transition: "filter 1.4s ease, transform 1.4s ease",
+      }}>
         <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          style={{ width: "100%", height: "100%" }}
+          animate={{ scale: [1, 1.05] }}
+          transition={{ duration: 30, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
+        >
+          <img
+            src={TITLE_BG}
+            alt=""
+            onLoad={() => setLoaded(true)}
+            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", display: "block" }}
+          />
+        </motion.div>
+      </div>
+
+      {/* Deep overlay */}
+      <div style={{
+        position: "absolute", inset: 0,
+        background: "linear-gradient(160deg, rgba(22,1,3,0.92) 0%, rgba(62,4,9,0.78) 50%, rgba(10,2,1,0.88) 100%)",
+      }} />
+
+      {/* Gold shimmer */}
+      <motion.div
+        animate={{ opacity: [0, 0.15, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          position: "absolute", inset: 0,
+          background: "radial-gradient(ellipse at 50% 50%, rgba(185,161,103,0.22) 0%, transparent 65%)",
+        }}
+      />
+
+      {/* Content — centered */}
+      <div style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 2rem" }}>
+        {/* Eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", marginBottom: "2rem" }}
+        >
+          <div style={{ width: "40px", height: "1px", background: GOLD_ALPHA(0.6) }} />
+          <span style={{
+            fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+            fontSize: "0.6rem", letterSpacing: isHe ? "0.1em" : "0.36em",
+            textTransform: "uppercase", color: GOLD,
+          }}>
+            {isHe ? "קאסה דו ברזיל" : "CASA DO BRASIL"}
+          </span>
+          <div style={{ width: "40px", height: "1px", background: GOLD_ALPHA(0.6) }} />
+        </motion.div>
+
+        {/* Main title */}
+        <div style={{ overflow: "hidden", marginBottom: "0.3rem" }}>
+          <motion.h1
+            initial={{ y: 80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1.0, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+            style={{
+              fontFamily: "'Heebo', sans-serif", fontWeight: 900,
+              fontSize: "clamp(42px, 8vw, 110px)",
+              color: "#fff", lineHeight: 1.0,
+              letterSpacing: isHe ? "0.02em" : "0.04em",
+              margin: 0,
+              textShadow: "0 4px 32px rgba(0,0,0,0.5)",
+            }}
+          >
+            {isHe ? "הסיפור" : "THE STORY"}
+          </motion.h1>
+        </div>
+        <div style={{ overflow: "hidden", marginBottom: "2.5rem" }}>
+          <motion.h1
+            initial={{ y: 80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1.0, delay: 0.65, ease: [0.25, 0.46, 0.45, 0.94] }}
+            style={{
+              fontFamily: "'Heebo', sans-serif", fontWeight: 300,
+              fontSize: "clamp(42px, 8vw, 110px)",
+              color: GOLD, lineHeight: 1.0,
+              letterSpacing: isHe ? "0.02em" : "0.04em",
+              margin: 0,
+            }}
+          >
+            {isHe ? "שלנו" : "OF US"}
+          </motion.h1>
+        </div>
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.85, delay: 0.9 }}
           style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 300,
-            fontSize: "0.58rem",
-            letterSpacing: isHe ? "0.08em" : "0.28em",
-            textTransform: "uppercase",
+            fontFamily: "'Heebo', sans-serif", fontWeight: 300,
+            fontSize: "clamp(13px, 1.1vw, 16px)",
+            color: "rgba(255,255,255,0.55)",
+            letterSpacing: isHe ? "0.04em" : "0.14em",
+            textTransform: isHe ? "none" : "uppercase",
+            margin: "0 auto 2.5rem",
+            maxWidth: "380px",
           }}
         >
-          {isHe ? "גלול להמשך" : "SCROLL TO BEGIN"}
-        </motion.div>
+          {isHe ? "אבי כראל · 2002 עד 2026" : "Avi Carel · 2002 to 2026"}
+        </motion.p>
+
+        {/* Scroll cue */}
         <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.3 }}
+          style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}
         >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={GOLD_ALPHA(0.6)} strokeWidth="2">
-            <path d="M12 5v14M5 12l7 7 7-7" />
-          </svg>
+          <span style={{
+            fontFamily: "'Heebo', sans-serif", fontWeight: 300,
+            fontSize: "0.52rem", letterSpacing: isHe ? "0.08em" : "0.28em",
+            textTransform: "uppercase", color: GOLD_ALPHA(0.5),
+          }}>
+            {isHe ? "גלול להמשך" : "SCROLL"}
+          </span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={GOLD_ALPHA(0.5)} strokeWidth="1.5">
+              <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 }
@@ -700,7 +745,7 @@ export default function StoryPage() {
   return (
     <div style={{ background: BORDEAUX, minHeight: "100vh" }}>
       <Navbar />
-      <StoryIntroBanner isHe={isHe} />
+      <StoryTitleSlide isHe={isHe} />
       {isMobile
         ? <MobileStory isHe={isHe} />
         : <DesktopStory isHe={isHe} />
