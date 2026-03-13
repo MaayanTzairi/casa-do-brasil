@@ -1,10 +1,9 @@
 /**
  * CASA DO BRASIL — Story Page
- * Design: Cinematic Asymmetric Luxury — matches site-wide system
- * Colors: Bordeaux (22,1,3) · Gold (185,161,103) · White · Deep Red (62,4,9)
+ * Design: Stacked floating cards — each card is centered with margins,
+ *         Bordeaux background visible around cards, creating a true deck-of-cards effect.
+ * Colors: Bordeaux (22,1,3) · Gold (185,161,103) · White
  * Font: Heebo Black/Bold/Regular/Light only
- * Layout: Stacked-card scroll on desktop (each card slides up over previous), vertical snap on mobile
- * Chapters: 2002 (Roots) · 2008 (Spark) · 2016 (Growth) · 2026 (Peak)
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -34,7 +33,6 @@ interface Chapter {
   bodyEn: string;
   bodyHe: string;
   image: string;
-  accent: string;
   isPeak?: boolean;
 }
 
@@ -48,7 +46,6 @@ const CHAPTERS: Chapter[] = [
     bodyEn: "Avi Carel arrives in Eilat with a vision. Not just a restaurant — a living tribute to the Brazilian gaucho tradition. Armed with a dream and the memory of smoke-kissed pampas, he plants the first seed of Casa do Brasil in the desert city.",
     bodyHe: "אבי כראל מגיע לאילת עם חזון. לא רק מסעדה — מחווה חיה למסורת הגאושו הברזילאי. חמוש בחלום ובזיכרון של ערבות מעושנות, הוא נוטע את הזרע הראשון של קאסה דו ברזיל בעיר המדבר.",
     image: CH1_IMG,
-    accent: "rgba(185,120,40,0.18)",
   },
   {
     year: "2008",
@@ -59,7 +56,6 @@ const CHAPTERS: Chapter[] = [
     bodyEn: "Casa do Brasil becomes a destination. Guests travel from every corner of Israel to experience the fire. The gauchos carve tableside, the music rises, and an unforgettable culinary ritual is born — one that marks Eilat's dining scene forever.",
     bodyHe: "קאסה דו ברזיל הופכת ליעד. אורחים מגיעים מכל קצוות הארץ לחוות את האש. הגאושוס חותכים ליד השולחן, המוזיקה עולה, וטקס קולינרי בלתי נשכח נולד — אחד שמותיר חותם על תרבות האוכל של אילת.",
     image: CH2_IMG,
-    accent: "rgba(200,60,10,0.18)",
   },
   {
     year: "2016",
@@ -70,7 +66,6 @@ const CHAPTERS: Chapter[] = [
     bodyEn: "The restaurant expands. Casa do Brasil becomes one of Eilat's most storied institutions — a fusion of meat, carnival, and culture that has shaped the city's culinary identity. The flame that started in 2002 now burns brighter than ever.",
     bodyHe: "המסעדה מתרחבת. קאסה דו ברזיל הופכת לאחד המוסדות הוותיקים של אילת — מיזוג של בשר, קרנבל ותרבות שעיצב את הזהות הקולינרית של העיר. הלהבה שהתחילה ב-2002 בוערת עכשיו יותר מתמיד.",
     image: CH3_IMG,
-    accent: "rgba(120,30,10,0.18)",
   },
   {
     year: "2026",
@@ -81,7 +76,6 @@ const CHAPTERS: Chapter[] = [
     bodyEn: "Under Avi Carel's vision, Casa do Brasil expands to 500 seats — one of the largest restaurants in Israel. A carnival of culinary excellence, live performance, and prime cuts from our in-house butchery. The dream, fully realized.",
     bodyHe: "בחסונו של אבי כראל, קאסה דו ברזיל מתרחבת ל-500 מקומות ישיבה — מהמסעדות הגדולות בישראל. קרנבל של מצוינות קולינרית, הופעות חיות ונתחים מובחרים מהקצבייה הביתית. החלום, במלואו.",
     image: CH4_IMG,
-    accent: "rgba(185,161,103,0.22)",
     isPeak: true,
   },
 ];
@@ -101,24 +95,18 @@ function EmberCanvas({ active }: { active: boolean }) {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
+    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
     resize();
     window.addEventListener("resize", resize);
 
     const spawnEmber = () => {
-      const x = Math.random() * canvas.width;
-      const y = canvas.height * (0.5 + Math.random() * 0.5);
       particlesRef.current.push({
-        x, y,
+        x: Math.random() * canvas.width,
+        y: canvas.height * (0.5 + Math.random() * 0.5),
         vx: (Math.random() - 0.5) * 1.2,
         vy: -(Math.random() * 2.5 + 1.0),
-        life: 0,
-        maxLife: 60 + Math.random() * 80,
-        size: Math.random() * 2.5 + 0.8,
-        alpha: 0,
+        life: 0, maxLife: 60 + Math.random() * 80,
+        size: Math.random() * 2.5 + 0.8, alpha: 0,
       });
     };
 
@@ -129,56 +117,44 @@ function EmberCanvas({ active }: { active: boolean }) {
       frame++;
       if (frame % 3 === 0) spawnEmber();
       if (frame % 5 === 0 && Math.random() > 0.5) spawnEmber();
-
       particlesRef.current = particlesRef.current.filter(p => p.life < p.maxLife);
       particlesRef.current.forEach(p => {
-        p.life++;
-        p.x += p.vx + Math.sin(p.life * 0.1) * 0.3;
-        p.y += p.vy;
-        p.vy *= 0.995;
+        p.life++; p.x += p.vx + Math.sin(p.life * 0.1) * 0.3; p.y += p.vy; p.vy *= 0.995;
         const t = p.life / p.maxLife;
         p.alpha = t < 0.2 ? t / 0.2 : t > 0.7 ? (1 - t) / 0.3 : 1;
-        const r = 255, g = Math.floor(120 + 80 * (1 - t)), b = 0;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${r},${g},${b},${p.alpha * 0.85})`;
+        ctx.fillStyle = `rgba(255,${Math.floor(120 + 80 * (1 - t))},0,${p.alpha * 0.85})`;
         ctx.fill();
       });
       animRef.current = requestAnimationFrame(animate);
     };
     animate();
-    return () => {
-      cancelAnimationFrame(animRef.current);
-      window.removeEventListener("resize", resize);
-    };
+    return () => { cancelAnimationFrame(animRef.current); window.removeEventListener("resize", resize); };
   }, [active]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        position: "absolute", inset: 0, width: "100%", height: "100%",
-        pointerEvents: "none", zIndex: 3,
-        opacity: active ? 1 : 0,
-        transition: "opacity 0.8s ease",
-      }}
-    />
+    <canvas ref={canvasRef} style={{
+      position: "absolute", inset: 0, width: "100%", height: "100%",
+      pointerEvents: "none", zIndex: 3,
+      opacity: active ? 1 : 0, transition: "opacity 0.8s ease",
+    }} />
   );
 }
 
-/* ─── PROGRESS BAR — sticky inside the scroll container ─── */
-function ProgressBar({ current, chapters }: { current: number; chapters: Chapter[] }) {
+/* ─── PROGRESS DOTS ─── */
+function ProgressDots({ current, chapters }: { current: number; chapters: Chapter[] }) {
   return (
     <div style={{
       position: "absolute",
-      bottom: "2rem",
+      bottom: "2.2rem",
       left: "50%",
       transform: "translateX(-50%)",
-      zIndex: 100,
+      zIndex: 200,
       display: "flex",
       alignItems: "center",
       gap: "0.75rem",
-      background: "rgba(22,1,3,0.72)",
+      background: "rgba(22,1,3,0.75)",
       backdropFilter: "blur(12px)",
       border: `1px solid ${GOLD_ALPHA(0.25)}`,
       borderRadius: "100px",
@@ -196,15 +172,10 @@ function ProgressBar({ current, chapters }: { current: number; chapters: Chapter
           }} />
           {i === current && (
             <span style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 700,
-              fontSize: "0.52rem",
-              letterSpacing: "0.18em",
-              color: GOLD,
-              whiteSpace: "nowrap",
-            }}>
-              {ch.year}
-            </span>
+              fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+              fontSize: "0.52rem", letterSpacing: "0.18em",
+              color: GOLD, whiteSpace: "nowrap",
+            }}>{ch.year}</span>
           )}
           {i < chapters.length - 1 && (
             <div style={{ width: "1rem", height: "1px", background: GOLD_ALPHA(0.2) }} />
@@ -215,42 +186,34 @@ function ProgressBar({ current, chapters }: { current: number; chapters: Chapter
   );
 }
 
-/* ─── CHAPTER CARD CONTENT ─── */
-function ChapterContent({
-  chapter,
-  index,
-  isActive,
-  isMobile,
+/* ─── CHAPTER CARD INNER CONTENT ─── */
+function CardContent({
+  chapter, index, isActive, isMobile,
 }: {
-  chapter: Chapter;
-  index: number;
-  isActive: boolean;
-  isMobile: boolean;
+  chapter: Chapter; index: number; isActive: boolean; isMobile: boolean;
 }) {
   const { isHe } = useLanguage();
   const [imgLoaded, setImgLoaded] = useState(false);
-
   const title = isHe ? chapter.titleHe : chapter.titleEn;
   const label = isHe ? chapter.labelHe : chapter.labelEn;
   const body = isHe ? chapter.bodyHe : chapter.bodyEn;
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}>
+    <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", borderRadius: "inherit" }}>
       {/* Background image */}
       <div style={{
-        position: "absolute", inset: 0,
+        position: "absolute", inset: 0, borderRadius: "inherit",
         filter: imgLoaded ? "none" : "blur(20px)",
         transform: imgLoaded ? "scale(1)" : "scale(1.05)",
         transition: "filter 1.2s ease, transform 1.2s ease",
       }}>
         <motion.div
           style={{ width: "100%", height: "100%" }}
-          animate={isActive ? { scale: [1, 1.06] } : { scale: 1 }}
-          transition={{ duration: 22, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
+          animate={isActive ? { scale: [1, 1.04] } : { scale: 1 }}
+          transition={{ duration: 20, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
         >
           <img
-            src={chapter.image}
-            alt={chapter.year}
+            src={chapter.image} alt={chapter.year}
             onLoad={() => setImgLoaded(true)}
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }}
           />
@@ -259,10 +222,10 @@ function ChapterContent({
 
       {/* Overlay */}
       <div style={{
-        position: "absolute", inset: 0,
+        position: "absolute", inset: 0, borderRadius: "inherit",
         background: chapter.isPeak
-          ? "linear-gradient(135deg, rgba(22,1,3,0.82) 0%, rgba(62,4,9,0.65) 50%, rgba(10,8,2,0.78) 100%)"
-          : "linear-gradient(135deg, rgba(22,1,3,0.88) 0%, rgba(62,4,9,0.60) 55%, rgba(10,5,2,0.45) 100%)",
+          ? "linear-gradient(135deg, rgba(22,1,3,0.80) 0%, rgba(62,4,9,0.60) 50%, rgba(10,8,2,0.75) 100%)"
+          : "linear-gradient(135deg, rgba(22,1,3,0.85) 0%, rgba(62,4,9,0.55) 55%, rgba(10,5,2,0.40) 100%)",
         zIndex: 1,
       }} />
 
@@ -275,7 +238,7 @@ function ChapterContent({
           animate={{ opacity: [0.0, 0.12, 0.0] }}
           transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
           style={{
-            position: "absolute", inset: 0, zIndex: 2,
+            position: "absolute", inset: 0, zIndex: 2, borderRadius: "inherit",
             background: "radial-gradient(ellipse at 50% 40%, rgba(185,161,103,0.28) 0%, transparent 70%)",
           }}
         />
@@ -284,35 +247,24 @@ function ChapterContent({
       {/* Content */}
       <div style={{
         position: "absolute", inset: 0, zIndex: 10,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-end",
+        display: "flex", flexDirection: "column", justifyContent: "flex-end",
         padding: isMobile
-          ? "0 1.8rem 5rem"
-          : isHe
-            ? "0 6vw 5rem 3vw"
-            : "0 3vw 5rem 6vw",
+          ? "0 1.6rem 2.4rem"
+          : isHe ? "0 4vw 3rem 2.5vw" : "0 2.5vw 3rem 4vw",
         direction: isHe ? "rtl" : "ltr",
       }}>
         {/* Chapter label */}
         <AnimatePresence>
           {isActive && (
-            <motion.div
-              key="label"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              style={{
-                display: "flex", alignItems: "center", gap: "0.65rem",
-                marginBottom: "1.2rem",
-                flexDirection: isHe ? "row-reverse" : "row",
-              }}
+            <motion.div key="label"
+              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.55, delay: 0.15 }}
+              style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.9rem", flexDirection: isHe ? "row-reverse" : "row" }}
             >
-              <div style={{ width: "24px", height: "1px", background: GOLD }} />
+              <div style={{ width: "20px", height: "1px", background: GOLD }} />
               <span style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                fontSize: "0.58rem", letterSpacing: isHe ? "0.08em" : "0.32em",
+                fontSize: "0.55rem", letterSpacing: isHe ? "0.08em" : "0.3em",
                 textTransform: "uppercase", color: GOLD,
               }}>{label}</span>
             </motion.div>
@@ -322,20 +274,16 @@ function ChapterContent({
         {/* Year */}
         <AnimatePresence>
           {isActive && (
-            <motion.div
-              key="year"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.9, delay: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+            <motion.div key="year"
+              initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.85, delay: 0.22, ease: [0.25, 0.46, 0.45, 0.94] }}
               style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-                fontSize: isMobile ? "clamp(72px, 22vw, 120px)" : "clamp(100px, 14vw, 200px)",
-                color: chapter.isPeak ? GOLD : "rgba(255,255,255,0.08)",
-                lineHeight: 0.85, letterSpacing: "-0.02em",
-                marginBottom: "0.4rem",
-                textShadow: chapter.isPeak ? `0 0 60px ${GOLD_ALPHA(0.4)}, 0 4px 24px rgba(0,0,0,0.5)` : "none",
+                fontSize: isMobile ? "clamp(60px, 18vw, 96px)" : "clamp(80px, 10vw, 150px)",
+                color: chapter.isPeak ? GOLD : "rgba(255,255,255,0.07)",
+                lineHeight: 0.85, letterSpacing: "-0.02em", marginBottom: "0.3rem",
                 WebkitTextStroke: chapter.isPeak ? "0" : `1px ${GOLD_ALPHA(0.35)}`,
+                textShadow: chapter.isPeak ? `0 0 60px ${GOLD_ALPHA(0.4)}` : "none",
               }}
             >
               {chapter.year}
@@ -346,19 +294,16 @@ function ChapterContent({
         {/* Title */}
         <AnimatePresence>
           {isActive && (
-            <motion.h2
-              key="title"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.85, delay: 0.38, ease: [0.25, 0.46, 0.45, 0.94] }}
+            <motion.h2 key="title"
+              initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.8, delay: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
               style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-                fontSize: isMobile ? "clamp(28px, 8vw, 44px)" : "clamp(32px, 3.8vw, 58px)",
+                fontSize: isMobile ? "clamp(24px, 6vw, 36px)" : "clamp(26px, 2.8vw, 44px)",
                 color: "#fff", lineHeight: 1.05,
                 letterSpacing: isHe ? "0.02em" : "0.08em",
-                margin: "0 0 1.2rem",
-                textShadow: "0 2px 16px rgba(0,0,0,0.4)",
+                margin: "0 0 1rem",
+                textShadow: "0 2px 12px rgba(0,0,0,0.4)",
               }}
             >
               {title}
@@ -369,16 +314,13 @@ function ChapterContent({
         {/* Gold rule */}
         <AnimatePresence>
           {isActive && (
-            <motion.div
-              key="rule"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              exit={{ scaleX: 0 }}
-              transition={{ duration: 0.9, delay: 0.52 }}
+            <motion.div key="rule"
+              initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} exit={{ scaleX: 0 }}
+              transition={{ duration: 0.8, delay: 0.48 }}
               style={{
-                width: "80px", height: "1px", background: GOLD,
+                width: "60px", height: "1px", background: GOLD,
                 transformOrigin: isHe ? "right" : "left",
-                marginBottom: "1.2rem",
+                marginBottom: "1rem",
                 marginLeft: isHe ? "auto" : 0,
                 marginRight: isHe ? 0 : "auto",
               }}
@@ -389,17 +331,14 @@ function ChapterContent({
         {/* Body */}
         <AnimatePresence>
           {isActive && (
-            <motion.p
-              key="body"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.85, delay: 0.62, ease: [0.25, 0.46, 0.45, 0.94] }}
+            <motion.p key="body"
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.8, delay: 0.58, ease: [0.25, 0.46, 0.45, 0.94] }}
               style={{
                 fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-                fontSize: isMobile ? "clamp(14px, 3.8vw, 16px)" : "clamp(16px, 1.2vw, 19px)",
-                color: "rgba(255,255,255,0.82)", lineHeight: 1.85,
-                maxWidth: "480px", margin: 0,
+                fontSize: isMobile ? "clamp(13px, 3.5vw, 15px)" : "clamp(14px, 1vw, 17px)",
+                color: "rgba(255,255,255,0.80)", lineHeight: 1.8,
+                maxWidth: "420px", margin: 0,
                 marginLeft: isHe ? "auto" : 0,
                 textAlign: isHe ? "right" : "left",
               }}
@@ -412,12 +351,12 @@ function ChapterContent({
 
       {/* Chapter number corner */}
       <div style={{
-        position: "absolute", top: "2rem",
-        right: isHe ? "auto" : "2.5rem",
-        left: isHe ? "2.5rem" : "auto",
+        position: "absolute", top: "1.4rem",
+        right: isHe ? "auto" : "1.8rem",
+        left: isHe ? "1.8rem" : "auto",
         zIndex: 10,
         fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-        fontSize: "0.48rem", letterSpacing: "0.3em",
+        fontSize: "0.44rem", letterSpacing: "0.3em",
         color: GOLD_ALPHA(0.5), textTransform: "uppercase",
       }}>
         {String(index + 1).padStart(2, "0")} / 04
@@ -426,66 +365,12 @@ function ChapterContent({
   );
 }
 
-/* ─── STACKED CARD (Desktop) ─── */
+/* ─── DESKTOP: STACKED FLOATING CARDS ─── */
 /**
- * Each card is absolutely positioned and stacked.
- * As you scroll, the next card slides up from below (translateY 100vh → 0).
- * The previous card stays in place (it's underneath).
- * ProgressBar is inside the sticky viewport so it never escapes the section.
+ * Cards are centered with margins — Bordeaux background visible around them.
+ * Each card slides up from below over the previous card.
+ * Card dimensions: ~88vw × ~82vh, centered.
  */
-function StackedCard({
-  chapter,
-  index,
-  scrollYProgress,
-  totalChapters,
-  activeChapter,
-}: {
-  chapter: Chapter;
-  index: number;
-  scrollYProgress: any;
-  totalChapters: number;
-  activeChapter: number;
-}) {
-  // Each card occupies 1/totalChapters of the scroll range
-  const start = index / totalChapters;
-  const end = (index + 1) / totalChapters;
-
-  // Card slides up from 100vh to 0 during its entry window
-  const y = useTransform(
-    scrollYProgress,
-    [Math.max(0, start - 0.001), end],
-    index === 0 ? ["0%", "0%"] : ["100%", "0%"]
-  );
-
-  // Slight scale-down for cards that are "under" the current one
-  const scale = useTransform(
-    scrollYProgress,
-    [start, end],
-    index === 0 ? [1, 0.96] : [1, 1]
-  );
-
-  return (
-    <motion.div
-      style={{
-        position: "absolute",
-        inset: 0,
-        y,
-        scale,
-        zIndex: index + 1,
-        transformOrigin: "top center",
-        willChange: "transform",
-      }}
-    >
-      <ChapterContent
-        chapter={chapter}
-        index={index}
-        isActive={activeChapter === index}
-        isMobile={false}
-      />
-    </motion.div>
-  );
-}
-
 function DesktopStory({ isHe }: { isHe: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeChapter, setActiveChapter] = useState(0);
@@ -501,29 +386,87 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
   }, [scrollYProgress]);
 
   return (
-    /* Outer container: total scroll height = chapters × 100vh */
     <div
       ref={containerRef}
       style={{ height: `${CHAPTERS.length * 100}vh`, position: "relative" }}
     >
-      {/* Sticky viewport — ProgressBar lives here so it's bounded */}
-      <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
-        {/* Card stack */}
-        {CHAPTERS.map((ch, i) => (
-          <StackedCard
-            key={ch.year}
-            chapter={ch}
-            index={i}
-            scrollYProgress={scrollYProgress}
-            totalChapters={CHAPTERS.length}
-            activeChapter={activeChapter}
-          />
-        ))}
+      {/* Sticky viewport */}
+      <div style={{
+        position: "sticky", top: 0, height: "100vh",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        overflow: "hidden",
+      }}>
+        {/* Card stack area */}
+        <div style={{
+          position: "relative",
+          width: "88vw",
+          height: "82vh",
+        }}>
+          {CHAPTERS.map((ch, i) => (
+            <StackedFloatingCard
+              key={ch.year}
+              chapter={ch}
+              index={i}
+              scrollYProgress={scrollYProgress}
+              totalChapters={CHAPTERS.length}
+              activeChapter={activeChapter}
+            />
+          ))}
+        </div>
 
-        {/* ProgressBar — inside sticky, never escapes into footer */}
-        <ProgressBar current={activeChapter} chapters={CHAPTERS} />
+        {/* Progress dots — inside sticky, bounded */}
+        <ProgressDots current={activeChapter} chapters={CHAPTERS} />
       </div>
     </div>
+  );
+}
+
+function StackedFloatingCard({
+  chapter, index, scrollYProgress, totalChapters, activeChapter,
+}: {
+  chapter: Chapter; index: number; scrollYProgress: any;
+  totalChapters: number; activeChapter: number;
+}) {
+  const start = index / totalChapters;
+  const end = (index + 1) / totalChapters;
+
+  // Slide up from 100% to 0% during its entry window; first card starts at 0
+  const y = useTransform(
+    scrollYProgress,
+    [Math.max(0, start - 0.001), Math.min(1, start + 0.25 / totalChapters)],
+    index === 0 ? ["0%", "0%"] : ["100%", "0%"]
+  );
+
+  // Cards underneath scale down slightly to show depth
+  const scale = useTransform(
+    scrollYProgress,
+    [start, end],
+    [1, index < totalChapters - 1 ? 0.97 : 1]
+  );
+
+  return (
+    <motion.div
+      style={{
+        position: "absolute",
+        inset: 0,
+        y,
+        scale,
+        zIndex: index + 1,
+        transformOrigin: "top center",
+        willChange: "transform",
+        borderRadius: "20px",
+        overflow: "hidden",
+        boxShadow: "0 24px 80px rgba(0,0,0,0.55), 0 4px 20px rgba(0,0,0,0.35)",
+        border: `1px solid ${GOLD_ALPHA(0.18)}`,
+      }}
+    >
+      <CardContent
+        chapter={chapter}
+        index={index}
+        isActive={activeChapter === index}
+        isMobile={false}
+      />
+    </motion.div>
   );
 }
 
@@ -548,152 +491,146 @@ function MobileStory({ isHe }: { isHe: boolean }) {
   return (
     <div
       ref={containerRef}
-      style={{ position: "relative", scrollSnapType: "y mandatory", overflowY: "scroll", height: "100vh" }}
+      style={{
+        position: "relative",
+        height: "100vh",
+        background: BORDEAUX,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        overflowY: "scroll",
+        scrollSnapType: "y mandatory",
+      }}
     >
       {CHAPTERS.map((ch, i) => (
         <div
           key={ch.year}
           ref={el => { sectionRefs.current[i] = el; }}
-          style={{ scrollSnapAlign: "start", height: "100vh", position: "relative" }}
+          style={{
+            scrollSnapAlign: "start",
+            height: "100vh",
+            width: "100%",
+            flexShrink: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "5rem 1.2rem 1.2rem",
+            boxSizing: "border-box",
+          }}
         >
-          <ChapterContent
-            chapter={ch}
-            index={i}
-            isActive={i === activeChapter}
-            isMobile={true}
-          />
+          <div style={{
+            width: "100%",
+            height: "100%",
+            borderRadius: "16px",
+            overflow: "hidden",
+            boxShadow: "0 16px 60px rgba(0,0,0,0.5)",
+            border: `1px solid ${GOLD_ALPHA(0.18)}`,
+          }}>
+            <CardContent
+              chapter={ch}
+              index={i}
+              isActive={i === activeChapter}
+              isMobile={true}
+            />
+          </div>
         </div>
       ))}
-      {/* ProgressBar inside scroll container — bounded */}
-      <div style={{ position: "sticky", bottom: 0, height: 0, zIndex: 100 }}>
-        <div style={{ position: "absolute", bottom: "2rem", left: "50%", transform: "translateX(-50%)" }}>
-          <ProgressBar current={activeChapter} chapters={CHAPTERS} />
-        </div>
-      </div>
+      {/* Bounded progress dots */}
+      <ProgressDots current={activeChapter} chapters={CHAPTERS} />
     </div>
   );
 }
 
 /* ─── STORY TITLE SLIDE ─── */
-const TITLE_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/story-ch1-roots-buHiUahabKhA3izt6V7zDV.webp";
-
 function StoryTitleSlide({ isHe }: { isHe: boolean }) {
-  const [loaded, setLoaded] = useState(false);
   return (
     <div style={{
-      position: "relative",
       width: "100vw",
       height: "100vh",
-      overflow: "hidden",
+      background: BORDEAUX,
       display: "flex",
+      flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
+      gap: "1.4rem",
+      textAlign: "center",
+      padding: "0 2rem",
     }}>
-      {/* Background */}
-      <div style={{
-        position: "absolute", inset: 0,
-        filter: loaded ? "none" : "blur(20px)",
-        transform: loaded ? "scale(1)" : "scale(1.05)",
-        transition: "filter 1.4s ease, transform 1.4s ease",
-      }}>
-        <img
-          src={TITLE_BG}
-          alt="Casa do Brasil Story"
-          onLoad={() => setLoaded(true)}
-          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", display: "block" }}
-        />
-      </div>
+      {/* Thin gold line above */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 1.2, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+        style={{ width: "60px", height: "1px", background: GOLD }}
+      />
 
-      {/* Dark overlay */}
-      <div style={{
-        position: "absolute", inset: 0,
-        background: "linear-gradient(180deg, rgba(22,1,3,0.55) 0%, rgba(22,1,3,0.72) 60%, rgba(22,1,3,0.95) 100%)",
-        zIndex: 1,
-      }} />
+      {/* Main title */}
+      <motion.h1
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.1, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+        style={{
+          fontFamily: "'Heebo', sans-serif",
+          fontWeight: 900,
+          fontSize: "clamp(42px, 8vw, 110px)",
+          color: "#fff",
+          lineHeight: 0.95,
+          letterSpacing: isHe ? "0.02em" : "0.06em",
+          margin: 0,
+          textShadow: "0 4px 32px rgba(0,0,0,0.3)",
+        }}
+      >
+        {isHe ? "הסיפור שלנו" : "Casa Do Brasil Story"}
+      </motion.h1>
 
-      {/* Content */}
-      <div style={{
-        position: "relative", zIndex: 2,
-        display: "flex", flexDirection: "column", alignItems: "center",
-        gap: "1.8rem", textAlign: "center",
-        padding: "0 2rem",
-        direction: isHe ? "rtl" : "ltr",
-      }}>
+      {/* Subtitle */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.9 }}
+        style={{
+          fontFamily: "'Heebo', sans-serif",
+          fontWeight: 300,
+          fontSize: "clamp(14px, 1.5vw, 18px)",
+          color: GOLD_ALPHA(0.75),
+          letterSpacing: isHe ? "0.04em" : "0.12em",
+          margin: 0,
+        }}
+      >
+        {isHe ? "אבי כראל · 2002 עד 2026" : "Avi Carel · 2002 to 2026"}
+      </motion.p>
+
+      {/* Thin gold line below */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 1.2, delay: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+        style={{ width: "60px", height: "1px", background: GOLD }}
+      />
+
+      {/* Scroll cue */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.4 }}
+        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem", marginTop: "1rem" }}
+      >
+        <span style={{
+          fontFamily: "'Heebo', sans-serif", fontWeight: 300,
+          fontSize: "0.5rem", letterSpacing: isHe ? "0.08em" : "0.28em",
+          textTransform: "uppercase", color: GOLD_ALPHA(0.4),
+        }}>
+          {isHe ? "גלול להמשך" : "SCROLL"}
+        </span>
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          style={{
-            display: "flex", alignItems: "center", gap: "1rem",
-            flexDirection: isHe ? "row-reverse" : "row",
-          }}
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
         >
-          <div style={{ width: "40px", height: "1px", background: GOLD }} />
-          <span style={{
-            fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-            fontSize: "0.6rem", letterSpacing: isHe ? "0.1em" : "0.35em",
-            textTransform: "uppercase", color: GOLD,
-          }}>
-            {isHe ? "הסיפור שלנו" : "OUR STORY"}
-          </span>
-          <div style={{ width: "40px", height: "1px", background: GOLD }} />
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={GOLD_ALPHA(0.4)} strokeWidth="1.5">
+            <path d="M12 5v14M5 12l7 7 7-7" />
+          </svg>
         </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.1, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          style={{
-            fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-            fontSize: "clamp(52px, 10vw, 130px)",
-            color: "#fff", lineHeight: 0.9,
-            letterSpacing: isHe ? "0.02em" : "0.06em",
-            textShadow: "0 4px 32px rgba(0,0,0,0.5)",
-            margin: 0,
-          }}
-        >
-          {isHe ? "קאסה דו ברזיל" : "CASA DO BRASIL"}
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.9 }}
-          style={{
-            fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-            fontSize: "clamp(14px, 1.5vw, 18px)",
-            color: "rgba(255,255,255,0.65)", letterSpacing: isHe ? "0.04em" : "0.12em",
-            textTransform: isHe ? "none" : "uppercase",
-            margin: 0,
-          }}
-        >
-          {isHe ? "אבי כראל · 2002 עד 2026" : "Avi Carel · 2002 to 2026"}
-        </motion.p>
-
-        {/* Scroll cue */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.3 }}
-          style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}
-        >
-          <span style={{
-            fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-            fontSize: "0.52rem", letterSpacing: isHe ? "0.08em" : "0.28em",
-            textTransform: "uppercase", color: GOLD_ALPHA(0.5),
-          }}>
-            {isHe ? "גלול להמשך" : "SCROLL"}
-          </span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={GOLD_ALPHA(0.5)} strokeWidth="1.5">
-              <path d="M12 5v14M5 12l7 7 7-7" />
-            </svg>
-          </motion.div>
-        </motion.div>
-      </div>
+      </motion.div>
     </div>
   );
 }
