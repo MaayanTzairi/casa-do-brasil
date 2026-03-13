@@ -365,49 +365,54 @@ function CardContent({
   );
 }
 
-/* ─── DESKTOP: STACKED FLOATING CARDS ─── */
+/* ─── DESKTOP: TRUE DECK STACKING ─── */
 /**
- * Cards are centered with margins — Bordeaux background visible around them.
- * Each card slides up SLOWLY from below over the previous card.
- * Previous card stays visible (scaled down slightly) so you see the deck effect.
- * First card is already partially visible in the Hero (starts 30% visible).
- * Card dimensions: ~88vw × ~82vh, centered.
+ * True deck-of-cards stacking:
+ * - All cards start stacked at the same position (full size)
+ * - As user scrolls into each card's segment, it slides up from below
+ *   and lands ON TOP of the previous card
+ * - Previous cards stay visible — each shows a top strip (peek) of ~60px
+ *   so the accumulated deck is visible behind the active card
+ * - First card starts half-visible in the Hero (peeks from below the title slide)
  */
+
+// How many px of each buried card's top strip remains visible
+const PEEK_PX = 52;
+
 function DesktopStory({ isHe }: { isHe: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeChapter, setActiveChapter] = useState(0);
-
-  // Use the whole scroll container including the title slide overlap
   const { scrollYProgress } = useScroll({ target: containerRef });
 
   useEffect(() => {
     const unsub = scrollYProgress.on("change", (v: number) => {
-      const idx = Math.min(CHAPTERS.length - 1, Math.floor(v * CHAPTERS.length));
+      // Each chapter occupies 100vh out of total (N*100 + 40)vh
+      // The first 40vh is the overlap with the title slide
+      // So we offset by 40/(N*100+40) before computing the chapter index
+      const total = CHAPTERS.length * 100 + 40;
+      const offsetFraction = 40 / total;
+      const adjusted = Math.max(0, (v - offsetFraction) / (1 - offsetFraction));
+      const idx = Math.min(CHAPTERS.length - 1, Math.floor(adjusted * CHAPTERS.length));
       setActiveChapter(idx);
     });
     return unsub;
   }, [scrollYProgress]);
 
+  // Total scroll height: each chapter gets 100vh, plus 40vh overlap with title
   return (
-    // Extra height for the title-slide overlap (30vh) so first card starts peeking
     <div
       ref={containerRef}
-      style={{ height: `${CHAPTERS.length * 100 + 30}vh`, position: "relative", marginTop: "-30vh" }}
+      style={{ height: `${CHAPTERS.length * 100 + 40}vh`, position: "relative", marginTop: "-40vh" }}
     >
-      {/* Sticky viewport */}
       <div style={{
         position: "sticky", top: 0, height: "100vh",
         display: "flex", alignItems: "center", justifyContent: "center",
         overflow: "hidden",
       }}>
-        {/* Card stack area */}
-        <div style={{
-          position: "relative",
-          width: "88vw",
-          height: "82vh",
-        }}>
+        {/* Card stack container — cards are absolutely positioned inside */}
+        <div style={{ position: "relative", width: "88vw", height: "82vh" }}>
           {CHAPTERS.map((ch, i) => (
-            <StackedFloatingCard
+            <DeckCard
               key={ch.year}
               chapter={ch}
               index={i}
@@ -417,61 +422,55 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
             />
           ))}
         </div>
-
-        {/* Progress dots — inside sticky, bounded */}
         <ProgressDots current={activeChapter} chapters={CHAPTERS} />
       </div>
     </div>
   );
 }
 
-function StackedFloatingCard({
+function DeckCard({
   chapter, index, scrollYProgress, totalChapters, activeChapter,
 }: {
   chapter: Chapter; index: number; scrollYProgress: any;
   totalChapters: number; activeChapter: number;
 }) {
-  const CARD_HEIGHT = typeof window !== "undefined" ? window.innerHeight * 0.82 : 800;
+  // Each segment of scroll progress is dedicated to one card
   const segSize = 1 / totalChapters;
-  const start = index * segSize;
-  const end = (index + 1) * segSize;
+  const cardStart = index * segSize;   // when this card starts entering
+  const cardEnd   = cardStart + segSize * 0.5; // when it finishes entering (settles)
 
-  // First card: peeks from 60% below, slides to 0 (settled)
-  // Other cards: slide up from full card height below, over 55% of their segment
+  // The card's final resting Y position when it's "settled" in the deck:
+  // Card 0 → top: 0 (full view)
+  // Card 1 → top: PEEK_PX (shows peek of card 0 above)
+  // Card 2 → top: PEEK_PX * 2 (shows peeks of cards 0 and 1)
+  // etc.
+  const settledY = index * PEEK_PX;
+
+  // Card enters from below (full card height below viewport) and slides to its settled position
+  // Card 0 starts at 50% (half-visible in hero)
+  const CARD_H = typeof window !== "undefined" ? window.innerHeight * 0.82 : 800;
+  const enterFrom = index === 0 ? CARD_H * 0.5 : CARD_H * 1.05;
+
   const y = useTransform(
     scrollYProgress,
-    index === 0
-      ? [0, segSize * 0.4]
-      : [start, start + segSize * 0.55],
-    index === 0
-      ? [CARD_HEIGHT * 0.6, 0]
-      : [CARD_HEIGHT * 1.1, 0]
+    [Math.max(0, cardStart - 0.001), cardEnd],
+    [enterFrom, settledY]
   );
 
-  // Previous card scales down gently as next card arrives — stays visible
-  const scale = useTransform(
-    scrollYProgress,
-    [start, end],
-    index < totalChapters - 1 ? [1, 0.94] : [1, 1]
-  );
-
-  // Previous card fades very slightly (not fully) so you still see it
-  const opacity = useTransform(
-    scrollYProgress,
-    [start, end],
-    index < totalChapters - 1 ? [1, 0.7] : [1, 1]
-  );
+  // Cards are stacked in z-order: later cards are on top
+  // This is the key: zIndex is FIXED by index (higher index = on top)
+  // so card 1 always covers card 0, card 2 always covers card 1, etc.
+  const zIndex = index + 1;
 
   return (
     <motion.div
       style={{
         position: "absolute",
-        inset: 0,
+        left: 0, right: 0,
+        top: 0,
+        height: "100%",
         y,
-        scale,
-        opacity,
-        zIndex: index + 1,
-        transformOrigin: "top center",
+        zIndex,
         willChange: "transform",
         borderRadius: "20px",
         overflow: "hidden",
