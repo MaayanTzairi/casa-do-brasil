@@ -230,8 +230,13 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Center logo */}
-            <a href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+            {/* Center logo — absolutely centered so it's always pixel-perfect regardless of left/right widths */}
+            <a href="/" style={{
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
+              display: "flex", alignItems: "center",
+            }}>
               <motion.div whileHover={{ scale: 1.06 }} transition={{ duration: 0.25 }}>
                 <LogoBadge size={56} scrolled={scrolled} />
               </motion.div>

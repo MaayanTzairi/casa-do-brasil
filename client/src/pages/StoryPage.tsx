@@ -743,7 +743,7 @@ export default function StoryPage() {
   }, []);
 
   return (
-    <div style={{ background: BORDEAUX, minHeight: "100vh" }}>
+    <div dir="ltr" style={{ background: BORDEAUX, minHeight: "100vh" }}>
       <Navbar />
       <StoryTitleSlide isHe={isHe} />
       {isMobile
