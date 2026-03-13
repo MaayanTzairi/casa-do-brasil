@@ -8,6 +8,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import Home from "./pages/Home";
 import Gallery from "./pages/Gallery";
 import MenuPage from "./pages/MenuPage";
+import StoryPage from "./pages/StoryPage";
 
 function Router() {
   return (
@@ -15,6 +16,7 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/gallery"} component={Gallery} />
       <Route path={"/menu"} component={MenuPage} />
+      <Route path={"/story"} component={StoryPage} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>
