@@ -440,6 +440,7 @@ const MENU_DATA: MenuCategory[] = [
     description: "Our marvellous home made desserts — the perfect finale to your Casa do Brasil experience.",
     descriptionHe: "הקינוחים הביתיים הנפלאים שלנו — הסיום המושלם לחוויית קאסה דו ברזיל.",
     type: "dessert",
+    illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/%D7%9C%D7%95%D7%97%D7%9E%D7%A9%D7%97%D7%A7%D7%99%D7%9ECASA(5)_ccac2abd.webp",
     items: [
       {
         name: "Pistachio Parfait",
