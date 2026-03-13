@@ -129,13 +129,40 @@ export default function HeroSection() {
         style={{ height: "clamp(100px, 18vw, 220px)", background: "linear-gradient(to top, rgba(40,3,6,0.75) 0%, transparent 100%)" }}
       />
 
-      {/* ── Gold Inset Frame — hidden on mobile ── */}
+      {/* ── Gold Inset Frame — hidden on mobile ──
+           Navbar is 70px tall, logo is 56px centered → logo center = 35px from top.
+           Top line sits at exactly 35px so it bisects the logo badge.
+           Left/right/bottom lines stay at 20px (inset-5) from edges.
+      */}
       {!isMobile && (
-        <div className="absolute inset-5 pointer-events-none" style={{ zIndex: 2 }}>
-          <motion.div className="absolute top-0 left-0 right-0 h-px" style={{ background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} variants={lineVariants} initial="hidden" animate="visible" />
-          <motion.div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.2, delay: 1.1, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }} />
-          <motion.div className="absolute top-0 bottom-0 left-0 w-px" style={{ background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2, delay: 0.9, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }} />
-          <motion.div className="absolute top-0 bottom-0 right-0 w-px" style={{ background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2, delay: 1.05, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }} />
+        <div className="absolute pointer-events-none" style={{ zIndex: 2, top: 0, left: "20px", right: "20px", bottom: "20px" }}>
+          {/* Top line — at 35px = exact vertical center of navbar (70px / 2) */}
+          <motion.div
+            className="absolute left-0 right-0 h-px"
+            style={{ top: "35px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }}
+            variants={lineVariants} initial="hidden" animate="visible"
+          />
+          {/* Bottom line */}
+          <motion.div
+            className="absolute bottom-0 left-0 right-0 h-px"
+            style={{ background: "rgba(185,161,103,0.55)", transformOrigin: "left" }}
+            initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
+            transition={{ duration: 1.2, delay: 1.1, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }}
+          />
+          {/* Left line — starts from top line (35px) downward */}
+          <motion.div
+            className="absolute left-0 w-px"
+            style={{ top: "35px", bottom: 0, background: "rgba(185,161,103,0.55)", transformOrigin: "top" }}
+            initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
+            transition={{ duration: 1.2, delay: 0.9, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }}
+          />
+          {/* Right line — starts from top line (35px) downward */}
+          <motion.div
+            className="absolute right-0 w-px"
+            style={{ top: "35px", bottom: 0, background: "rgba(185,161,103,0.55)", transformOrigin: "top" }}
+            initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
+            transition={{ duration: 1.2, delay: 1.05, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }}
+          />
         </div>
       )}
 
