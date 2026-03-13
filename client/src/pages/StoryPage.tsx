@@ -367,57 +367,69 @@ function CardContent({
 
 /* ─── DESKTOP: TRUE DECK STACKING ─── */
 /**
- * True deck-of-cards stacking:
- * - All cards start stacked at the same position (full size)
- * - As user scrolls into each card's segment, it slides up from below
- *   and lands ON TOP of the previous card
- * - Previous cards stay visible — each shows a top strip (peek) of ~60px
- *   so the accumulated deck is visible behind the active card
- * - First card starts half-visible in the Hero (peeks from below the title slide)
+ * Deck logic (simple & correct):
+ *
+ * - Card 0 is fully visible immediately when the user arrives on the page.
+ * - Each subsequent card (1, 2, 3) slides up from below during its scroll segment
+ *   and lands ON TOP of the previous card.
+ * - Every settled card leaves a PEEK_PX strip visible at the top so the
+ *   accumulated deck is visible behind the active card.
+ * - Total scroll = (N-1) × 100vh (one segment per incoming card).
+ *   Card 0 needs no scroll segment — it’s already there.
  */
 
-// How many px of each buried card's top strip remains visible
-const PEEK_PX = 52;
+const PEEK_PX = 52;   // px of each buried card’s top strip that stays visible
+const CARD_VH = 72;   // vh — fixed height for every card
 
+/**
+ * DesktopStory — simple & correct:
+ * - Card 0 is ALWAYS visible (no animation needed), positioned at the top of the sticky area
+ * - Cards 1, 2, 3 slide up one by one as user scrolls
+ * - Each settled card leaves PEEK_PX strip visible
+ * - The whole DesktopStory block has marginTop: -35vh so card 0 starts inside the Hero
+ */
 function DesktopStory({ isHe }: { isHe: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeChapter, setActiveChapter] = useState(0);
+  // (N-1) scroll segments, one per incoming card
   const { scrollYProgress } = useScroll({ target: containerRef });
 
   useEffect(() => {
     const unsub = scrollYProgress.on("change", (v: number) => {
-      // Each chapter occupies 100vh out of total (N*100 + 40)vh
-      // The first 40vh is the overlap with the title slide
-      // So we offset by 40/(N*100+40) before computing the chapter index
-      const total = CHAPTERS.length * 100 + 40;
-      const offsetFraction = 40 / total;
-      const adjusted = Math.max(0, (v - offsetFraction) / (1 - offsetFraction));
-      const idx = Math.min(CHAPTERS.length - 1, Math.floor(adjusted * CHAPTERS.length));
-      setActiveChapter(idx);
+      const N = CHAPTERS.length;
+      const seg = Math.min(N - 1, Math.floor(v * (N - 1)));
+      setActiveChapter(seg);
     });
     return unsub;
   }, [scrollYProgress]);
 
-  // Total scroll height: each chapter gets 100vh, plus 40vh overlap with title
   return (
     <div
       ref={containerRef}
-      style={{ height: `${CHAPTERS.length * 100 + 40}vh`, position: "relative", marginTop: "-40vh" }}
+      style={{
+        // (N-1) scroll segments of 100vh each
+        height: `${(CHAPTERS.length - 1) * 100}vh`,
+        position: "relative",
+        // Pull up so card 0 overlaps into the Hero
+        marginTop: "-35vh",
+        zIndex: 2,
+      }}
     >
       <div style={{
-        position: "sticky", top: 0, height: "100vh",
-        display: "flex", alignItems: "center", justifyContent: "center",
+        position: "sticky",
+        top: "70px",
+        height: `calc(100vh - 70px)`,
+        display: "flex",
+        alignItems: "flex-start",
+        justifyContent: "center",
+        paddingTop: "1rem",
         overflow: "hidden",
       }}>
-        {/* Card stack container
-             CARD_HEIGHT = 72vh (fixed for all cards)
-             Container height = CARD_HEIGHT + (n-1)*PEEK_PX to hold the full deck
-             marginTop: 0.5rem — close to navbar but not touching */}
+        {/* Card stack container */}
         <div style={{
           position: "relative",
           width: "88vw",
-          height: `calc(72vh + ${(CHAPTERS.length - 1) * PEEK_PX}px)`,
-          marginTop: "0.5rem",
+          height: `calc(${CARD_VH}vh + ${(CHAPTERS.length - 1) * PEEK_PX}px)`,
         }}>
           {CHAPTERS.map((ch, i) => (
             <DeckCard
@@ -442,33 +454,28 @@ function DeckCard({
   chapter: Chapter; index: number; scrollYProgress: any;
   totalChapters: number; activeChapter: number;
 }) {
-  // Each segment of scroll progress is dedicated to one card
-  const segSize = 1 / totalChapters;
-  const cardStart = index * segSize;   // when this card starts entering
-  const cardEnd   = cardStart + segSize * 0.5; // when it finishes entering (settles)
+  // (N-1) scroll segments, one per incoming card (cards 1..N-1)
+  // Card 0: always at y=0 (no animation)
+  // Card i (i>0): slides in during segment i-1: v from (i-1)/(N-1) to i/(N-1)
+  const N = totalChapters;
+  const segSize = N > 1 ? 1 / (N - 1) : 1;
 
-  // The card's final resting Y position when it's "settled" in the deck:
-  // Card 0 → top: 0 (full view)
-  // Card 1 → top: PEEK_PX (shows peek of card 0 above)
-  // Card 2 → top: PEEK_PX * 2 (shows peeks of cards 0 and 1)
-  // etc.
+  const cardStart = index === 0 ? 0 : (index - 1) * segSize;
+  const cardEnd   = index === 0 ? 0 : cardStart + segSize * 0.6;
+
   const settledY = index * PEEK_PX;
 
-  // Card enters from below (full card height below viewport) and slides to its settled position
-  // Card 0 starts at 50% (half-visible in hero)
-  const CARD_H = typeof window !== "undefined" ? window.innerHeight * 0.72 : 650;
-  const enterFrom = index === 0 ? CARD_H * 0.5 : CARD_H * 1.05;
+  const CARD_H = typeof window !== "undefined" ? window.innerHeight * (CARD_VH / 100) : 650;
 
   const y = useTransform(
     scrollYProgress,
-    [Math.max(0, cardStart - 0.001), cardEnd],
-    [enterFrom, settledY]
+    index === 0
+      ? [0, 1]                                              // card 0: no movement
+      : [Math.max(0, cardStart), Math.min(1, cardEnd)],
+    index === 0
+      ? [settledY, settledY]                                // card 0: always at settled pos
+      : [CARD_H * 1.05, settledY]                           // cards 1+: slide up from below
   );
-
-  // Cards are stacked in z-order: later cards are on top
-  // This is the key: zIndex is FIXED by index (higher index = on top)
-  // so card 1 always covers card 0, card 2 always covers card 1, etc.
-  const zIndex = index + 1;
 
   return (
     <motion.div
@@ -476,9 +483,9 @@ function DeckCard({
         position: "absolute",
         left: 0, right: 0,
         top: 0,
-        height: "72vh",  /* Fixed height — same for ALL cards */
+        height: `${CARD_VH}vh`,
         y,
-        zIndex,
+        zIndex: index + 1,
         willChange: "transform",
         borderRadius: "20px",
         overflow: "hidden",
@@ -568,12 +575,12 @@ function MobileStory({ isHe }: { isHe: boolean }) {
 }
 
 /* ─── STORY TITLE SLIDE ─── */
-// Title slide is 70vh — the first card peeks from below
+// Title slide is 50vh — compact hero, card 0 peeks from below
 function StoryTitleSlide({ isHe }: { isHe: boolean }) {
   return (
     <div style={{
       width: "100vw",
-      height: "70vh",
+      height: "50vh",
       background: BORDEAUX,
       display: "flex",
       flexDirection: "column",
@@ -583,7 +590,7 @@ function StoryTitleSlide({ isHe }: { isHe: boolean }) {
       textAlign: "center",
       padding: "0 2rem",
       position: "relative",
-      zIndex: 1,
+      zIndex: 10,  /* above the peeking card */
     }}>
       {/* Thin gold line above */}
       <motion.div
@@ -611,23 +618,6 @@ function StoryTitleSlide({ isHe }: { isHe: boolean }) {
       >
         {isHe ? "הסיפור שלנו" : "Casa Do Brasil Story"}
       </motion.h1>
-
-      {/* Subtitle */}
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.9 }}
-        style={{
-          fontFamily: "'Heebo', sans-serif",
-          fontWeight: 300,
-          fontSize: "clamp(14px, 1.5vw, 18px)",
-          color: GOLD_ALPHA(0.75),
-          letterSpacing: isHe ? "0.04em" : "0.12em",
-          margin: 0,
-        }}
-      >
-        {isHe ? "אבי כראל · 2002 עד 2026" : "Avi Carel · 2002 to 2026"}
-      </motion.p>
 
       {/* Thin gold line below */}
       <motion.div
@@ -679,11 +669,18 @@ export default function StoryPage() {
   return (
     <div dir="ltr" style={{ background: BORDEAUX, minHeight: "100vh" }}>
       <Navbar />
-      <StoryTitleSlide isHe={isHe} />
-      {isMobile
-        ? <MobileStory isHe={isHe} />
-        : <DesktopStory isHe={isHe} />
-      }
+      {isMobile ? (
+        <>
+          <StoryTitleSlide isHe={isHe} />
+          <MobileStory isHe={isHe} />
+        </>
+      ) : (
+        // Desktop: Title slide first, then DesktopStory with negative margin so card 0 peeks inside Hero
+        <>
+          <StoryTitleSlide isHe={isHe} />
+          <DesktopStory isHe={isHe} />
+        </>
+      )}
       <Footer />
     </div>
   );
