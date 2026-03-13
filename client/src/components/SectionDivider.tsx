@@ -3,12 +3,9 @@
  *
  * Layout: [──── gold line ────] [picanha skewer illustration] [──── gold line ────]
  *
- * The skewer illustration is displayed at a constrained width (~420px),
- * centered. The gold lines on each side extend to the viewport edges
- * and fade to transparent. The whole strip is ~120px tall.
- *
- * The image has a white/cream background so we use mixBlendMode: multiply
- * to make the background invisible against the white page.
+ * The illustration floats transparently between sections.
+ * We use a CSS SVG filter to knock out the white/cream background pixels,
+ * leaving only the illustration itself visible over any background.
  */
 
 const SKEWER_IMG =
@@ -35,47 +32,63 @@ function GoldLine({ side }: { side: "left" | "right" }) {
 
 export default function SectionDivider() {
   return (
-    <div
-      style={{
-        width: "100%",
-        background: "transparent",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "0.5rem 3vw",
-        pointerEvents: "none",
-        userSelect: "none",
-        gap: "0",
-        overflow: "hidden",
-      }}
-    >
-      {/* Left gold line */}
-      <GoldLine side="left" />
-
-      {/* Skewer illustration — centered, constrained */}
+    <>
+      {/* SVG filter definition to knock out near-white pixels */}
+      <svg width="0" height="0" style={{ position: "absolute" }}>
+        <defs>
+          <filter id="remove-white-skewer" colorInterpolationFilters="sRGB">
+            <feColorMatrix
+              type="matrix"
+              values="1 0 0 0 0
+                      0 1 0 0 0
+                      0 0 1 0 0
+                      -10 -10 -10 40 -5"
+            />
+          </filter>
+        </defs>
+      </svg>
       <div
         style={{
-          flexShrink: 0,
-          width: "clamp(220px, 36vw, 480px)",
-          lineHeight: 0,
-          position: "relative",
+          width: "100%",
+          background: "transparent",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "0.5rem 3vw",
+          pointerEvents: "none",
+          userSelect: "none",
+          gap: "0",
+          overflow: "hidden",
         }}
       >
-        <img
-          src={SKEWER_IMG}
-          alt=""
-          aria-hidden="true"
-          style={{
-            display: "block",
-            width: "100%",
-            height: "auto",
-            mixBlendMode: "multiply",
-          }}
-        />
-      </div>
+        {/* Left gold line */}
+        <GoldLine side="left" />
 
-      {/* Right gold line */}
-      <GoldLine side="right" />
-    </div>
+        {/* Skewer illustration — centered, constrained, white bg removed */}
+        <div
+          style={{
+            flexShrink: 0,
+            width: "clamp(220px, 36vw, 480px)",
+            lineHeight: 0,
+            position: "relative",
+          }}
+        >
+          <img
+            src={SKEWER_IMG}
+            alt=""
+            aria-hidden="true"
+            style={{
+              display: "block",
+              width: "100%",
+              height: "auto",
+              filter: "url(#remove-white-skewer)",
+            }}
+          />
+        </div>
+
+        {/* Right gold line */}
+        <GoldLine side="right" />
+      </div>
+    </>
   );
 }

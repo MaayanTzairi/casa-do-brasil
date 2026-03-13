@@ -1,13 +1,10 @@
 /**
  * CASA DO BRASIL — Section Divider 2
  *
- * Sits between MENU section and Reservations section.
- * Identical design and sizing to SectionDivider (skewer).
- *
- * carnival_full.png: 1909×813 px, ratio 0.426 — almost identical to
- * skewer (2048×868, ratio 0.424). So we use the exact same clamp values.
- *
  * Layout: [──── gold line ────] [carnival dancer] [──── gold line ────]
+ *
+ * The illustration floats transparently between sections.
+ * We use a CSS SVG filter to knock out the white/cream background pixels.
  */
 
 const CARNIVAL_IMG =
@@ -34,45 +31,61 @@ function GoldLine({ side }: { side: "left" | "right" }) {
 
 export default function SectionDivider2() {
   return (
-    <div
-      style={{
-        width: "100%",
-        background: "transparent",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "0.5rem 3vw",
-        pointerEvents: "none",
-        userSelect: "none",
-        gap: "0",
-        overflow: "hidden",
-      }}
-    >
-      <GoldLine side="left" />
-
-      {/* Same exact sizing as SectionDivider (skewer) — ratios are nearly identical */}
+    <>
+      {/* SVG filter definition to knock out near-white pixels */}
+      <svg width="0" height="0" style={{ position: "absolute" }}>
+        <defs>
+          <filter id="remove-white-carnival" colorInterpolationFilters="sRGB">
+            <feColorMatrix
+              type="matrix"
+              values="1 0 0 0 0
+                      0 1 0 0 0
+                      0 0 1 0 0
+                      -10 -10 -10 40 -5"
+            />
+          </filter>
+        </defs>
+      </svg>
       <div
         style={{
-          flexShrink: 0,
-          width: "clamp(220px, 36vw, 480px)",
-          lineHeight: 0,
-          position: "relative",
+          width: "100%",
+          background: "transparent",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "0.5rem 3vw",
+          pointerEvents: "none",
+          userSelect: "none",
+          gap: "0",
+          overflow: "hidden",
         }}
       >
-        <img
-          src={CARNIVAL_IMG}
-          alt=""
-          aria-hidden="true"
-          style={{
-            display: "block",
-            width: "100%",
-            height: "auto",
-            mixBlendMode: "multiply",
-          }}
-        />
-      </div>
+        <GoldLine side="left" />
 
-      <GoldLine side="right" />
-    </div>
+        {/* Carnival dancer illustration — white bg removed via filter */}
+        <div
+          style={{
+            flexShrink: 0,
+            width: "clamp(220px, 36vw, 480px)",
+            lineHeight: 0,
+            position: "relative",
+          }}
+        >
+          <img
+            src={CARNIVAL_IMG}
+            alt=""
+            aria-hidden="true"
+            style={{
+              display: "block",
+              width: "100%",
+              height: "auto",
+              filter: "url(#remove-white-carnival)",
+            }}
+          />
+        </div>
+
+        <GoldLine side="right" />
+      </div>
+    </>
   );
 }
