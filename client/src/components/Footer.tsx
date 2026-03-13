@@ -167,14 +167,37 @@ export default function Footer() {
         maxWidth: "1100px",
       }} />
       <div style={{
-        textAlign: "center",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "1.5rem",
+        flexWrap: "wrap",
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 300,
         fontSize: "0.75rem",
         letterSpacing: "0.12em",
         color: "rgba(255,255,255,0.3)",
+        direction: isHe ? "rtl" : "ltr",
       }}>
-        © {new Date().getFullYear()} Casa do Brasil. {isHe ? "כל הזכויות שמורות." : "All rights reserved."}
+        <span>© {new Date().getFullYear()} Casa do Brasil. {isHe ? "כל הזכויות שמורות." : "All rights reserved."}</span>
+        <span style={{ width: "1px", height: "12px", background: "rgba(185,161,103,0.25)", display: "inline-block" }} />
+        <a
+          href="#"
+          style={{ color: "rgba(255,255,255,0.3)", textDecoration: "none", transition: "color 0.2s" }}
+          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GOLD; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.3)"; }}
+        >
+          {isHe ? "מדיניות פרטיות" : "Privacy Policy"}
+        </a>
+        <span style={{ width: "1px", height: "12px", background: "rgba(185,161,103,0.25)", display: "inline-block" }} />
+        <a
+          href="#"
+          style={{ color: "rgba(255,255,255,0.3)", textDecoration: "none", transition: "color 0.2s" }}
+          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GOLD; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.3)"; }}
+        >
+          {isHe ? "הצהרת נגישות" : "Accessibility Statement"}
+        </a>
       </div>
     </footer>
   );
