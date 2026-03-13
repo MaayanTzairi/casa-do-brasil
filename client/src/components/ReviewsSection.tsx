@@ -22,6 +22,7 @@ interface Review {
   textHe: string;
   rating: 5 | 4;
   date: string;
+  dateHe: string;
 }
 
 const REVIEWS: Review[] = [
@@ -32,6 +33,7 @@ const REVIEWS: Review[] = [
     textHe: "חוויית סעודה בלתי נשכחת. הפיקאניה הייתה מושלמת, והאווירה לקחה אותנו ישר לברזיל. שווה כל שקל.",
     rating: 5,
     date: "January 2025",
+    dateHe: "ינואר 2025",
   },
   {
     author: "Daniel K.",
@@ -40,6 +42,7 @@ const REVIEWS: Review[] = [
     textHe: "הרודיציו הוא חגיגה אמיתית — נתחים אינסופיים, כל אחד טוב מהקודם. הצוות חם ומקצועי. חובה בביקור באילת.",
     rating: 5,
     date: "December 2024",
+    dateHe: "דצמבר 2024",
   },
   {
     author: "Maya R.",
@@ -48,6 +51,7 @@ const REVIEWS: Review[] = [
     textHe: "חגגנו כאן את יום הנישואין שלנו וזה היה קסום. פילה הרוסיני נמס בפה. ההמלצות על היין היו מדויקות. נחזור לכל אירוע.",
     rating: 5,
     date: "February 2025",
+    dateHe: "פברואר 2025",
   },
   {
     author: "Avi L.",
@@ -56,6 +60,7 @@ const REVIEWS: Review[] = [
     textHe: "המסעדה הטובה ביותר לבשר באילת, ללא תחרות. מנת הטורנדו היא יצירת מופת — אנטריקוט, פילה וכבד אווז בצלחת אחת. מדהים.",
     rating: 5,
     date: "March 2025",
+    dateHe: "מרץ 2025",
   },
   {
     author: "Sarah M.",
@@ -64,6 +69,7 @@ const REVIEWS: Review[] = [
     textHe: "האווירה מדהימה — חמה, תוססת, עם מוזיקה חיה שהפכה את הערב לקרנבל ברזילאי אמיתי. האוכל התאים לאנרגיה בצורה מושלמת.",
     rating: 5,
     date: "January 2025",
+    dateHe: "ינואר 2025",
   },
   {
     author: "Tom B.",
@@ -72,6 +78,7 @@ const REVIEWS: Review[] = [
     textHe: "הפאבה לבדה שווה את הנסיעה. קרמי, אותנטי ומוגש בצורה יפהפייה. השירות היה ללא דופי מתחילה ועד סוף.",
     rating: 5,
     date: "November 2024",
+    dateHe: "נובמבר 2024",
   },
   {
     author: "Lior G.",
@@ -80,6 +87,7 @@ const REVIEWS: Review[] = [
     textHe: "הגענו למבצע הצהריים ונשארנו בגלל האווירה. ערך מדהים — מנות פתיחה נדיבות, פיקאניה מושלמת, ואירוח הכי חם באילת.",
     rating: 5,
     date: "February 2025",
+    dateHe: "פברואר 2025",
   },
   {
     author: "Rachel H.",
@@ -88,6 +96,7 @@ const REVIEWS: Review[] = [
     textHe: "צלעות הכבש המיושנות היו יוצאות דופן — רכות, מעושנות ומתובלות לשלמות. מסעדה שמבינה באמת את אמנות הגריל.",
     rating: 5,
     date: "December 2024",
+    dateHe: "דצמבר 2024",
   },
   {
     author: "Yossi P.",
@@ -96,6 +105,7 @@ const REVIEWS: Review[] = [
     textHe: "הבאנו קבוצה של 12 לארוחת יום הולדת. הצוות טיפל בהכל ללא רבב. מצעד הבשר לא פסק — כולם יצאו מרוצים לחלוטין.",
     rating: 5,
     date: "October 2024",
+    dateHe: "אוקטובר 2024",
   },
   {
     author: "Michal T.",
@@ -104,6 +114,7 @@ const REVIEWS: Review[] = [
     textHe: "כבד האווז הצרוב על הבריוש הוא אחד הדברים הטובים ביותר שאכלתי. עשיר, עדין ומאוזן בצורה מושלמת עם ריבת עגבניות השרי.",
     rating: 5,
     date: "January 2025",
+    dateHe: "ינואר 2025",
   },
   {
     author: "Eitan F.",
@@ -112,6 +123,7 @@ const REVIEWS: Review[] = [
     textHe: "ביקרתי פעמיים השנה ושתי הפעמים היו יוצאות דופן. העקביות מרשימה — אותה איכות, אותה חמימות, אותם נתחים מדהימים בכל פעם.",
     rating: 5,
     date: "March 2025",
+    dateHe: "מרץ 2025",
   },
   {
     author: "Hila N.",
@@ -120,6 +132,7 @@ const REVIEWS: Review[] = [
     textHe: "רוטב הצ'ימיצ'ורי ממכר — הייתי יכולה לאכול אותו עם הכל. כל הארוחה הייתה מסע בטעמים ברזילאיים. מקום מיוחד באמת.",
     rating: 5,
     date: "February 2025",
+    dateHe: "פברואר 2025",
   },
   {
     author: "Ran A.",
@@ -128,6 +141,7 @@ const REVIEWS: Review[] = [
     textHe: "מסלול הרודיציו ב-289 שווה כל שקל. 12 סוגי בשר, כולם מבוצעים בצורה מושלמת. לבבות העוף היו באופן מפתיע השיא של הערב.",
     rating: 5,
     date: "November 2024",
+    dateHe: "נובמבר 2024",
   },
   {
     author: "Dina W.",
@@ -136,6 +150,7 @@ const REVIEWS: Review[] = [
     textHe: "כמי שנוסעת לברזיל באופן קבוע, אני יכולה לומר שקאסה דו ברזיל לוכדת את רוח הצ'וראסקריה האותנטית טוב מרוב המקומות שביקרתי בהם.",
     rating: 5,
     date: "January 2025",
+    dateHe: "ינואר 2025",
   },
   {
     author: "Kobi S.",
@@ -144,6 +159,7 @@ const REVIEWS: Review[] = [
     textHe: "הקרם ברולה היה הסיום המושלם לארוחה מושלמת. קרמל פריך מעל, קרם וניל משיי מתחת. מחמאות לכל צוות המטבח.",
     rating: 5,
     date: "December 2024",
+    dateHe: "דצמבר 2024",
   },
   {
     author: "Orly B.",
@@ -152,6 +168,7 @@ const REVIEWS: Review[] = [
     textHe: "רומנטי, אלגנטי וטעים. התאורה, המוזיקה, האוכל — הכל היה מאורגן בצורה מושלמת לערב מיוחד. ממליצה בחום לדייט.",
     rating: 5,
     date: "February 2025",
+    dateHe: "פברואר 2025",
   },
   {
     author: "Gal M.",
@@ -160,6 +177,7 @@ const REVIEWS: Review[] = [
     textHe: "הבוליניו מדהימים — פריכים מבחוץ, עסיסיים מבפנים. הזמנו מנות נוספות כי פשוט לא יכולנו להפסיק. טעם אמיתי של ברזיל באילת.",
     rating: 5,
     date: "March 2025",
+    dateHe: "מרץ 2025",
   },
   {
     author: "Tamar L.",
@@ -168,6 +186,7 @@ const REVIEWS: Review[] = [
     textHe: "מדור הבשר הטרי לפי משקל הוא אבן חן נסתרת. הסירלוין שהזמנו היה מיושן לשלמות — טעם עמוק, שיוש יפהפה. נזמין שוב.",
     rating: 5,
     date: "January 2025",
+    dateHe: "ינואר 2025",
   },
   {
     author: "Nimrod C.",
@@ -176,6 +195,7 @@ const REVIEWS: Review[] = [
     textHe: "השירות כאן הוא ברמה אחרת. כל פרט קיבל תשומת לב — מהרגע שנכנסנו עד הביס האחרון. כך נראה אירוח אמיתי.",
     rating: 5,
     date: "October 2024",
+    dateHe: "אוקטובר 2024",
   },
   {
     author: "Shira E.",
@@ -184,6 +204,7 @@ const REVIEWS: Review[] = [
     textHe: "הגעתי עם ציפיות גבוהות ויצאתי כשהן עלו על הציפיות. המאמיניה הייתה רכה וטעימה, התוספות נדיבות, והקינוחים היו אלוהיים.",
     rating: 5,
     date: "February 2025",
+    dateHe: "פברואר 2025",
   },
 ];
 
@@ -204,6 +225,7 @@ function Stars({ rating }: { rating: number }) {
 function ReviewCard({ review, isHe }: { review: Review; isHe: boolean }) {
   const text = isHe ? review.textHe : review.text;
   const author = isHe ? review.authorHe : review.author;
+  const date = isHe ? review.dateHe : review.date;
 
   return (
     <div
@@ -266,7 +288,7 @@ function ReviewCard({ review, isHe }: { review: Review; isHe: boolean }) {
             letterSpacing: "0.06em",
           }}
         >
-          {review.date}
+          {date}
         </span>
       </div>
     </div>
@@ -281,10 +303,14 @@ export default function ReviewsSection() {
   const posRef = useRef<number>(0);
   const pausedRef = useRef<boolean>(false);
 
-  // Infinite auto-scroll
+  // Infinite auto-scroll — always LTR regardless of page direction
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
+
+    // Reset position when language changes
+    posRef.current = 0;
+    track.style.transform = `translateX(0px)`;
 
     const speed = 0.55; // px per frame
 
@@ -303,7 +329,7 @@ export default function ReviewsSection() {
 
     animRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animRef.current);
-  }, []);
+  }, [isHe]);
 
   // Duplicate reviews for seamless loop
   const allReviews = [...REVIEWS, ...REVIEWS];
@@ -420,9 +446,9 @@ export default function ReviewsSection() {
         <div style={{ width: "clamp(60px, 8vw, 100px)", height: "1px", background: GOLD_R + "0.3)", margin: "2.8rem auto 0" }} />
       </motion.div>
 
-      {/* Carousel */}
+      {/* Carousel — always LTR so scroll direction is consistent */}
       <div
-        style={{ position: "relative", overflow: "hidden" }}
+        style={{ position: "relative", overflow: "hidden", direction: "ltr" }}
         onMouseEnter={() => { pausedRef.current = true; }}
         onMouseLeave={() => { pausedRef.current = false; }}
       >
