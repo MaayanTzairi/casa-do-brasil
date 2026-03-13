@@ -734,8 +734,6 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                 width: "clamp(100px, 14vw, 200px)",
                 height: "clamp(100px, 14vw, 200px)",
                 objectFit: "contain",
-                opacity: 0.92,
-                filter: "drop-shadow(0 4px 16px rgba(62,4,9,0.12))",
                 pointerEvents: "none",
               }}
             />
@@ -814,8 +812,6 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                 width: "clamp(100px, 14vw, 200px)",
                 height: "clamp(100px, 14vw, 200px)",
                 objectFit: "contain",
-                opacity: 0.92,
-                filter: "drop-shadow(0 4px 16px rgba(62,4,9,0.12))",
                 pointerEvents: "none",
               }}
             />
