@@ -409,9 +409,16 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
         display: "flex", alignItems: "center", justifyContent: "center",
         overflow: "hidden",
       }}>
-        {/* Card stack container — cards are absolutely positioned inside */}
-        {/* Height: 100vh minus navbar (70px) minus top/bottom margins (2*1.5rem) ≈ 76vh */}
-        <div style={{ position: "relative", width: "88vw", height: "76vh", marginTop: "1.5rem" }}>
+        {/* Card stack container
+             CARD_HEIGHT = 72vh (fixed for all cards)
+             Container height = CARD_HEIGHT + (n-1)*PEEK_PX to hold the full deck
+             marginTop: 0.5rem — close to navbar but not touching */}
+        <div style={{
+          position: "relative",
+          width: "88vw",
+          height: `calc(72vh + ${(CHAPTERS.length - 1) * PEEK_PX}px)`,
+          marginTop: "0.5rem",
+        }}>
           {CHAPTERS.map((ch, i) => (
             <DeckCard
               key={ch.year}
@@ -449,7 +456,7 @@ function DeckCard({
 
   // Card enters from below (full card height below viewport) and slides to its settled position
   // Card 0 starts at 50% (half-visible in hero)
-  const CARD_H = typeof window !== "undefined" ? window.innerHeight * 0.76 : 700;
+  const CARD_H = typeof window !== "undefined" ? window.innerHeight * 0.72 : 650;
   const enterFrom = index === 0 ? CARD_H * 0.5 : CARD_H * 1.05;
 
   const y = useTransform(
@@ -469,7 +476,7 @@ function DeckCard({
         position: "absolute",
         left: 0, right: 0,
         top: 0,
-        height: "100%",
+        height: "72vh",  /* Fixed height — same for ALL cards */
         y,
         zIndex,
         willChange: "transform",
