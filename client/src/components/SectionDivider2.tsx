@@ -1,14 +1,13 @@
 /**
  * CASA DO BRASIL — Section Divider 2
  *
- * Layout: [──── gold line ────] [carnival dancer] [──── gold line ────]
- *
- * The illustration floats transparently between sections.
- * We use a CSS SVG filter to knock out the white/cream background pixels.
+ * Carnival dancer illustration with clean gold gradient lines on both sides.
+ * Identical layout to SectionDivider for visual consistency.
+ * No background, no border, no shadow, no filter.
  */
 
-const CARNIVAL_IMG =
-  "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/bJXauwhzIPqhxrRc.png?Expires=1804534167&Signature=G~3dHXaswz6IA4ehqZWDlhKLX7kzxWvIVFwYVu-nnvwTogJXwe1QROnK6sJpnXz-QJ5wNlK73VLc2l3CahSLvVQjQT~ovabz8~iRFUEaOo0ileXcRYNah6ZQeMODOoMFVsJeWCsRNbkLh2UHicKi~ufgihrOQ9DT9~4kJYRSsKfpK3c18kyC6FAxuEchs4NKfVVLvcODeJl1Qa4ng-MwzJTqKYFzfF5Z9J7f0zb8qHQQblWc-~4-3sSTP1ImmhxqzjbMc6vgJKDEWn4CHLJtpmy7TsFSoEOuoUYkkgs~DbTboRQOyAj82vrYdznNSkPm7xr2WKcjmlVZVWUlVr4HQA__&Key-Pair-Id=K2HSFNDJXOU9YS";
+const DANCER_IMG =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/%D7%9C%D7%95%D7%97%D7%9E%D7%A9%D7%97%D7%A7%D7%99%D7%9DCASA(4)_b7530c4e.webp";
 
 const GOLD = "rgba(185,161,103,";
 
@@ -21,8 +20,8 @@ function GoldLine({ side }: { side: "left" | "right" }) {
         minWidth: 0,
         height: "1px",
         background: isLeft
-          ? `linear-gradient(to right, transparent 0%, ${GOLD}0.25) 20%, ${GOLD}0.65) 100%)`
-          : `linear-gradient(to left, transparent 0%, ${GOLD}0.25) 20%, ${GOLD}0.65) 100%)`,
+          ? `linear-gradient(to right, transparent 0%, ${GOLD}0.2) 15%, ${GOLD}0.7) 70%, ${GOLD}0.4) 100%)`
+          : `linear-gradient(to left, transparent 0%, ${GOLD}0.2) 15%, ${GOLD}0.7) 70%, ${GOLD}0.4) 100%)`,
         alignSelf: "center",
       }}
     />
@@ -31,61 +30,45 @@ function GoldLine({ side }: { side: "left" | "right" }) {
 
 export default function SectionDivider2() {
   return (
-    <>
-      {/* SVG filter definition to knock out near-white pixels */}
-      <svg width="0" height="0" style={{ position: "absolute" }}>
-        <defs>
-          <filter id="remove-white-carnival" colorInterpolationFilters="sRGB">
-            <feColorMatrix
-              type="matrix"
-              values="1 0 0 0 0
-                      0 1 0 0 0
-                      0 0 1 0 0
-                      -10 -10 -10 40 -5"
-            />
-          </filter>
-        </defs>
-      </svg>
+    <div
+      style={{
+        width: "100%",
+        background: "transparent",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "0 3vw",
+        gap: "clamp(16px, 2.5vw, 40px)",
+        pointerEvents: "none",
+        userSelect: "none",
+        overflow: "hidden",
+      }}
+    >
+      {/* Left gold line */}
+      <GoldLine side="left" />
+
+      {/* Carnival dancer illustration — transparent, no filter, no shadow */}
       <div
         style={{
-          width: "100%",
-          background: "transparent",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "0.5rem 3vw",
-          pointerEvents: "none",
-          userSelect: "none",
-          gap: "0",
-          overflow: "hidden",
+          flexShrink: 0,
+          width: "clamp(160px, 26vw, 360px)",
+          lineHeight: 0,
         }}
       >
-        <GoldLine side="left" />
-
-        {/* Carnival dancer illustration — white bg removed via filter */}
-        <div
+        <img
+          src={DANCER_IMG}
+          alt=""
+          aria-hidden="true"
           style={{
-            flexShrink: 0,
-            width: "clamp(220px, 36vw, 480px)",
-            lineHeight: 0,
-            position: "relative",
+            display: "block",
+            width: "100%",
+            height: "auto",
           }}
-        >
-          <img
-            src={CARNIVAL_IMG}
-            alt=""
-            aria-hidden="true"
-            style={{
-              display: "block",
-              width: "100%",
-              height: "auto",
-              filter: "url(#remove-white-carnival)",
-            }}
-          />
-        </div>
-
-        <GoldLine side="right" />
+        />
       </div>
-    </>
+
+      {/* Right gold line */}
+      <GoldLine side="right" />
+    </div>
   );
 }
