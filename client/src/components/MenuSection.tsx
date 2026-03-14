@@ -305,6 +305,7 @@ export default function MenuSection() {
         <div
           style={{
             flex: mobile ? "none" : "1",
+            width: mobile ? "100%" : undefined,
             display: "flex", flexDirection: "column", justifyContent: "center",
             paddingTop: mobile ? "0" : "2rem",
             order: mobile ? 1 : (isHe ? 1 : 2),
@@ -331,6 +332,8 @@ export default function MenuSection() {
               fontFamily:"'Heebo', sans-serif", fontWeight:900,
               fontSize: mobile ? "clamp(36px, 10vw, 52px)" : "clamp(36px, 3.8vw, 58px)",
               color:BORDEAUX, margin:0, lineHeight:0.9, letterSpacing:"0.01em",
+              textAlign: isHe ? "right" : "left",
+              width: "100%",
             }}
           >
             {isHe ? <>חווייה<br />ברזילאית<br />אותנטית</> : <>AUTHENTIC<br />BRAZILIAN<br />EXPERIENCE</>}
