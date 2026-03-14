@@ -66,11 +66,16 @@ function GalleryHero({ isHe }: { isHe: boolean }) {
 
       {/* No top/bottom gradient fades */}
 
-      {/* Gold inset frame lines */}
-      <div style={{ position: "absolute", inset: "20px", pointerEvents: "none", zIndex: 2 }}>
-        <motion.div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.45)", transformOrigin: "left" }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.2, delay: 0.4 }} />
-        <motion.div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: "1px", background: "rgba(185,161,103,0.45)", transformOrigin: "top" }} initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2, delay: 0.4 }} />
-        <motion.div style={{ position: "absolute", top: 0, bottom: 0, right: 0, width: "1px", background: "rgba(185,161,103,0.45)", transformOrigin: "top" }} initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2, delay: 0.55 }} />
+      {/* Gold inset frame — matches homepage: top line below navbar at 82px, sides/bottom at 20px */}
+      <div style={{ position: "absolute", top: 0, left: "20px", right: "20px", bottom: "20px", pointerEvents: "none", zIndex: 2 }}>
+        {/* Top line — just below navbar */}
+        <motion.div style={{ position: "absolute", top: "82px", left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.2, delay: 0.4 }} />
+        {/* Bottom line */}
+        <motion.div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.2, delay: 0.6 }} />
+        {/* Left line — starts from top line */}
+        <motion.div style={{ position: "absolute", top: "82px", bottom: 0, left: 0, width: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2, delay: 0.4 }} />
+        {/* Right line — starts from top line */}
+        <motion.div style={{ position: "absolute", top: "82px", bottom: 0, right: 0, width: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2, delay: 0.55 }} />
       </div>
 
       {/* Content */}
