@@ -284,7 +284,7 @@ function ReviewCard({ review, isHe }: { review: Review; isHe: boolean }) {
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 300,
             fontSize: "0.65rem",
-            color: "rgba(62,4,9,0.4)",
+            color: "rgba(62,4,9,0.65)",
             letterSpacing: "0.06em",
           }}
         >

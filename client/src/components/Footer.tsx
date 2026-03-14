@@ -13,7 +13,7 @@ const GOLD_LIGHT = "rgba(185,161,103,0.35)";
 const BORDEAUX = "rgb(22,1,3)";
 
 const LOGO_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-transparent_448961b5.png";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-small_383f3293.webp";
 
 export default function Footer() {
   const { isHe } = useLanguage();
@@ -281,7 +281,7 @@ export default function Footer() {
         fontWeight: 300,
         fontSize: mobile ? "0.68rem" : "0.75rem",
         letterSpacing: "0.12em",
-        color: "rgba(255,255,255,0.3)",
+        color: "rgba(255,255,255,0.55)",
         direction: isHe ? "rtl" : "ltr",
         textAlign: "center",
       }}>
@@ -289,18 +289,18 @@ export default function Footer() {
         {!mobile && <span style={{ width: "1px", height: "12px", background: "rgba(185,161,103,0.25)", display: "inline-block" }} />}
         <a
           href="#"
-          style={{ color: "rgba(255,255,255,0.3)", textDecoration: "none", transition: "color 0.2s" }}
+          style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none", transition: "color 0.2s" }}
           onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GOLD; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.3)"; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.55)"; }}
         >
           {isHe ? "מדיניות פרטיות" : "Privacy Policy"}
         </a>
         {!mobile && <span style={{ width: "1px", height: "12px", background: "rgba(185,161,103,0.25)", display: "inline-block" }} />}
         <a
           href="#"
-          style={{ color: "rgba(255,255,255,0.3)", textDecoration: "none", transition: "color 0.2s" }}
+          style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none", transition: "color 0.2s" }}
           onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GOLD; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.3)"; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.55)"; }}
         >
           {isHe ? "הצהרת נגישות" : "Accessibility Statement"}
         </a>
@@ -309,9 +309,9 @@ export default function Footer() {
           href="https://www.mt-mc.com"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: "rgba(255,255,255,0.3)", textDecoration: "none", transition: "color 0.2s" }}
+          style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none", transition: "color 0.2s" }}
           onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GOLD; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.3)"; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.55)"; }}
         >
           {isHe ? "עוצב ופותח על ידי MTMC" : "Powered & Designed by MTMC"}
         </a>

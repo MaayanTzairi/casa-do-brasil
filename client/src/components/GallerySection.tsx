@@ -220,6 +220,8 @@ export default function GallerySection() {
               <button
                 key={i}
                 onClick={() => setCurrent(i)}
+                aria-label={`תמונה ${i + 1} מתוך ${IMAGES.length}`}
+                aria-current={i === current ? "true" : undefined}
                 style={{
                   width: i === current ? "22px" : "6px",
                   height: "6px",

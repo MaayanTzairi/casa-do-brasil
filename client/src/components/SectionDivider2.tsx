@@ -7,7 +7,7 @@
  */
 
 const DANCER_IMG =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/%D7%9C%D7%95%D7%97%D7%9E%D7%A9%D7%97%D7%A7%D7%99%D7%9DCASA(4)_b7530c4e.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider2-optimized_164b5dde.webp";
 
 const GOLD = "rgba(185,161,103,";
 
