@@ -138,8 +138,9 @@ function MenuCard({ img, track, name, nameLine2, subtitle, href, dark=false, del
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        flex: "0 0 calc(50% - 0.75rem)",
-        /* Identical fixed height via aspect ratio trick — we use a wrapper */
+        flex: "1 1 0",
+        minWidth: 0,
+        /* Equal height via flex stretch */
         position: "relative",
         marginTop: elevated ? "-2.5rem" : "0",
         /* Layered shadow */
@@ -181,10 +182,9 @@ function MenuCard({ img, track, name, nameLine2, subtitle, href, dark=false, del
             ? "linear-gradient(160deg, rgba(22,1,3,0) 0%, rgba(22,1,3,0.12) 50%, rgba(22,1,3,0.6) 100%)"
             : "linear-gradient(160deg, rgba(250,250,248,0) 0%, rgba(250,250,248,0.08) 50%, rgba(250,250,248,0.5) 100%)",
         }} />
-        {/* Track label */}
-        <div style={{ position:"absolute", top:"1.1rem", left:"1.3rem", zIndex:3, display:"flex", alignItems:"center", gap:"0.5rem" }}>
-          <div style={{ width:"12px", height:"1px", background:GOLD, opacity:0.85 }} />
-          <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.65rem", letterSpacing:"0.42em", textTransform:"uppercase", color:GOLD }}>{track}</span>
+        {/* Track label — decorative line only, no text */}
+        <div style={{ position:"absolute", top:"1.1rem", left:"1.3rem", zIndex:3 }}>
+          <div style={{ width:"20px", height:"1px", background:GOLD, opacity:0.85 }} />
         </div>
       </div>
 
@@ -194,10 +194,10 @@ function MenuCard({ img, track, name, nameLine2, subtitle, href, dark=false, del
 
         <div style={{
           fontFamily:"'Heebo', sans-serif", fontWeight:900,
-          fontSize:"clamp(14px, 1.8vw, 28px)",
+          fontSize:"clamp(12px, 1.4vw, 20px)",
           color: dark ? "#fff" : BORDEAUX,
-          lineHeight: 1.0, letterSpacing:"0.02em", marginBottom:"0.5rem",
-          whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+          lineHeight: 1.1, letterSpacing:"0.02em", marginBottom:"0.5rem",
+          whiteSpace: "normal", overflow: "visible", wordBreak: "break-word",
         }}>
           {name}{nameLine2 && <><br />{nameLine2}</>}
         </div>
@@ -271,7 +271,7 @@ export default function MenuSection() {
             /* Extra bottom space to accommodate the elevated card's upward shift */
             paddingTop: mobile ? "0" : "2.5rem",
             paddingBottom: mobile ? "0" : "0.5rem",
-            alignItems: "flex-start",
+            alignItems: "stretch",
           }}
         >
           {/* CHURRASCARIA — elevated (shifted up) */}

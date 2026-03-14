@@ -96,7 +96,7 @@ export default function CasaVibesSection() {
       }}>
 
         {/* ══════════ TEXT COLUMN ══════════ */}
-        <div style={{ paddingRight: (!mobile && !isHe) ? "2vw" : 0, paddingLeft: (!mobile && isHe) ? "2vw" : 0, textAlign: isHe ? "right" : "left" }}>
+        <div style={{ paddingRight: (!mobile && !isHe) ? "2vw" : 0, paddingLeft: (!mobile && isHe) ? "2vw" : 0, textAlign: isHe ? "right" : "left", direction: isHe ? "rtl" : "ltr", width: mobile ? "100%" : undefined }}>
 
           {/* Label */}
           <motion.div
@@ -125,6 +125,9 @@ export default function CasaVibesSection() {
                   letterSpacing: "0.03em",
                   margin: 0,
                   textShadow: "2px 3px 0 rgba(185,161,103,0.16), 0 6px 18px rgba(62,4,9,0.10)",
+                  textAlign: isHe ? "right" : "left",
+                  width: "100%",
+                  display: "block",
                 }}
               >{word}</motion.h2>
             </div>
