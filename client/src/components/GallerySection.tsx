@@ -213,7 +213,7 @@ export default function GallerySection() {
             initial={{ opacity: 0, y: 14 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.85, delay: 0.5 }}
-            style={{ alignSelf: isHe ? "flex-end" : "flex-start", width: mobile ? "100%" : undefined, display: mobile ? "flex" : undefined, justifyContent: mobile ? (isHe ? "flex-end" : "flex-start") : undefined }}
+            style={{ alignSelf: isHe ? "flex-end" : "flex-start", width: mobile ? "100%" : undefined, display: mobile ? "flex" : undefined, justifyContent: mobile ? (isHe ? "center" : "flex-start") : undefined }}
           >
             <Link href="/gallery">
               <span

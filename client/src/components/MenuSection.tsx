@@ -354,7 +354,7 @@ export default function MenuSection() {
             initial={{ opacity: 0, y: 14 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.85, delay: 0.42 }}
-            style={{ display: "flex", justifyContent: isHe ? "flex-end" : "flex-start", width: "100%" }}
+            style={{ display: "flex", justifyContent: (mobile && isHe) ? "center" : (isHe ? "flex-end" : "flex-start"), width: "100%" }}
           >
             <a
               href="#menu"
