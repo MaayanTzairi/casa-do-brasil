@@ -220,18 +220,24 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
         position: "sticky",
         top: "70px",
         height: "calc(100vh - 70px)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
         overflow: "hidden",
       }}>
-        {/* Card stack */}
+        {/*
+         * Card stack: positioned absolutely, centered in the sticky viewport.
+         * Card 1 is at the center. Animated cards enter from below and settle
+         * at center + (i+1)*PEEK_PX offset (pushing the stack down slightly).
+         * We shift the whole stack up by half the total peek offset so it stays
+         * visually centered.
+         */}
         <div style={{
-          position: "relative",
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: `translate(-50%, calc(-50% - ${((N - 1) * PEEK_PX) / 2}px))`,
           width: CARD_W,
           height: stackH,
         }}>
-          {/* Card 1 — static, always at y=0, zIndex 1 */}
+          {/* Card 1 — static, always at top of stack (y=0), zIndex 1 */}
           <div style={{
             position: "absolute",
             top: 0, left: 0, right: 0,
