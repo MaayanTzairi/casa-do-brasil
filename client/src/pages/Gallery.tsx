@@ -176,7 +176,7 @@ export default function Gallery() {
 
       {/* ── FILTER TABS ── */}
       <div style={{
-        padding: "0 6vw 2.5rem",
+        padding: "3rem 6vw 2.5rem",
         maxWidth: "1300px",
         margin: "0 auto",
         direction: isHe ? "rtl" : "ltr",
