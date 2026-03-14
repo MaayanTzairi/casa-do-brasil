@@ -4,12 +4,50 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CASA DO BRASIL — Brazilian Steakhouse</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Self-hosted fonts from CDN — eliminates Google Fonts 750ms blocking -->
     <link rel="preconnect" href="https://d2xsxph8kpxj0f.cloudfront.net" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;900&family=Frank+Ruhl+Libre:wght@300;400;700;900&family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;900&family=Frank+Ruhl+Libre:wght@300;400;700;900&family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet" /></noscript>
-    <link rel="preload" as="image" href="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main-Xjsh9uMVYH6frhxTU2HJ4c.webp" />
+    <!-- Preload critical font files (Heebo Hebrew + Latin for above-the-fold text) -->
+    <link rel="preload" as="font" type="font/woff2" href="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/heebo-hebrew_6044f9fd.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/heebo-latin_40e0904a.woff2" crossorigin />
+    <style>
+      /* Self-hosted Heebo — Hebrew subset */
+      @font-face {
+        font-family: 'Heebo';
+        font-style: normal;
+        font-weight: 300 900;
+        font-display: swap;
+        src: url(https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/heebo-hebrew_6044f9fd.woff2) format('woff2');
+        unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+      }
+      /* Self-hosted Heebo — Latin subset */
+      @font-face {
+        font-family: 'Heebo';
+        font-style: normal;
+        font-weight: 300 900;
+        font-display: swap;
+        src: url(https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/heebo-latin_40e0904a.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* Self-hosted Frank Ruhl Libre — Hebrew subset */
+      @font-face {
+        font-family: 'Frank Ruhl Libre';
+        font-style: normal;
+        font-weight: 300 900;
+        font-display: swap;
+        src: url(https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/frank-ruhl-hebrew_ceaf0c90.woff2) format('woff2');
+        unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+      }
+      /* Self-hosted Frank Ruhl Libre — Latin subset */
+      @font-face {
+        font-family: 'Frank Ruhl Libre';
+        font-style: normal;
+        font-weight: 300 900;
+        font-display: swap;
+        src: url(https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/frank-ruhl-latin_fd1a3e07.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+    </style>
+    <link rel="preload" as="image" href="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main-Xjsh9uMVYH6frhxTU2HJ4c.webp" fetchpriority="high" />
   </head>
   <body>
     <div id="root"></div>

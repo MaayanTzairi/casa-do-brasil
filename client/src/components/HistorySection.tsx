@@ -143,11 +143,11 @@ export default function HistorySection() {
         overflow: "hidden",
         direction: "ltr",
       }}>
-        {MILESTONES.map((m, i) => {
+        {MILESTONES.map((milestone, i) => {
           const isActive = i === active;
           return (
             <motion.div
-              key={m.year}
+              key={milestone.year}
               layout
               onClick={() => setActive(i)}
               animate={{ flex: isActive ? 5 : 1 }}
@@ -162,8 +162,8 @@ export default function HistorySection() {
             >
               {/* Background image */}
               <motion.img
-                src={m.image}
-                alt={m.title}
+                src={milestone.image}
+                alt={milestone.title}
                 loading="lazy"
                 decoding="async"
                 animate={{ scale: isActive ? 1.0 : 1.08 }}
@@ -228,7 +228,7 @@ export default function HistorySection() {
                       transform: "rotate(180deg)",
                       letterSpacing: "0.06em",
                     }}>
-                      {m.year}
+                      {milestone.year}
                     </div>
                     <div style={{
                       width: 1, height: 24,
@@ -245,7 +245,7 @@ export default function HistorySection() {
                       textOrientation: "mixed",
                       transform: "rotate(180deg)",
                     }}>
-                      {m.label}
+                      {milestone.label}
                     </div>
                   </motion.div>
                 )}
@@ -278,7 +278,7 @@ export default function HistorySection() {
                       marginBottom: -12,
                       userSelect: "none",
                     }}>
-                      {m.year}
+                      {milestone.year}
                     </div>
 
                     {/* Gold label */}
@@ -291,7 +291,7 @@ export default function HistorySection() {
                       color: GOLD,
                       marginBottom: 10,
                     }}>
-                      {m.label}
+                      {milestone.label}
                     </p>
 
                     {/* Title */}
@@ -303,7 +303,7 @@ export default function HistorySection() {
                       lineHeight: 1.2,
                       marginBottom: 14,
                     }}>
-                      {m.title}
+                      {milestone.title}
                     </h3>
 
                     {/* Gold divider */}
@@ -327,7 +327,7 @@ export default function HistorySection() {
                       maxWidth: 440,
                       marginLeft: isHe ? "auto" : 0,
                     }}>
-                      {m.body}
+                      {milestone.body}
                     </p>
                   </motion.div>
                 )}
@@ -355,9 +355,9 @@ export default function HistorySection() {
         display: "flex", justifyContent: "center",
         gap: 10, marginTop: 28,
       }}>
-        {MILESTONES.map((m, i) => (
+        {MILESTONES.map((milestone, i) => (
           <button
-            key={m.year}
+            key={milestone.year}
             onClick={() => setActive(i)}
             style={{
               background: "none", border: "none", cursor: "pointer",
@@ -382,7 +382,7 @@ export default function HistorySection() {
               color: i === active ? GOLD : "rgba(185,161,103,0.35)",
               transition: "color 0.3s",
             }}>
-              {m.year}
+              {milestone.year}
             </span>
           </button>
         ))}

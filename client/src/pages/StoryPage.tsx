@@ -19,7 +19,7 @@
  */
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -223,7 +223,7 @@ function StoryCard({
   );
 
   return (
-    <motion.div
+    <m.div
       style={{
         position: "absolute",
         top: 0, left: 0, right: 0,
@@ -239,7 +239,7 @@ function StoryCard({
       }}
     >
       <CardContent ch={ch} isHe={isHe} isMobile={false} />
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -363,12 +363,12 @@ function StoryHero({ isHe }: { isHe: boolean }) {
       position: "relative",
       zIndex: 2,
     }}>
-      <motion.div
+      <m.div
         initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
         transition={{ duration: 1.2, delay: 0.3 }}
         style={{ width: "60px", height: "1px", background: GOLD }}
       />
-      <motion.h1
+      <m.h1
         initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.0, delay: 0.55 }}
         style={{
@@ -394,8 +394,8 @@ function StoryHero({ isHe }: { isHe: boolean }) {
             Casa Do Brasil
           </>
         )}
-      </motion.h1>
-      <motion.div
+      </m.h1>
+      <m.div
         initial={{ opacity: 0 }} animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.4 }}
         style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem", marginTop: "0.5rem" }}
@@ -407,12 +407,12 @@ function StoryHero({ isHe }: { isHe: boolean }) {
         }}>
           {isHe ? "גלול להמשך" : "SCROLL"}
         </span>
-        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.8, repeat: Infinity }}>
+        <m.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.8, repeat: Infinity }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={GOLD_A(0.4)} strokeWidth="1.5">
             <path d="M12 5v14M5 12l7 7 7-7" />
           </svg>
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </div>
   );
 }

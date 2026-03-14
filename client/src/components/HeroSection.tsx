@@ -8,7 +8,7 @@
  */
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const HERO_IMAGE =
@@ -63,7 +63,6 @@ const lineVariants = {
 
 export default function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null);
-  const [loaded, setLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const { isHe } = useLanguage();
 
@@ -75,12 +74,6 @@ export default function HeroSection() {
   const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const overlayOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 1]);
   const titleY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = HERO_IMAGE;
-    img.onload = () => setLoaded(true);
-  }, []);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -95,33 +88,37 @@ export default function HeroSection() {
       className="relative w-full overflow-hidden"
       style={{ height: "100svh", minHeight: "600px" }}
     >
-      {/* ── Background Image with Ken Burns + Parallax ── */}
-      <motion.div
+      {/* ── Background Image with Ken Burns (CSS) + Parallax ── */}
+      <m.div
         className="absolute inset-0 w-full h-full"
         style={{ y: imageY }}
-        initial={{ scale: 1.06 }}
-        animate={loaded ? { scale: 1 } : { scale: 1.06 }}
-        transition={{ duration: 1.8, ease: "easeOut" }}
       >
-        <motion.div
-          className="w-full h-full"
-          animate={{ scale: [1, 1.08], x: ["0%", "1.5%"], y: ["0%", "-1%"] }}
-          transition={{ duration: 28, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
-        >
-          <div
-            className="w-full h-full bg-cover bg-center"
-            style={{ backgroundImage: `url(${HERO_IMAGE})`, backgroundPosition: "center 30%" }}
-          />
-        </motion.div>
-      </motion.div>
+        <img
+          src={HERO_IMAGE}
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          decoding="sync"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center 30%",
+            animation: "kenBurns 28s ease-in-out infinite alternate",
+            willChange: "transform",
+          }}
+        />
+      </m.div>
 
       {/* ── Cinematic Overlay ── */}
-      <motion.div className="absolute inset-0" style={{ opacity: overlayOpacity }}>
+      <m.div className="absolute inset-0" style={{ opacity: overlayOpacity }}>
         <div
           className="absolute inset-0"
           style={{ background: "linear-gradient(110deg, rgba(40,3,6,0.88) 0%, rgba(62,4,9,0.72) 45%, rgba(20,4,6,0.50) 100%)" }}
         />
-      </motion.div>
+      </m.div>
 
       {/* ── Bottom Gradient Fade ── */}
       <div
@@ -137,7 +134,7 @@ export default function HeroSection() {
       {!isMobile && (
         <div className="absolute pointer-events-none" style={{ zIndex: 2, top: 0, left: "20px", right: "20px", bottom: "20px" }}>
           {/* Top line — full width, just below the navbar (70px height + 12px gap = 82px) */}
-          <motion.div
+          <m.div
             className="absolute left-0 right-0 h-px"
             style={{
               top: "82px",
@@ -149,21 +146,21 @@ export default function HeroSection() {
             transition={{ duration: 1.2, delay: 0.7, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }}
           />
           {/* Bottom line */}
-          <motion.div
+          <m.div
             className="absolute bottom-0 left-0 right-0 h-px"
             style={{ background: "rgba(185,161,103,0.55)", transformOrigin: "left" }}
             initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
             transition={{ duration: 1.2, delay: 1.1, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }}
           />
           {/* Left line — starts from top line (82px) downward */}
-          <motion.div
+          <m.div
             className="absolute left-0 w-px"
             style={{ top: "82px", bottom: 0, background: "rgba(185,161,103,0.55)", transformOrigin: "top" }}
             initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
             transition={{ duration: 1.2, delay: 0.9, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] }}
           />
           {/* Right line — starts from top line (82px) downward */}
-          <motion.div
+          <m.div
             className="absolute right-0 w-px"
             style={{ top: "82px", bottom: 0, background: "rgba(185,161,103,0.55)", transformOrigin: "top" }}
             initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
@@ -175,7 +172,7 @@ export default function HeroSection() {
 
 
       {/* ── Hero Content ── */}
-      <motion.div
+      <m.div
         className="absolute inset-0 z-10 flex flex-col justify-end"
         style={{
           y: titleY,
@@ -187,10 +184,10 @@ export default function HeroSection() {
         }}
       >
         {/* Title block */}
-        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="mb-4" style={{ width: "100%", textAlign: isHe ? "right" : "left" }}>
+        <m.div variants={containerVariants} initial="hidden" animate="visible" className="mb-4" style={{ width: "100%", textAlign: isHe ? "right" : "left" }}>
           {["CASA", "DO", "BRASIL"].map((word) => (
             <div key={word} className="overflow-hidden">
-              <motion.h1
+              <m.h1
                 variants={wordVariants}
                 className="block select-none"
                 style={{
@@ -204,13 +201,13 @@ export default function HeroSection() {
                 }}
               >
                 {word}
-              </motion.h1>
+              </m.h1>
             </div>
           ))}
-        </motion.div>
+        </m.div>
 
         {/* Gold rule */}
-        <motion.div
+        <m.div
           className="mb-4"
           style={{ width: isMobile ? "clamp(120px, 40vw, 220px)" : "clamp(180px, 28vw, 460px)", transformOrigin: isHe ? "right" : "left", marginLeft: isHe ? "auto" : undefined, marginRight: isHe ? 0 : undefined }}
           variants={lineVariants}
@@ -218,10 +215,10 @@ export default function HeroSection() {
           animate="visible"
         >
           <div className="h-px" style={{ background: GOLD }} />
-        </motion.div>
+        </m.div>
 
         {/* Subtitle */}
-        <motion.p
+        <m.p
           custom={1.3}
           variants={slideUpVariants}
           initial="hidden"
@@ -239,10 +236,10 @@ export default function HeroSection() {
           }}
         >
           {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקריה" : "Brazilian Grill - Music & Churrascaria"}
-        </motion.p>
+        </m.p>
 
         {/* CTA Buttons */}
-        <motion.div
+        <m.div
           custom={1.6}
           variants={slideUpVariants}
           initial="hidden"
@@ -251,12 +248,12 @@ export default function HeroSection() {
         >
           <ReserveButton isMobile={isMobile} />
           <ExploreButton isMobile={isMobile} />
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
 
       {/* ── Social Icons — same side as SCROLL, above it, desktop only ── */}
       {!isMobile && (
-        <motion.div
+        <m.div
           className="absolute z-20 flex flex-col items-center gap-4"
           style={{ bottom: "9rem", right: isHe ? undefined : "2.5rem", left: isHe ? "2.5rem" : undefined }}
           initial={{ opacity: 0 }}
@@ -296,12 +293,12 @@ export default function HeroSection() {
             }
           />
           <div style={{ width: "1px", height: "36px", background: "rgba(185,161,103,0.35)" }} />
-        </motion.div>
+        </m.div>
       )}
 
       {/* ── Scroll Indicator — hidden on mobile ── */}
       {!isMobile && (
-        <motion.div
+        <m.div
           className="absolute z-20 flex flex-col items-center gap-2"
           style={{ bottom: "2rem", right: isHe ? undefined : "2.5rem", left: isHe ? "2.5rem" : undefined }}
           initial={{ opacity: 0 }}
@@ -311,12 +308,12 @@ export default function HeroSection() {
           <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.3em", color: "rgba(185,161,103,0.65)", textTransform: "uppercase", writingMode: "vertical-rl", marginBottom: "8px" }}>
             SCROLL
           </span>
-          <motion.div
+          <m.div
             style={{ width: "1px", height: "44px", background: "rgba(185,161,103,0.45)" }}
             animate={{ scaleY: [1, 0.25, 1], opacity: [0.45, 1, 0.45] }}
             transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
           />
-        </motion.div>
+        </m.div>
       )}
     </section>
   );

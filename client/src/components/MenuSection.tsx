@@ -14,13 +14,13 @@
  */
 
 import { useRef, useState, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
+import { m, useInView } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const CHURRASCARIA_IMG =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-churrascaria-small_1bbac17e.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-churrascaria-v2_v2_cb04fc5f.webp";
 const CLASSIC_IMG =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-classic-small_1322133b.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-classic-v2_v2_7709ebb5.webp";
 
 const GOLD = "#B9A167";
 const GOLD_R = "rgba(185,161,103,";
@@ -130,7 +130,7 @@ function MenuCard({ img, track, name, nameLine2, subtitle, href, dark=false, del
   const { isHe } = useLanguage();
 
   return (
-    <motion.div
+    <m.div
       custom={delay}
       variants={fadeUp}
       initial="hidden"
@@ -224,7 +224,7 @@ function MenuCard({ img, track, name, nameLine2, subtitle, href, dark=false, del
           {isHe ? (<>לצפייה בתפריט <span style={{ fontSize:"0.78rem" }}>←</span></>) : (<>VIEW MENU <span style={{ fontSize:"0.78rem" }}>→</span></>)}
         </a>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -314,7 +314,7 @@ export default function MenuSection() {
             direction: isHe ? "rtl" : "ltr",
           }}
         >
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.7, delay: 0.05 }}
@@ -322,9 +322,9 @@ export default function MenuSection() {
           >
             <div style={{ width:"20px", height:"1px", background:GOLD }} />
             <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.78rem", letterSpacing: isHe ? "0.08em" : "0.44em", textTransform:"uppercase", color:GOLD }}>{isHe ? "התפריט שלנו" : "OUR MENU"}</span>
-          </motion.div>
+          </m.div>
 
-          <motion.h2
+          <m.h2
             initial={{ opacity: 0, y: 22 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.95, delay: 0.15 }}
@@ -337,9 +337,9 @@ export default function MenuSection() {
             }}
           >
             {isHe ? <>חווייה<br />ברזילאית<br />אותנטית</> : <>AUTHENTIC<br />BRAZILIAN<br />EXPERIENCE</>}
-          </motion.h2>
+          </m.h2>
 
-          <motion.div
+          <m.div
             initial={{ scaleX: 0 }}
             animate={inView ? { scaleX: 1 } : {}}
             transition={{ duration: 1, delay: 0.32 }}
@@ -353,7 +353,7 @@ export default function MenuSection() {
             }}
           />
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 14 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.85, delay: 0.42 }}
@@ -375,7 +375,7 @@ export default function MenuSection() {
             >
               {isHe ? (<>התפריט המלא <span style={{ fontSize:"0.9rem" }}>←</span></>) : (<>VIEW FULL MENU <span style={{ fontSize:"0.9rem" }}>→</span></>)}
             </a>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </div>

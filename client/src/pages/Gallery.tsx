@@ -6,7 +6,7 @@
  */
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -20,7 +20,7 @@ const HERO_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-carnival_f495b5d9.webp";
 
 const ALL_IMAGES = [
-  { id: "interior",   src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-interior_ca31b808.webp", labelEn: "THE SPACE",    labelHe: "המרחב",    captionEn: "Designed for the senses",       captionHe: "מעוצב לחושים",           cat: "space" },
+  { id: "interior",   src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-interior-v2_v2_4827c495.webp", labelEn: "THE SPACE",    labelHe: "המרחב",    captionEn: "Designed for the senses",       captionHe: "מעוצב לחושים",           cat: "space" },
   { id: "dining",     src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-dining_a1ccc47f.webp", labelEn: "THE TABLE",    labelHe: "השולחן",   captionEn: "Every meal, a celebration",     captionHe: "כל ארוחה היא חגיגה",     cat: "space" },
   { id: "picanha",    src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-picanha_770485ba.webp", labelEn: "PICANHA",      labelHe: "פיקניה",    captionEn: "The crown cut of Brasil",      captionHe: "הנתח המלכותי של ברזיל",  cat: "food" },
   { id: "caipirinha", src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-caipirinha_c48da7f4.webp", labelEn: "CAIPIRINHA",   labelHe: "קייפיריניה", captionEn: "Brasil in a glass",            captionHe: "ברזיל בכוס",              cat: "food" },
@@ -41,7 +41,7 @@ function GalleryHero({ isHe }: { isHe: boolean }) {
       }}
     >
       {/* Background image */}
-      <motion.div
+      <m.div
         initial={{ scale: 1.08 }}
         animate={{ scale: 1 }}
         transition={{ duration: 1.8, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -56,7 +56,7 @@ function GalleryHero({ isHe }: { isHe: boolean }) {
             display: "block",
           }}
         />
-      </motion.div>
+      </m.div>
 
       {/* Dark overlay */}
       <div style={{
@@ -69,13 +69,13 @@ function GalleryHero({ isHe }: { isHe: boolean }) {
       {/* Gold inset frame — matches homepage: top line below navbar at 82px, sides/bottom at 20px */}
       <div style={{ position: "absolute", top: 0, left: "20px", right: "20px", bottom: "20px", pointerEvents: "none", zIndex: 2 }}>
         {/* Top line — just below navbar */}
-        <motion.div style={{ position: "absolute", top: "82px", left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.2, delay: 0.4 }} />
+        <m.div style={{ position: "absolute", top: "82px", left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.2, delay: 0.4 }} />
         {/* Bottom line */}
-        <motion.div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.2, delay: 0.6 }} />
+        <m.div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.2, delay: 0.6 }} />
         {/* Left line — starts from top line */}
-        <motion.div style={{ position: "absolute", top: "82px", bottom: 0, left: 0, width: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2, delay: 0.4 }} />
+        <m.div style={{ position: "absolute", top: "82px", bottom: 0, left: 0, width: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2, delay: 0.4 }} />
         {/* Right line — starts from top line */}
-        <motion.div style={{ position: "absolute", top: "82px", bottom: 0, right: 0, width: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2, delay: 0.55 }} />
+        <m.div style={{ position: "absolute", top: "82px", bottom: 0, right: 0, width: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2, delay: 0.55 }} />
       </div>
 
       {/* Content */}
@@ -89,7 +89,7 @@ function GalleryHero({ isHe }: { isHe: boolean }) {
         }}
       >
         {/* Label */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.5 }}
@@ -99,10 +99,10 @@ function GalleryHero({ isHe }: { isHe: boolean }) {
           <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.52rem", letterSpacing: isHe ? "0.06em" : "0.38em", textTransform: "uppercase", color: GOLD }}>
             {isHe ? "קאסה דו ברזיל" : "Casa do Brasil"}
           </span>
-        </motion.div>
+        </m.div>
 
         {/* Title */}
-        <motion.h1
+        <m.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.85, delay: 0.65 }}
@@ -117,10 +117,10 @@ function GalleryHero({ isHe }: { isHe: boolean }) {
           }}
         >
           {isHe ? "הגלריה" : "GALLERY"}
-        </motion.h1>
+        </m.h1>
 
         {/* Gold rule */}
-        <motion.div
+        <m.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1, delay: 0.9 }}
@@ -134,7 +134,7 @@ function GalleryHero({ isHe }: { isHe: boolean }) {
         />
 
         {/* Subtitle */}
-        <motion.p
+        <m.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 1.1 }}
@@ -149,7 +149,7 @@ function GalleryHero({ isHe }: { isHe: boolean }) {
           }}
         >
           {isHe ? "צבע, אש ורוח הקרנבל" : "Colour, Fire & the Spirit of Carnival"}
-        </motion.p>
+        </m.p>
       </div>
     </section>
   );
@@ -218,7 +218,7 @@ export default function Gallery() {
       }}>
         <AnimatePresence>
           {filtered.map((img, i) => (
-            <motion.div
+            <m.div
               key={img.id}
               layout
               initial={{ opacity: 0, y: 20 }}
@@ -244,7 +244,7 @@ export default function Gallery() {
                 onMouseEnter={e => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
               />
-            </motion.div>
+            </m.div>
           ))}
         </AnimatePresence>
       </div>
@@ -252,7 +252,7 @@ export default function Gallery() {
       {/* ── LIGHTBOX ── */}
       <AnimatePresence>
         {lightbox && lightboxImg && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -265,7 +265,7 @@ export default function Gallery() {
               cursor: "zoom-out",
             }}
           >
-            <motion.img
+            <m.img
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -303,7 +303,7 @@ export default function Gallery() {
             >
               ×
             </button>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 

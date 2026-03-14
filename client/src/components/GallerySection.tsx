@@ -10,7 +10,7 @@
  */
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { m, useInView, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -21,7 +21,7 @@ const BORDEAUX = "rgb(62,4,9)";
 const IMAGES = [
   {
     id: "interior",
-    src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-interior_ca31b808.webp",
+    src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-interior-v2_v2_4827c495.webp",
   },
   {
     id: "picanha",
@@ -129,7 +129,7 @@ export default function GallerySection() {
           justifyContent: "center",
         }}>
           {/* Section label */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.7 }}
@@ -149,10 +149,10 @@ export default function GallerySection() {
             }}>
               {isHe ? "גלריה" : "GALLERY"}
             </span>
-          </motion.div>
+          </m.div>
 
           {/* Headline */}
-          <motion.h2
+          <m.h2
             initial={{ opacity: 0, y: 22 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.95, delay: 0.12 }}
@@ -168,10 +168,10 @@ export default function GallerySection() {
             {isHe
               ? <>להיות באילת<br />ולהרגיש בברזיל</>
               : <>BE IN EILAT,<br />FEEL IN BRAZIL</>}
-          </motion.h2>
+          </m.h2>
 
           {/* Gold divider */}
-          <motion.div
+          <m.div
             initial={{ scaleX: 0 }}
             animate={inView ? { scaleX: 1 } : {}}
             transition={{ duration: 1, delay: 0.28 }}
@@ -187,7 +187,7 @@ export default function GallerySection() {
           />
 
           {/* Body text */}
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 14 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.85, delay: 0.38 }}
@@ -204,10 +204,10 @@ export default function GallerySection() {
             {isHe
               ? "צלילים, ריחות וצבעים — הגלריה שלנו מזמינה אתכם להציץ לתוך הנשמה של קאסה דו ברזיל."
               : "Sounds, aromas and colors — our gallery invites you to glimpse the soul of Casa do Brasil."}
-          </motion.p>
+          </m.p>
 
           {/* Slide dots */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.7, delay: 0.45 }}
@@ -234,23 +234,23 @@ export default function GallerySection() {
                 }}
               />
             ))}
-          </motion.div>
+          </m.div>
 
           {/* CTA — desktop only */}
           {!mobile && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 14 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.85, delay: 0.5 }}
               style={{ display: "flex", justifyContent: "flex-start", marginTop: "2rem" }}
             >
               <CTAButton isHe={isHe} />
-            </motion.div>
+            </m.div>
           )}
         </div>
 
         {/* ── IMAGE SLIDER COLUMN ── */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: isHe ? -30 : 30 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 1, delay: 0.2 }}
@@ -287,7 +287,7 @@ export default function GallerySection() {
               maxHeight: mobile ? "320px" : "500px",
             }}>
               <AnimatePresence mode="wait">
-                <motion.img
+                <m.img
                   key={IMAGES[current].id}
                   src={IMAGES[current].src}
                   alt=""
@@ -367,19 +367,19 @@ export default function GallerySection() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* ── MOBILE CTA — below slider, centered ── */}
       {mobile && (
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 14 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.85, delay: 0.6 }}
           style={{ display: "flex", justifyContent: "center", marginTop: "2rem", padding: "0 6vw" }}
         >
           <CTAButton isHe={isHe} />
-        </motion.div>
+        </m.div>
       )}
     </section>
   );

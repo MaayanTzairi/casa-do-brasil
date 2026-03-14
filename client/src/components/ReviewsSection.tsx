@@ -7,7 +7,7 @@
  */
 
 import { useRef, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const GOLD = "#B9A167";
@@ -352,7 +352,7 @@ export default function ReviewsSection() {
       }}
     >
       {/* Header */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
@@ -455,7 +455,7 @@ export default function ReviewsSection() {
           </span>
           <div style={{ width: "32px", height: "1px", background: GOLD }} />
         </div>
-      </motion.div>
+      </m.div>
 
       {/* Carousel — always LTR so scroll direction is consistent */}
       <div

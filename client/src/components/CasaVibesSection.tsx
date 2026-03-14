@@ -11,13 +11,13 @@
  */
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { m, useInView } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const MEAT_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/our-story-meat_2d1fb536.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/meat-v2_v2_c9250c58.webp";
 const CARNIVAL_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/our-story-carnival_0ebcb58e.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/carnival-v2_v2_942d1bb1.webp";
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(62,4,9)";
@@ -32,7 +32,7 @@ const fadeUp = {
 
 function GoldLine({ delay = 0 }: { delay?: number }) {
   return (
-    <motion.div
+    <m.div
       initial={{ scaleX: 0 }}
       animate={{ scaleX: 1 }}
       transition={{ duration: 0.9, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -102,7 +102,7 @@ export default function CasaVibesSection() {
         <div style={{ paddingRight: (!mobile && !isHe) ? "2vw" : 0, paddingLeft: (!mobile && isHe) ? "2vw" : 0, textAlign: isHe ? "right" : "left", direction: isHe ? "rtl" : "ltr", width: mobile ? "100%" : undefined }}>
 
           {/* Label */}
-          <motion.div
+          <m.div
             custom={0} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
             style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.4rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start", width: "100%" }}
           >
@@ -112,12 +112,12 @@ export default function CasaVibesSection() {
               fontSize: "0.78rem", letterSpacing: isHe ? "0.08em" : "0.38em",
               textTransform: "uppercase", color: GOLD,
             }}>{isHe ? "הסיפור שלנו" : "OUR STORY"}</span>
-          </motion.div>
+          </m.div>
 
           {/* Big headline */}
           {(isHe ? ["בשר.", "מוזיקה.", "ברזיל."] : ["MEAT.", "MUSIC.", "BRASIL."]).map((word, i) => (
             <div key={word} style={{ overflow: "hidden" }}>
-              <motion.h2
+              <m.h2
                 custom={0.08 + i * 0.11} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
                 style={{
                   fontFamily: "'Heebo', sans-serif",
@@ -132,20 +132,20 @@ export default function CasaVibesSection() {
                   width: "100%",
                   display: "block",
                 }}
-              >{word}</motion.h2>
+              >{word}</m.h2>
             </div>
           ))}
 
           {/* Gold rule */}
-          <motion.div
+          <m.div
             custom={0.42} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
             style={{ width: mobile ? "120px" : "160px", margin: isHe ? "1.5rem 0 1.4rem auto" : "1.5rem auto 1.4rem 0" }}
           >
             <GoldLine delay={0.42} />
-          </motion.div>
+          </m.div>
 
           {/* Body */}
-          <motion.p
+          <m.p
             custom={0.52} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
             style={{
               fontFamily: "'Heebo', sans-serif", fontWeight: 300,
@@ -160,10 +160,10 @@ export default function CasaVibesSection() {
               ? "קאסה דו ברזיל היא יותר מארוחה — זו חגיגה. צ'וראסקו ברזילאי אותנטי, שנחתך ליד השולחן על ידי הגאושוס שלנו, בצירת הקצב, הצבע והנשמה של הקרנבל. כל ביקור הוא חג לכל החושים."
               : "Casa do Brasil is more than a meal — it is a celebration. Authentic Brazilian churrasco, carved tableside by our gauchos, paired with the rhythm, color and soul of carnival. Every visit is a feast for all the senses."
             }
-          </motion.p>
+          </m.p>
 
           {/* CTA */}
-          <motion.div custom={0.76} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
+          <m.div custom={0.76} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
             style={{ display: "flex", justifyContent: mobile ? "center" : "flex-start", width: "100%" }}
           >
             <a
@@ -181,7 +181,7 @@ export default function CasaVibesSection() {
             >
               {isHe ? (<>הסיפור של קאזה דו ברזיל <span style={{ fontSize: "0.85rem" }}>←</span></>) : (<>Casa Do Brasil Story <span style={{ fontSize: "0.85rem" }}>→</span></>)}
             </a>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* ══════════ RIGHT — IMAGES (desktop only in grid) ══════════ */}
@@ -190,12 +190,12 @@ export default function CasaVibesSection() {
           <div style={{ position: "relative", height: "clamp(400px, 46vw, 580px)", paddingBottom: "2rem" }}>
 
             {/* Image 1 — tall, anchored top-left, gentle float */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1.0, delay: 0.18, ease: [0.25, 0.46, 0.45, 0.94] }}
               style={{ position: "absolute", top: 0, left: 0, width: "58%", zIndex: 2 }}
             >
-              <motion.div
+              <m.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
                 style={{
@@ -216,17 +216,17 @@ export default function CasaVibesSection() {
                   <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.32em", color: GOLD, marginBottom: "0.25rem" }}>CHURRASCO</div>
                   <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(14px, 1.5vw, 19px)", color: "#fff", lineHeight: 1.1 }}>THE ART<br />OF FIRE</div>
                 </div>
-              </motion.div>
+              </m.div>
               <CornerBrackets />
-            </motion.div>
+            </m.div>
 
             {/* Image 2 — shorter, anchored bottom-right, offset float */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 32 }} animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1.0, delay: 0.32, ease: [0.25, 0.46, 0.45, 0.94] }}
               style={{ position: "absolute", bottom: 0, right: 0, width: "55%", zIndex: 3 }}
             >
-              <motion.div
+              <m.div
                 animate={{ y: [0, -12, 0] }}
                 transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
                 style={{
@@ -247,9 +247,9 @@ export default function CasaVibesSection() {
                   <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.32em", color: GOLD, marginBottom: "0.25rem" }}>CARNIVAL</div>
                   <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(14px, 1.5vw, 19px)", color: "#fff", lineHeight: 1.1 }}>THE SOUL<br />OF BRASIL</div>
                 </div>
-              </motion.div>
+              </m.div>
               <CornerBrackets />
-            </motion.div>
+            </m.div>
           </div>
         )}
       </div>
@@ -265,12 +265,12 @@ export default function CasaVibesSection() {
           overflow: "visible",
         }}>
           {/* Image 1 — tall, anchored top-left */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
             style={{ position: "absolute", top: 0, left: 0, width: "60%", zIndex: 2 }}
           >
-            <motion.div
+            <m.div
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
               style={{ position: "relative", overflow: "hidden", boxShadow: "0 16px 48px rgba(62,4,9,0.36), 0 6px 18px rgba(62,4,9,0.20)", borderRadius: "2px" }}
@@ -283,16 +283,16 @@ export default function CasaVibesSection() {
                 <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>CHURRASCO</div>
                 <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(12px, 3.5vw, 16px)", color: "#fff", lineHeight: 1.1 }}>THE ART<br />OF FIRE</div>
               </div>
-            </motion.div>
+            </m.div>
             <CornerBrackets offset={-6} len={12} w={1} />
-          </motion.div>
+          </m.div>
           {/* Image 2 — shorter, anchored bottom-right */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.22, ease: [0.25, 0.46, 0.45, 0.94] }}
             style={{ position: "absolute", bottom: 0, right: 0, width: "56%", zIndex: 3 }}
           >
-            <motion.div
+            <m.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
               style={{ position: "relative", overflow: "hidden", boxShadow: "0 20px 56px rgba(62,4,9,0.40), 0 8px 22px rgba(62,4,9,0.22)", borderRadius: "2px" }}
@@ -305,9 +305,9 @@ export default function CasaVibesSection() {
                 <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>CARNIVAL</div>
                 <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(12px, 3.5vw, 16px)", color: "#fff", lineHeight: 1.1 }}>THE SOUL<br />OF BRASIL</div>
               </div>
-            </motion.div>
+            </m.div>
             <CornerBrackets offset={-6} len={12} w={1} />
-          </motion.div>
+          </m.div>
         </div>
       )}
     </section>

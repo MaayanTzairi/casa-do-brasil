@@ -7,7 +7,7 @@
  */
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 /** Navigate to a hash link, handling cross-page navigation */
@@ -28,7 +28,7 @@ function navigateToHash(href: string, e: React.MouseEvent) {
 }
 
 const LOGO_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-small_383f3293.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-v2_v2_36399d31.webp";
 
 const GOLD = "#B9A167";
 const BORDEAUX = "rgb(62,4,9)";
@@ -159,7 +159,7 @@ export default function Navbar() {
 
   return (
     <>
-      <motion.nav
+      <m.nav
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
@@ -232,7 +232,7 @@ export default function Navbar() {
                 }}
               >
                 {[0, 1, 2].map((i) => (
-                  <motion.div
+                  <m.div
                     key={i}
                     style={{ width: "24px", height: "1.5px", background: scrolled ? BORDEAUX : GOLD, borderRadius: "2px" }}
                     animate={
@@ -264,9 +264,9 @@ export default function Navbar() {
               transform: "translateX(-50%)",
               display: "flex", alignItems: "center",
             }}>
-              <motion.div whileHover={{ scale: 1.06 }} transition={{ duration: 0.25 }}>
+              <m.div whileHover={{ scale: 1.06 }} transition={{ duration: 0.25 }}>
                 <LogoBadge size={56} scrolled={scrolled} />
-              </motion.div>
+              </m.div>
             </a>
 
             {/* Right links + lang toggle */}
@@ -317,12 +317,12 @@ export default function Navbar() {
             </div>
           </>
         )}
-      </motion.nav>
+      </m.nav>
 
       {/* Mobile overlay */}
       <AnimatePresence>
         {menuOpen && isMobile && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -339,7 +339,7 @@ export default function Navbar() {
             <div style={{ position: "absolute", top: "80px", left: "2rem", right: "2rem", height: "1px", background: "rgba(185,161,103,0.3)" }} />
 
             {ALL_LINKS.map((link, i) => (
-              <motion.a
+              <m.a
                 key={link.label}
                 href={link.href}
                 target={link.href.startsWith('http') ? '_blank' : undefined}
@@ -362,16 +362,16 @@ export default function Navbar() {
                 onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#FFFFFF"; }}
               >
                 {link.label}
-              </motion.a>
+              </m.a>
             ))}
 
-            <motion.div
+            <m.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ delay: 0.4, duration: 0.6 }}
               style={{ width: "40px", height: "1px", background: GOLD }}
             />
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>
