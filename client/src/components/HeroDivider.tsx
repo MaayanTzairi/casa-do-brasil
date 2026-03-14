@@ -12,7 +12,7 @@
  */
 
 const PANORAMA_IMG =
-  "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/DMLENVYsLhbQNFTK.png?Expires=1804534509&Signature=BTr-I~tSAZwwoXfkvLSbdIqvc3JY9ASUuvNWuy960PxYzJxe--VCecKsoQGG5mj7~JvJPGbJWtCk--J1nsumpnDoWNhYfZoLuQ79lYlzh7eYnYPfqCDuQ1QNdthqx7BOFG89c99bOfBbLRi9NLQd7D-zQk9jcl1YdK0a9z9KcQP8jA-u2-w~RgQ36hg2~YT8I50bXjcRzncD~zkwix~mJsi3BnIEr87yXHtIgdJK9~AVHpx1-qWSSFTtB-EG8lEtGt2YZGjUXt-U5HTEeYQBtrz6PVjOp0p1vtLQ1prwVTg18q-7vzxmGiyXBDbXG8KrDxwwibBU9hSlzzsEZnj4dQ__&Key-Pair-Id=K2HSFNDJXOU9YS";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-footer_80a01222.webp";
 
 const GOLD = "rgba(185,161,103,";
 

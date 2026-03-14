@@ -13,7 +13,7 @@ const GOLD_LIGHT = "rgba(185,161,103,0.35)";
 const BORDEAUX = "rgb(22,1,3)";
 
 const LOGO_URL =
-  "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/uHTuTZMyDxkuiNst.png?Expires=1804585555&Signature=BCE5XCJ9GXizch-hUtg295kLcRrHFMmNVcefcdjko~3jqWGICbaQ6y2PXweZX2aGIpeGXXsfR9kESKWGVuAmwvB-aFtb5YUw3oDTEsT8OU~62QeeMf177EyXpfgZ27fH9OccohAE9tymaFpKRRtKPNJSIamZGco0NskAT5ZiT2Bb-oYxsyw9teOvUc9LVOAmcSjilinB5b-bTkdd9o18s9JhzDNF8USGg4FnDKbmHLf9rC7DxT-SgQnnO4TyXqAGSOKvtxdEjRBTKLOyKpv2rZMVoy1-IXuTfdVZxTeqaIsXBsLH~zE1EyWq0edtjfGDjXpW8-Gt0Tymq4irfOnYyA__&Key-Pair-Id=K2HSFNDJXOU9YS";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-illustration-2_d5f4ee2c.webp";
 
 export default function Footer() {
   const { isHe } = useLanguage();
