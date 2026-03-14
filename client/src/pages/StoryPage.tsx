@@ -22,7 +22,7 @@ const GOLD_A   = (a: number) => `rgba(185,161,103,${a})`;
 const BORDEAUX = "rgb(22,1,3)";
 
 const CARD_W_VW = 84;   // vw
-const CARD_VH   = 76;   // vh — card height
+const CARD_VH   = 68;   // vh — card height
 const PEEK_PX   = 52;   // px of previous card visible above next
 
 const CH1_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/story-ch1-roots-buHiUahabKhA3izt6V7zDV.webp";
@@ -235,12 +235,13 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
         height: "calc(100vh - 70px)",
         overflow: "hidden",
       }}>
-        {/* Card stack: centered in sticky viewport */}
+        {/* Card stack: card 1 centered in sticky viewport */}
         <div style={{
           position: "absolute",
           left: "50%",
-          top: "50%",
-          transform: `translate(-50%, calc(-50% - ${((N - 1) * PEEK_PX) / 2}px))`,
+          // top = 50% of sticky viewport minus half card height = card 1 is centered
+          top: `calc(50% - ${CARD_VH / 2}vh)`,
+          transform: "translateX(-50%)",
           width: `${CARD_W_VW}vw`,
           height: stackH,
         }}>
