@@ -368,24 +368,6 @@ function StoryHero({ isHe }: { isHe: boolean }) {
         transition={{ duration: 1.2, delay: 0.3 }}
         style={{ width: "60px", height: "1px", background: GOLD }}
       />
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.1, delay: 0.5 }}
-        style={{
-          fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-          fontSize: "clamp(42px, 8vw, 110px)",
-          color: "#fff", lineHeight: 0.95,
-          letterSpacing: isHe ? "0.02em" : "0.06em",
-          margin: 0, textShadow: "0 4px 32px rgba(0,0,0,0.3)",
-        }}
-      >
-        {isHe ? "הסיפור שלנו" : "Casa Do Brasil Story"}
-      </motion.h1>
-      <motion.div
-        initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
-        transition={{ duration: 1.2, delay: 0.7 }}
-        style={{ width: "60px", height: "1px", background: GOLD }}
-      />
       <motion.div
         initial={{ opacity: 0 }} animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.4 }}
