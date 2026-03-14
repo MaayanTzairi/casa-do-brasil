@@ -10,7 +10,7 @@
  * - Responsive: stacks on mobile
  */
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -60,6 +60,129 @@ function CornerBrackets({ offset = -8, len = 16, w = 1.2 }: { offset?: number; l
         </svg>
       ))}
     </>
+  );
+}
+
+const SLIDES = [
+  {
+    url: MEAT_URL,
+    label: "CHURRASCO",
+    title: "THE ART\nOF FIRE",
+    objectPosition: "center 40%",
+  },
+  {
+    url: CARNIVAL_URL,
+    label: "CARNIVAL",
+    title: "THE SOUL\nOF BRASIL",
+    objectPosition: "center 20%",
+  },
+];
+
+function MobileCarousel({ inView }: { inView: boolean }) {
+  const [current, setCurrent] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+
+  const prev = useCallback(() => setCurrent((c) => (c - 1 + SLIDES.length) % SLIDES.length), []);
+  const next = useCallback(() => setCurrent((c) => (c + 1) % SLIDES.length), []);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) diff > 0 ? next() : prev();
+    touchStartX.current = null;
+  };
+
+  const slide = SLIDES[current];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.9, delay: 0.1 }}
+      style={{ position: "relative", width: "100%" }}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Image */}
+      <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 16px 48px rgba(62,4,9,0.32)" }}>
+        <motion.img
+          key={current}
+          src={slide.url}
+          alt={slide.label}
+          loading="lazy"
+          decoding="async"
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
+          style={{ width: "100%", aspectRatio: "4/3", objectFit: "cover", objectPosition: slide.objectPosition, display: "block" }}
+        />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 55%)", pointerEvents: "none" }} />
+        {/* Caption */}
+        <div style={{ position: "absolute", bottom: "1rem", left: "1rem" }}>
+          <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.2rem" }}>{slide.label}</div>
+          <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(14px, 4vw, 18px)", color: "#fff", lineHeight: 1.1, whiteSpace: "pre-line" }}>{slide.title}</div>
+        </div>
+        {/* Arrows */}
+        <button
+          onClick={prev}
+          aria-label="Previous"
+          style={{
+            position: "absolute", left: "0.75rem", top: "50%", transform: "translateY(-50%)",
+            width: "36px", height: "36px", borderRadius: "50%",
+            background: "rgba(255,255,255,0.92)", border: "none", cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            boxShadow: "0 2px 12px rgba(62,4,9,0.22)",
+            zIndex: 10, transition: "background 0.2s",
+          }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#fff"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.92)"; }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={BORDEAUX} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15,18 9,12 15,6" />
+          </svg>
+        </button>
+        <button
+          onClick={next}
+          aria-label="Next"
+          style={{
+            position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)",
+            width: "36px", height: "36px", borderRadius: "50%",
+            background: "rgba(255,255,255,0.92)", border: "none", cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            boxShadow: "0 2px 12px rgba(62,4,9,0.22)",
+            zIndex: 10, transition: "background 0.2s",
+          }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#fff"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.92)"; }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={BORDEAUX} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9,18 15,12 9,6" />
+          </svg>
+        </button>
+      </div>
+      <CornerBrackets offset={-6} len={12} w={1} />
+      {/* Dots */}
+      <div style={{ display: "flex", justifyContent: "center", gap: "0.45rem", marginTop: "0.9rem" }}>
+        {SLIDES.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            aria-label={`Slide ${i + 1}`}
+            style={{
+              width: i === current ? "20px" : "7px",
+              height: "7px",
+              borderRadius: "4px",
+              background: i === current ? GOLD : "rgba(185,161,103,0.35)",
+              border: "none", cursor: "pointer", padding: 0,
+              transition: "all 0.3s ease",
+            }}
+          />
+        ))}
+      </div>
+    </motion.div>
   );
 }
 
@@ -185,39 +308,8 @@ export default function CasaVibesSection() {
 
         {/* ══════════ RIGHT — IMAGES ══════════ */}
         {mobile ? (
-          /* Mobile: two smaller images staggered left/right */
-          <div style={{ position: "relative", height: "280px" }}>
-            {/* Image 1 — left, slightly higher */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-              style={{ position: "absolute", top: 0, left: 0, width: "58%", zIndex: 2 }}
-            >
-              <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 14px 44px rgba(62,4,9,0.28)" }}>
-                <img src={MEAT_URL} alt="Churrasco" loading="lazy" decoding="async" style={{ width: "100%", aspectRatio: "4/5", objectFit: "cover", objectPosition: "center 40%", display: "block" }} />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.75) 0%, transparent 55%)", pointerEvents: "none" }} />
-                <div style={{ position: "absolute", bottom: "0.75rem", left: "0.75rem" }}>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>CHURRASCO</div>
-                </div>
-              </div>
-              <CornerBrackets offset={-6} len={12} w={1} />
-            </motion.div>
-            {/* Image 2 — right, lower */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.22, ease: [0.25, 0.46, 0.45, 0.94] }}
-              style={{ position: "absolute", bottom: 0, right: 0, width: "55%", zIndex: 3 }}
-            >
-              <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 18px 52px rgba(62,4,9,0.32)" }}>
-                <img src={CARNIVAL_URL} alt="Carnival" loading="lazy" decoding="async" style={{ width: "100%", aspectRatio: "4/5", objectFit: "cover", objectPosition: "center 20%", display: "block" }} />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 55%)", pointerEvents: "none" }} />
-                <div style={{ position: "absolute", bottom: "0.75rem", left: "0.75rem" }}>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>CARNIVAL</div>
-                </div>
-              </div>
-              <CornerBrackets offset={-6} len={12} w={1} />
-            </motion.div>
-          </div>
+          /* Mobile: swipe carousel */
+          <MobileCarousel inView={inView} />
         ) : (
           /* Desktop: staggered overlap — tall image top-left, shorter bottom-right */
           <div style={{ position: "relative", height: "clamp(400px, 46vw, 580px)", paddingBottom: "2rem" }}>
