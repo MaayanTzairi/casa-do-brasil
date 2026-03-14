@@ -276,8 +276,8 @@ export default function MenuSection() {
           <MenuCard
             img={CHURRASCARIA_IMG}
             track={isHe ? "החווייה" : "The Experience"}
-            name={isHe ? "צ'וראס-" : "CHURRAS-"}
-            nameLine2={isHe ? "קריה" : "CARIA"}
+            name={isHe ? "צ'וראסקריה" : "CHURRASCARIA"}
+            nameLine2={undefined}
             subtitle={isHe ? "כל כלול" : "All You Can Eat"}
             href="#churrascaria"
             dark

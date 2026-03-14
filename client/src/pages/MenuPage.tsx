@@ -846,7 +846,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                     gap: "0.6rem",
                   }}>
                     <span style={{ color: GOLD, fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
-                    <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(12px, 0.9vw, 14px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
+                    <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(14px, 1.05vw, 16px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
                       {isHe ? a.nameHe : a.name}
                     </span>
                   </li>
@@ -901,7 +901,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                           gap: "0.55rem",
                         }}>
                           <span style={{ color: GOLD, fontSize: "0.5rem", marginTop: "4px", flexShrink: 0 }}>▪</span>
-                          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(12px, 0.88vw, 14px)", color: ti === 1 ? "rgba(255,255,255,0.88)" : "rgb(70,25,25)", lineHeight: 1.5 }}>
+                          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(14px, 1.05vw, 16px)", color: ti === 1 ? "rgba(255,255,255,0.88)" : "rgb(70,25,25)", lineHeight: 1.5 }}>
                             {item}
                           </span>
                         </li>
@@ -972,7 +972,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               {category.lunchStarters.map((s, i) => (
                 <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
                   <span style={{ color: GOLD, fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
-                  <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(12px, 0.9vw, 14px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
+                  <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(14px, 1.05vw, 16px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
                     {isHe ? s.nameHe : s.name}
                   </span>
                 </li>
@@ -1264,20 +1264,20 @@ function MenuHero({ isHe }: { isHe: boolean }) {
         background: "linear-gradient(110deg, rgba(22,1,3,0.88) 0%, rgba(62,4,9,0.72) 45%, rgba(20,4,6,0.45) 100%)",
       }} />
 
-      {/* Top fade — subtle bright vignette */}
+      {/* Top fade — very subtle, just enough to show navbar */}
       <div style={{
         position: "absolute", top: 0, left: 0, right: 0,
-        height: "180px",
-        background: "linear-gradient(to bottom, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 35%, transparent 100%)",
+        height: "120px",
+        background: "linear-gradient(to bottom, rgba(22,1,3,0.55) 0%, rgba(22,1,3,0.15) 60%, transparent 100%)",
         pointerEvents: "none",
         zIndex: 2,
       }} />
 
-      {/* Bottom fade — smooth multi-stop to white */}
+      {/* Bottom fade — smooth multi-stop to white, starts well below subtitle */}
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0,
-        height: "180px",
-        background: "linear-gradient(to top, #ffffff 0%, rgba(255,255,255,0.82) 30%, rgba(255,255,255,0.38) 60%, rgba(255,255,255,0.08) 82%, transparent 100%)",
+        height: "220px",
+        background: "linear-gradient(to top, #ffffff 0%, rgba(255,255,255,0.92) 25%, rgba(255,255,255,0.55) 55%, rgba(255,255,255,0.12) 78%, transparent 100%)",
         pointerEvents: "none",
         zIndex: 2,
       }} />

@@ -188,7 +188,7 @@ export default function CasaVibesSection() {
           {/* CTA */}
           <motion.div custom={0.76} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}>
             <a
-              href="#story"
+              href="/story"
               style={{
                 display: "inline-flex", alignItems: "center", gap: "0.45rem",
                 fontFamily: "'Heebo', sans-serif", fontWeight: 700,
