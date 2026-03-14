@@ -182,7 +182,7 @@ export default function HeroSection() {
           paddingBottom: isMobile ? "clamp(3rem, 10vw, 5rem)" : "clamp(3rem, 6vw, 6rem)",
           paddingLeft: isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           paddingRight: isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
-          alignItems: (isMobile && isHe) ? "flex-end" : "flex-start",
+          alignItems: isHe ? "flex-end" : "flex-start",
           direction: isHe ? "rtl" : "ltr",
         }}
       >

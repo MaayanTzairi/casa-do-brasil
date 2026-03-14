@@ -6,8 +6,7 @@
  * - HE: Text column RIGHT, image slider LEFT
  * - Mobile: stacked vertically — slider first, then CTA below slider (centered)
  *
- * Design: Cinematic Asymmetric Luxury
- * Colors: White · Gold (185,161,103) · Bordeaux (62,4,9)
+ * Gold corners and prev/next arrows are OUTSIDE the image container.
  */
 
 import { useRef, useState, useEffect, useCallback } from "react";
@@ -87,7 +86,6 @@ export default function GallerySection() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Auto-advance every 3.5s
   const next = useCallback(() => {
     setCurrent(c => (c + 1) % IMAGES.length);
   }, []);
@@ -182,8 +180,9 @@ export default function GallerySection() {
               background: `linear-gradient(to right, ${GOLD}, ${GOLD_R}0.2))`,
               marginBottom: "1.5rem",
               transformOrigin: isHe ? "right" : "left",
-              marginLeft: (mobile && isHe) ? "auto" : undefined,
-              marginRight: (mobile && !isHe) ? "auto" : undefined,
+              marginLeft: isHe ? "auto" : undefined,
+              marginRight: isHe ? 0 : undefined,
+              alignSelf: isHe ? "flex-end" : "flex-start",
             }}
           />
 
@@ -235,7 +234,7 @@ export default function GallerySection() {
             ))}
           </motion.div>
 
-          {/* CTA — desktop only (mobile CTA is below the slider) */}
+          {/* CTA — desktop only */}
           {!mobile && (
             <motion.div
               initial={{ opacity: 0, y: 14 }}
@@ -255,86 +254,116 @@ export default function GallerySection() {
           transition={{ duration: 1, delay: 0.2 }}
           style={{
             flex: 1,
-            position: "relative",
-            overflow: "hidden",
-            aspectRatio: "4/3",
-            minHeight: mobile ? "260px" : "clamp(300px, 36vw, 520px)",
-            maxHeight: mobile ? "340px" : "520px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "stretch",
           }}
         >
-          {/* Slides */}
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={IMAGES[current].id}
-              src={IMAGES[current].src}
-              alt=""
-              loading="lazy"
-              decoding="async"
-              initial={{ opacity: 0, scale: 1.04 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.97 }}
-              transition={{ duration: 0.75, ease: [0.25, 0.46, 0.45, 0.94] }}
-              style={{
-                position: "absolute",
-                inset: 0,
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                objectPosition: "center",
-              }}
-            />
-          </AnimatePresence>
+          {/* Outer frame: gold corners OUTSIDE the image, arrows OUTSIDE */}
+          <div style={{ position: "relative" }}>
+            {/* Gold corner brackets — at the outer frame edges */}
+            {[
+              { top: 0, left: 0, borderTop: `1.5px solid ${GOLD}`, borderLeft: `1.5px solid ${GOLD}` },
+              { top: 0, right: 0, borderTop: `1.5px solid ${GOLD}`, borderRight: `1.5px solid ${GOLD}` },
+              { bottom: 0, left: 0, borderBottom: `1.5px solid ${GOLD}`, borderLeft: `1.5px solid ${GOLD}` },
+              { bottom: 0, right: 0, borderBottom: `1.5px solid ${GOLD}`, borderRight: `1.5px solid ${GOLD}` },
+            ].map((s, i) => (
+              <div key={i} style={{
+                position: "absolute", width: "18px", height: "18px",
+                opacity: 0.7, zIndex: 4, pointerEvents: "none",
+                ...s,
+              }} />
+            ))}
 
-          {/* Gold corner brackets */}
-          {[
-            { top: "12px", left: "12px", borderTop: `1.5px solid ${GOLD}`, borderLeft: `1.5px solid ${GOLD}` },
-            { top: "12px", right: "12px", borderTop: `1.5px solid ${GOLD}`, borderRight: `1.5px solid ${GOLD}` },
-            { bottom: "12px", left: "12px", borderBottom: `1.5px solid ${GOLD}`, borderLeft: `1.5px solid ${GOLD}` },
-            { bottom: "12px", right: "12px", borderBottom: `1.5px solid ${GOLD}`, borderRight: `1.5px solid ${GOLD}` },
-          ].map((s, i) => (
-            <div key={i} style={{
-              position: "absolute", width: "16px", height: "16px",
-              opacity: 0.6, zIndex: 4, pointerEvents: "none",
-              ...s,
-            }} />
-          ))}
+            {/* Image area — inset from corners */}
+            <div style={{
+              margin: "10px",
+              position: "relative",
+              overflow: "hidden",
+              aspectRatio: "4/3",
+              minHeight: mobile ? "240px" : "clamp(280px, 34vw, 500px)",
+              maxHeight: mobile ? "320px" : "500px",
+            }}>
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={IMAGES[current].id}
+                  src={IMAGES[current].src}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.97 }}
+                  transition={{ duration: 0.75, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    objectPosition: "center",
+                  }}
+                />
+              </AnimatePresence>
 
-          {/* Prev / Next arrows */}
-          {(["prev", "next"] as const).map(dir => (
-            <button
-              key={dir}
-              onClick={dir === "prev" ? prev : next}
-              style={{
-                position: "absolute",
-                top: "50%", transform: "translateY(-50%)",
-                [dir === "prev" ? "left" : "right"]: "14px",
-                zIndex: 5,
-                background: "rgba(62,4,9,0.55)",
-                border: `1px solid ${GOLD_R}0.4)`,
-                color: GOLD,
-                width: "34px", height: "34px",
-                borderRadius: "50%",
-                cursor: "pointer",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "14px",
-                transition: "background 0.25s",
-              }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = BORDEAUX; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(62,4,9,0.55)"; }}
-            >
-              {dir === "prev" ? "‹" : "›"}
-            </button>
-          ))}
+              {/* Slide counter — inside image, bottom right */}
+              <div style={{
+                position: "absolute", bottom: "12px", right: "12px",
+                fontFamily: "'Heebo', sans-serif", fontWeight: 300,
+                fontSize: "0.65rem", letterSpacing: "0.2em",
+                color: `${GOLD_R}0.9)`,
+                zIndex: 4,
+                textShadow: "0 1px 4px rgba(0,0,0,0.5)",
+              }}>
+                {String(current + 1).padStart(2, "0")} / {String(IMAGES.length).padStart(2, "0")}
+              </div>
+            </div>
 
-          {/* Slide counter */}
-          <div style={{
-            position: "absolute", bottom: "16px", right: "16px",
-            fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-            fontSize: "0.65rem", letterSpacing: "0.2em",
-            color: `${GOLD_R}0.85)`,
-            zIndex: 4,
-          }}>
-            {String(current + 1).padStart(2, "0")} / {String(IMAGES.length).padStart(2, "0")}
+            {/* Prev / Next arrows — OUTSIDE the image, below it */}
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: "0.75rem",
+              padding: "0 10px",
+            }}>
+              <button
+                onClick={prev}
+                style={{
+                  background: "transparent",
+                  border: `1px solid ${GOLD_R}0.5)`,
+                  color: BORDEAUX,
+                  width: "36px", height: "36px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "18px",
+                  transition: "background 0.25s, color 0.25s",
+                }}
+                onMouseEnter={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = BORDEAUX; el.style.color = "#fff"; }}
+                onMouseLeave={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = "transparent"; el.style.color = BORDEAUX; }}
+              >
+                ‹
+              </button>
+              <button
+                onClick={next}
+                style={{
+                  background: "transparent",
+                  border: `1px solid ${GOLD_R}0.5)`,
+                  color: BORDEAUX,
+                  width: "36px", height: "36px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "18px",
+                  transition: "background 0.25s, color 0.25s",
+                }}
+                onMouseEnter={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = BORDEAUX; el.style.color = "#fff"; }}
+                onMouseLeave={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = "transparent"; el.style.color = BORDEAUX; }}
+              >
+                ›
+              </button>
+            </div>
           </div>
         </motion.div>
       </div>

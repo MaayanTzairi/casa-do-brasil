@@ -347,9 +347,9 @@ export default function MenuSection() {
               width:"48px", height:"1.5px",
               background:`linear-gradient(to right, ${GOLD}, ${GOLD_R}0.2))`,
               margin:"1.8rem 0 2rem", transformOrigin: isHe ? "right" : "left",
-              marginLeft: (mobile && isHe) ? "auto" : (!mobile && !isHe) ? undefined : undefined,
-              marginRight: (mobile && !isHe) ? "auto" : undefined,
-              alignSelf: (mobile && isHe) ? "flex-end" : (mobile && !isHe) ? "center" : undefined,
+              marginLeft: isHe ? "auto" : undefined,
+              marginRight: isHe ? 0 : undefined,
+              alignSelf: isHe ? "flex-end" : "flex-start",
             }}
           />
 
