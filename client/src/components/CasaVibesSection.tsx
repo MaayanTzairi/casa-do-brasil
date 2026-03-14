@@ -192,11 +192,11 @@ export default function CasaVibesSection() {
 
       {/* Mobile images — side by side, full natural height, no cropping */}
       {mobile && (
-        <div style={{ display: "flex", gap: "10px", width: "100%", maxWidth: "1280px", margin: "2.5rem auto 0", alignItems: "flex-start" }}>
-          {/* Left image — meat (taller) */}
-          <div style={{ ...animStyle(inView, 0.1), flex: "0 0 57%", alignSelf: "flex-start" }}>
-            <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 16px 48px rgba(62,4,9,0.36), 0 6px 18px rgba(62,4,9,0.20)", borderRadius: "2px" }}>
-              <img src={MEAT_URL} srcSet={`${MEAT_URL_SM} 450w, ${MEAT_URL} 800w`} sizes="57vw" alt="Churrasco" loading="lazy" decoding="async" width={600} height={800} style={{ width: "100%", display: "block" }} />
+        <div style={{ display: "flex", gap: "10px", width: "100%", maxWidth: "1280px", margin: "2.5rem auto 0", alignItems: "stretch" }}>
+          {/* Left image — meat */}
+          <div style={{ ...animStyle(inView, 0.1), flex: "1 1 0", minWidth: 0 }}>
+            <div style={{ position: "relative", overflow: "hidden", height: "260px", boxShadow: "0 16px 48px rgba(62,4,9,0.36), 0 6px 18px rgba(62,4,9,0.20)", borderRadius: "2px" }}>
+              <img src={MEAT_URL} srcSet={`${MEAT_URL_SM} 450w, ${MEAT_URL} 800w`} sizes="50vw" alt="Churrasco" loading="lazy" decoding="async" width={600} height={800} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%", display: "block" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 52%)", pointerEvents: "none" }} />
               <div style={{ position: "absolute", bottom: "0.75rem", left: "0.75rem" }}>
                 <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>CHURRASCO</div>
@@ -205,10 +205,10 @@ export default function CasaVibesSection() {
             </div>
             <CornerBrackets offset={-6} len={12} w={1} />
           </div>
-          {/* Right image — carnival (shorter), pushed down to create overlap effect */}
-          <div style={{ ...animStyle(inView, 0.22), flex: "0 0 calc(43% - 10px)", alignSelf: "flex-end", marginBottom: "0" }}>
-            <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 20px 56px rgba(62,4,9,0.40), 0 8px 22px rgba(62,4,9,0.22)", borderRadius: "2px" }}>
-              <img src={CARNIVAL_URL} srcSet={`${CARNIVAL_URL_SM} 450w, ${CARNIVAL_URL} 800w`} sizes="43vw" alt="Carnival" loading="lazy" decoding="async" width={600} height={750} style={{ width: "100%", display: "block" }} />
+          {/* Right image — carnival */}
+          <div style={{ ...animStyle(inView, 0.22), flex: "1 1 0", minWidth: 0 }}>
+            <div style={{ position: "relative", overflow: "hidden", height: "260px", boxShadow: "0 20px 56px rgba(62,4,9,0.40), 0 8px 22px rgba(62,4,9,0.22)", borderRadius: "2px" }}>
+              <img src={CARNIVAL_URL} srcSet={`${CARNIVAL_URL_SM} 450w, ${CARNIVAL_URL} 800w`} sizes="50vw" alt="Carnival" loading="lazy" decoding="async" width={600} height={750} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%", display: "block" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.80) 0%, transparent 52%)", pointerEvents: "none" }} />
               <div style={{ position: "absolute", bottom: "0.75rem", left: "0.75rem" }}>
                 <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>CARNIVAL</div>
