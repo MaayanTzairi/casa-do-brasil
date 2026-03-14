@@ -279,7 +279,7 @@ export default function MenuSection() {
             name={isHe ? "צ'וראסקריה" : "CHURRASCARIA"}
             nameLine2={undefined}
             subtitle={isHe ? "כל כלול" : "All You Can Eat"}
-            href="#churrascaria"
+            href="/menu?tab=churrascaria"
             dark
             delay={0.15}
             inView={inView}
@@ -289,10 +289,10 @@ export default function MenuSection() {
           <MenuCard
             img={CLASSIC_IMG}
             track={isHe ? "אלא קארט" : "À La Carte"}
-            name={isHe ? "תפריט" : "CLASSIC"}
-            nameLine2={isHe ? "קלאסי" : "MENU"}
+            name={isHe ? "תפריט קלאסי" : "CLASSIC MENU"}
+            nameLine2={undefined}
             subtitle={isHe ? "בחירות אישיות" : "Individual Selections"}
-            href="#classic"
+            href="/menu?tab=classic"
             delay={0.28}
             inView={inView}
             elevated={false}

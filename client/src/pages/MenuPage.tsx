@@ -1371,7 +1371,16 @@ function MenuHero({ isHe }: { isHe: boolean }) {
 export default function MenuPage() {
   const { lang } = useLanguage();
   const isHe = lang === "he";
-  const [activeId, setActiveId] = useState("churrascaria");
+
+  // Read ?tab= query param to open the correct tab when navigating from homepage cards
+  const initialTab = (() => {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get("tab");
+    const validIds = ["churrascaria", "specials", "under12", "fresh-meat", "desserts", "lunch"];
+    return tab && validIds.includes(tab) ? tab : "churrascaria";
+  })();
+
+  const [activeId, setActiveId] = useState(initialTab);
   const [tabSticky, setTabSticky] = useState(false);
   const tabSentinelRef = useRef<HTMLDivElement>(null);
 

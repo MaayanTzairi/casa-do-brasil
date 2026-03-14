@@ -136,30 +136,7 @@ function GalleryCard({ img, delay, inView }: { img: typeof IMAGES[0]; delay: num
         }} />
       ))}
 
-      {/* Label + caption */}
-      <div style={{ position: "absolute", bottom: "1rem", left: "1rem", zIndex: 4 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.25rem" }}>
-          <div style={{ width: "10px", height: "1px", background: GOLD }} />
-          <span style={{
-            fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-            fontSize: "0.65rem", letterSpacing: "0.38em",
-            textTransform: "uppercase", color: GOLD,
-          }}>
-            {img.label}
-          </span>
-        </div>
-        <div style={{
-          fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontStyle: "italic",
-          fontSize: "clamp(10px, 0.72vw, 12px)",
-          color: "rgba(255,255,255,0.82)",
-          letterSpacing: "0.03em",
-          transform: hovered ? "translateY(0)" : "translateY(5px)",
-          opacity: hovered ? 1 : 0,
-          transition: "transform 0.35s ease, opacity 0.35s ease",
-        }}>
-          {img.caption}
-        </div>
-      </div>
+      {/* No text labels — clean images only */}
     </motion.div>
   );
 }
