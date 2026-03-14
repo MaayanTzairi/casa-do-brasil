@@ -1111,6 +1111,7 @@ function TabBar({
       style={{
         position: sticky ? "sticky" : "relative",
         top: sticky ? "70px" : undefined,
+        marginTop: sticky ? 0 : "2.5rem",
         zIndex: 40,
         background: sticky ? "rgba(255,255,255,0.97)" : "#fff",
         backdropFilter: sticky ? "blur(12px)" : "none",
