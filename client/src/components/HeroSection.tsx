@@ -232,7 +232,7 @@ export default function HeroSection() {
             fontSize: isMobile ? "clamp(12px, 3.5vw, 16px)" : "clamp(15px, 1.8vw, 21px)",
             color: GOLD,
             letterSpacing: "0.12em",
-            marginBottom: isMobile ? "1.8rem" : "2.5rem",
+            marginBottom: isMobile ? "2.2rem" : "3.2rem",
             fontStyle: "italic",
             textAlign: isHe ? "right" : "left",
             width: "100%",

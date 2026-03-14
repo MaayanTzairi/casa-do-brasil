@@ -876,14 +876,14 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                   }}>
                     {/* Track header */}
                     <div style={{ marginBottom: "1.2rem" }}>
-                      <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.44rem", letterSpacing: "0.28em", color: ti === 1 ? GOLD : GOLD, textTransform: "uppercase", marginBottom: "0.4rem" }}>
+                      <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.9vw, 14px)", letterSpacing: "0.22em", color: ti === 1 ? GOLD : GOLD, textTransform: "uppercase", marginBottom: "0.5rem" }}>
                         {isHe ? track.countHe : track.count}
                       </div>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: "0.3rem" }}>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "0.4rem" }}>
                         <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(28px, 3vw, 40px)", color: ti === 1 ? "#fff" : BORDEAUX, lineHeight: 1 }}>
                           ₪{track.price}
                         </span>
-                        <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.65rem", color: ti === 1 ? "rgba(255,255,255,0.65)" : "rgba(62,4,9,0.55)" }}>
+                        <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 400, fontSize: "clamp(11px, 0.9vw, 14px)", color: ti === 1 ? "rgba(255,255,255,0.75)" : "rgba(62,4,9,0.65)", letterSpacing: "0.06em" }}>
                           {isHe ? "לסועד" : "per diner"}
                         </span>
                       </div>
@@ -1002,7 +1002,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                     <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(20px, 2.2vw, 28px)", color: BORDEAUX, lineHeight: 1 }}>
                       {tier.price}
                     </div>
-                    <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.55rem", color: "rgba(62,4,9,0.5)", letterSpacing: "0.06em" }}>
+                    <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 400, fontSize: "clamp(11px, 0.85vw, 13px)", color: "rgba(62,4,9,0.65)", letterSpacing: "0.06em" }}>
                       {isHe ? "לסועד" : "per diner"}
                     </div>
                   </div>
