@@ -4,7 +4,7 @@
  * Layout: Asymmetric side-by-side, fits in one viewport section
  * - EN: Text column LEFT, image slider RIGHT
  * - HE: Text column RIGHT, image slider LEFT
- * - Mobile: stacked vertically
+ * - Mobile: stacked vertically — slider first, then CTA below slider (centered)
  *
  * Design: Cinematic Asymmetric Luxury
  * Colors: White · Gold (185,161,103) · Bordeaux (62,4,9)
@@ -45,6 +45,33 @@ const IMAGES = [
     src: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80&fm=webp",
   },
 ];
+
+/* ── Shared CTA Button ── */
+function CTAButton({ isHe }: { isHe: boolean }) {
+  return (
+    <Link href="/gallery">
+      <span
+        style={{
+          display: "inline-flex", alignItems: "center", gap: "0.7rem",
+          fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+          fontSize: "0.65rem", letterSpacing: "0.28em",
+          textTransform: "uppercase", textDecoration: "none",
+          color: BORDEAUX, padding: "0.85rem 2rem",
+          border: `1.5px solid ${GOLD}`,
+          cursor: "pointer",
+          transition: "background 0.28s, color 0.28s",
+          background: "transparent",
+        }}
+        onMouseEnter={e => { const el = e.currentTarget as HTMLSpanElement; el.style.background = BORDEAUX; el.style.color = "#fff"; }}
+        onMouseLeave={e => { const el = e.currentTarget as HTMLSpanElement; el.style.background = "transparent"; el.style.color = BORDEAUX; }}
+      >
+        {isHe
+          ? (<>גלריה מלאה <span style={{ fontSize: "0.9rem" }}>←</span></>)
+          : (<>FULL GALLERY <span style={{ fontSize: "0.9rem" }}>→</span></>)}
+      </span>
+    </Link>
+  );
+}
 
 export default function GallerySection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -91,7 +118,7 @@ export default function GallerySection() {
         padding: "0 6vw",
         display: "flex",
         flexDirection: mobile ? "column" : "row",
-        gap: mobile ? "2.5rem" : "clamp(2.5rem, 5vw, 6rem)",
+        gap: mobile ? "2rem" : "clamp(2.5rem, 5vw, 6rem)",
         alignItems: "stretch",
         direction: isHe ? "rtl" : "ltr",
       }}>
@@ -170,7 +197,7 @@ export default function GallerySection() {
               fontSize: "clamp(13px, 1vw, 15px)",
               color: "rgba(62,4,9,0.65)",
               lineHeight: 1.75,
-              marginBottom: "2.2rem",
+              marginBottom: mobile ? "1.5rem" : "2.2rem",
               textAlign: isHe ? "right" : "left",
               direction: isHe ? "rtl" : "ltr",
             }}
@@ -186,7 +213,7 @@ export default function GallerySection() {
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.7, delay: 0.45 }}
             style={{
-              display: "flex", gap: "6px", marginBottom: "2rem",
+              display: "flex", gap: "6px", marginBottom: mobile ? "0" : "2rem",
               justifyContent: mobile ? "center" : (isHe ? "flex-end" : "flex-start"),
             }}
           >
@@ -208,35 +235,17 @@ export default function GallerySection() {
             ))}
           </motion.div>
 
-          {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.85, delay: 0.5 }}
-            style={{ alignSelf: isHe ? "flex-end" : "flex-start", width: mobile ? "100%" : undefined, display: mobile ? "flex" : undefined, justifyContent: mobile ? (isHe ? "center" : "flex-start") : undefined }}
-          >
-            <Link href="/gallery">
-              <span
-                style={{
-                  display: "inline-flex", alignItems: "center", gap: "0.7rem",
-                  fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                  fontSize: "0.65rem", letterSpacing: "0.28em",
-                  textTransform: "uppercase", textDecoration: "none",
-                  color: BORDEAUX, padding: "0.85rem 2rem",
-                  border: `1.5px solid ${GOLD}`,
-                  cursor: "pointer",
-                  transition: "background 0.28s, color 0.28s",
-                  background: "transparent",
-                }}
-                onMouseEnter={e => { const el = e.currentTarget as HTMLSpanElement; el.style.background = BORDEAUX; el.style.color = "#fff"; }}
-                onMouseLeave={e => { const el = e.currentTarget as HTMLSpanElement; el.style.background = "transparent"; el.style.color = BORDEAUX; }}
-              >
-                {isHe
-                  ? (<>גלריה מלאה <span style={{ fontSize: "0.9rem" }}>←</span></>)
-                  : (<>FULL GALLERY <span style={{ fontSize: "0.9rem" }}>→</span></>)}
-              </span>
-            </Link>
-          </motion.div>
+          {/* CTA — desktop only (mobile CTA is below the slider) */}
+          {!mobile && (
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.85, delay: 0.5 }}
+              style={{ display: "flex", justifyContent: isHe ? "flex-end" : "flex-start", marginTop: "2rem" }}
+            >
+              <CTAButton isHe={isHe} />
+            </motion.div>
+          )}
         </div>
 
         {/* ── IMAGE SLIDER COLUMN ── */}
@@ -329,6 +338,18 @@ export default function GallerySection() {
           </div>
         </motion.div>
       </div>
+
+      {/* ── MOBILE CTA — below slider, centered ── */}
+      {mobile && (
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.85, delay: 0.6 }}
+          style={{ display: "flex", justifyContent: "center", marginTop: "2rem", padding: "0 6vw" }}
+        >
+          <CTAButton isHe={isHe} />
+        </motion.div>
+      )}
     </section>
   );
 }
