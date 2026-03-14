@@ -94,13 +94,12 @@ function MobileCarousel({ inView }: { inView: boolean }) {
       transition={{ duration: 0.9, delay: 0.1 }}
       style={{ position: "relative", width: "100%" }}
     >
-      {/* Card stack */}
+      {/* Card stack — fixed height so cards truly overlap */}
       <div
         style={{
           position: "relative",
           width: "100%",
-          // Height = card aspect + peeking cards below
-          paddingBottom: `calc(75% + ${STACK_OFFSET * (SLIDES.length - 1)}px)`,
+          height: `calc((100vw - 3rem) * 0.75 + ${STACK_OFFSET * (SLIDES.length - 1)}px)`,
         }}
       >
         {SLIDES.map((slide, i) => {
@@ -183,7 +182,7 @@ function MobileCarousel({ inView }: { inView: boolean }) {
       </div>
 
       {/* Tap to flip hint + dots */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "1rem", paddingTop: `${STACK_OFFSET * (SLIDES.length - 1)}px` }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "1rem" }}>
         <button
           onClick={advance}
           style={{
