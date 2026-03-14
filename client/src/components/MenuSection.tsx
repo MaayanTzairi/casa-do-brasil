@@ -127,6 +127,7 @@ interface CardProps {
 
 function MenuCard({ img, track, name, nameLine2, subtitle, href, dark=false, delay=0, inView, elevated=false }: CardProps) {
   const [hovered, setHovered] = useState(false);
+  const { isHe } = useLanguage();
 
   return (
     <motion.div
@@ -220,7 +221,7 @@ function MenuCard({ img, track, name, nameLine2, subtitle, href, dark=false, del
             opacity: hovered ? 0.6 : 1, transition:"opacity 0.2s",
           }}
         >
-          {"VIEW MENU"} <span style={{ fontSize:"0.78rem" }}>→</span>
+          {isHe ? (<><span style={{ fontSize:"0.78rem" }}>←</span> צפה בתפריט</>) : (<>VIEW MENU <span style={{ fontSize:"0.78rem" }}>→</span></>)}
         </a>
       </div>
     </motion.div>
@@ -309,6 +310,7 @@ export default function MenuSection() {
             order: mobile ? 1 : (isHe ? 1 : 2),
             textAlign: isHe ? "right" : "left",
             alignItems: isHe ? "flex-end" : "flex-start",
+            direction: isHe ? "rtl" : "ltr",
           }}
         >
           <motion.div

@@ -159,7 +159,7 @@ export default function CasaVibesSection() {
           {/* Stats row */}
           <motion.div
             custom={0.64} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
-            style={{ display: "flex", gap: "2.2rem", marginBottom: "2.2rem", flexWrap: "wrap", justifyContent: isHe ? "flex-end" : "flex-start" }}
+            style={{ display: "flex", gap: "2.2rem", marginBottom: "2.2rem", flexWrap: "wrap", justifyContent: (mobile && isHe) ? "center" : (isHe ? "flex-end" : "flex-start") }}
           >
             {(isHe ? [
               { num: "קצביה", label: "ביתית" },
