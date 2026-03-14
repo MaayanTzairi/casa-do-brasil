@@ -155,6 +155,8 @@ export default function GallerySection() {
               background: `linear-gradient(to right, ${GOLD}, ${GOLD_R}0.2))`,
               marginBottom: "1.5rem",
               transformOrigin: isHe ? "right" : "left",
+              marginLeft: (mobile && isHe) ? "auto" : undefined,
+              marginRight: (mobile && !isHe) ? "auto" : undefined,
             }}
           />
 
@@ -185,7 +187,7 @@ export default function GallerySection() {
             transition={{ duration: 0.7, delay: 0.45 }}
             style={{
               display: "flex", gap: "6px", marginBottom: "2rem",
-              justifyContent: isHe ? "flex-end" : "flex-start",
+              justifyContent: mobile ? "center" : (isHe ? "flex-end" : "flex-start"),
             }}
           >
             {IMAGES.map((_, i) => (
@@ -211,7 +213,7 @@ export default function GallerySection() {
             initial={{ opacity: 0, y: 14 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.85, delay: 0.5 }}
-            style={{ alignSelf: isHe ? "flex-end" : "flex-start" }}
+            style={{ alignSelf: isHe ? "flex-end" : "flex-start", width: mobile ? "100%" : undefined, display: mobile ? "flex" : undefined, justifyContent: mobile ? (isHe ? "flex-end" : "flex-start") : undefined }}
           >
             <Link href="/gallery">
               <span
