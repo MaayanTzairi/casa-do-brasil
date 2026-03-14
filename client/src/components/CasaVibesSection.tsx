@@ -79,23 +79,13 @@ const SLIDES = [
 ];
 
 function MobileCarousel({ inView }: { inView: boolean }) {
-  const [current, setCurrent] = useState(0);
-  const touchStartX = useRef<number | null>(null);
+  const [topIndex, setTopIndex] = useState(0);
+  // Each card has a fixed stagger offset so the deck looks layered
+  const STACK_OFFSET = 12; // px shift per card below top
 
-  const prev = useCallback(() => setCurrent((c) => (c - 1 + SLIDES.length) % SLIDES.length), []);
-  const next = useCallback(() => setCurrent((c) => (c + 1) % SLIDES.length), []);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) diff > 0 ? next() : prev();
-    touchStartX.current = null;
-  };
-
-  const slide = SLIDES[current];
+  const advance = useCallback(() => {
+    setTopIndex((c) => (c + 1) % SLIDES.length);
+  }, []);
 
   return (
     <motion.div
@@ -103,84 +93,131 @@ function MobileCarousel({ inView }: { inView: boolean }) {
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.9, delay: 0.1 }}
       style={{ position: "relative", width: "100%" }}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
     >
-      {/* Image */}
-      <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 16px 48px rgba(62,4,9,0.32)" }}>
-        <motion.img
-          key={current}
-          src={slide.url}
-          alt={slide.label}
-          loading="lazy"
-          decoding="async"
-          initial={{ opacity: 0, scale: 1.04 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.55, ease: "easeOut" }}
-          style={{ width: "100%", aspectRatio: "4/3", objectFit: "cover", objectPosition: slide.objectPosition, display: "block" }}
-        />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 55%)", pointerEvents: "none" }} />
-        {/* Caption */}
-        <div style={{ position: "absolute", bottom: "1rem", left: "1rem" }}>
-          <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.2rem" }}>{slide.label}</div>
-          <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(14px, 4vw, 18px)", color: "#fff", lineHeight: 1.1, whiteSpace: "pre-line" }}>{slide.title}</div>
-        </div>
-        {/* Arrows */}
+      {/* Card stack */}
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          // Height = card aspect + peeking cards below
+          paddingBottom: `calc(75% + ${STACK_OFFSET * (SLIDES.length - 1)}px)`,
+        }}
+      >
+        {SLIDES.map((slide, i) => {
+          // Position in stack: 0 = top, 1 = one below, etc.
+          const stackPos = (i - topIndex + SLIDES.length) % SLIDES.length;
+          const isTop = stackPos === 0;
+          const zIndex = SLIDES.length - stackPos;
+          const offsetY = stackPos * STACK_OFFSET;
+          const scale = 1 - stackPos * 0.04;
+
+          return (
+            <motion.div
+              key={i}
+              animate={{
+                y: offsetY,
+                scale,
+                zIndex,
+              }}
+              transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                zIndex,
+                transformOrigin: "top center",
+                cursor: isTop ? "default" : "pointer",
+              }}
+              onClick={!isTop ? advance : undefined}
+            >
+              <div
+                style={{
+                  position: "relative",
+                  overflow: "hidden",
+                  boxShadow: isTop
+                    ? "0 20px 56px rgba(62,4,9,0.38), 0 6px 18px rgba(62,4,9,0.20)"
+                    : "0 8px 24px rgba(62,4,9,0.18)",
+                  transition: "box-shadow 0.4s ease",
+                }}
+              >
+                <img
+                  src={slide.url}
+                  alt={slide.label}
+                  loading="lazy"
+                  decoding="async"
+                  style={{
+                    width: "100%",
+                    aspectRatio: "4/3",
+                    objectFit: "cover",
+                    objectPosition: slide.objectPosition,
+                    display: "block",
+                    filter: isTop ? "none" : "brightness(0.7)",
+                    transition: "filter 0.4s ease",
+                  }}
+                />
+                <div style={{
+                  position: "absolute", inset: 0,
+                  background: "linear-gradient(to top, rgba(62,4,9,0.80) 0%, transparent 55%)",
+                  pointerEvents: "none",
+                  opacity: isTop ? 1 : 0.5,
+                  transition: "opacity 0.4s ease",
+                }} />
+                {/* Caption — only on top card */}
+                {isTop && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.35, delay: 0.2 }}
+                    style={{ position: "absolute", bottom: "1rem", left: "1rem" }}
+                  >
+                    <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.2rem" }}>{slide.label}</div>
+                    <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(14px, 4vw, 18px)", color: "#fff", lineHeight: 1.1, whiteSpace: "pre-line" }}>{slide.title}</div>
+                  </motion.div>
+                )}
+                <CornerBrackets offset={-6} len={12} w={1} />
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Tap to flip hint + dots */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "1rem", paddingTop: `${STACK_OFFSET * (SLIDES.length - 1)}px` }}>
         <button
-          onClick={prev}
-          aria-label="Previous"
+          onClick={advance}
           style={{
-            position: "absolute", left: "0.75rem", top: "50%", transform: "translateY(-50%)",
-            width: "36px", height: "36px", borderRadius: "50%",
-            background: "rgba(255,255,255,0.92)", border: "none", cursor: "pointer",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 2px 12px rgba(62,4,9,0.22)",
-            zIndex: 10, transition: "background 0.2s",
+            display: "inline-flex", alignItems: "center", gap: "0.4rem",
+            background: "none", border: "none", cursor: "pointer", padding: 0,
+            fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+            fontSize: "0.6rem", letterSpacing: "0.22em", textTransform: "uppercase",
+            color: GOLD,
           }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#fff"; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.92)"; }}
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={BORDEAUX} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15,18 9,12 15,6" />
-          </svg>
-        </button>
-        <button
-          onClick={next}
-          aria-label="Next"
-          style={{
-            position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)",
-            width: "36px", height: "36px", borderRadius: "50%",
-            background: "rgba(255,255,255,0.92)", border: "none", cursor: "pointer",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 2px 12px rgba(62,4,9,0.22)",
-            zIndex: 10, transition: "background 0.2s",
-          }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#fff"; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.92)"; }}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={BORDEAUX} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="9,18 15,12 9,6" />
           </svg>
+          NEXT
         </button>
-      </div>
-      <CornerBrackets offset={-6} len={12} w={1} />
-      {/* Dots */}
-      <div style={{ display: "flex", justifyContent: "center", gap: "0.45rem", marginTop: "0.9rem" }}>
-        {SLIDES.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrent(i)}
-            aria-label={`Slide ${i + 1}`}
-            style={{
-              width: i === current ? "20px" : "7px",
-              height: "7px",
-              borderRadius: "4px",
-              background: i === current ? GOLD : "rgba(185,161,103,0.35)",
-              border: "none", cursor: "pointer", padding: 0,
-              transition: "all 0.3s ease",
-            }}
-          />
-        ))}
+        <div style={{ display: "flex", gap: "0.4rem" }}>
+          {SLIDES.map((_, i) => {
+            const isActive = i === topIndex;
+            return (
+              <button
+                key={i}
+                onClick={() => setTopIndex(i)}
+                style={{
+                  width: isActive ? "20px" : "7px",
+                  height: "7px",
+                  borderRadius: "4px",
+                  background: isActive ? GOLD : "rgba(185,161,103,0.35)",
+                  border: "none", cursor: "pointer", padding: 0,
+                  transition: "all 0.3s ease",
+                }}
+              />
+            );
+          })}
+        </div>
       </div>
     </motion.div>
   );
