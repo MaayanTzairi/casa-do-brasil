@@ -37,7 +37,7 @@ const IMAGES = [
   },
   {
     id: "grill",
-    src: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=900&q=80&fm=webp",
+    src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-food-ambiance_18d34935.webp",
   },
   {
     id: "atmosphere",
