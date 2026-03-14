@@ -106,7 +106,7 @@ export default function CasaVibesSection() {
             <div style={{ width: "28px", height: "1px", background: GOLD }} />
             <span style={{
               fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-              fontSize: "0.65rem", letterSpacing: isHe ? "0.08em" : "0.38em",
+              fontSize: "0.78rem", letterSpacing: isHe ? "0.08em" : "0.38em",
               textTransform: "uppercase", color: GOLD,
             }}>{isHe ? "הסיפור שלנו" : "OUR STORY"}</span>
           </motion.div>

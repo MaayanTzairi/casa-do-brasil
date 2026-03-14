@@ -378,7 +378,7 @@ export default function ReviewsSection() {
             style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 700,
-              fontSize: "0.55rem",
+              fontSize: "0.78rem",
               letterSpacing: "0.38em",
               textTransform: "uppercase",
               color: GOLD,
