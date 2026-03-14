@@ -1,21 +1,18 @@
 /**
  * CASA DO BRASIL — Full Gallery Page
- * Route: /gallery
- * Design: Cinematic hero (matches Menu page) → filter tabs → masonry grid → lightbox
- * Uses shared Navbar and Footer
+ * No framer-motion — CSS transitions only
  */
 
-import { useState } from "react";
-import { m, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useInViewCSS } from "@/hooks/useInViewCSS";
 
 const GOLD = "#B9A167";
 const GOLD_R = "rgba(185,161,103,";
 const BORDEAUX = "rgb(62,4,9)";
 
-/* Hero image — carnival atmosphere */
 const HERO_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-carnival_f495b5d9.webp";
 
@@ -28,138 +25,50 @@ const ALL_IMAGES = [
   { id: "skewers",    src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-skewers_17adafb4.webp", labelEn: "CHURRASCO",    labelHe: "צ'וראסקו",  captionEn: "Fire, smoke and tradition",    captionHe: "אש, עשן ומסורת",         cat: "food" },
 ];
 
-/* ─── HERO ─── */
 function GalleryHero({ isHe }: { isHe: boolean }) {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => { const t = setTimeout(() => setLoaded(true), 50); return () => clearTimeout(t); }, []);
+
   return (
-    <section
-      style={{
-        position: "relative",
-        width: "100%",
-        height: "clamp(420px, 70vh, 720px)",
-        overflow: "hidden",
-        background: BORDEAUX,
-      }}
-    >
-      {/* Background image */}
-      <m.div
-        initial={{ scale: 1.08 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 1.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        style={{ position: "absolute", inset: 0 }}
-      >
-        <img
-          src={HERO_IMG}
-          alt="Gallery"
-          style={{
-            width: "100%", height: "100%",
-            objectFit: "cover", objectPosition: "center 30%",
-            display: "block",
-          }}
-        />
-      </m.div>
+    <section style={{ position:"relative", width:"100%", height:"clamp(420px, 70vh, 720px)", overflow:"hidden", background:BORDEAUX }}>
+      <div style={{ position:"absolute", inset:0 }}>
+        <img src={HERO_IMG} alt="Gallery" style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 30%", display:"block" }} />
+      </div>
+      <div style={{ position:"absolute", inset:0, background:"linear-gradient(110deg, rgba(22,1,3,0.88) 0%, rgba(62,4,9,0.72) 45%, rgba(20,4,6,0.45) 100%)" }} />
 
-      {/* Dark overlay */}
-      <div style={{
-        position: "absolute", inset: 0,
-        background: "linear-gradient(110deg, rgba(22,1,3,0.88) 0%, rgba(62,4,9,0.72) 45%, rgba(20,4,6,0.45) 100%)",
-      }} />
-
-      {/* No top/bottom gradient fades */}
-
-      {/* Gold inset frame — matches homepage: top line below navbar at 82px, sides/bottom at 20px */}
-      <div style={{ position: "absolute", top: 0, left: "20px", right: "20px", bottom: "20px", pointerEvents: "none", zIndex: 2 }}>
-        {/* Top line — just below navbar */}
-        <m.div style={{ position: "absolute", top: "82px", left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.2, delay: 0.4 }} />
-        {/* Bottom line */}
-        <m.div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.2, delay: 0.6 }} />
-        {/* Left line — starts from top line */}
-        <m.div style={{ position: "absolute", top: "82px", bottom: 0, left: 0, width: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2, delay: 0.4 }} />
-        {/* Right line — starts from top line */}
-        <m.div style={{ position: "absolute", top: "82px", bottom: 0, right: 0, width: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2, delay: 0.55 }} />
+      {/* Gold inset frame */}
+      <div style={{ position:"absolute", top:0, left:"20px", right:"20px", bottom:"20px", pointerEvents:"none", zIndex:2 }}>
+        <div style={{ position:"absolute", top:"82px", left:0, right:0, height:"1px", background:"rgba(185,161,103,0.55)", transformOrigin:"left", transform: loaded ? "scaleX(1)" : "scaleX(0)", transition:"transform 1.2s 0.4s ease" }} />
+        <div style={{ position:"absolute", bottom:0, left:0, right:0, height:"1px", background:"rgba(185,161,103,0.55)", transformOrigin:"left", transform: loaded ? "scaleX(1)" : "scaleX(0)", transition:"transform 1.2s 0.6s ease" }} />
+        <div style={{ position:"absolute", top:"82px", bottom:0, left:0, width:"1px", background:"rgba(185,161,103,0.55)", transformOrigin:"top", transform: loaded ? "scaleY(1)" : "scaleY(0)", transition:"transform 1.2s 0.4s ease" }} />
+        <div style={{ position:"absolute", top:"82px", bottom:0, right:0, width:"1px", background:"rgba(185,161,103,0.55)", transformOrigin:"top", transform: loaded ? "scaleY(1)" : "scaleY(0)", transition:"transform 1.2s 0.55s ease" }} />
       </div>
 
       {/* Content */}
-      <div
-        dir={isHe ? "rtl" : "ltr"}
-        style={{
-          position: "absolute", inset: 0, zIndex: 10,
-          display: "flex", flexDirection: "column", justifyContent: "flex-end",
-          padding: "clamp(2rem, 5vw, 4rem) clamp(1.5rem, 6vw, 5.5rem)",
-          paddingBottom: "clamp(3.5rem, 7vw, 5.5rem)",
-        }}
-      >
-        {/* Label */}
-        <m.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
-          style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "0.9rem", flexDirection: isHe ? "row-reverse" : "row" }}
-        >
-          <div style={{ width: "22px", height: "1px", background: GOLD }} />
-          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.52rem", letterSpacing: isHe ? "0.06em" : "0.38em", textTransform: "uppercase", color: GOLD }}>
+      <div dir={isHe ? "rtl" : "ltr"} style={{ position:"absolute", inset:0, zIndex:10, display:"flex", flexDirection:"column", justifyContent:"flex-end", padding:"clamp(2rem, 5vw, 4rem) clamp(1.5rem, 6vw, 5.5rem)", paddingBottom:"clamp(3.5rem, 7vw, 5.5rem)" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:"0.7rem", marginBottom:"0.9rem", flexDirection: isHe ? "row-reverse" : "row", opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(16px)", transition:"opacity 0.7s 0.5s, transform 0.7s 0.5s" }}>
+          <div style={{ width:"22px", height:"1px", background:GOLD }} />
+          <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.52rem", letterSpacing: isHe ? "0.06em" : "0.38em", textTransform:"uppercase", color:GOLD }}>
             {isHe ? "קאסה דו ברזיל" : "Casa do Brasil"}
           </span>
-        </m.div>
-
-        {/* Title */}
-        <m.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.85, delay: 0.65 }}
-          style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 900,
-            fontSize: "clamp(44px, 7vw, 100px)",
-            color: "#FFFFFF",
-            lineHeight: 0.88,
-            letterSpacing: isHe ? "-0.01em" : "-0.02em",
-            margin: "0 0 0.8rem",
-          }}
-        >
+        </div>
+        <h1 style={{ fontFamily:"'Heebo', sans-serif", fontWeight:900, fontSize:"clamp(44px, 7vw, 100px)", color:"#FFFFFF", lineHeight:0.88, letterSpacing: isHe ? "-0.01em" : "-0.02em", margin:"0 0 0.8rem", opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(24px)", transition:"opacity 0.85s 0.65s, transform 0.85s 0.65s" }}>
           {isHe ? "הגלריה" : "GALLERY"}
-        </m.h1>
-
-        {/* Gold rule */}
-        <m.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 1, delay: 0.9 }}
-          style={{
-            width: "clamp(80px, 14vw, 200px)",
-            height: "1px",
-            background: GOLD,
-            transformOrigin: isHe ? "right" : "left",
-            marginBottom: "0.9rem",
-          }}
-        />
-
-        {/* Subtitle */}
-        <m.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 1.1 }}
-          style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 300,
-            fontSize: "clamp(12px, 1.2vw, 16px)",
-            color: GOLD,
-            letterSpacing: "0.1em",
-            fontStyle: "italic",
-            margin: 0,
-          }}
-        >
+        </h1>
+        <div style={{ width:"clamp(80px, 14vw, 200px)", height:"1px", background:GOLD, transformOrigin: isHe ? "right" : "left", marginBottom:"0.9rem", transform: loaded ? "scaleX(1)" : "scaleX(0)", transition:"transform 1s 0.9s ease" }} />
+        <p style={{ fontFamily:"'Heebo', sans-serif", fontWeight:300, fontSize:"clamp(12px, 1.2vw, 16px)", color:GOLD, letterSpacing:"0.1em", fontStyle:"italic", margin:0, opacity: loaded ? 1 : 0, transition:"opacity 0.7s 1.1s" }}>
           {isHe ? "צבע, אש ורוח הקרנבל" : "Colour, Fire & the Spirit of Carnival"}
-        </m.p>
+        </p>
       </div>
     </section>
   );
 }
 
-/* ─── MAIN PAGE ─── */
 export default function Gallery() {
   const { isHe } = useLanguage();
   const [cat, setCat] = useState("all");
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const [lightboxVisible, setLightboxVisible] = useState(false);
 
   const CATS = [
     { id: "all",   labelEn: "ALL",   labelHe: "הכל" },
@@ -171,143 +80,76 @@ export default function Gallery() {
   const filtered = cat === "all" ? ALL_IMAGES : ALL_IMAGES.filter(i => i.cat === cat);
   const lightboxImg = ALL_IMAGES.find(i => i.id === lightbox);
 
-  return (
-    <div style={{ minHeight: "100vh", background: "#ffffff" }}>
-      {/* ── SHARED NAVBAR ── */}
-      <Navbar />
+  const openLightbox = (id: string) => {
+    setLightbox(id);
+    requestAnimationFrame(() => requestAnimationFrame(() => setLightboxVisible(true)));
+  };
+  const closeLightbox = () => {
+    setLightboxVisible(false);
+    setTimeout(() => setLightbox(null), 300);
+  };
 
-      {/* ── HERO ── */}
+  // Close on Escape
+  useEffect(() => {
+    const fn = (e: KeyboardEvent) => { if (e.key === "Escape") closeLightbox(); };
+    window.addEventListener("keydown", fn);
+    return () => window.removeEventListener("keydown", fn);
+  }, []);
+
+  return (
+    <div style={{ minHeight:"100vh", background:"#ffffff" }}>
+      <Navbar />
       <GalleryHero isHe={isHe} />
 
-      {/* ── FILTER TABS ── */}
-      <div style={{
-        padding: "3rem 6vw 2.5rem",
-        maxWidth: "1300px",
-        margin: "0 auto",
-        direction: isHe ? "rtl" : "ltr",
-      }}>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", justifyContent: isHe ? "flex-end" : "flex-start" }}>
+      {/* Filter tabs */}
+      <div style={{ padding:"3rem 6vw 2.5rem", maxWidth:"1300px", margin:"0 auto", direction: isHe ? "rtl" : "ltr" }}>
+        <div style={{ display:"flex", gap:"0.5rem", flexWrap:"wrap", justifyContent: isHe ? "flex-end" : "flex-start" }}>
           {CATS.map(c => (
-            <button
-              key={c.id}
-              onClick={() => setCat(c.id)}
-              style={{
-                fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                fontSize: "0.65rem", letterSpacing: isHe ? "0.06em" : "0.28em",
-                textTransform: "uppercase",
-                padding: "0.55rem 1.4rem",
-                border: `1px solid ${cat === c.id ? BORDEAUX : GOLD_R + "0.4)"}`,
-                background: cat === c.id ? BORDEAUX : "transparent",
-                color: cat === c.id ? "#fff" : BORDEAUX,
-                cursor: "pointer",
-                transition: "all 0.25s ease",
-              }}
-            >
+            <button key={c.id} onClick={() => setCat(c.id)} style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.65rem", letterSpacing: isHe ? "0.06em" : "0.28em", textTransform:"uppercase", padding:"0.55rem 1.4rem", border:`1px solid ${cat === c.id ? BORDEAUX : GOLD_R + "0.4)"}`, background: cat === c.id ? BORDEAUX : "transparent", color: cat === c.id ? "#fff" : BORDEAUX, cursor:"pointer", transition:"all 0.25s ease" }}>
               {isHe ? c.labelHe : c.labelEn}
             </button>
           ))}
         </div>
       </div>
 
-      {/* ── MASONRY GRID ── */}
-      <div style={{
-        padding: "0 6vw 6rem",
-        maxWidth: "1300px", margin: "0 auto",
-        columns: "3 280px",
-        columnGap: "10px",
-      }}>
-        <AnimatePresence>
-          {filtered.map((img, i) => (
-            <m.div
-              key={img.id}
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
-              onClick={() => setLightbox(img.id)}
-              style={{
-                breakInside: "avoid",
-                marginBottom: "10px",
-                position: "relative",
-                overflow: "hidden",
-                cursor: "pointer",
-                display: "block",
-              }}
-            >
-              <img
-                src={img.src}
-                alt={isHe ? img.labelHe : img.labelEn}
-                loading="lazy"
-                decoding="async"
-                style={{ width: "100%", display: "block", transition: "transform 1.2s ease" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
-              />
-            </m.div>
-          ))}
-        </AnimatePresence>
+      {/* Masonry grid */}
+      <div style={{ padding:"0 6vw 6rem", maxWidth:"1300px", margin:"0 auto", columns:"3 280px", columnGap:"10px" }}>
+        {filtered.map((img, i) => (
+          <div key={img.id} onClick={() => openLightbox(img.id)}
+            style={{ breakInside:"avoid", marginBottom:"10px", position:"relative", overflow:"hidden", cursor:"pointer", display:"block", opacity:1, transition:`opacity 0.5s ${i * 0.06}s` }}
+          >
+            <img src={img.src} alt={isHe ? img.labelHe : img.labelEn} loading="lazy" decoding="async"
+              style={{ width:"100%", display:"block", transition:"transform 1.2s ease" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
+            />
+          </div>
+        ))}
       </div>
 
-      {/* ── LIGHTBOX ── */}
-      <AnimatePresence>
-        {lightbox && lightboxImg && (
-          <m.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setLightbox(null)}
-            style={{
-              position: "fixed", inset: 0, zIndex: 100,
-              background: "rgba(10,2,2,0.92)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              padding: "2rem",
-              cursor: "zoom-out",
-            }}
-          >
-            <m.img
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.4 }}
-              src={lightboxImg.src}
-              alt={isHe ? lightboxImg.labelHe : lightboxImg.labelEn}
-              style={{
-                maxWidth: "90vw", maxHeight: "85vh",
-                objectFit: "contain",
-                boxShadow: `0 0 80px rgba(185,161,103,0.15)`,
-              }}
-              onClick={e => e.stopPropagation()}
-            />
-            {/* Caption */}
-            <div style={{
-              position: "fixed", bottom: "2.5rem", left: "50%", transform: "translateX(-50%)",
-              textAlign: "center",
-            }}>
-              <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.3em", color: GOLD, textTransform: "uppercase" }}>
-                {isHe ? lightboxImg.labelHe : lightboxImg.labelEn}
-              </div>
-              <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.75rem", color: "rgba(255,255,255,0.55)", marginTop: "0.3rem" }}>
-                {isHe ? lightboxImg.captionHe : lightboxImg.captionEn}
-              </div>
+      {/* Lightbox */}
+      {lightbox && lightboxImg && (
+        <div onClick={closeLightbox}
+          style={{ position:"fixed", inset:0, zIndex:100, background:"rgba(10,2,2,0.92)", display:"flex", alignItems:"center", justifyContent:"center", padding:"2rem", cursor:"zoom-out", opacity: lightboxVisible ? 1 : 0, transition:"opacity 0.3s" }}
+        >
+          <img src={lightboxImg.src} alt={isHe ? lightboxImg.labelHe : lightboxImg.labelEn}
+            style={{ maxWidth:"90vw", maxHeight:"85vh", objectFit:"contain", boxShadow:"0 0 80px rgba(185,161,103,0.15)", transform: lightboxVisible ? "scale(1)" : "scale(0.9)", transition:"transform 0.4s, opacity 0.4s", opacity: lightboxVisible ? 1 : 0 }}
+            onClick={e => e.stopPropagation()}
+          />
+          <div style={{ position:"fixed", bottom:"2.5rem", left:"50%", transform:"translateX(-50%)", textAlign:"center" }}>
+            <div style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.65rem", letterSpacing:"0.3em", color:GOLD, textTransform:"uppercase" }}>
+              {isHe ? lightboxImg.labelHe : lightboxImg.labelEn}
             </div>
-            <button
-              onClick={() => setLightbox(null)}
-              style={{
-                position: "fixed", top: "1.5rem", right: "2rem",
-                background: "transparent", border: `1px solid ${GOLD_R}0.5)`,
-                color: GOLD, width: "40px", height: "40px",
-                fontSize: "1.2rem", cursor: "pointer",
-                display: "flex", alignItems: "center", justifyContent: "center",
-              }}
-            >
-              ×
-            </button>
-          </m.div>
-        )}
-      </AnimatePresence>
+            <div style={{ fontFamily:"'Heebo', sans-serif", fontWeight:300, fontSize:"0.75rem", color:"rgba(255,255,255,0.55)", marginTop:"0.3rem" }}>
+              {isHe ? lightboxImg.captionHe : lightboxImg.captionEn}
+            </div>
+          </div>
+          <button onClick={closeLightbox}
+            style={{ position:"fixed", top:"1.5rem", right:"2rem", background:"transparent", border:`1px solid ${GOLD_R}0.5)`, color:GOLD, width:"40px", height:"40px", fontSize:"1.2rem", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}
+          >×</button>
+        </div>
+      )}
 
-      {/* ── SHARED FOOTER ── */}
       <Footer />
     </div>
   );

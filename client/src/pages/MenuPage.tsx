@@ -9,7 +9,6 @@
  */
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -615,10 +614,7 @@ function MenuItemRow({ item, isHe, type, index }: { item: MenuItem; isHe: boolea
   const tag = isHe ? item.tagHe : item.tag;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
+    <div
       style={{
         display: "flex",
         flexDirection: "row",
@@ -671,7 +667,7 @@ function MenuItemRow({ item, isHe, type, index }: { item: MenuItem; isHe: boolea
           {item.price}
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }
 
@@ -695,12 +691,8 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
   const isDeal = category.type === "deal";
 
   return (
-    <motion.div
+    <div
       key={category.id}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
       dir={isHe ? "rtl" : "ltr"}
       style={{ width: "100%" }}
     >
@@ -1064,7 +1056,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
           </p>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }
 
@@ -1124,10 +1116,7 @@ function TabBar({
     >
       {/* Mobile scroll hint — animated arrow on right edge */}
       {isMobile && showScrollHint && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 1, 0.7, 1] }}
-          transition={{ duration: 1.2, delay: 0.6, repeat: 3, repeatType: "reverse" }}
+        <div
           style={{
             position: "absolute",
             right: 0, top: 0, bottom: 0,
@@ -1141,9 +1130,7 @@ function TabBar({
             paddingRight: "8px",
           }}
         >
-          <motion.div
-            animate={{ x: [0, 5, 0] }}
-            transition={{ duration: 0.9, repeat: Infinity, ease: "easeInOut" }}
+          <div
             style={{ display: "flex", alignItems: "center", gap: "2px" }}
           >
             <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.42rem", letterSpacing: "0.1em", color: GOLD, textTransform: "uppercase" }}>
@@ -1152,8 +1139,8 @@ function TabBar({
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2.2" strokeLinecap="round">
               <polyline points="9,18 15,12 9,6"/>
             </svg>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       )}
 
       <div
@@ -1237,16 +1224,11 @@ function MenuHero({ isHe }: { isHe: boolean }) {
       }}
     >
       {/* Background image */}
-      <motion.div
+      <div
         className="absolute inset-0 w-full h-full"
-        initial={{ scale: 1.06 }}
-        animate={loaded ? { scale: 1 } : { scale: 1.06 }}
-        transition={{ duration: 1.8, ease: "easeOut" }}
       >
-        <motion.div
+        <div
           className="w-full h-full"
-          animate={{ scale: [1, 1.05] }}
-          transition={{ duration: 25, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
         >
           <div
             style={{
@@ -1256,8 +1238,8 @@ function MenuHero({ isHe }: { isHe: boolean }) {
               backgroundPosition: "center 35%",
             }}
           />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       {/* Overlay */}
       <div style={{
@@ -1270,13 +1252,13 @@ function MenuHero({ isHe }: { isHe: boolean }) {
       {/* Gold inset frame — matches homepage: top line below navbar at 82px, sides/bottom at 20px */}
       <div style={{ position: "absolute", top: 0, left: "20px", right: "20px", bottom: "20px", pointerEvents: "none", zIndex: 2 }}>
         {/* Top line — just below navbar */}
-        <motion.div style={{ position: "absolute", top: "82px", left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.2, delay: 0.4 }} />
+        <div style={{ position: "absolute", top: "82px", left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} />
         {/* Bottom line */}
-        <motion.div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.2, delay: 0.6 }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} />
         {/* Left line — starts from top line */}
-        <motion.div style={{ position: "absolute", top: "82px", bottom: 0, left: 0, width: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2, delay: 0.4 }} />
+        <div style={{ position: "absolute", top: "82px", bottom: 0, left: 0, width: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} />
         {/* Right line — starts from top line */}
-        <motion.div style={{ position: "absolute", top: "82px", bottom: 0, right: 0, width: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2, delay: 0.55 }} />
+        <div style={{ position: "absolute", top: "82px", bottom: 0, right: 0, width: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} />
       </div>
 
       {/* Content */}
@@ -1290,23 +1272,17 @@ function MenuHero({ isHe }: { isHe: boolean }) {
         }}
       >
         {/* Label */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
+        <div
           style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "0.9rem", flexDirection: isHe ? "row-reverse" : "row" }}
         >
           <div style={{ width: "22px", height: "1px", background: GOLD }} />
           <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.52rem", letterSpacing: isHe ? "0.06em" : "0.38em", textTransform: "uppercase", color: GOLD }}>
             {isHe ? "קאסה דו ברזיל" : "Casa do Brasil"}
           </span>
-        </motion.div>
+        </div>
 
         {/* Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.85, delay: 0.65 }}
+        <h1
           style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 900,
@@ -1318,13 +1294,10 @@ function MenuHero({ isHe }: { isHe: boolean }) {
           }}
         >
           {isHe ? "התפריט" : "THE MENU"}
-        </motion.h1>
+        </h1>
 
         {/* Gold rule */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 1, delay: 0.9 }}
+        <div
           style={{
             width: "clamp(80px, 14vw, 200px)",
             height: "1px",
@@ -1335,10 +1308,7 @@ function MenuHero({ isHe }: { isHe: boolean }) {
         />
 
         {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 1.1 }}
+        <p
           style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 300,
@@ -1350,7 +1320,7 @@ function MenuHero({ isHe }: { isHe: boolean }) {
           }}
         >
           {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקריה" : "Brazilian Grill — Music & Churrascaria"}
-        </motion.p>
+        </p>
       </div>
     </section>
   );
@@ -1416,9 +1386,9 @@ export default function MenuPage() {
           textAlign: isHe ? "right" : "left",
         }}
       >
-        <AnimatePresence mode="wait">
+        
           <CategoryPanel key={activeId} category={activeCategory} isHe={isHe} />
-        </AnimatePresence>
+        
       </div>
 
       <Footer />

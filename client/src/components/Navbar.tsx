@@ -3,11 +3,10 @@
  * Bilingual EN/HE with language toggle icon
  * - On Hero: transparent, white links
  * - After scroll: white bg + blur, bordeaux links
- * - Language toggle: globe icon → EN | HE pill in top-right area
+ * - No framer-motion — pure CSS transitions
  */
 
 import { useEffect, useState } from "react";
-import { m, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 /** Navigate to a hash link, handling cross-page navigation */
@@ -15,12 +14,10 @@ function navigateToHash(href: string, e: React.MouseEvent) {
   if (href.startsWith("#")) {
     const isHome = window.location.pathname === "/";
     if (isHome) {
-      // Same page: smooth scroll
       e.preventDefault();
       const el = document.querySelector(href);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
-      // Different page: navigate to /#hash
       e.preventDefault();
       window.location.href = "/" + href;
     }
@@ -73,13 +70,12 @@ function LogoBadge({ size, scrolled }: { size: number; scrolled: boolean }) {
     }}>
       <img src={LOGO_URL} alt="Casa do Brasil" style={{
         width: size - pad * 2, height: size - pad * 2,
-        objectFit: "contain", filter: "none", display: "block",
+        objectFit: "contain", display: "block",
       }} />
     </div>
   );
 }
 
-/** Language toggle pill */
 function LangToggle({ scrolled }: { scrolled: boolean }) {
   const { lang, setLang } = useLanguage();
   const isHe = lang === "he";
@@ -100,28 +96,18 @@ function LangToggle({ scrolled }: { scrolled: boolean }) {
         transition: "all 0.3s ease",
         flexShrink: 0,
       }}
-      onMouseEnter={e => {
-        (e.currentTarget as HTMLButtonElement).style.borderColor = GOLD;
-      }}
-      onMouseLeave={e => {
-        (e.currentTarget as HTMLButtonElement).style.borderColor = borderColor;
-      }}
+      onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = GOLD; }}
+      onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = borderColor; }}
     >
-      {/* Globe icon */}
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10"/>
         <line x1="2" y1="12" x2="22" y2="12"/>
         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
       </svg>
       <span style={{
-        fontFamily: "'Heebo', sans-serif",
-        fontWeight: 700,
-        fontSize: "0.65rem",
-        letterSpacing: "0.2em",
-        color: color,
-        textTransform: "uppercase",
-        transition: "color 0.3s",
-        lineHeight: 1,
+        fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem",
+        letterSpacing: "0.2em", color, textTransform: "uppercase",
+        transition: "color 0.3s", lineHeight: 1,
       }}>
         {isHe ? "EN" : "עב"}
       </span>
@@ -159,10 +145,7 @@ export default function Navbar() {
 
   return (
     <>
-      <m.nav
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
+      <nav
         dir="ltr"
         style={{
           position: "fixed",
@@ -180,47 +163,37 @@ export default function Navbar() {
           boxShadow: scrolled
             ? `0 1px 0 rgba(185,161,103,0.25), 0 4px 24px rgba(62,4,9,0.08)`
             : "none",
+          animation: "slideDown 0.7s 0.15s ease both",
         }}
       >
         {isMobile ? (
           <>
-            {/* Left: Reservation button */}
             <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
               <a
                 href="https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73"
-                target="_blank"
-                rel="noopener noreferrer"
+                target="_blank" rel="noopener noreferrer"
                 style={{
-                  fontFamily: "'Heebo', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "0.55rem",
-                  letterSpacing: isHe ? "0.04em" : "0.14em",
-                  textTransform: "uppercase",
-                  textDecoration: "none",
+                  fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+                  fontSize: "0.55rem", letterSpacing: isHe ? "0.04em" : "0.14em",
+                  textTransform: "uppercase", textDecoration: "none",
                   color: scrolled ? "#fff" : GOLD,
                   background: scrolled ? BORDEAUX : "transparent",
                   border: `1.5px solid ${scrolled ? BORDEAUX : GOLD}`,
                   padding: "0.35rem 0.7rem",
-                  whiteSpace: "nowrap",
-                  transition: "all 0.3s ease",
+                  whiteSpace: "nowrap", transition: "all 0.3s ease",
                 }}
               >
                 {isHe ? "הזמנה" : "RESERVE"}
               </a>
             </div>
 
-            {/* Center: logo — absolutely centered so left/right widths don't affect it */}
             <a href="/" style={{
-              position: "absolute",
-              left: "50%",
-              transform: "translateX(-50%)",
-              display: "flex", alignItems: "center",
-              zIndex: 1,
+              position: "absolute", left: "50%", transform: "translateX(-50%)",
+              display: "flex", alignItems: "center", zIndex: 1,
             }}>
               <LogoBadge size={44} scrolled={scrolled} />
             </a>
 
-            {/* Right: language toggle + hamburger */}
             <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", justifyContent: "flex-end", flex: 1 }}>
               <LangToggle scrolled={scrolled} />
               <button
@@ -232,15 +205,18 @@ export default function Navbar() {
                 }}
               >
                 {[0, 1, 2].map((i) => (
-                  <m.div
+                  <div
                     key={i}
-                    style={{ width: "24px", height: "1.5px", background: scrolled ? BORDEAUX : GOLD, borderRadius: "2px" }}
-                    animate={
-                      menuOpen
-                        ? i === 1 ? { opacity: 0 } : i === 0 ? { rotate: 45, y: 6.5 } : { rotate: -45, y: -6.5 }
-                        : { rotate: 0, y: 0, opacity: 1 }
-                    }
-                    transition={{ duration: 0.28 }}
+                    style={{
+                      width: "24px", height: "1.5px",
+                      background: scrolled ? BORDEAUX : GOLD,
+                      borderRadius: "2px",
+                      transition: "transform 0.28s ease, opacity 0.28s ease",
+                      transform: menuOpen
+                        ? i === 1 ? "scaleX(0)" : i === 0 ? "rotate(45deg) translate(4px, 4px)" : "rotate(-45deg) translate(4px, -4px)"
+                        : "none",
+                      opacity: menuOpen && i === 1 ? 0 : 1,
+                    }}
                   />
                 ))}
               </button>
@@ -248,7 +224,6 @@ export default function Navbar() {
           </>
         ) : (
           <>
-            {/* Left links */}
             <div style={{ display: "flex", alignItems: "center", gap: "clamp(1.4rem, 2.2vw, 2.8rem)" }}>
               {links.left.map((link) => (
                 <NavLink key={link.label} href={link.href} color={linkColor} scrolled={scrolled} isHe={isHe}>
@@ -257,19 +232,18 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Center logo — absolutely centered so it's always pixel-perfect regardless of left/right widths */}
             <a href="/" style={{
-              position: "absolute",
-              left: "50%",
-              transform: "translateX(-50%)",
+              position: "absolute", left: "50%", transform: "translateX(-50%)",
               display: "flex", alignItems: "center",
             }}>
-              <m.div whileHover={{ scale: 1.06 }} transition={{ duration: 0.25 }}>
+              <div style={{ transition: "transform 0.25s ease" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.transform = "scale(1.06)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.transform = "scale(1)"; }}
+              >
                 <LogoBadge size={56} scrolled={scrolled} />
-              </m.div>
+              </div>
             </a>
 
-            {/* Right links + lang toggle */}
             <div style={{ display: "flex", alignItems: "center", gap: "clamp(1.2rem, 2vw, 2.4rem)" }}>
               {links.right.map((link) =>
                 link.cta ? (
@@ -279,12 +253,9 @@ export default function Navbar() {
                     target={link.href.startsWith('http') ? '_blank' : undefined}
                     rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     style={{
-                      fontFamily: isHe ? "'Heebo', sans-serif" : "'Heebo', sans-serif",
-                      fontWeight: 700,
-                      fontSize: "0.65rem",
-                      letterSpacing: isHe ? "0.06em" : "0.2em",
-                      textTransform: "uppercase",
-                      textDecoration: "none",
+                      fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+                      fontSize: "0.65rem", letterSpacing: isHe ? "0.06em" : "0.2em",
+                      textTransform: "uppercase", textDecoration: "none",
                       color: scrolled ? "#fff" : GOLD,
                       background: scrolled ? BORDEAUX : "transparent",
                       border: `1.5px solid ${scrolled ? BORDEAUX : GOLD}`,
@@ -294,9 +265,7 @@ export default function Navbar() {
                     }}
                     onMouseEnter={e => {
                       const el = e.currentTarget as HTMLAnchorElement;
-                      el.style.background = GOLD;
-                      el.style.borderColor = GOLD;
-                      el.style.color = "#fff";
+                      el.style.background = GOLD; el.style.borderColor = GOLD; el.style.color = "#fff";
                     }}
                     onMouseLeave={e => {
                       const el = e.currentTarget as HTMLAnchorElement;
@@ -317,63 +286,56 @@ export default function Navbar() {
             </div>
           </>
         )}
-      </m.nav>
+      </nav>
 
-      {/* Mobile overlay */}
-      <AnimatePresence>
-        {menuOpen && isMobile && (
-          <m.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            dir={isHe ? "rtl" : "ltr"}
-            style={{
-              position: "fixed", inset: 0, zIndex: 49,
-              background: "rgba(40,3,6,0.97)",
-              display: "flex", flexDirection: "column",
-              alignItems: "center", justifyContent: "center",
-              gap: "2.2rem",
-            }}
-          >
-            <div style={{ position: "absolute", top: "80px", left: "2rem", right: "2rem", height: "1px", background: "rgba(185,161,103,0.3)" }} />
+      {/* Mobile overlay — CSS transition */}
+      {isMobile && (
+        <div
+          dir={isHe ? "rtl" : "ltr"}
+          style={{
+            position: "fixed", inset: 0, zIndex: 49,
+            background: "rgba(40,3,6,0.97)",
+            display: "flex", flexDirection: "column",
+            alignItems: "center", justifyContent: "center",
+            gap: "2.2rem",
+            opacity: menuOpen ? 1 : 0,
+            pointerEvents: menuOpen ? "auto" : "none",
+            transition: "opacity 0.3s ease",
+          }}
+        >
+          <div style={{ position: "absolute", top: "80px", left: "2rem", right: "2rem", height: "1px", background: "rgba(185,161,103,0.3)" }} />
 
-            {ALL_LINKS.map((link, i) => (
-              <m.a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                onClick={(e) => { navigateToHash(link.href, e); setMenuOpen(false); }}
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.05 + i * 0.07, duration: 0.4 }}
-                style={{
-                  fontFamily: "'Heebo', sans-serif",
-                  fontWeight: 900,
-                  fontSize: "clamp(20px, 5.5vw, 28px)",
-                  letterSpacing: isHe ? "0.04em" : "0.22em",
-                  color: "#FFFFFF",
-                  textDecoration: "none",
-                  textTransform: "uppercase",
-                  transition: "color 0.2s",
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GOLD; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#FFFFFF"; }}
-              >
-                {link.label}
-              </m.a>
-            ))}
+          {ALL_LINKS.map((link, i) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target={link.href.startsWith('http') ? '_blank' : undefined}
+              rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              onClick={(e) => { navigateToHash(link.href, e); setMenuOpen(false); }}
+              style={{
+                fontFamily: "'Heebo', sans-serif", fontWeight: 900,
+                fontSize: "clamp(20px, 5.5vw, 28px)",
+                letterSpacing: isHe ? "0.04em" : "0.22em",
+                color: "#FFFFFF", textDecoration: "none", textTransform: "uppercase",
+                transition: `color 0.2s, opacity 0.4s ${0.05 + i * 0.07}s, transform 0.4s ${0.05 + i * 0.07}s`,
+                opacity: menuOpen ? 1 : 0,
+                transform: menuOpen ? "translateY(0)" : "translateY(18px)",
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GOLD; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#FFFFFF"; }}
+            >
+              {link.label}
+            </a>
+          ))}
 
-            <m.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              style={{ width: "40px", height: "1px", background: GOLD }}
-            />
-          </m.div>
-        )}
-      </AnimatePresence>
+          <div style={{
+            width: "40px", height: "1px", background: GOLD,
+            transition: `transform 0.6s 0.4s ease, opacity 0.6s 0.4s ease`,
+            transform: menuOpen ? "scaleX(1)" : "scaleX(0)",
+            transformOrigin: "left",
+          }} />
+        </div>
+      )}
     </>
   );
 }
@@ -391,28 +353,19 @@ function NavLink({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        fontFamily: "'Heebo', sans-serif",
-        fontWeight: 700,
-        fontSize: "0.65rem",
-        letterSpacing: isHe ? "0.04em" : "0.2em",
-        textTransform: "uppercase",
-        textDecoration: "none",
+        fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+        fontSize: "0.65rem", letterSpacing: isHe ? "0.04em" : "0.2em",
+        textTransform: "uppercase", textDecoration: "none",
         color: hovered ? GOLD : color,
         transition: "color 0.25s ease",
-        position: "relative",
-        paddingBottom: "2px",
-        whiteSpace: "nowrap",
+        position: "relative", paddingBottom: "2px", whiteSpace: "nowrap",
       }}
     >
       {children}
       <span style={{
-        position: "absolute",
-        bottom: 0, left: 0,
-        width: hovered ? "100%" : "0%",
-        height: "1px",
-        background: GOLD,
-        transition: "width 0.3s ease",
-        display: "block",
+        position: "absolute", bottom: 0, left: 0,
+        width: hovered ? "100%" : "0%", height: "1px",
+        background: GOLD, transition: "width 0.3s ease", display: "block",
       }} />
     </a>
   );

@@ -171,7 +171,6 @@ export default defineConfig({
         manualChunks: {
           // Split heavy vendor libs into separate cached chunks
           "vendor-react": ["react", "react-dom"],
-          "vendor-motion": ["framer-motion"],
           "vendor-ui": ["@radix-ui/react-tooltip", "@radix-ui/react-dialog", "@radix-ui/react-select"],
         },
       },

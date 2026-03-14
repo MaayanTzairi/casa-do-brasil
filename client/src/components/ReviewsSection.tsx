@@ -7,7 +7,7 @@
  */
 
 import { useRef, useEffect, useState } from "react";
-import { m } from "framer-motion";
+import { useInViewCSS } from "@/hooks/useInViewCSS";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const GOLD = "#B9A167";
@@ -352,11 +352,7 @@ export default function ReviewsSection() {
       }}
     >
       {/* Header */}
-      <m.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+      <div
         style={{
           textAlign: "center",
           marginBottom: "3.5rem",
@@ -455,7 +451,7 @@ export default function ReviewsSection() {
           </span>
           <div style={{ width: "32px", height: "1px", background: GOLD }} />
         </div>
-      </m.div>
+      </div>
 
       {/* Carousel — always LTR so scroll direction is consistent */}
       <div
