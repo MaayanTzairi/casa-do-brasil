@@ -28,7 +28,7 @@ function navigateToHash(href: string, e: React.MouseEvent) {
 }
 
 const LOGO_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-illustration-2_d5f4ee2c.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-transparent_448961b5.png";
 
 const GOLD = "#B9A167";
 const BORDEAUX = "rgb(62,4,9)";

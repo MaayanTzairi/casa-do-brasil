@@ -13,7 +13,7 @@ const GOLD_LIGHT = "rgba(185,161,103,0.35)";
 const BORDEAUX = "rgb(22,1,3)";
 
 const LOGO_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-illustration-2_d5f4ee2c.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-transparent_448961b5.png";
 
 export default function Footer() {
   const { isHe } = useLanguage();
@@ -65,6 +65,7 @@ export default function Footer() {
               border: `1px solid ${GOLD_LIGHT}`,
               display: "flex", alignItems: "center", justifyContent: "center",
               padding: "7px",
+              background: "rgba(255,255,255,0.92)",
             }}>
               <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
             </div>
@@ -220,6 +221,7 @@ export default function Footer() {
               border: `1px solid ${GOLD_LIGHT}`,
               display: "flex", alignItems: "center", justifyContent: "center",
               padding: "8px",
+              background: "rgba(255,255,255,0.92)",
             }}>
               <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
             </div>
