@@ -3,13 +3,12 @@
  * Design: Stacked card deck on Bordeaux background.
  *
  * Layout:
- *   - Hero: 100vh, title. Card 1 top strip peeks at bottom.
- *   - Scroll section: sticky, 5 × 100vh
- *     - Seg 0 (100vh): card 1 rises to center and stops (sticky pause)
- *     - Seg 1 (100vh): pause — card 1 fully visible, no animation
- *     - Seg 2 (100vh): card 2 slides in from RIGHT, covers card 1
- *     - Seg 3 (100vh): card 3 slides in from LEFT, covers card 2
- *     - Seg 4 (100vh): card 4 slides in from RIGHT, covers card 3
+ *   - Hero: 55vh, title.
+ *   - Scroll section: sticky, 4 × 100vh
+ *     - Seg 0 (100vh): card 1 visible immediately (no animation), pause
+ *     - Seg 1 (100vh): card 2 slides in from RIGHT, covers card 1
+ *     - Seg 2 (100vh): card 3 slides in from LEFT, covers card 2
+ *     - Seg 3 (100vh): card 4 slides in from RIGHT, covers card 3
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -163,10 +162,10 @@ function SideCard({
   scrollYProgress: any;
   isHe: boolean;
 }) {
-  const TOTAL_SEGS = 5;
+  const TOTAL_SEGS = 4;
   const seg = 1 / TOTAL_SEGS;
-  // cardIndex 1 → seg 2, cardIndex 2 → seg 3, cardIndex 3 → seg 4
-  const segStart = (cardIndex + 1) * seg;
+  // cardIndex 1 → seg 1, cardIndex 2 → seg 2, cardIndex 3 → seg 3
+  const segStart = cardIndex * seg;
   const segEnd   = segStart + seg * 0.6;
 
   // Alternate direction: even cardIndex from right, odd from left
@@ -207,7 +206,7 @@ function SideCard({
 /* ─── DESKTOP STORY ─── */
 function DesktopStory({ isHe }: { isHe: boolean }) {
   const N = CHAPTERS.length;  // 4
-  const TOTAL_SEGS = 5;       // seg0: card1 enters, seg1: pause, seg2-4: cards 2-4 slide in
+  const TOTAL_SEGS = 4;       // seg0: pause with card1 visible, seg1-3: cards 2-4 slide in
   const containerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const { scrollYProgress } = useScroll({ target: containerRef });
@@ -215,22 +214,14 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
   useEffect(() => {
     const seg = 1 / TOTAL_SEGS;
     return scrollYProgress.on("change", (v: number) => {
-      if (v < 2 * seg) setActive(0);
-      else if (v < 3 * seg) setActive(1);
-      else if (v < 4 * seg) setActive(2);
+      if (v < 1 * seg) setActive(0);
+      else if (v < 2 * seg) setActive(1);
+      else if (v < 3 * seg) setActive(2);
       else setActive(3);
     });
   }, [scrollYProgress]);
 
   const containerH = `${TOTAL_SEGS * 100}vh`;
-
-  // Card 1: rises from below during seg 0, then stays
-  const card1EntryPx = typeof window !== "undefined" ? window.innerHeight + 60 : 900;
-  const card1Y = useTransform(
-    scrollYProgress,
-    [0, 1 / TOTAL_SEGS * 0.7],
-    [card1EntryPx, 0],
-  );
 
   // Stack height: card height + peek strips for all 4 cards
   const stackH = `calc(${CARD_VH}vh + ${(N - 1) * PEEK_PX}px)`;
@@ -253,13 +244,12 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
           width: `${CARD_W_VW}vw`,
           height: stackH,
         }}>
-          {/* Card 1 — rises from below, then stays */}
-          <motion.div
+          {/* Card 1 — always visible, no animation */}
+          <div
             style={{
               position: "absolute",
               top: 0, left: 0, right: 0,
               height: `${CARD_VH}vh`,
-              y: card1Y,
               zIndex: 1,
               borderRadius: "18px",
               overflow: "hidden",
@@ -268,7 +258,7 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
             }}
           >
             <CardContent ch={CHAPTERS[0]} isHe={isHe} isMobile={false} />
-          </motion.div>
+          </div>
 
           {/* Cards 2, 3, 4 — slide in from sides */}
           {CHAPTERS.slice(1).map((ch, i) => (
@@ -331,8 +321,8 @@ function StoryHero({ isHe }: { isHe: boolean }) {
   return (
     <div style={{
       width: "100vw",
-      height: "55vh",
-      minHeight: "300px",
+      height: "40vh",
+      minHeight: "240px",
       background: BORDEAUX,
       display: "flex",
       flexDirection: "column",
