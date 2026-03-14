@@ -67,7 +67,7 @@ export default function Footer() {
               padding: "7px",
               background: "rgba(255,255,255,0.92)",
             }}>
-              <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+              <img src={LOGO_URL} alt="Casa do Brasil" width={80} height={80} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
             </div>
             <div style={{
               fontFamily: "'Heebo', sans-serif",
@@ -223,7 +223,7 @@ export default function Footer() {
               padding: "8px",
               background: "rgba(255,255,255,0.92)",
             }}>
-              <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+              <img src={LOGO_URL} alt="Casa do Brasil" width={80} height={80} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
             </div>
             <div style={{
               fontFamily: "'Heebo', sans-serif",

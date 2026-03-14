@@ -724,6 +724,10 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               alt=""
               aria-hidden="true"
               className="illus-desktop"
+              width={200}
+              height={200}
+              loading="lazy"
+              decoding="async"
               style={{
                 width: "clamp(100px, 14vw, 200px)",
                 height: "clamp(100px, 14vw, 200px)",
@@ -741,6 +745,10 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                 src={category.illustration}
                 alt=""
                 aria-hidden="true"
+                width={200}
+                height={200}
+                loading="lazy"
+                decoding="async"
                 style={{
                   position: "absolute",
                   top: 0,
@@ -802,6 +810,10 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               alt=""
               aria-hidden="true"
               className="illus-desktop"
+              width={200}
+              height={200}
+              loading="lazy"
+              decoding="async"
               style={{
                 width: "clamp(100px, 14vw, 200px)",
                 height: "clamp(100px, 14vw, 200px)",

@@ -78,6 +78,7 @@ export default function HistorySection() {
             >
               {/* Background image */}
               <img src={milestone.image} alt={milestone.title} loading="lazy" decoding="async"
+                width={800} height={600}
                 style={{
                   position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover",
                   filter: isActive ? "brightness(0.58) saturate(0.75)" : "brightness(0.28) saturate(0.4)",

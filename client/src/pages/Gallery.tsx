@@ -32,7 +32,7 @@ function GalleryHero({ isHe }: { isHe: boolean }) {
   return (
     <section style={{ position:"relative", width:"100%", height:"clamp(420px, 70vh, 720px)", overflow:"hidden", background:BORDEAUX }}>
       <div style={{ position:"absolute", inset:0 }}>
-        <img src={HERO_IMG} alt="Gallery" style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 30%", display:"block" }} />
+        <img src={HERO_IMG} alt="Gallery" width={1920} height={1080} fetchPriority="high" style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 30%", display:"block" }} />
       </div>
       <div style={{ position:"absolute", inset:0, background:"linear-gradient(110deg, rgba(22,1,3,0.88) 0%, rgba(62,4,9,0.72) 45%, rgba(20,4,6,0.45) 100%)" }} />
 
@@ -119,6 +119,7 @@ export default function Gallery() {
             style={{ breakInside:"avoid", marginBottom:"10px", position:"relative", overflow:"hidden", cursor:"pointer", display:"block", opacity:1, transition:`opacity 0.5s ${i * 0.06}s` }}
           >
             <img src={img.src} alt={isHe ? img.labelHe : img.labelEn} loading="lazy" decoding="async"
+              width={800} height={600}
               style={{ width:"100%", display:"block", transition:"transform 1.2s ease" }}
               onMouseEnter={e => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
               onMouseLeave={e => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
@@ -133,6 +134,7 @@ export default function Gallery() {
           style={{ position:"fixed", inset:0, zIndex:100, background:"rgba(10,2,2,0.92)", display:"flex", alignItems:"center", justifyContent:"center", padding:"2rem", cursor:"zoom-out", opacity: lightboxVisible ? 1 : 0, transition:"opacity 0.3s" }}
         >
           <img src={lightboxImg.src} alt={isHe ? lightboxImg.labelHe : lightboxImg.labelEn}
+            width={1200} height={900}
             style={{ maxWidth:"90vw", maxHeight:"85vh", objectFit:"contain", boxShadow:"0 0 80px rgba(185,161,103,0.15)", transform: lightboxVisible ? "scale(1)" : "scale(0.9)", transition:"transform 0.4s, opacity 0.4s", opacity: lightboxVisible ? 1 : 0 }}
             onClick={e => e.stopPropagation()}
           />

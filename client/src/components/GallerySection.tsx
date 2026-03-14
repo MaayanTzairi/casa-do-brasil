@@ -124,6 +124,7 @@ export default function GallerySection() {
               {/* CSS crossfade slider — two layers */}
               {IMAGES.map((img, i) => (
                 <img key={img.id} src={img.src} alt="" loading={i === 0 ? "eager" : "lazy"} decoding="async"
+                  width={1200} height={900}
                   style={{
                     position:"absolute", inset:0, width:"100%", height:"100%",
                     objectFit:"cover", objectPosition:"center",

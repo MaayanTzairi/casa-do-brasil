@@ -68,7 +68,7 @@ function LogoBadge({ size, scrolled }: { size: number; scrolled: boolean }) {
       boxShadow: scrolled ? "none" : "0 2px 16px rgba(0,0,0,0.18)",
       transition: "background 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease",
     }}>
-      <img src={LOGO_URL} alt="Casa do Brasil" style={{
+      <img src={LOGO_URL} alt="Casa do Brasil" width={80} height={80} style={{
         width: size - pad * 2, height: size - pad * 2,
         objectFit: "contain", display: "block",
       }} />

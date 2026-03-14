@@ -58,6 +58,8 @@ export default function HeroSection() {
           aria-hidden="true"
           fetchPriority="high"
           decoding="sync"
+          width={1920}
+          height={1080}
           style={{
             position: "absolute",
             inset: 0,

@@ -86,6 +86,10 @@ export default function HeroDivider() {
             src={PANORAMA_IMG}
             alt=""
             aria-hidden="true"
+            width={960}
+            height={320}
+            loading="lazy"
+            decoding="async"
             style={{
               display: "block",
               width: "100%",

@@ -98,7 +98,7 @@ function MenuCard({ img, name, nameLine2, subtitle, href, dark=false, delay=0, i
       <GoldCorners opacity={hovered ? 0.85 : 0.5} />
 
       <div style={{ position:"relative", paddingBottom:"62%", overflow:"hidden", flexShrink:0 }}>
-        <img src={img} alt={name} style={{
+        <img src={img} alt={name} width={600} height={372} style={{
           position:"absolute", inset:0, width:"100%", height:"100%",
           objectFit:"cover", objectPosition:"center 28%",
           transform: hovered ? "scale(1.06)" : "scale(1)",
