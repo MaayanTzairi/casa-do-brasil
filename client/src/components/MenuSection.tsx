@@ -142,7 +142,7 @@ function MenuCard({ img, track, name, nameLine2, subtitle, href, dark=false, del
         minWidth: 0,
         /* Equal height via flex stretch */
         position: "relative",
-        marginTop: elevated ? "-2.5rem" : "0",
+        marginTop: 0,
         /* Layered shadow */
         boxShadow: hovered
           ? `0 2px 8px ${GOLD_R}0.14), 0 16px 44px rgba(62,4,9,${dark?"0.52":"0.16"}), 0 36px 72px rgba(62,4,9,${dark?"0.3":"0.08"})`
@@ -221,7 +221,7 @@ function MenuCard({ img, track, name, nameLine2, subtitle, href, dark=false, del
             opacity: hovered ? 0.6 : 1, transition:"opacity 0.2s",
           }}
         >
-          {isHe ? (<>צפה בתפריט <span style={{ fontSize:"0.78rem" }}>←</span></>) : (<>VIEW MENU <span style={{ fontSize:"0.78rem" }}>→</span></>)}
+          {isHe ? (<>לצפייה בתפריט <span style={{ fontSize:"0.78rem" }}>←</span></>) : (<>VIEW MENU <span style={{ fontSize:"0.78rem" }}>→</span></>)}
         </a>
       </div>
     </motion.div>
@@ -318,7 +318,7 @@ export default function MenuSection() {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.7, delay: 0.05 }}
-            style={{ display:"flex", alignItems:"center", gap:"0.7rem", marginBottom:"1.4rem", flexDirection: isHe ? "row-reverse" : "row" }}
+            style={{ display:"flex", alignItems:"center", gap:"0.7rem", marginBottom:"1.4rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start", width:"100%" }}
           >
             <div style={{ width:"20px", height:"1px", background:GOLD }} />
             <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.65rem", letterSpacing: isHe ? "0.08em" : "0.44em", textTransform:"uppercase", color:GOLD }}>{isHe ? "התפריט שלנו" : "OUR MENU"}</span>
@@ -369,7 +369,7 @@ export default function MenuSection() {
               onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background=BORDEAUX; el.style.color="#fff"; }}
               onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background="transparent"; el.style.color=BORDEAUX; }}
             >
-              {isHe ? (<>צפה בתפריט המלא <span style={{ fontSize:"0.9rem" }}>←</span></>) : (<>VIEW FULL MENU <span style={{ fontSize:"0.9rem" }}>→</span></>)}
+              {isHe ? (<>התפריט המלא <span style={{ fontSize:"0.9rem" }}>←</span></>) : (<>VIEW FULL MENU <span style={{ fontSize:"0.9rem" }}>→</span></>)}
             </a>
           </motion.div>
         </div>

@@ -101,7 +101,7 @@ export default function CasaVibesSection() {
           {/* Label */}
           <motion.div
             custom={0} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
-            style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.4rem", flexDirection: isHe ? "row-reverse" : "row" }}
+            style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.4rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start", width: "100%" }}
           >
             <div style={{ width: "28px", height: "1px", background: GOLD }} />
             <span style={{

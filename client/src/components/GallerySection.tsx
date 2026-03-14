@@ -184,7 +184,7 @@ export default function GallerySection() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.7 }}
-          style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1.4rem", flexDirection: isHe ? "row-reverse" : "row" }}
+          style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1.4rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start", width: "100%" }}
         >
           <div style={{ width: "20px", height: "1px", background: GOLD }} />
           <span style={{
