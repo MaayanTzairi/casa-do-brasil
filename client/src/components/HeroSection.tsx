@@ -11,6 +11,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const HERO_IMAGE =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main-Xjsh9uMVYH6frhxTU2HJ4c.webp";
+const HERO_IMAGE_SM =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_eb2aef7a.webp";
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(40,3,6)";
@@ -54,6 +56,8 @@ export default function HeroSection() {
       <div ref={imgWrapRef} className="absolute inset-0 w-full h-full" style={{ willChange: "transform" }}>
         <img
           src={HERO_IMAGE}
+          srcSet={`${HERO_IMAGE_SM} 900w, ${HERO_IMAGE} 1920w`}
+          sizes="100vw"
           alt=""
           aria-hidden="true"
           fetchPriority="high"

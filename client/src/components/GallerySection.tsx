@@ -13,12 +13,12 @@ const GOLD_R = "rgba(185,161,103,";
 const BORDEAUX = "rgb(62,4,9)";
 
 const IMAGES = [
-  { id: "interior", src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-interior-v2_v2_4827c495.webp" },
-  { id: "picanha", src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-picanha_770485ba.webp" },
-  { id: "carnival", src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-carnival_f495b5d9.webp" },
-  { id: "dining", src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-dining_a1ccc47f.webp" },
-  { id: "grill", src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-food-ambiance_18d34935.webp" },
-  { id: "atmosphere", src: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80&fm=webp" },
+  { id: "interior", src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-interior-v2_v2_4827c495.webp", srcSm: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-interior-sm_fea85219.webp" },
+  { id: "picanha", src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-picanha_770485ba.webp", srcSm: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-picanha-sm_4bd497bb.webp" },
+  { id: "carnival", src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-carnival_f495b5d9.webp", srcSm: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-carnival-sm_28b63e19.webp" },
+  { id: "dining", src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-dining_a1ccc47f.webp", srcSm: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-dining-sm_852dbd99.webp" },
+  { id: "grill", src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-food-ambiance_18d34935.webp", srcSm: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-food-ambiance-sm_cd935390.webp" },
+  { id: "atmosphere", src: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80&fm=webp", srcSm: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=75&fm=webp" },
 ];
 
 function animStyle(inView: boolean, delay: number): React.CSSProperties {
@@ -123,7 +123,10 @@ export default function GallerySection() {
             <div style={{ margin:"10px", position:"relative", overflow:"hidden", aspectRatio:"4/3", minHeight: mobile ? "240px" : "clamp(280px, 34vw, 500px)", maxHeight: mobile ? "320px" : "500px" }}>
               {/* CSS crossfade slider — two layers */}
               {IMAGES.map((img, i) => (
-                <img key={img.id} src={img.src} alt="" loading={i === 0 ? "eager" : "lazy"} decoding="async"
+                <img key={img.id} src={img.src}
+                  srcSet={`${img.srcSm} 700w, ${img.src} 1200w`}
+                  sizes="(max-width:768px) 100vw, 50vw"
+                  alt="" loading={i === 0 ? "eager" : "lazy"} decoding="async"
                   width={1200} height={900}
                   style={{
                     position:"absolute", inset:0, width:"100%", height:"100%",

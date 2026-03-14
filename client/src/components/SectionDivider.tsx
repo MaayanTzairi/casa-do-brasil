@@ -8,6 +8,8 @@
 
 const SKEWER_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider1-v2_v2_6449af8c.webp";
+const SKEWER_IMG_SM =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider1-sm_3aaf1fcd.webp";
 
 const GOLD = "rgba(185,161,103,";
 
@@ -57,6 +59,8 @@ export default function SectionDivider() {
       >
         <img
           src={SKEWER_IMG}
+          srcSet={`${SKEWER_IMG_SM} 320w, ${SKEWER_IMG} 560w`}
+          sizes="clamp(160px, 26vw, 360px)"
           alt=""
           aria-hidden="true"
           width={560}

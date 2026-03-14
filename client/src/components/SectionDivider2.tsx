@@ -8,6 +8,8 @@
 
 const DANCER_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider2-v2_v2_5cdd0c34.webp";
+const DANCER_IMG_SM =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider2-sm_ff5251eb.webp";
 
 const GOLD = "rgba(185,161,103,";
 
@@ -57,6 +59,8 @@ export default function SectionDivider2() {
       >
         <img
           src={DANCER_IMG}
+          srcSet={`${DANCER_IMG_SM} 320w, ${DANCER_IMG} 560w`}
+          sizes="clamp(160px, 26vw, 360px)"
           alt=""
           aria-hidden="true"
           width={560}
