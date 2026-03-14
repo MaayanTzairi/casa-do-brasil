@@ -61,7 +61,7 @@ function GalleryHero({ isHe }: { isHe: boolean }) {
       {/* Dark overlay */}
       <div style={{
         position: "absolute", inset: 0,
-        background: "linear-gradient(110deg, rgba(22,1,3,0.82) 0%, rgba(62,4,9,0.60) 50%, rgba(20,4,6,0.38) 100%)",
+        background: "linear-gradient(110deg, rgba(22,1,3,0.88) 0%, rgba(62,4,9,0.72) 45%, rgba(20,4,6,0.45) 100%)",
       }} />
 
       {/* No top/bottom gradient fades */}
