@@ -1,17 +1,17 @@
 /**
- * CASA DO BRASIL — Gallery Section (Redesigned)
+ * CASA DO BRASIL — Gallery Section (Slider Edition)
  *
- * Layout: Asymmetric side-by-side
- * - EN: Text column LEFT, stacked image mosaic RIGHT
- * - HE: Text column RIGHT, stacked image mosaic LEFT
+ * Layout: Asymmetric side-by-side, fits in one viewport section
+ * - EN: Text column LEFT, image slider RIGHT
+ * - HE: Text column RIGHT, image slider LEFT
  * - Mobile: stacked vertically
  *
  * Design: Cinematic Asymmetric Luxury
  * Colors: White · Gold (185,161,103) · Bordeaux (62,4,9)
  */
 
-import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -23,91 +23,55 @@ const IMAGES = [
   {
     id: "interior",
     src: "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/AdfUhjvpwYrntPMW.jpg?Expires=1804535020&Signature=sRLTL9BTr0BI7l0t-ddFhsz1~pO008iJPWO0vxEB9FAduJRbDz5EuqWHtXZQyVp0LdxM11bn0NBsYqnRMQoPosPtNH5fi0q~j7ZKSJEYAJckWZ0kKq6qgdNdAtPnJHuvDNyHfi7S5erAEyry0eUx1fLHe-c-CZHjQAWg4ycLNQjMXf9DSg1UcbC0cUksKC1ztWWWILSPEdQLyiGK8hYKN-1eB3G0P8a0X8qqDsSyPXKsmgJkmdt2vqZc6MPzZ-Et1VH0YmDBwytLG6SOgnwAgWmZnkd6Kl6roqZhUndKqN-e0V-kwZ5JQdefRXqz0mK1xItZ0hFgNgPEr6X0PouSCg__&Key-Pair-Id=K2HSFNDJXOU9YS",
-    tall: true,
-  },
-  {
-    id: "dining",
-    src: "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/TKHqjFzJHypTppMr.png?Expires=1804535020&Signature=Zf16vChRRrJ0xtp1GDWJnnLeSUxFKB0QIe-WJBe5NkDHaPG6lT5VAo1AgQGBXhBTp9x6GZalGUj7Ouu--ArvtNwU9cX2Cm8UpxacF3tXRdgpJlF-RdFi-mmwRdP1C~gUVXFbwfG8ZxqAF2EjNAbXRjcQlZmsna-JVumEEUvyclMxAD~hy-GhwNaMSLKhfHJMUzdZlXDrSsqItHx4BY2F~LYh3vrPHqgih46xx5oD1H1xQxuULzjoXzWCJGtcLvVD0y9MMEl9vJ~EQFf18XE8bShnRSxvagUMGfzJVDbMFSOZD~XkdOSoWd4oNNPyKBfBYTG-w8hdDnbgk-VVhWlHig__&Key-Pair-Id=K2HSFNDJXOU9YS",
-    tall: false,
   },
   {
     id: "picanha",
     src: "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/yGDbdbyNhKjqUhRQ.jpg?Expires=1804535020&Signature=koGwIqaJPNHQDe3gPnh3VCEyAnPCw8uWknTgKMMKiEEMsXbKUCLqS5YYFpNEIJbtJikwIMfT~SS6GkDH2QOAJpCuQFZE582c-xrBCQIPA3TXmeTsds7famuSe51~BwGUMeZ7O1gRjTeS4UrxAObhdxH9k~43PxwxeIhstCWoP9mED9oOPfTLIoNAv3IHEkbza20i92pxgW89MFVklzDwJSyglINIkubEz6ATch20PCjUaovXsGGyrRd9Lb3GgqpP2W9Q~xvppSjUzWv6XujBg05zqVyHkW6j6LQkdUyJeEgO7XS0UA7V0LTiPuJFXPCWrJ~rNx8qAVwFqlf~fMwouA__&Key-Pair-Id=K2HSFNDJXOU9YS",
-    tall: false,
   },
   {
     id: "carnival",
     src: "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/WFBaDsGhaOyOOZah.jpg?Expires=1804535020&Signature=ruip1zG3Z3GgAQTzNVkLhwYSE~M8hpdIMMqSbPY4wQIU46Jogv2SxBlLDtoquQJNsLKwLATI2japkQykpXe68LBPa3FEsENZITAWaW61psUmJ6m~3Gsizympk1xPszyGeHM2TtbR8ra1Ft4NtaOQatUx0Jt~gLYynjNwUbzcDVgxCUZpNeGI6L334rzMXSN1g1MGEfF~hXyAhVeTvdWqzc7RjMXGBs3OtsGyLKNwPKmuBDPW9pPVRpAgCmQLoDK2RNi-9EcOk~YS6Dpmx5FTqFVhxUUsYLCzMKyY4CYsC6Vy5R9VSN7WLLX2IdgExO4Nba7wOuEMaEZ7eSrgxwUpLw__&Key-Pair-Id=K2HSFNDJXOU9YS",
-    tall: true,
+  },
+  {
+    id: "dining",
+    src: "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663392712778/TKHqjFzJHypTppMr.png?Expires=1804535020&Signature=Zf16vChRRrJ0xtp1GDWJnnLeSUxFKB0QIe-WJBe5NkDHaPG6lT5VAo1AgQGBXhBTp9x6GZalGUj7Ouu--ArvtNwU9cX2Cm8UpxacF3tXRdgpJlF-RdFi-mmwRdP1C~gUVXFbwfG8ZxqAF2EjNAbXRjcQlZmsna-JVumEEUvyclMxAD~hy-GhwNaMSLKhfHJMUzdZlXDrSsqItHx4BY2F~LYh3vrPHqgih46xx5oD1H1xQxuULzjoXzWCJGtcLvVD0y9MMEl9vJ~EQFf18XE8bShnRSxvagUMGfzJVDbMFSOZD~XkdOSoWd4oNNPyKBfBYTG-w8hdDnbgk-VVhWlHig__&Key-Pair-Id=K2HSFNDJXOU9YS",
+  },
+  {
+    id: "grill",
+    src: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=900&q=80&fm=webp",
+  },
+  {
+    id: "atmosphere",
+    src: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80&fm=webp",
   },
 ];
-
-function MosaicImage({ img, delay, inView }: { img: typeof IMAGES[0]; delay: number; inView: boolean }) {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 18 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.9, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        position: "relative",
-        overflow: "hidden",
-        gridRow: img.tall ? "span 2" : "span 1",
-        boxShadow: hovered
-          ? `0 8px 32px rgba(62,4,9,0.22), 0 2px 8px ${GOLD_R}0.14)`
-          : `0 2px 12px rgba(62,4,9,0.10)`,
-        transform: hovered ? "scale(1.015)" : "scale(1)",
-        transition: "box-shadow 0.4s ease, transform 0.5s ease",
-        cursor: "pointer",
-      }}
-    >
-      <img
-        src={img.src}
-        alt=""
-        loading="lazy"
-        decoding="async"
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          objectPosition: "center",
-          transform: hovered ? "scale(1.07)" : "scale(1)",
-          transition: "transform 1.4s cubic-bezier(0.25,0.46,0.45,0.94)",
-          display: "block",
-        }}
-      />
-      {/* Subtle gold tint on hover */}
-      <div style={{
-        position: "absolute", inset: 0, pointerEvents: "none",
-        background: `${GOLD_R}0.08)`,
-        opacity: hovered ? 1 : 0,
-        transition: "opacity 0.4s ease",
-      }} />
-      {/* Gold corner brackets */}
-      {[
-        { top: "8px", left: "8px", borderTop: `1px solid ${GOLD}`, borderLeft: `1px solid ${GOLD}` },
-        { top: "8px", right: "8px", borderTop: `1px solid ${GOLD}`, borderRight: `1px solid ${GOLD}` },
-        { bottom: "8px", left: "8px", borderBottom: `1px solid ${GOLD}`, borderLeft: `1px solid ${GOLD}` },
-        { bottom: "8px", right: "8px", borderBottom: `1px solid ${GOLD}`, borderRight: `1px solid ${GOLD}` },
-      ].map((s, i) => (
-        <div key={i} style={{
-          position: "absolute", width: "10px", height: "10px",
-          opacity: hovered ? 0.7 : 0.25,
-          transition: "opacity 0.4s ease",
-          zIndex: 3,
-          ...s,
-        }} />
-      ))}
-    </motion.div>
-  );
-}
 
 export default function GallerySection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-8%" });
   const { isHe } = useLanguage();
+  const [current, setCurrent] = useState(0);
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Auto-advance every 3.5s
+  const next = useCallback(() => {
+    setCurrent(c => (c + 1) % IMAGES.length);
+  }, []);
+  const prev = useCallback(() => {
+    setCurrent(c => (c - 1 + IMAGES.length) % IMAGES.length);
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(next, 3500);
+    return () => clearInterval(id);
+  }, [next]);
 
   return (
     <section
@@ -116,8 +80,9 @@ export default function GallerySection() {
       style={{
         width: "100%",
         background: "#ffffff",
-        padding: "5rem 0 6rem",
+        padding: mobile ? "4rem 0" : "5rem 0",
         overflow: "hidden",
+        boxSizing: "border-box",
       }}
     >
       <div style={{
@@ -125,142 +90,242 @@ export default function GallerySection() {
         margin: "0 auto",
         padding: "0 6vw",
         display: "flex",
-        flexDirection: "column",
-        gap: "0",
+        flexDirection: mobile ? "column" : "row",
+        gap: mobile ? "2.5rem" : "clamp(2.5rem, 5vw, 6rem)",
+        alignItems: "stretch",
+        direction: isHe ? "rtl" : "ltr",
       }}>
-        {/* ── TWO-COLUMN LAYOUT ── */}
+
+        {/* ── TEXT COLUMN ── */}
         <div style={{
+          flex: "0 0 clamp(200px, 30%, 340px)",
           display: "flex",
-          flexDirection: "row",
-          gap: "clamp(2rem, 5vw, 6rem)",
-          alignItems: "stretch",
-          direction: isHe ? "rtl" : "ltr",
+          flexDirection: "column",
+          justifyContent: "center",
         }}>
+          {/* Section label */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.7 }}
+            style={{
+              display: "flex", alignItems: "center", gap: "0.7rem",
+              marginBottom: "1.4rem",
+              flexDirection: isHe ? "row-reverse" : "row",
+              justifyContent: isHe ? "flex-end" : "flex-start",
+              width: "100%",
+            }}
+          >
+            <div style={{ width: "20px", height: "1px", background: GOLD }} />
+            <span style={{
+              fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+              fontSize: "0.78rem", letterSpacing: isHe ? "0.08em" : "0.44em",
+              textTransform: "uppercase", color: GOLD,
+            }}>
+              {isHe ? "גלריה" : "GALLERY"}
+            </span>
+          </motion.div>
 
-          {/* ── TEXT COLUMN ── */}
-          <div style={{
-            flex: "0 0 clamp(220px, 32%, 380px)",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            paddingTop: "1rem",
-          }}>
-            {/* Section label */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.7 }}
-              style={{
-                display: "flex", alignItems: "center", gap: "0.7rem",
-                marginBottom: "1.4rem",
-                flexDirection: isHe ? "row-reverse" : "row",
-                justifyContent: isHe ? "flex-end" : "flex-start",
-                width: "100%",
-              }}
-            >
-              <div style={{ width: "20px", height: "1px", background: GOLD }} />
-              <span style={{
-                fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                fontSize: "0.78rem", letterSpacing: isHe ? "0.08em" : "0.44em",
-                textTransform: "uppercase", color: GOLD,
-              }}>
-                {isHe ? "גלריה" : "GALLERY"}
+          {/* Headline */}
+          <motion.h2
+            initial={{ opacity: 0, y: 22 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.95, delay: 0.12 }}
+            style={{
+              fontFamily: "'Heebo', sans-serif", fontWeight: 900,
+              fontSize: mobile ? "clamp(30px, 8vw, 44px)" : "clamp(28px, 3vw, 48px)",
+              color: BORDEAUX, margin: "0 0 1.5rem", lineHeight: 1.0,
+              letterSpacing: "0.01em",
+              textAlign: isHe ? "right" : "left",
+              direction: isHe ? "rtl" : "ltr",
+            }}
+          >
+            {isHe
+              ? <>להיות באילת<br />ולהרגיש בברזיל</>
+              : <>BE IN EILAT,<br />FEEL BRAZIL</>}
+          </motion.h2>
+
+          {/* Gold divider */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={inView ? { scaleX: 1 } : {}}
+            transition={{ duration: 1, delay: 0.28 }}
+            style={{
+              width: "48px", height: "1.5px",
+              background: `linear-gradient(to right, ${GOLD}, ${GOLD_R}0.2))`,
+              marginBottom: "1.5rem",
+              transformOrigin: isHe ? "right" : "left",
+            }}
+          />
+
+          {/* Body text */}
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.85, delay: 0.38 }}
+            style={{
+              fontFamily: "'Heebo', sans-serif", fontWeight: 300,
+              fontSize: "clamp(13px, 1vw, 15px)",
+              color: "rgba(62,4,9,0.65)",
+              lineHeight: 1.75,
+              marginBottom: "2.2rem",
+              textAlign: isHe ? "right" : "left",
+              direction: isHe ? "rtl" : "ltr",
+            }}
+          >
+            {isHe
+              ? "צלילים, ריחות וצבעים — הגלריה שלנו מזמינה אתכם להציץ לתוך הנשמה של קאסה דו ברזיל."
+              : "Sounds, aromas and colors — our gallery invites you to glimpse the soul of Casa do Brasil."}
+          </motion.p>
+
+          {/* Slide dots */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.7, delay: 0.45 }}
+            style={{
+              display: "flex", gap: "6px", marginBottom: "2rem",
+              justifyContent: isHe ? "flex-end" : "flex-start",
+            }}
+          >
+            {IMAGES.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                style={{
+                  width: i === current ? "22px" : "6px",
+                  height: "6px",
+                  borderRadius: "3px",
+                  background: i === current ? GOLD : `${GOLD_R}0.3)`,
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 0,
+                  transition: "all 0.35s ease",
+                }}
+              />
+            ))}
+          </motion.div>
+
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.85, delay: 0.5 }}
+            style={{ alignSelf: isHe ? "flex-end" : "flex-start" }}
+          >
+            <Link href="/gallery">
+              <span
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: "0.7rem",
+                  fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+                  fontSize: "0.65rem", letterSpacing: "0.28em",
+                  textTransform: "uppercase", textDecoration: "none",
+                  color: BORDEAUX, padding: "0.85rem 2rem",
+                  border: `1.5px solid ${GOLD}`,
+                  cursor: "pointer",
+                  transition: "background 0.28s, color 0.28s",
+                  background: "transparent",
+                }}
+                onMouseEnter={e => { const el = e.currentTarget as HTMLSpanElement; el.style.background = BORDEAUX; el.style.color = "#fff"; }}
+                onMouseLeave={e => { const el = e.currentTarget as HTMLSpanElement; el.style.background = "transparent"; el.style.color = BORDEAUX; }}
+              >
+                {isHe
+                  ? (<>גלריה מלאה <span style={{ fontSize: "0.9rem" }}>←</span></>)
+                  : (<>FULL GALLERY <span style={{ fontSize: "0.9rem" }}>→</span></>)}
               </span>
-            </motion.div>
+            </Link>
+          </motion.div>
+        </div>
 
-            {/* Headline */}
-            <motion.h2
-              initial={{ opacity: 0, y: 22 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.95, delay: 0.12 }}
+        {/* ── IMAGE SLIDER COLUMN ── */}
+        <motion.div
+          initial={{ opacity: 0, x: isHe ? -30 : 30 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 1, delay: 0.2 }}
+          style={{
+            flex: 1,
+            position: "relative",
+            overflow: "hidden",
+            aspectRatio: "4/3",
+            minHeight: mobile ? "260px" : "clamp(300px, 36vw, 520px)",
+            maxHeight: mobile ? "340px" : "520px",
+          }}
+        >
+          {/* Slides */}
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={IMAGES[current].id}
+              src={IMAGES[current].src}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              initial={{ opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              transition={{ duration: 0.75, ease: [0.25, 0.46, 0.45, 0.94] }}
               style={{
-                fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-                fontSize: "clamp(36px, 3.8vw, 58px)",
-                color: BORDEAUX, margin: "0 0 1.5rem", lineHeight: 0.9,
-                letterSpacing: "0.01em",
-                textAlign: isHe ? "right" : "left",
-              }}
-            >
-              {isHe ? <>חושו את<br />החווייה</> : <>FEEL THE<br />EXPERIENCE</>}
-            </motion.h2>
-
-            {/* Gold divider */}
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={inView ? { scaleX: 1 } : {}}
-              transition={{ duration: 1, delay: 0.28 }}
-              style={{
-                width: "48px", height: "1.5px",
-                background: `linear-gradient(to right, ${GOLD}, ${GOLD_R}0.2))`,
-                marginBottom: "1.5rem",
-                transformOrigin: isHe ? "right" : "left",
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: "center",
               }}
             />
+          </AnimatePresence>
 
-            {/* Body text */}
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.85, delay: 0.38 }}
+          {/* Gold corner brackets */}
+          {[
+            { top: "12px", left: "12px", borderTop: `1.5px solid ${GOLD}`, borderLeft: `1.5px solid ${GOLD}` },
+            { top: "12px", right: "12px", borderTop: `1.5px solid ${GOLD}`, borderRight: `1.5px solid ${GOLD}` },
+            { bottom: "12px", left: "12px", borderBottom: `1.5px solid ${GOLD}`, borderLeft: `1.5px solid ${GOLD}` },
+            { bottom: "12px", right: "12px", borderBottom: `1.5px solid ${GOLD}`, borderRight: `1.5px solid ${GOLD}` },
+          ].map((s, i) => (
+            <div key={i} style={{
+              position: "absolute", width: "16px", height: "16px",
+              opacity: 0.6, zIndex: 4, pointerEvents: "none",
+              ...s,
+            }} />
+          ))}
+
+          {/* Prev / Next arrows */}
+          {(["prev", "next"] as const).map(dir => (
+            <button
+              key={dir}
+              onClick={dir === "prev" ? prev : next}
               style={{
-                fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-                fontSize: "clamp(13px, 1vw, 15px)",
-                color: "rgba(62,4,9,0.65)",
-                lineHeight: 1.75,
-                marginBottom: "2.2rem",
-                textAlign: isHe ? "right" : "left",
-                direction: isHe ? "rtl" : "ltr",
+                position: "absolute",
+                top: "50%", transform: "translateY(-50%)",
+                [dir === "prev" ? "left" : "right"]: "14px",
+                zIndex: 5,
+                background: "rgba(62,4,9,0.55)",
+                border: `1px solid ${GOLD_R}0.4)`,
+                color: GOLD,
+                width: "34px", height: "34px",
+                borderRadius: "50%",
+                cursor: "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "14px",
+                transition: "background 0.25s",
               }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = BORDEAUX; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(62,4,9,0.55)"; }}
             >
-              {isHe
-                ? "צלילים, ריחות וצבעים — הגלריה שלנו מזמינה אתכם להציץ לתוך הנשמה של קאסה דו ברזיל. מהאש הפתוחה ועד לחיוכים על הפנים."
-                : "Sounds, aromas and colors — our gallery invites you to glimpse the soul of Casa do Brasil. From open fire to smiling faces."}
-            </motion.p>
+              {dir === "prev" ? "‹" : "›"}
+            </button>
+          ))}
 
-            {/* CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.85, delay: 0.5 }}
-              style={{ alignSelf: isHe ? "flex-end" : "flex-start" }}
-            >
-              <Link href="/gallery">
-                <span
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: "0.7rem",
-                    fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                    fontSize: "0.65rem", letterSpacing: "0.28em",
-                    textTransform: "uppercase", textDecoration: "none",
-                    color: BORDEAUX, padding: "0.85rem 2rem",
-                    border: `1.5px solid ${GOLD}`,
-                    cursor: "pointer",
-                    transition: "background 0.28s, color 0.28s",
-                  }}
-                  onMouseEnter={e => { const el = e.currentTarget as HTMLSpanElement; el.style.background = BORDEAUX; el.style.color = "#fff"; }}
-                  onMouseLeave={e => { const el = e.currentTarget as HTMLSpanElement; el.style.background = "transparent"; el.style.color = BORDEAUX; }}
-                >
-                  {isHe
-                    ? (<>צפה בגלריה המלאה <span style={{ fontSize: "0.9rem" }}>←</span></>)
-                    : (<>VIEW FULL GALLERY <span style={{ fontSize: "0.9rem" }}>→</span></>)}
-                </span>
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* ── IMAGE MOSAIC COLUMN ── */}
+          {/* Slide counter */}
           <div style={{
-            flex: 1,
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gridTemplateRows: "clamp(140px, 18vw, 240px) clamp(140px, 18vw, 240px)",
-            gap: "10px",
-            minHeight: "clamp(290px, 38vw, 490px)",
+            position: "absolute", bottom: "16px", right: "16px",
+            fontFamily: "'Heebo', sans-serif", fontWeight: 300,
+            fontSize: "0.65rem", letterSpacing: "0.2em",
+            color: `${GOLD_R}0.85)`,
+            zIndex: 4,
           }}>
-            {IMAGES.map((img, i) => (
-              <MosaicImage key={img.id} img={img} delay={0.1 * i + 0.2} inView={inView} />
-            ))}
+            {String(current + 1).padStart(2, "0")} / {String(IMAGES.length).padStart(2, "0")}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
