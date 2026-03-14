@@ -167,7 +167,7 @@ export default function GallerySection() {
           >
             {isHe
               ? <>להיות באילת<br />ולהרגיש בברזיל</>
-              : <>BE IN EILAT,<br />FEEL BRAZIL</>}
+              : <>BE IN EILAT,<br />FEEL IN BRAZIL</>}
           </motion.h2>
 
           {/* Gold divider */}

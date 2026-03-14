@@ -363,33 +363,7 @@ export default function ReviewsSection() {
           padding: "0 1.5rem",
         }}
       >
-        {/* Overline */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "0.8rem",
-            marginBottom: "3rem",
-          }}
-        >
-          <div style={{ width: "32px", height: "1px", background: GOLD }} />
-          <span
-            style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 700,
-              fontSize: "0.78rem",
-              letterSpacing: "0.38em",
-              textTransform: "uppercase",
-              color: GOLD,
-            }}
-          >
-            {isHe ? "מה אומרים עלינו" : "What They Say"}
-          </span>
-          <div style={{ width: "32px", height: "1px", background: GOLD }} />
-        </div>
-
-        {/* Three stats row */}
+         {/* Three stats row */}
         <div
           style={{
             display: "grid",
@@ -455,6 +429,32 @@ export default function ReviewsSection() {
 
         {/* Thin gold rule below stats */}
         <div style={{ width: "clamp(60px, 8vw, 100px)", height: "1px", background: GOLD_R + "0.3)", margin: "2.8rem auto 0" }} />
+
+        {/* Section title — below stats */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.8rem",
+            marginTop: "2.8rem",
+          }}
+        >
+          <div style={{ width: "32px", height: "1px", background: GOLD }} />
+          <span
+            style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 700,
+              fontSize: "0.78rem",
+              letterSpacing: "0.38em",
+              textTransform: "uppercase",
+              color: GOLD,
+            }}
+          >
+            {isHe ? "הלקוחות שלנו" : "Our Customers"}
+          </span>
+          <div style={{ width: "32px", height: "1px", background: GOLD }} />
+        </div>
       </motion.div>
 
       {/* Carousel — always LTR so scroll direction is consistent */}

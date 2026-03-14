@@ -178,7 +178,7 @@ export default function CasaVibesSection() {
               onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = GOLD; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = BORDEAUX; }}
             >
-              {isHe ? (<>קרא את הסיפור שלנו <span style={{ fontSize: "0.85rem" }}>←</span></>) : (<>READ OUR STORY <span style={{ fontSize: "0.85rem" }}>→</span></>)}
+              {isHe ? (<>הסיפור של קאזה דו ברזיל <span style={{ fontSize: "0.85rem" }}>←</span></>) : (<>Casa Do Brasil Story <span style={{ fontSize: "0.85rem" }}>→</span></>)}
             </a>
           </motion.div>
         </div>
@@ -220,15 +220,23 @@ export default function CasaVibesSection() {
           </div>
         ) : (
           /* Desktop: staggered overlap — tall image top-left, shorter bottom-right */
-          <div style={{ position: "relative", height: "clamp(360px, 42vw, 540px)", overflow: "hidden" }}>
+          <div style={{ position: "relative", height: "clamp(400px, 46vw, 580px)", paddingBottom: "2rem" }}>
 
-            {/* Image 1 — tall, anchored top-left */}
+            {/* Image 1 — tall, anchored top-left, gentle float */}
             <motion.div
               initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1.0, delay: 0.18, ease: [0.25, 0.46, 0.45, 0.94] }}
               style={{ position: "absolute", top: 0, left: 0, width: "58%", zIndex: 2 }}
             >
-              <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 20px 60px rgba(62,4,9,0.24)" }}>
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+                style={{
+                  position: "relative", overflow: "hidden",
+                  boxShadow: "0 24px 64px rgba(62,4,9,0.38), 0 8px 24px rgba(62,4,9,0.22)",
+                  borderRadius: "2px",
+                }}
+              >
                 <img
                   src={MEAT_URL} alt="Churrasco"
                   loading="lazy" decoding="async"
@@ -241,17 +249,25 @@ export default function CasaVibesSection() {
                   <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.32em", color: GOLD, marginBottom: "0.25rem" }}>CHURRASCO</div>
                   <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(14px, 1.5vw, 19px)", color: "#fff", lineHeight: 1.1 }}>THE ART<br />OF FIRE</div>
                 </div>
-              </div>
+              </motion.div>
               <CornerBrackets />
             </motion.div>
 
-            {/* Image 2 — shorter, anchored bottom-right, overlaps image 1 */}
+            {/* Image 2 — shorter, anchored bottom-right, offset float */}
             <motion.div
               initial={{ opacity: 0, y: 32 }} animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1.0, delay: 0.32, ease: [0.25, 0.46, 0.45, 0.94] }}
               style={{ position: "absolute", bottom: 0, right: 0, width: "55%", zIndex: 3 }}
             >
-              <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 22px 64px rgba(62,4,9,0.30)" }}>
+              <motion.div
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+                style={{
+                  position: "relative", overflow: "hidden",
+                  boxShadow: "0 28px 72px rgba(62,4,9,0.42), 0 10px 28px rgba(62,4,9,0.25)",
+                  borderRadius: "2px",
+                }}
+              >
                 <img
                   src={CARNIVAL_URL} alt="Carnival"
                   loading="lazy" decoding="async"
@@ -264,7 +280,7 @@ export default function CasaVibesSection() {
                   <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.32em", color: GOLD, marginBottom: "0.25rem" }}>CARNIVAL</div>
                   <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(14px, 1.5vw, 19px)", color: "#fff", lineHeight: 1.1 }}>THE SOUL<br />OF BRASIL</div>
                 </div>
-              </div>
+              </motion.div>
               <CornerBrackets />
             </motion.div>
           </div>
