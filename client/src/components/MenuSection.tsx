@@ -221,7 +221,7 @@ function MenuCard({ img, track, name, nameLine2, subtitle, href, dark=false, del
             opacity: hovered ? 0.6 : 1, transition:"opacity 0.2s",
           }}
         >
-          {isHe ? (<><span style={{ fontSize:"0.78rem" }}>←</span> צפה בתפריט</>) : (<>VIEW MENU <span style={{ fontSize:"0.78rem" }}>→</span></>)}
+          {isHe ? (<>צפה בתפריט <span style={{ fontSize:"0.78rem" }}>←</span></>) : (<>VIEW MENU <span style={{ fontSize:"0.78rem" }}>→</span></>)}
         </a>
       </div>
     </motion.div>
@@ -369,7 +369,7 @@ export default function MenuSection() {
               onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background=BORDEAUX; el.style.color="#fff"; }}
               onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background="transparent"; el.style.color=BORDEAUX; }}
             >
-              {isHe ? (<><span style={{ fontSize:"0.9rem" }}>←</span> צפה בתפריט המלא</>) : (<>VIEW FULL MENU <span style={{ fontSize:"0.9rem" }}>→</span></>)}
+              {isHe ? (<>צפה בתפריט המלא <span style={{ fontSize:"0.9rem" }}>←</span></>) : (<>VIEW FULL MENU <span style={{ fontSize:"0.9rem" }}>→</span></>)}
             </a>
           </motion.div>
         </div>

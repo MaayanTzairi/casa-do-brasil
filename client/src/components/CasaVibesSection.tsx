@@ -203,7 +203,7 @@ export default function CasaVibesSection() {
               onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = GOLD; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = BORDEAUX; }}
             >
-              {isHe ? (<><span style={{ fontSize: "0.85rem" }}>←</span> קרא את הסיפור שלנו</>) : (<>READ OUR STORY <span style={{ fontSize: "0.85rem" }}>→</span></>)}
+              {isHe ? (<>קרא את הסיפור שלנו <span style={{ fontSize: "0.85rem" }}>←</span></>) : (<>READ OUR STORY <span style={{ fontSize: "0.85rem" }}>→</span></>)}
             </a>
           </motion.div>
         </div>

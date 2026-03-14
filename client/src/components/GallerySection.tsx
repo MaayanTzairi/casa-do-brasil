@@ -230,7 +230,7 @@ export default function GallerySection() {
                 onMouseEnter={e => { const el = e.currentTarget as HTMLSpanElement; el.style.background = BORDEAUX; el.style.color = "#fff"; }}
                 onMouseLeave={e => { const el = e.currentTarget as HTMLSpanElement; el.style.background = "transparent"; el.style.color = BORDEAUX; }}
               >
-                {isHe ? (<><span style={{ fontSize: "0.9rem" }}>←</span> צפה בגלריה המלאה</>) : (<>VIEW FULL GALLERY <span style={{ fontSize: "0.9rem" }}>→</span></>)}
+                {isHe ? (<>צפה בגלריה המלאה <span style={{ fontSize: "0.9rem" }}>←</span></>) : (<>VIEW FULL GALLERY <span style={{ fontSize: "0.9rem" }}>→</span></>)}
               </span>
             </Link>
           </motion.div>
