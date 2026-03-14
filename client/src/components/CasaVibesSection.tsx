@@ -87,12 +87,14 @@ export default function CasaVibesSection() {
     >
       <div style={{
         display: "grid",
-        gridTemplateColumns: mobile ? "1fr" : "1fr 1fr",
+        gridTemplateColumns: mobile ? "1fr" : "minmax(0,1fr) minmax(0,1fr)",
         gap: mobile ? "3rem" : "0 2.5vw",
         alignItems: "center",
         maxWidth: "1280px",
         margin: "0 auto",
         direction: isHe ? "rtl" : "ltr",
+        width: "100%",
+        boxSizing: "border-box" as const,
       }}>
 
         {/* ══════════ TEXT COLUMN ══════════ */}
@@ -218,7 +220,7 @@ export default function CasaVibesSection() {
           </div>
         ) : (
           /* Desktop: staggered overlap — tall image top-left, shorter bottom-right */
-          <div style={{ position: "relative", height: "540px" }}>
+          <div style={{ position: "relative", height: "clamp(360px, 42vw, 540px)", overflow: "hidden" }}>
 
             {/* Image 1 — tall, anchored top-left */}
             <motion.div

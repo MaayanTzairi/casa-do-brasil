@@ -182,10 +182,12 @@ export default function HeroSection() {
           paddingBottom: isMobile ? "clamp(3rem, 10vw, 5rem)" : "clamp(3rem, 6vw, 6rem)",
           paddingLeft: isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           paddingRight: isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
+          alignItems: (isMobile && isHe) ? "flex-end" : "flex-start",
+          direction: isHe ? "rtl" : "ltr",
         }}
       >
         {/* Title block */}
-        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="mb-4">
+        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="mb-4" style={{ width: "100%", textAlign: isHe ? "right" : "left" }}>
           {["CASA", "DO", "BRASIL"].map((word) => (
             <div key={word} className="overflow-hidden">
               <motion.h1
@@ -198,6 +200,7 @@ export default function HeroSection() {
                   color: "#FFFFFF",
                   letterSpacing: "-0.02em",
                   lineHeight: 0.88,
+                  textAlign: isHe ? "right" : "left",
                 }}
               >
                 {word}
@@ -209,7 +212,7 @@ export default function HeroSection() {
         {/* Gold rule */}
         <motion.div
           className="mb-4"
-          style={{ width: isMobile ? "clamp(120px, 40vw, 220px)" : "clamp(180px, 28vw, 460px)", transformOrigin: "left" }}
+          style={{ width: isMobile ? "clamp(120px, 40vw, 220px)" : "clamp(180px, 28vw, 460px)", transformOrigin: isHe ? "right" : "left", marginLeft: isHe ? "auto" : undefined, marginRight: isHe ? 0 : undefined }}
           variants={lineVariants}
           initial="hidden"
           animate="visible"
@@ -231,6 +234,8 @@ export default function HeroSection() {
             letterSpacing: "0.12em",
             marginBottom: isMobile ? "1.8rem" : "2.5rem",
             fontStyle: "italic",
+            textAlign: isHe ? "right" : "left",
+            width: "100%",
           }}
         >
           {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקריה" : "Brazilian Grill - Music & Churrascaria"}
@@ -242,7 +247,7 @@ export default function HeroSection() {
           variants={slideUpVariants}
           initial="hidden"
           animate="visible"
-          style={{ display: "flex", alignItems: "center", gap: isMobile ? "0.8rem" : "1.25rem", flexWrap: "wrap", justifyContent: (isMobile && isHe) ? "flex-end" : "flex-start" }}
+          style={{ display: "flex", alignItems: "center", gap: isMobile ? "0.8rem" : "1.25rem", flexWrap: "wrap", justifyContent: isHe ? "flex-end" : "flex-start", width: "100%" }}
         >
           <ReserveButton isMobile={isMobile} />
           <ExploreButton isMobile={isMobile} />
