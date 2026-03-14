@@ -207,28 +207,38 @@ export default function CasaVibesSection() {
 
         {/* ══════════ RIGHT — IMAGES ══════════ */}
         {mobile ? (
-          /* Mobile: two full-width images stacked */
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            {[
-              { src: MEAT_URL, label: "CHURRASCO", title: "THE ART OF FIRE", pos: "center 40%", d: 0.1 },
-              { src: CARNIVAL_URL, label: "CARNIVAL", title: "THE SOUL OF BRASIL", pos: "center 20%", d: 0.22 },
-            ].map((img) => (
-              <motion.div key={img.label}
-                initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.9, delay: img.d, ease: [0.25, 0.46, 0.45, 0.94] }}
-                style={{ position: "relative" }}
-              >
-                <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 14px 44px rgba(62,4,9,0.22)" }}>
-                  <img src={img.src} alt={img.label} loading="lazy" decoding="async" style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover", objectPosition: img.pos, display: "block" }} />
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.75) 0%, transparent 55%)", pointerEvents: "none" }} />
-                  <div style={{ position: "absolute", bottom: "1rem", left: "1rem" }}>
-                    <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.3em", color: GOLD, marginBottom: "0.2rem" }}>{img.label}</div>
-                    <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(15px, 4vw, 20px)", color: "#fff", lineHeight: 1.1 }}>{img.title}</div>
-                  </div>
+          /* Mobile: two smaller images staggered left/right */
+          <div style={{ position: "relative", height: "280px" }}>
+            {/* Image 1 — left, slightly higher */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              style={{ position: "absolute", top: 0, left: 0, width: "58%", zIndex: 2 }}
+            >
+              <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 14px 44px rgba(62,4,9,0.28)" }}>
+                <img src={MEAT_URL} alt="Churrasco" loading="lazy" decoding="async" style={{ width: "100%", aspectRatio: "4/5", objectFit: "cover", objectPosition: "center 40%", display: "block" }} />
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.75) 0%, transparent 55%)", pointerEvents: "none" }} />
+                <div style={{ position: "absolute", bottom: "0.75rem", left: "0.75rem" }}>
+                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>CHURRASCO</div>
                 </div>
-                <CornerBrackets offset={-7} len={14} w={1.1} />
-              </motion.div>
-            ))}
+              </div>
+              <CornerBrackets offset={-6} len={12} w={1} />
+            </motion.div>
+            {/* Image 2 — right, lower */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.9, delay: 0.22, ease: [0.25, 0.46, 0.45, 0.94] }}
+              style={{ position: "absolute", bottom: 0, right: 0, width: "55%", zIndex: 3 }}
+            >
+              <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 18px 52px rgba(62,4,9,0.32)" }}>
+                <img src={CARNIVAL_URL} alt="Carnival" loading="lazy" decoding="async" style={{ width: "100%", aspectRatio: "4/5", objectFit: "cover", objectPosition: "center 20%", display: "block" }} />
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 55%)", pointerEvents: "none" }} />
+                <div style={{ position: "absolute", bottom: "0.75rem", left: "0.75rem" }}>
+                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>CARNIVAL</div>
+                </div>
+              </div>
+              <CornerBrackets offset={-6} len={12} w={1} />
+            </motion.div>
           </div>
         ) : (
           /* Desktop: staggered overlap — tall image top-left, shorter bottom-right */

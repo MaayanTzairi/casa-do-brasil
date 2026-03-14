@@ -193,9 +193,10 @@ function MenuCard({ img, track, name, nameLine2, subtitle, href, dark=false, del
 
         <div style={{
           fontFamily:"'Heebo', sans-serif", fontWeight:900,
-          fontSize:"clamp(20px, 1.8vw, 28px)",
+          fontSize:"clamp(14px, 1.8vw, 28px)",
           color: dark ? "#fff" : BORDEAUX,
-          lineHeight: 0.88, letterSpacing:"0.025em", marginBottom:"0.5rem",
+          lineHeight: 1.0, letterSpacing:"0.02em", marginBottom:"0.5rem",
+          whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
         }}>
           {name}{nameLine2 && <><br />{nameLine2}</>}
         </div>

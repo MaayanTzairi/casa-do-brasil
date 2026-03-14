@@ -2,8 +2,10 @@
  * CASA DO BRASIL — Global Footer
  * Design: Minimalist luxury — deep bordeaux background, gold accents
  * Bilingual EN/HE with RTL support
+ * Mobile: single-column stacked layout, all text on single lines
  */
 
+import { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const GOLD = "rgb(185,161,103)";
@@ -15,6 +17,28 @@ const LOGO_URL =
 
 export default function Footer() {
   const { isHe } = useLanguage();
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const fn = () => setMobile(window.innerWidth < 768);
+    fn();
+    window.addEventListener("resize", fn);
+    return () => window.removeEventListener("resize", fn);
+  }, []);
+
+  const label = (text: string) => (
+    <div style={{
+      fontFamily: "'Heebo', sans-serif",
+      fontWeight: 700,
+      fontSize: "0.65rem",
+      letterSpacing: "0.3em",
+      textTransform: "uppercase",
+      color: GOLD,
+      marginBottom: "1.2rem",
+    }}>
+      {text}
+    </div>
+  );
 
   return (
     <footer
@@ -23,164 +47,244 @@ export default function Footer() {
       style={{
         background: BORDEAUX,
         color: "#fff",
-        padding: "3.5rem 6vw 2rem",
+        padding: mobile ? "3rem 1.5rem 2rem" : "3.5rem 6vw 2rem",
       }}
     >
       {/* Top gold rule */}
       <div style={{ height: "1px", background: GOLD_LIGHT, marginBottom: "3rem" }} />
 
-      {/* Main grid */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "1fr auto 1fr",
-        gap: "2rem 4vw",
-        alignItems: "start",
-        maxWidth: "1100px",
-        margin: "0 auto",
-      }}>
+      {mobile ? (
+        /* ── MOBILE LAYOUT: stacked, centered ── */
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2.5rem", textAlign: "center" }}>
 
-        {/* Left — Info */}
-        <div style={{ textAlign: isHe ? "right" : "left" }}>
-          <div style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 700,
-            fontSize: "0.65rem",
-            letterSpacing: "0.3em",
-            textTransform: "uppercase",
-            color: GOLD,
-            marginBottom: "1.2rem",
-          }}>
-            {isHe ? "מצאו אותנו" : "FIND US"}
+          {/* Logo */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.8rem" }}>
+            <div style={{
+              width: "64px", height: "64px",
+              borderRadius: "50%",
+              border: `1px solid ${GOLD_LIGHT}`,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              padding: "7px",
+            }}>
+              <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+            </div>
+            <div style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 900,
+              fontSize: "0.65rem",
+              letterSpacing: "0.28em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.5)",
+            }}>
+              CASA DO BRASIL
+            </div>
           </div>
 
           {/* Address */}
-          <p style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 300,
-            fontSize: "0.9rem",
-            lineHeight: 1.7,
-            color: "rgba(255,255,255,0.82)",
-            margin: "0 0 0.5rem",
-          }}>
-            {isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}
-          </p>
-          <p style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 300,
-            fontSize: "0.82rem",
-            color: "rgba(255,255,255,0.55)",
-            margin: "0 0 1.4rem",
-          }}>
-            {isHe ? "(צמוד למלון נובה)" : "(adjacent to the Nova Hotel)"}
-          </p>
+          <div>
+            {label(isHe ? "מצאו אותנו" : "FIND US")}
+            <p style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 300,
+              fontSize: "0.9rem",
+              lineHeight: 1.7,
+              color: "rgba(255,255,255,0.82)",
+              margin: "0 0 0.4rem",
+              whiteSpace: "nowrap",
+            }}>
+              {isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}
+            </p>
+            <p style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 300,
+              fontSize: "0.82rem",
+              color: "rgba(255,255,255,0.55)",
+              margin: "0 0 1.2rem",
+              whiteSpace: "nowrap",
+            }}>
+              {isHe ? "(צמוד למלון נובה)" : "(adjacent to the Nova Hotel)"}
+            </p>
+            {/* Phone — single line */}
+            <a
+              href="tel:08-6323032"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 600,
+                fontSize: "1rem",
+                color: GOLD,
+                textDecoration: "none",
+                letterSpacing: "0.04em",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.06 6.06l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z" />
+              </svg>
+              08-6323032
+            </a>
+          </div>
 
-          {/* Phone */}
-          <a
-            href="tel:08-6323032"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.5rem",
+          {/* Hours */}
+          <div>
+            {label(isHe ? "שעות פתיחה" : "HOURS")}
+            <p style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 300,
+              fontSize: "0.9rem",
+              lineHeight: 1.7,
+              color: "rgba(255,255,255,0.82)",
+              margin: "0 0 0.3rem",
+              whiteSpace: "nowrap",
+            }}>
+              {isHe ? "ראשון עד שבת" : "Sunday to Saturday"}
+            </p>
+            <p style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 600,
-              fontSize: "1rem",
+              fontSize: "1.05rem",
               color: GOLD,
-              textDecoration: "none",
+              margin: 0,
               letterSpacing: "0.04em",
-              transition: "opacity 0.2s",
-            }}
-            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.opacity = "0.75"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.opacity = "1"; }}
-          >
-            {/* Phone icon */}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.06 6.06l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z" />
-            </svg>
-            08-6323032
-          </a>
+              whiteSpace: "nowrap",
+            }}>
+              12:00 – 23:00
+            </p>
+          </div>
         </div>
+      ) : (
+        /* ── DESKTOP LAYOUT: 3-column grid ── */
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "1fr auto 1fr",
+          gap: "2rem 4vw",
+          alignItems: "start",
+          maxWidth: "1100px",
+          margin: "0 auto",
+        }}>
 
-        {/* Center — Logo */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
-          <div style={{
-            width: "72px", height: "72px",
-            borderRadius: "50%",
-            border: `1px solid ${GOLD_LIGHT}`,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            padding: "8px",
-          }}>
-            <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+          {/* Left — Info */}
+          <div style={{ textAlign: isHe ? "right" : "left" }}>
+            {label(isHe ? "מצאו אותנו" : "FIND US")}
+            <p style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 300,
+              fontSize: "0.9rem",
+              lineHeight: 1.7,
+              color: "rgba(255,255,255,0.82)",
+              margin: "0 0 0.5rem",
+            }}>
+              {isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}
+            </p>
+            <p style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 300,
+              fontSize: "0.82rem",
+              color: "rgba(255,255,255,0.55)",
+              margin: "0 0 1.4rem",
+            }}>
+              {isHe ? "(צמוד למלון נובה)" : "(adjacent to the Nova Hotel)"}
+            </p>
+            <a
+              href="tel:08-6323032"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 600,
+                fontSize: "1rem",
+                color: GOLD,
+                textDecoration: "none",
+                letterSpacing: "0.04em",
+                transition: "opacity 0.2s",
+                whiteSpace: "nowrap",
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.opacity = "0.75"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.opacity = "1"; }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.06 6.06l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z" />
+              </svg>
+              08-6323032
+            </a>
           </div>
-          <div style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 900,
-            fontSize: "0.65rem",
-            letterSpacing: "0.28em",
-            textTransform: "uppercase",
-            color: "rgba(255,255,255,0.5)",
-          }}>
-            CASA DO BRASIL
-          </div>
-        </div>
 
-        {/* Right — Hours */}
-        <div style={{ textAlign: isHe ? "left" : "right" }}>
-          <div style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 700,
-            fontSize: "0.65rem",
-            letterSpacing: "0.3em",
-            textTransform: "uppercase",
-            color: GOLD,
-            marginBottom: "1.2rem",
-          }}>
-            {isHe ? "שעות פתיחה" : "HOURS"}
+          {/* Center — Logo */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
+            <div style={{
+              width: "72px", height: "72px",
+              borderRadius: "50%",
+              border: `1px solid ${GOLD_LIGHT}`,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              padding: "8px",
+            }}>
+              <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+            </div>
+            <div style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 900,
+              fontSize: "0.65rem",
+              letterSpacing: "0.28em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.5)",
+            }}>
+              CASA DO BRASIL
+            </div>
           </div>
-          <p style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 300,
-            fontSize: "0.9rem",
-            lineHeight: 1.7,
-            color: "rgba(255,255,255,0.82)",
-            margin: "0 0 0.3rem",
-          }}>
-            {isHe ? "ראשון עד שבת" : "Sunday to Saturday"}
-          </p>
-          <p style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 600,
-            fontSize: "1.05rem",
-            color: GOLD,
-            margin: 0,
-            letterSpacing: "0.04em",
-          }}>
-            12:00 – 23:00
-          </p>
+
+          {/* Right — Hours */}
+          <div style={{ textAlign: isHe ? "left" : "right" }}>
+            {label(isHe ? "שעות פתיחה" : "HOURS")}
+            <p style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 300,
+              fontSize: "0.9rem",
+              lineHeight: 1.7,
+              color: "rgba(255,255,255,0.82)",
+              margin: "0 0 0.3rem",
+            }}>
+              {isHe ? "ראשון עד שבת" : "Sunday to Saturday"}
+            </p>
+            <p style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 600,
+              fontSize: "1.05rem",
+              color: GOLD,
+              margin: 0,
+              letterSpacing: "0.04em",
+            }}>
+              12:00 – 23:00
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Bottom rule + copyright */}
       <div style={{
         height: "1px",
         background: GOLD_LIGHT,
         margin: "2.5rem auto 1.5rem",
-        maxWidth: "1100px",
+        maxWidth: mobile ? "100%" : "1100px",
       }} />
       <div style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        gap: "1.5rem",
+        gap: mobile ? "0.8rem" : "1.5rem",
         flexWrap: "wrap",
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 300,
-        fontSize: "0.75rem",
+        fontSize: mobile ? "0.68rem" : "0.75rem",
         letterSpacing: "0.12em",
         color: "rgba(255,255,255,0.3)",
         direction: isHe ? "rtl" : "ltr",
+        textAlign: "center",
       }}>
         <span>© {new Date().getFullYear()} Casa do Brasil. {isHe ? "כל הזכויות שמורות." : "All rights reserved."}</span>
-        <span style={{ width: "1px", height: "12px", background: "rgba(185,161,103,0.25)", display: "inline-block" }} />
+        {!mobile && <span style={{ width: "1px", height: "12px", background: "rgba(185,161,103,0.25)", display: "inline-block" }} />}
         <a
           href="#"
           style={{ color: "rgba(255,255,255,0.3)", textDecoration: "none", transition: "color 0.2s" }}
@@ -189,7 +293,7 @@ export default function Footer() {
         >
           {isHe ? "מדיניות פרטיות" : "Privacy Policy"}
         </a>
-        <span style={{ width: "1px", height: "12px", background: "rgba(185,161,103,0.25)", display: "inline-block" }} />
+        {!mobile && <span style={{ width: "1px", height: "12px", background: "rgba(185,161,103,0.25)", display: "inline-block" }} />}
         <a
           href="#"
           style={{ color: "rgba(255,255,255,0.3)", textDecoration: "none", transition: "color 0.2s" }}
@@ -198,7 +302,7 @@ export default function Footer() {
         >
           {isHe ? "הצהרת נגישות" : "Accessibility Statement"}
         </a>
-        <span style={{ width: "1px", height: "12px", background: "rgba(185,161,103,0.25)", display: "inline-block" }} />
+        {!mobile && <span style={{ width: "1px", height: "12px", background: "rgba(185,161,103,0.25)", display: "inline-block" }} />}
         <a
           href="https://www.mt-mc.com"
           target="_blank"
