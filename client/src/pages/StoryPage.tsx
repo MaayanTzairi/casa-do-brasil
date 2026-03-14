@@ -135,29 +135,33 @@ function CardContent({ ch, isHe, isMobile }: { ch: Chapter; isHe: boolean; isMob
   );
 }
 
-/* ─── ANIMATED CARD (cards 2, 3, 4 — index 1, 2, 3) ─── */
+/* ─── ANIMATED CARD ─── */
+/*
+ * Segment layout (totalSegs = N + 1):
+ *   Seg 0: card 1 enters from below → settles at center
+ *   Seg 1: pause — card 1 fully visible
+ *   Seg 2: card 2 enters
+ *   Seg 3: card 3 enters
+ *   Seg 4: card 4 enters
+ */
 function AnimatedCard({
-  ch, cardIndex, scrollYProgress, totalAnimated, isHe,
+  ch, cardIndex, scrollYProgress, totalSegs, isHe,
 }: {
   ch: Chapter;
-  cardIndex: number;       // 0-based among animated cards (0 = card 2, 1 = card 3, 2 = card 4)
+  cardIndex: number;      // 0 = card 1, 1 = card 2, 2 = card 3, 3 = card 4
   scrollYProgress: any;
-  totalAnimated: number;   // = 3
+  totalSegs: number;      // N + 1 (for pause)
   isHe: boolean;
 }) {
-  /*
-   * Each animated card occupies 1/totalSegs of the scroll range.
-   * The first segment is a pause (card 1 visible), then cards 2-4 enter.
-   * totalSegs = totalAnimated + 1 (pause)
-   */
-  const totalSegs = totalAnimated + 1;
-  const seg   = 1 / totalSegs;
-  // Card i starts after the pause segment + previous cards
-  const start = (1 + cardIndex) * seg;
-  const end   = start + seg * 0.5;
+  const seg = 1 / totalSegs;
+  // card 0 enters in seg 0, card 1 enters in seg 2, card 2 in seg 3, card 3 in seg 4
+  const segIndex = cardIndex === 0 ? 0 : cardIndex + 1;
+  const start = segIndex * seg;
+  const end   = start + seg * 0.55;
 
   const entryPx  = typeof window !== "undefined" ? window.innerHeight + 60 : 900;
-  const settledY = (cardIndex + 1) * PEEK_PX;
+  // card 0 settles at y=0 (top of stack), subsequent cards settle at PEEK_PX * cardIndex
+  const settledY = cardIndex * PEEK_PX;
 
   const y = useTransform(
     scrollYProgress,
@@ -172,7 +176,7 @@ function AnimatedCard({
         top: 0, left: 0, right: 0,
         height: `${CARD_VH}vh`,
         y,
-        zIndex: cardIndex + 2,   // card 1 has zIndex 1, card 2 = 2, card 3 = 3, card 4 = 4
+        zIndex: cardIndex + 1,
         willChange: "transform",
         borderRadius: "18px",
         overflow: "hidden",
@@ -187,30 +191,33 @@ function AnimatedCard({
 
 /* ─── DESKTOP STORY ─── */
 function DesktopStory({ isHe }: { isHe: boolean }) {
-  const N         = CHAPTERS.length;      // 4
-  const animated  = N - 1;               // 3 animated cards (2, 3, 4)
-  // Extra pause segment so card 1 is visible before card 2 enters
-  const PAUSE     = 1;                   // 1 extra 100vh pause segment
-  const totalSegs = animated + PAUSE;    // 4 total segments
+  const N = CHAPTERS.length;  // 4
+  /*
+   * Segment layout:
+   *   Seg 0: card 1 enters
+   *   Seg 1: pause (card 1 fully visible)
+   *   Seg 2: card 2 enters
+   *   Seg 3: card 3 enters
+   *   Seg 4: card 4 enters
+   * Total = N + 1 = 5 segments
+   */
+  const totalSegs = N + 1;  // 5
   const containerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const { scrollYProgress } = useScroll({ target: containerRef });
 
   useEffect(() => {
     return scrollYProgress.on("change", (v: number) => {
-      // active = 0 during pause, then 1, 2, 3 as cards come in
-      const cardProgress = Math.max(0, v - PAUSE / totalSegs) / (animated / totalSegs);
-      setActive(Math.min(N - 1, Math.floor(cardProgress * animated + 0.5)));
+      const seg = 1 / totalSegs;
+      if (v < seg) setActive(0);
+      else if (v < 2 * seg) setActive(0);
+      else if (v < 3 * seg) setActive(1);
+      else if (v < 4 * seg) setActive(2);
+      else setActive(3);
     });
-  }, [scrollYProgress, N, animated, totalSegs]);
+  }, [scrollYProgress, totalSegs]);
 
-  /*
-   * Container height: (animated + PAUSE) × 100vh
-   * First PAUSE segment = card 1 fully visible, no animation
-   * Then each animated segment brings in one card
-   */
   const containerH = `${totalSegs * 100}vh`;
-  // Stack container height: card height + peek strips for all cards
   const stackH = `calc(${CARD_VH}vh + ${(N - 1) * PEEK_PX}px)`;
 
   return (
@@ -222,13 +229,7 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
         height: "calc(100vh - 70px)",
         overflow: "hidden",
       }}>
-        {/*
-         * Card stack: positioned absolutely, centered in the sticky viewport.
-         * Card 1 is at the center. Animated cards enter from below and settle
-         * at center + (i+1)*PEEK_PX offset (pushing the stack down slightly).
-         * We shift the whole stack up by half the total peek offset so it stays
-         * visually centered.
-         */}
+        {/* Card stack: centered in sticky viewport */}
         <div style={{
           position: "absolute",
           left: "50%",
@@ -237,28 +238,14 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
           width: CARD_W,
           height: stackH,
         }}>
-          {/* Card 1 — static, always at top of stack (y=0), zIndex 1 */}
-          <div style={{
-            position: "absolute",
-            top: 0, left: 0, right: 0,
-            height: `${CARD_VH}vh`,
-            zIndex: 1,
-            borderRadius: "18px",
-            overflow: "hidden",
-            boxShadow: "0 20px 70px rgba(0,0,0,0.65), 0 4px 16px rgba(0,0,0,0.3)",
-            border: `1px solid ${GOLD_A(0.18)}`,
-          }}>
-            <CardContent ch={CHAPTERS[0]} isHe={isHe} isMobile={false} />
-          </div>
-
-          {/* Cards 2, 3, 4 — animated */}
-          {CHAPTERS.slice(1).map((ch, i) => (
+          {/* All 4 cards animated — card 1 enters in seg 0, cards 2-4 enter in segs 2-4 */}
+          {CHAPTERS.map((ch, i) => (
             <AnimatedCard
               key={ch.year}
               ch={ch}
               cardIndex={i}
               scrollYProgress={scrollYProgress}
-              totalAnimated={animated}
+              totalSegs={totalSegs}
               isHe={isHe}
             />
           ))}
