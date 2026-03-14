@@ -233,6 +233,8 @@ export default function Gallery() {
               <img
                 src={img.src}
                 alt={isHe ? img.labelHe : img.labelEn}
+                loading="lazy"
+                decoding="async"
                 style={{ width: "100%", display: "block", transition: "transform 1.2s ease" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}

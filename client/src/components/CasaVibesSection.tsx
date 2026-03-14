@@ -219,7 +219,7 @@ export default function CasaVibesSection() {
                 style={{ position: "relative" }}
               >
                 <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 14px 44px rgba(62,4,9,0.22)" }}>
-                  <img src={img.src} alt={img.label} style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover", objectPosition: img.pos, display: "block" }} />
+                  <img src={img.src} alt={img.label} loading="lazy" decoding="async" style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover", objectPosition: img.pos, display: "block" }} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.75) 0%, transparent 55%)", pointerEvents: "none" }} />
                   <div style={{ position: "absolute", bottom: "1rem", left: "1rem" }}>
                     <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.3em", color: GOLD, marginBottom: "0.2rem" }}>{img.label}</div>
@@ -243,6 +243,7 @@ export default function CasaVibesSection() {
               <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 20px 60px rgba(62,4,9,0.24)" }}>
                 <img
                   src={MEAT_URL} alt="Churrasco"
+                  loading="lazy" decoding="async"
                   style={{ width: "100%", aspectRatio: "3/4", objectFit: "cover", objectPosition: "center 40%", display: "block", transition: "transform 1.1s ease" }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
@@ -265,6 +266,7 @@ export default function CasaVibesSection() {
               <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 22px 64px rgba(62,4,9,0.30)" }}>
                 <img
                   src={CARNIVAL_URL} alt="Carnival"
+                  loading="lazy" decoding="async"
                   style={{ width: "100%", aspectRatio: "4/5", objectFit: "cover", objectPosition: "center 20%", display: "block", transition: "transform 1.1s ease" }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}

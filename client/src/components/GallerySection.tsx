@@ -95,6 +95,8 @@ function GalleryCard({ img, delay, inView }: { img: typeof IMAGES[0]; delay: num
       <img
         src={img.src}
         alt={img.label}
+        loading="lazy"
+        decoding="async"
         style={{
           width: "100%",
           height: "100%",
