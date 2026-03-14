@@ -242,7 +242,7 @@ export default function HeroSection() {
           variants={slideUpVariants}
           initial="hidden"
           animate="visible"
-          style={{ display: "flex", alignItems: "center", gap: isMobile ? "0.8rem" : "1.25rem", flexWrap: "wrap" }}
+          style={{ display: "flex", alignItems: "center", gap: isMobile ? "0.8rem" : "1.25rem", flexWrap: "wrap", justifyContent: (isMobile && isHe) ? "flex-end" : "flex-start" }}
         >
           <ReserveButton isMobile={isMobile} />
           <ExploreButton isMobile={isMobile} />

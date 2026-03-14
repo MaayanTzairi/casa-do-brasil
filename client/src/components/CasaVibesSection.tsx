@@ -159,37 +159,10 @@ export default function CasaVibesSection() {
             }
           </motion.p>
 
-          {/* Stats row */}
-          <motion.div
-            custom={0.64} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
-            style={{ display: "flex", gap: "2.2rem", marginBottom: "2.2rem", flexWrap: "wrap", justifyContent: (mobile && isHe) ? "center" : (isHe ? "flex-end" : "flex-start") }}
-          >
-            {(isHe ? [
-              { num: "קצביה", label: "ביתית" },
-              { num: "רוח", label: "הקרנבל" },
-              { num: "צ׳וראס", label: "קריה" },
-            ] : [
-              { num: "BUTCHER'S", label: "CUT" },
-              { num: "CARNIVAL", label: "SPIRIT" },
-              { num: "CHURRAS", label: "CARIA" },
-            ]).map((s) => (
-              <div key={s.label}>
-                <div style={{
-                  fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-                  fontSize: mobile ? "clamp(20px, 5.5vw, 28px)" : "clamp(18px, 2vw, 26px)",
-                  color: GOLD, lineHeight: 1,
-                }}>{s.num}</div>
-                <div style={{
-                  fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                  fontSize: "0.65rem", letterSpacing: "0.22em",
-                  color: BORDEAUX, marginTop: "4px",
-                }}>{s.label}</div>
-              </div>
-            ))}
-          </motion.div>
-
           {/* CTA */}
-          <motion.div custom={0.76} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}>
+          <motion.div custom={0.76} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
+            style={{ display: "flex", justifyContent: (mobile && isHe) ? "flex-end" : (isHe ? "flex-end" : "flex-start"), width: "100%" }}
+          >
             <a
               href="/story"
               style={{
