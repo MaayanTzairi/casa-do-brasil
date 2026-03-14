@@ -1230,7 +1230,7 @@ function MenuHero({ isHe }: { isHe: boolean }) {
       style={{
         position: "relative",
         width: "100%",
-        height: "clamp(320px, 42vw, 560px)",
+        height: "clamp(420px, 70vh, 720px)",
         overflow: "hidden",
         background: BORDEAUX_DEEP,
       }}
@@ -1264,23 +1264,7 @@ function MenuHero({ isHe }: { isHe: boolean }) {
         background: "linear-gradient(110deg, rgba(22,1,3,0.88) 0%, rgba(62,4,9,0.72) 45%, rgba(20,4,6,0.45) 100%)",
       }} />
 
-      {/* Top fade — very subtle, just enough to show navbar */}
-      <div style={{
-        position: "absolute", top: 0, left: 0, right: 0,
-        height: "120px",
-        background: "linear-gradient(to bottom, rgba(22,1,3,0.55) 0%, rgba(22,1,3,0.15) 60%, transparent 100%)",
-        pointerEvents: "none",
-        zIndex: 2,
-      }} />
-
-      {/* Bottom fade — smooth multi-stop to white, starts well below subtitle */}
-      <div style={{
-        position: "absolute", bottom: 0, left: 0, right: 0,
-        height: "220px",
-        background: "linear-gradient(to top, #ffffff 0%, rgba(255,255,255,0.92) 25%, rgba(255,255,255,0.55) 55%, rgba(255,255,255,0.12) 78%, transparent 100%)",
-        pointerEvents: "none",
-        zIndex: 2,
-      }} />
+      {/* No top/bottom gradient fades */}
 
       {/* Gold inset frame */}
       <div style={{ position: "absolute", inset: "20px", pointerEvents: "none", zIndex: 2 }}>

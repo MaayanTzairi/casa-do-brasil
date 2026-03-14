@@ -35,7 +35,7 @@ function GalleryHero({ isHe }: { isHe: boolean }) {
       style={{
         position: "relative",
         width: "100%",
-        height: "clamp(340px, 50vh, 560px)",
+        height: "clamp(420px, 70vh, 720px)",
         overflow: "hidden",
         background: BORDEAUX,
       }}
@@ -64,23 +64,7 @@ function GalleryHero({ isHe }: { isHe: boolean }) {
         background: "linear-gradient(110deg, rgba(22,1,3,0.82) 0%, rgba(62,4,9,0.60) 50%, rgba(20,4,6,0.38) 100%)",
       }} />
 
-      {/* Top fade — dark, preserves navbar readability */}
-      <div style={{
-        position: "absolute", top: 0, left: 0, right: 0,
-        height: "110px",
-        background: "linear-gradient(to bottom, rgba(22,1,3,0.50) 0%, rgba(22,1,3,0.12) 60%, transparent 100%)",
-        pointerEvents: "none",
-        zIndex: 2,
-      }} />
-
-      {/* Bottom fade — blends into white page */}
-      <div style={{
-        position: "absolute", bottom: 0, left: 0, right: 0,
-        height: "200px",
-        background: "linear-gradient(to top, #ffffff 0%, rgba(255,255,255,0.88) 22%, rgba(255,255,255,0.48) 52%, rgba(255,255,255,0.08) 78%, transparent 100%)",
-        pointerEvents: "none",
-        zIndex: 2,
-      }} />
+      {/* No top/bottom gradient fades */}
 
       {/* Gold inset frame lines */}
       <div style={{ position: "absolute", inset: "20px", pointerEvents: "none", zIndex: 2 }}>
