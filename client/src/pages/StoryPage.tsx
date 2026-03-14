@@ -2,13 +2,20 @@
  * CASA DO BRASIL — Our Story Page
  * Design: Stacked card deck on Bordeaux background.
  *
- * Layout:
- *   - Hero: 55vh, title.
- *   - Scroll section: sticky, 4 × 100vh
- *     - Seg 0 (100vh): card 1 visible immediately (no animation), pause
- *     - Seg 1 (100vh): card 2 slides in from RIGHT, covers card 1
- *     - Seg 2 (100vh): card 3 slides in from LEFT, covers card 2
- *     - Seg 3 (100vh): card 4 slides in from RIGHT, covers card 3
+ * Animation logic:
+ *   - All 4 cards share the same top:0 position in the stack container.
+ *   - The stack container is centered vertically in the sticky viewport.
+ *   - Card 1 is always visible (no entry animation).
+ *   - Cards 2, 3, 4 slide in from alternating sides (right/left/right).
+ *   - When card N arrives, cards 0..N-1 each animate their Y by -PEEK_PX.
+ *   - This means the active card is always fully visible, and previous cards
+ *     peek from the top with a PEEK_PX strip.
+ *
+ * Scroll segments (TOTAL_SEGS = 4, each 100vh):
+ *   Seg 0: card 1 visible, pause
+ *   Seg 1: card 2 slides from right → card 1 moves up -PEEK_PX
+ *   Seg 2: card 3 slides from left  → card 1 moves up -2*PEEK_PX, card 2 moves up -PEEK_PX
+ *   Seg 3: card 4 slides from right → card 1 moves up -3*PEEK_PX, card 2 moves up -2*PEEK_PX, card 3 moves up -PEEK_PX
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -24,6 +31,7 @@ const BORDEAUX = "rgb(22,1,3)";
 const CARD_W_VW = 84;   // vw
 const CARD_VH   = 68;   // vh — card height
 const PEEK_PX   = 52;   // px of previous card visible above next
+const TOTAL_SEGS = 4;   // number of scroll segments
 
 const CH1_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/story-ch1-roots-buHiUahabKhA3izt6V7zDV.webp";
 const CH2_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/story-ch2-spark-gvZ5RqseExocUc7k4PC6Gg.webp";
@@ -140,56 +148,88 @@ function CardContent({ ch, isHe, isMobile }: { ch: Chapter; isHe: boolean; isMob
   );
 }
 
-/* ─── SIDE-SLIDING CARD (cards 2, 3, 4) ─── */
+/* ─── SINGLE ANIMATED CARD ─── */
 /*
- * Each card slides in from the side during its scroll segment.
- * Card 2 from right, card 3 from left, card 4 from right.
- * Once settled, it stays at settledY = (cardIndex) * PEEK_PX
- * so the top strip of the previous card remains visible.
+ * Each card has:
+ *   - An optional X slide-in animation (cards 2-4 only)
+ *   - A Y push-up animation (all cards except the last)
  *
- * Scroll segments (totalSegs = 5):
- *   Seg 0: card 1 rises to center
- *   Seg 1: pause
- *   Seg 2: card 2 slides from right
- *   Seg 3: card 3 slides from left
- *   Seg 4: card 4 slides from right
+ * The Y push-up is driven by how many cards come after this one.
+ * When card k arrives (at scroll segment k), this card moves up by -PEEK_PX.
+ * So after all later cards arrive, this card is at y = -(laterCount * PEEK_PX).
+ *
+ * We pre-compute all 4 sets of keyframes at the top level (no hooks in loops).
  */
-function SideCard({
-  ch, cardIndex, scrollYProgress, isHe,
+
+// Pre-compute Y keyframes for each card index (0-3)
+function buildYKeyframes(cardIndex: number, totalCards: number) {
+  const seg = 1 / TOTAL_SEGS;
+  const laterCount = totalCards - 1 - cardIndex;
+  if (laterCount === 0) return null; // last card never moves up
+
+  const inputRange: number[] = [0];
+  const outputRange: number[] = [0];
+  for (let k = 1; k <= laterCount; k++) {
+    const laterCardIdx = cardIndex + k;
+    const arrivalStart = laterCardIdx * seg;
+    const arrivalEnd = arrivalStart + seg * 0.55;
+    inputRange.push(Math.max(0, arrivalStart));
+    outputRange.push(-(k - 1) * PEEK_PX);
+    inputRange.push(Math.min(1, arrivalEnd));
+    outputRange.push(-k * PEEK_PX);
+  }
+  inputRange.push(1);
+  outputRange.push(-laterCount * PEEK_PX);
+  return { inputRange, outputRange };
+}
+
+// Pre-compute X keyframes for each card index (1-3, card 0 has no X animation)
+function buildXKeyframes(cardIndex: number) {
+  if (cardIndex === 0) return null;
+  const seg = 1 / TOTAL_SEGS;
+  const segStart = cardIndex * seg;
+  const segEnd = segStart + seg * 0.55;
+  const fromRight = cardIndex % 2 === 1;
+  const entryX = fromRight ? "110vw" : "-110vw";
+  return {
+    inputRange: [Math.max(0, segStart), Math.min(1, segEnd)],
+    outputRange: [entryX, "0vw"],
+  };
+}
+
+/* Individual card component — uses pre-computed keyframes */
+function StoryCard({
+  ch, cardIndex, totalCards, scrollYProgress, isHe,
 }: {
   ch: Chapter;
-  cardIndex: number;   // 1 = card 2, 2 = card 3, 3 = card 4
+  cardIndex: number;
+  totalCards: number;
   scrollYProgress: any;
   isHe: boolean;
 }) {
-  const TOTAL_SEGS = 4;
-  const seg = 1 / TOTAL_SEGS;
-  // cardIndex 1 → seg 1, cardIndex 2 → seg 2, cardIndex 3 → seg 3
-  const segStart = cardIndex * seg;
-  const segEnd   = segStart + seg * 0.6;
+  const yKf = buildYKeyframes(cardIndex, totalCards);
+  const xKf = buildXKeyframes(cardIndex);
 
-  // Alternate direction: even cardIndex from right, odd from left
-  const fromRight = cardIndex % 2 === 1;
-  const entryX = fromRight ? "110vw" : "-110vw";
-  const settledX = "0vw";
-
-  // Vertical position: each card settles PEEK_PX lower than the previous
-  const settledY = cardIndex * PEEK_PX;
-
-  const x = useTransform(
+  // Always call hooks unconditionally (React rules)
+  const yMotion = useTransform(
     scrollYProgress,
-    [Math.max(0, segStart), Math.min(1, segEnd)],
-    [entryX, settledX],
+    yKf ? yKf.inputRange : [0, 1],
+    yKf ? yKf.outputRange : [0, 0],
+  );
+  const xMotion = useTransform(
+    scrollYProgress,
+    xKf ? xKf.inputRange : [0, 1],
+    xKf ? xKf.outputRange : ["0vw", "0vw"],
   );
 
   return (
     <motion.div
       style={{
         position: "absolute",
-        top: `${settledY}px`,
-        left: 0, right: 0,
+        top: 0, left: 0, right: 0,
         height: `${CARD_VH}vh`,
-        x,
+        x: xKf ? xMotion : undefined,
+        y: yKf ? yMotion : undefined,
         zIndex: cardIndex + 1,
         willChange: "transform",
         borderRadius: "18px",
@@ -206,7 +246,6 @@ function SideCard({
 /* ─── DESKTOP STORY ─── */
 function DesktopStory({ isHe }: { isHe: boolean }) {
   const N = CHAPTERS.length;  // 4
-  const TOTAL_SEGS = 4;       // seg0: pause with card1 visible, seg1-3: cards 2-4 slide in
   const containerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const { scrollYProgress } = useScroll({ target: containerRef });
@@ -223,8 +262,11 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
 
   const containerH = `${TOTAL_SEGS * 100}vh`;
 
-  // Stack height: card height + peek strips for all 4 cards
-  const stackH = `calc(${CARD_VH}vh + ${(N - 1) * PEEK_PX}px)`;
+  // Stack container height: card height + peek strips for cards 1-3 that get pushed up
+  // The active card is always at top:0 of the container.
+  // Previous cards peek above the container top (negative y), so we only need CARD_VH height.
+  // But we add a little extra so the container doesn't clip the peeking cards.
+  const stackH = `${CARD_VH}vh`;
 
   return (
     <div ref={containerRef} style={{ height: containerH, position: "relative" }}>
@@ -235,38 +277,24 @@ function DesktopStory({ isHe }: { isHe: boolean }) {
         height: "calc(100vh - 70px)",
         overflow: "hidden",
       }}>
-        {/* Card stack: card 1 centered in sticky viewport */}
+        {/* Card stack: centered vertically in sticky viewport */}
         <div style={{
           position: "absolute",
           left: "50%",
-          // top = 50% of sticky viewport minus half card height = card 1 is centered
+          // Center the card vertically: top = 50% - half card height
           top: `calc(50% - ${CARD_VH / 2}vh)`,
           transform: "translateX(-50%)",
           width: `${CARD_W_VW}vw`,
           height: stackH,
+          // overflow visible so peeking cards show above the container
+          overflow: "visible",
         }}>
-          {/* Card 1 — always visible, no animation */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0, left: 0, right: 0,
-              height: `${CARD_VH}vh`,
-              zIndex: 1,
-              borderRadius: "18px",
-              overflow: "hidden",
-              boxShadow: "0 24px 80px rgba(0,0,0,0.7), 0 4px 16px rgba(0,0,0,0.3)",
-              border: `1px solid ${GOLD_A(0.2)}`,
-            }}
-          >
-            <CardContent ch={CHAPTERS[0]} isHe={isHe} isMobile={false} />
-          </div>
-
-          {/* Cards 2, 3, 4 — slide in from sides */}
-          {CHAPTERS.slice(1).map((ch, i) => (
-            <SideCard
+          {CHAPTERS.map((ch, i) => (
+            <StoryCard
               key={ch.year}
               ch={ch}
-              cardIndex={i + 1}
+              cardIndex={i}
+              totalCards={N}
               scrollYProgress={scrollYProgress}
               isHe={isHe}
             />
