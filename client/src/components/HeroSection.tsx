@@ -182,7 +182,7 @@ export default function HeroSection() {
           paddingBottom: isMobile ? "clamp(3rem, 10vw, 5rem)" : "clamp(3rem, 6vw, 6rem)",
           paddingLeft: isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           paddingRight: isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
-          alignItems: isHe ? "flex-end" : "flex-start",
+          alignItems: "stretch",
           direction: isHe ? "rtl" : "ltr",
         }}
       >
@@ -247,7 +247,7 @@ export default function HeroSection() {
           variants={slideUpVariants}
           initial="hidden"
           animate="visible"
-          style={{ display: "flex", alignItems: "center", gap: isMobile ? "0.8rem" : "1.25rem", flexWrap: "wrap", justifyContent: isHe ? "flex-end" : "flex-start", width: "100%" }}
+          style={{ display: "flex", alignItems: "center", gap: isMobile ? "0.8rem" : "1.25rem", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" }}
         >
           <ReserveButton isMobile={isMobile} />
           <ExploreButton isMobile={isMobile} />

@@ -158,7 +158,7 @@ export default function GallerySection() {
             transition={{ duration: 0.95, delay: 0.12 }}
             style={{
               fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-              fontSize: mobile ? "clamp(30px, 8vw, 44px)" : "clamp(28px, 3vw, 48px)",
+              fontSize: mobile ? "clamp(36px, 10vw, 52px)" : "clamp(36px, 3.8vw, 58px)",
               color: BORDEAUX, margin: "0 0 1.5rem", lineHeight: 1.0,
               letterSpacing: "0.01em",
               textAlign: isHe ? "right" : "left",
@@ -213,7 +213,7 @@ export default function GallerySection() {
             transition={{ duration: 0.7, delay: 0.45 }}
             style={{
               display: "flex", gap: "6px", marginBottom: mobile ? "0" : "2rem",
-              justifyContent: mobile ? "center" : (isHe ? "flex-end" : "flex-start"),
+              justifyContent: mobile ? "center" : "flex-start",
             }}
           >
             {IMAGES.map((_, i) => (
@@ -240,7 +240,7 @@ export default function GallerySection() {
               initial={{ opacity: 0, y: 14 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.85, delay: 0.5 }}
-              style={{ display: "flex", justifyContent: isHe ? "flex-end" : "flex-start", marginTop: "2rem" }}
+              style={{ display: "flex", justifyContent: "flex-start", marginTop: "2rem" }}
             >
               <CTAButton isHe={isHe} />
             </motion.div>
@@ -306,6 +306,52 @@ export default function GallerySection() {
                 />
               </AnimatePresence>
 
+              {/* Prev arrow — left side, vertically centered */}
+              <button
+                onClick={prev}
+                style={{
+                  position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)",
+                  background: "rgba(255,255,255,0.92)",
+                  border: "none",
+                  color: BORDEAUX,
+                  width: "40px", height: "40px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "20px",
+                  zIndex: 5,
+                  boxShadow: "0 2px 12px rgba(0,0,0,0.18)",
+                  transition: "background 0.22s, color 0.22s, transform 0.22s",
+                }}
+                onMouseEnter={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = BORDEAUX; el.style.color = "#fff"; el.style.transform = "translateY(-50%) scale(1.08)"; }}
+                onMouseLeave={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = "rgba(255,255,255,0.92)"; el.style.color = BORDEAUX; el.style.transform = "translateY(-50%) scale(1)"; }}
+              >
+                ‹
+              </button>
+
+              {/* Next arrow — right side, vertically centered */}
+              <button
+                onClick={next}
+                style={{
+                  position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)",
+                  background: "rgba(255,255,255,0.92)",
+                  border: "none",
+                  color: BORDEAUX,
+                  width: "40px", height: "40px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "20px",
+                  zIndex: 5,
+                  boxShadow: "0 2px 12px rgba(0,0,0,0.18)",
+                  transition: "background 0.22s, color 0.22s, transform 0.22s",
+                }}
+                onMouseEnter={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = BORDEAUX; el.style.color = "#fff"; el.style.transform = "translateY(-50%) scale(1.08)"; }}
+                onMouseLeave={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = "rgba(255,255,255,0.92)"; el.style.color = BORDEAUX; el.style.transform = "translateY(-50%) scale(1)"; }}
+              >
+                ›
+              </button>
+
               {/* Slide counter — inside image, bottom right */}
               <div style={{
                 position: "absolute", bottom: "12px", right: "12px",
@@ -317,52 +363,6 @@ export default function GallerySection() {
               }}>
                 {String(current + 1).padStart(2, "0")} / {String(IMAGES.length).padStart(2, "0")}
               </div>
-            </div>
-
-            {/* Prev / Next arrows — OUTSIDE the image, below it */}
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginTop: "0.75rem",
-              padding: "0 10px",
-            }}>
-              <button
-                onClick={prev}
-                style={{
-                  background: "transparent",
-                  border: `1px solid ${GOLD_R}0.5)`,
-                  color: BORDEAUX,
-                  width: "36px", height: "36px",
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: "18px",
-                  transition: "background 0.25s, color 0.25s",
-                }}
-                onMouseEnter={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = BORDEAUX; el.style.color = "#fff"; }}
-                onMouseLeave={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = "transparent"; el.style.color = BORDEAUX; }}
-              >
-                ‹
-              </button>
-              <button
-                onClick={next}
-                style={{
-                  background: "transparent",
-                  border: `1px solid ${GOLD_R}0.5)`,
-                  color: BORDEAUX,
-                  width: "36px", height: "36px",
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: "18px",
-                  transition: "background 0.25s, color 0.25s",
-                }}
-                onMouseEnter={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = BORDEAUX; el.style.color = "#fff"; }}
-                onMouseLeave={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = "transparent"; el.style.color = BORDEAUX; }}
-              >
-                ›
-              </button>
             </div>
           </div>
         </motion.div>
