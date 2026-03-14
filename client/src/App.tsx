@@ -1,25 +1,53 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
+import { lazy, Suspense } from "react";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
-import Home from "./pages/Home";
-import Gallery from "./pages/Gallery";
-import MenuPage from "./pages/MenuPage";
-import StoryPage from "./pages/StoryPage";
+
+// Lazy-load all pages so each is a separate chunk loaded on demand
+const Home = lazy(() => import("./pages/Home"));
+const Gallery = lazy(() => import("./pages/Gallery"));
+const MenuPage = lazy(() => import("./pages/MenuPage"));
+const StoryPage = lazy(() => import("./pages/StoryPage"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
+// Minimal loading fallback — keeps the background colour consistent
+function PageLoader() {
+  return (
+    <div style={{
+      minHeight: "100vh",
+      background: "#fff",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}>
+      <div style={{
+        width: "32px",
+        height: "32px",
+        border: "2px solid rgba(185,161,103,0.25)",
+        borderTop: "2px solid #B9A167",
+        borderRadius: "50%",
+        animation: "spin 0.8s linear infinite",
+      }} />
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    </div>
+  );
+}
 
 function Router() {
   return (
-    <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/gallery"} component={Gallery} />
-      <Route path={"/menu"} component={MenuPage} />
-      <Route path={"/story"} component={StoryPage} />
-      <Route path={"/404"} component={NotFound} />
-      <Route component={NotFound} />
-    </Switch>
+    <Suspense fallback={<PageLoader />}>
+      <Switch>
+        <Route path={"/"} component={Home} />
+        <Route path={"/gallery"} component={Gallery} />
+        <Route path={"/menu"} component={MenuPage} />
+        <Route path={"/story"} component={StoryPage} />
+        <Route path={"/404"} component={NotFound} />
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 
