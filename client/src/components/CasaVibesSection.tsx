@@ -15,9 +15,9 @@ import { motion, useInView } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const MEAT_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/section2-meat-ke9deE2CaiwVZ9ZoiEuQWQ.png";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/our-story-meat_2d1fb536.webp";
 const CARNIVAL_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/section2-carnival-cpA5t7SkhMGYiXQYXTmtnv.png";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/our-story-carnival_0ebcb58e.webp";
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(62,4,9)";
