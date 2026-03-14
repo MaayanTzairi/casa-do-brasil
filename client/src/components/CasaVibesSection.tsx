@@ -240,8 +240,8 @@ export default function CasaVibesSection() {
       ref={ref}
       style={{
         background: "#fff",
-        padding: mobile ? "3.5rem 1.5rem 4rem" : "5rem 5vw 5rem 6vw",
-        overflow: "hidden",
+        padding: mobile ? "3.5rem 1.5rem 5rem" : "5rem 5vw 5rem 6vw",
+        overflow: mobile ? "visible" : "hidden",
       }}
     >
       <div style={{
@@ -342,56 +342,8 @@ export default function CasaVibesSection() {
           </motion.div>
         </div>
 
-        {/* ══════════ RIGHT — IMAGES ══════════ */}
-        {mobile ? (
-          /* Mobile: same overlapping layout as desktop, scaled for mobile */
-          <div style={{ position: "relative", height: "320px" }}>
-            {/* Image 1 — tall, anchored top-left */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-              style={{ position: "absolute", top: 0, left: 0, width: "60%", zIndex: 2 }}
-            >
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-                style={{ position: "relative", overflow: "hidden", boxShadow: "0 16px 48px rgba(62,4,9,0.36), 0 6px 18px rgba(62,4,9,0.20)", borderRadius: "2px" }}
-              >
-                <img src={MEAT_URL} alt="Churrasco" loading="lazy" decoding="async"
-                  style={{ width: "100%", aspectRatio: "3/4", objectFit: "cover", objectPosition: "center 40%", display: "block" }}
-                />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 52%)", pointerEvents: "none" }} />
-                <div style={{ position: "absolute", bottom: "0.75rem", left: "0.75rem" }}>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>CHURRASCO</div>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(12px, 3.5vw, 16px)", color: "#fff", lineHeight: 1.1 }}>THE ART<br />OF FIRE</div>
-                </div>
-              </motion.div>
-              <CornerBrackets offset={-6} len={12} w={1} />
-            </motion.div>
-            {/* Image 2 — shorter, anchored bottom-right */}
-            <motion.div
-              initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.22, ease: [0.25, 0.46, 0.45, 0.94] }}
-              style={{ position: "absolute", bottom: 0, right: 0, width: "56%", zIndex: 3 }}
-            >
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-                style={{ position: "relative", overflow: "hidden", boxShadow: "0 20px 56px rgba(62,4,9,0.40), 0 8px 22px rgba(62,4,9,0.22)", borderRadius: "2px" }}
-              >
-                <img src={CARNIVAL_URL} alt="Carnival" loading="lazy" decoding="async"
-                  style={{ width: "100%", aspectRatio: "4/5", objectFit: "cover", objectPosition: "center 20%", display: "block" }}
-                />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.80) 0%, transparent 52%)", pointerEvents: "none" }} />
-                <div style={{ position: "absolute", bottom: "0.75rem", left: "0.75rem" }}>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>CARNIVAL</div>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(12px, 3.5vw, 16px)", color: "#fff", lineHeight: 1.1 }}>THE SOUL<br />OF BRASIL</div>
-                </div>
-              </motion.div>
-              <CornerBrackets offset={-6} len={12} w={1} />
-            </motion.div>
-          </div>
-        ) : (
+        {/* ══════════ RIGHT — IMAGES (desktop only in grid) ══════════ */}
+        {!mobile && (
           /* Desktop: staggered overlap — tall image top-left, shorter bottom-right */
           <div style={{ position: "relative", height: "clamp(400px, 46vw, 580px)", paddingBottom: "2rem" }}>
 
@@ -459,6 +411,63 @@ export default function CasaVibesSection() {
           </div>
         )}
       </div>
+
+      {/* Mobile images — outside the grid so paddingBottom gives real height */}
+      {mobile && (
+        <div style={{
+          position: "relative",
+          width: "100%",
+          maxWidth: "1280px",
+          margin: "0 auto",
+          paddingBottom: "calc(60% * 1.35 + 70px)",
+          overflow: "visible",
+        }}>
+          {/* Image 1 — tall, anchored top-left */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+            style={{ position: "absolute", top: 0, left: 0, width: "60%", zIndex: 2 }}
+          >
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+              style={{ position: "relative", overflow: "hidden", boxShadow: "0 16px 48px rgba(62,4,9,0.36), 0 6px 18px rgba(62,4,9,0.20)", borderRadius: "2px" }}
+            >
+              <img src={MEAT_URL} alt="Churrasco" loading="lazy" decoding="async"
+                style={{ width: "100%", aspectRatio: "3/4", objectFit: "cover", objectPosition: "center 40%", display: "block" }}
+              />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 52%)", pointerEvents: "none" }} />
+              <div style={{ position: "absolute", bottom: "0.75rem", left: "0.75rem" }}>
+                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>CHURRASCO</div>
+                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(12px, 3.5vw, 16px)", color: "#fff", lineHeight: 1.1 }}>THE ART<br />OF FIRE</div>
+              </div>
+            </motion.div>
+            <CornerBrackets offset={-6} len={12} w={1} />
+          </motion.div>
+          {/* Image 2 — shorter, anchored bottom-right */}
+          <motion.div
+            initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.9, delay: 0.22, ease: [0.25, 0.46, 0.45, 0.94] }}
+            style={{ position: "absolute", bottom: 0, right: 0, width: "56%", zIndex: 3 }}
+          >
+            <motion.div
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+              style={{ position: "relative", overflow: "hidden", boxShadow: "0 20px 56px rgba(62,4,9,0.40), 0 8px 22px rgba(62,4,9,0.22)", borderRadius: "2px" }}
+            >
+              <img src={CARNIVAL_URL} alt="Carnival" loading="lazy" decoding="async"
+                style={{ width: "100%", aspectRatio: "4/5", objectFit: "cover", objectPosition: "center 20%", display: "block" }}
+              />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.80) 0%, transparent 52%)", pointerEvents: "none" }} />
+              <div style={{ position: "absolute", bottom: "0.75rem", left: "0.75rem" }}>
+                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>CARNIVAL</div>
+                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(12px, 3.5vw, 16px)", color: "#fff", lineHeight: 1.1 }}>THE SOUL<br />OF BRASIL</div>
+              </div>
+            </motion.div>
+            <CornerBrackets offset={-6} len={12} w={1} />
+          </motion.div>
+        </div>
+      )}
     </section>
   );
 }
