@@ -15,14 +15,16 @@ const BORDEAUX = "rgb(62,4,9)";
 
 const HERO_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-carnival_f495b5d9.webp";
+const HERO_IMG_SM =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-carnival-hero-sm_063fdc65.webp";
 
 const ALL_IMAGES = [
-  { id: "interior",   src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-interior-v2_v2_4827c495.webp", labelEn: "THE SPACE",    labelHe: "המרחב",    captionEn: "Designed for the senses",       captionHe: "מעוצב לחושים",           cat: "space" },
-  { id: "dining",     src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-dining_a1ccc47f.webp", labelEn: "THE TABLE",    labelHe: "השולחן",   captionEn: "Every meal, a celebration",     captionHe: "כל ארוחה היא חגיגה",     cat: "space" },
-  { id: "picanha",    src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-picanha_770485ba.webp", labelEn: "PICANHA",      labelHe: "פיקניה",    captionEn: "The crown cut of Brasil",      captionHe: "הנתח המלכותי של ברזיל",  cat: "food" },
-  { id: "caipirinha", src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-caipirinha_c48da7f4.webp", labelEn: "CAIPIRINHA",   labelHe: "קייפיריניה", captionEn: "Brasil in a glass",            captionHe: "ברזיל בכוס",              cat: "food" },
-  { id: "carnival",   src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-carnival_f495b5d9.webp", labelEn: "O CARNAVAL",   labelHe: "הקרנבל",    captionEn: "The spirit of Brasil",         captionHe: "רוח ברזיל",              cat: "vibe" },
-  { id: "skewers",    src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-skewers_17adafb4.webp", labelEn: "CHURRASCO",    labelHe: "צ'וראסקו",  captionEn: "Fire, smoke and tradition",    captionHe: "אש, עשן ומסורת",         cat: "food" },
+  { id: "interior",   src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-interior-v2_v2_4827c495.webp",  srcSm: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-interior-sm_fea85219.webp",       labelEn: "THE SPACE",    labelHe: "המרחב",    captionEn: "Designed for the senses",       captionHe: "מעוצב לחושים",           cat: "space" },
+  { id: "dining",     src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-dining_a1ccc47f.webp",           srcSm: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-dining-sm_852dbd99.webp",           labelEn: "THE TABLE",    labelHe: "השולחן",   captionEn: "Every meal, a celebration",     captionHe: "כל ארוחה היא חגיגה",     cat: "space" },
+  { id: "picanha",    src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-picanha_770485ba.webp",          srcSm: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-picanha-sm_4bd497bb.webp",          labelEn: "PICANHA",      labelHe: "פיקניה",    captionEn: "The crown cut of Brasil",      captionHe: "הנתח המלכותי של ברזיל",  cat: "food" },
+  { id: "caipirinha", src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-caipirinha_c48da7f4.webp",       srcSm: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-caipirinha-sm_07c182c8.webp",       labelEn: "CAIPIRINHA",   labelHe: "קייפיריניה", captionEn: "Brasil in a glass",            captionHe: "ברזיל בכוס",              cat: "food" },
+  { id: "carnival",   src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-carnival_f495b5d9.webp",         srcSm: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-carnival-sm_28b63e19.webp",         labelEn: "O CARNAVAL",   labelHe: "הקרנבל",    captionEn: "The spirit of Brasil",         captionHe: "רוח ברזיל",              cat: "vibe" },
+  { id: "skewers",    src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-skewers_17adafb4.webp",           srcSm: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-skewers-sm_c71b3d51.webp",           labelEn: "CHURRASCO",    labelHe: "צ'וראסקו",  captionEn: "Fire, smoke and tradition",    captionHe: "אש, עשן ומסורת",         cat: "food" },
 ];
 
 function GalleryHero({ isHe }: { isHe: boolean }) {
@@ -32,7 +34,10 @@ function GalleryHero({ isHe }: { isHe: boolean }) {
   return (
     <section style={{ position:"relative", width:"100%", height:"clamp(420px, 70vh, 720px)", overflow:"hidden", background:BORDEAUX }}>
       <div style={{ position:"absolute", inset:0 }}>
-        <img src={HERO_IMG} alt="Gallery" width={1920} height={1080} fetchPriority="high" style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 30%", display:"block" }} />
+        <img src={HERO_IMG}
+          srcSet={`${HERO_IMG_SM} 900w, ${HERO_IMG} 1920w`}
+          sizes="100vw"
+          alt="Gallery" width={1920} height={1080} fetchPriority="high" style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 30%", display:"block" }} />
       </div>
       <div style={{ position:"absolute", inset:0, background:"linear-gradient(110deg, rgba(22,1,3,0.88) 0%, rgba(62,4,9,0.72) 45%, rgba(20,4,6,0.45) 100%)" }} />
 
@@ -118,7 +123,10 @@ export default function Gallery() {
           <div key={img.id} onClick={() => openLightbox(img.id)}
             style={{ breakInside:"avoid", marginBottom:"10px", position:"relative", overflow:"hidden", cursor:"pointer", display:"block", opacity:1, transition:`opacity 0.5s ${i * 0.06}s` }}
           >
-            <img src={img.src} alt={isHe ? img.labelHe : img.labelEn} loading="lazy" decoding="async"
+            <img src={img.src}
+              srcSet={`${img.srcSm} 700w, ${img.src} 1200w`}
+              sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+              alt={isHe ? img.labelHe : img.labelEn} loading="lazy" decoding="async"
               width={800} height={600}
               style={{ width:"100%", display:"block", transition:"transform 1.2s ease" }}
               onMouseEnter={e => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
@@ -133,7 +141,10 @@ export default function Gallery() {
         <div onClick={closeLightbox}
           style={{ position:"fixed", inset:0, zIndex:100, background:"rgba(10,2,2,0.92)", display:"flex", alignItems:"center", justifyContent:"center", padding:"2rem", cursor:"zoom-out", opacity: lightboxVisible ? 1 : 0, transition:"opacity 0.3s" }}
         >
-          <img src={lightboxImg.src} alt={isHe ? lightboxImg.labelHe : lightboxImg.labelEn}
+          <img src={lightboxImg.src}
+            srcSet={`${lightboxImg.srcSm} 700w, ${lightboxImg.src} 1200w`}
+            sizes="90vw"
+            alt={isHe ? lightboxImg.labelHe : lightboxImg.labelEn}
             width={1200} height={900}
             style={{ maxWidth:"90vw", maxHeight:"85vh", objectFit:"contain", boxShadow:"0 0 80px rgba(185,161,103,0.15)", transform: lightboxVisible ? "scale(1)" : "scale(0.9)", transition:"transform 0.4s, opacity 0.4s", opacity: lightboxVisible ? 1 : 0 }}
             onClick={e => e.stopPropagation()}
