@@ -1128,19 +1128,27 @@ function TabBar({
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: isHe ? "flex-end" : "flex-start",
+            justifyContent: isHe ? "flex-start" : "flex-end",
             padding: "3px 1rem 2px",
             pointerEvents: "none",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "3px", flexDirection: isHe ? "row-reverse" : "row" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
+            {/* Hebrew: arrow LEFT of word, pointing left. English: word then arrow pointing right */}
+            {isHe && (
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2.5" strokeLinecap="round"
+                style={{ transform: "scaleX(-1)" }}>
+                <polyline points="9,18 15,12 9,6"/>
+              </svg>
+            )}
             <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "9px", letterSpacing: "0.1em", color: GOLD, textTransform: "uppercase" }}>
               {isHe ? "עוד" : "more"}
             </span>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2.5" strokeLinecap="round"
-              style={{ transform: isHe ? "scaleX(-1)" : "none" }}>
-              <polyline points="9,18 15,12 9,6"/>
-            </svg>
+            {!isHe && (
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2.5" strokeLinecap="round">
+                <polyline points="9,18 15,12 9,6"/>
+              </svg>
+            )}
           </div>
         </div>
       )}
