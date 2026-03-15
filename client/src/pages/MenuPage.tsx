@@ -1122,30 +1122,26 @@ function TabBar({
         overflow: "hidden",
       }}
     >
-      {/* Mobile scroll hint — fixed corner badge above tabs */}
+      {/* Mobile scroll hint — separate row above tabs, left-aligned */}
       {isMobile && showScrollHint && (
         <div
           style={{
-            position: "absolute",
-            right: 6,
-            top: 4,
-            zIndex: 50,
-            pointerEvents: "none",
-            background: "rgba(255,255,255,0.95)",
-            borderRadius: "4px",
-            padding: "2px 5px 2px 4px",
-            boxShadow: "0 1px 4px rgba(62,4,9,0.12)",
             display: "flex",
             alignItems: "center",
-            gap: "2px",
+            justifyContent: "flex-start",
+            padding: "6px 1rem 4px",
+            borderBottom: `1px solid rgba(180,140,60,0.1)`,
+            pointerEvents: "none",
           }}
         >
-          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "9px", letterSpacing: "0.08em", color: GOLD, textTransform: "uppercase" }}>
-            {isHe ? "עוד" : "more"}
-          </span>
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2.5" strokeLinecap="round">
-            <polyline points="9,18 15,12 9,6"/>
-          </svg>
+          <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
+            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "9px", letterSpacing: "0.1em", color: GOLD, textTransform: "uppercase" }}>
+              {isHe ? "עוד" : "more"}
+            </span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2.5" strokeLinecap="round">
+              <polyline points="9,18 15,12 9,6"/>
+            </svg>
+          </div>
         </div>
       )}
 
