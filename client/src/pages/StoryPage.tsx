@@ -156,7 +156,7 @@ function StoryHero({ isHe }: { isHe: boolean }) {
   useEffect(() => { const t = setTimeout(() => setLoaded(true), 50); return () => clearTimeout(t); }, []);
 
   return (
-    <div style={{ width:"100vw", height:"40vh", minHeight:"240px", background:BORDEAUX, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:"1.2rem", textAlign:"center", padding:"0 2rem", position:"relative", zIndex:2 }}>
+    <div style={{ width:"100vw", minHeight:"40vh", background:BORDEAUX, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:"1.2rem", textAlign:"center", padding:"calc(64px + 3rem) 2rem 3rem", position:"relative", zIndex:2 }}>
       <div style={{ width:"60px", height:"1px", background:GOLD, transform: loaded ? "scaleX(1)" : "scaleX(0)", transformOrigin:"center", transition:"transform 1.2s 0.3s ease" }} />
       <h1 style={{ fontFamily:"'Heebo', sans-serif", fontWeight:900, fontSize:"clamp(32px, 6vw, 80px)", color:"#fff", lineHeight:1.0, letterSpacing: isHe ? "0.02em" : "0.05em", margin:"0.6rem 0 0", textShadow:"0 4px 28px rgba(0,0,0,0.35)", textAlign:"center", opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(24px)", transition:"opacity 1s 0.55s, transform 1s 0.55s" }}>
         {isHe ? (
