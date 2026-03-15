@@ -724,14 +724,12 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               alt=""
               aria-hidden="true"
               className="illus-desktop"
-              width={200}
-              height={200}
               loading="lazy"
               decoding="async"
               style={{
                 width: "clamp(100px, 14vw, 200px)",
-                height: "clamp(100px, 14vw, 200px)",
-                objectFit: "contain",
+                height: "auto",
+                display: "block",
                 pointerEvents: "none",
               }}
             />
@@ -810,14 +808,12 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               alt=""
               aria-hidden="true"
               className="illus-desktop"
-              width={200}
-              height={200}
               loading="lazy"
               decoding="async"
               style={{
                 width: "clamp(100px, 14vw, 200px)",
-                height: "clamp(100px, 14vw, 200px)",
-                objectFit: "contain",
+                height: "auto",
+                display: "block",
                 pointerEvents: "none",
               }}
             />
