@@ -1122,36 +1122,7 @@ function TabBar({
         overflow: "hidden",
       }}
     >
-      {/* Mobile scroll hint — compact row above tabs */}
-      {isMobile && showScrollHint && (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: isHe ? "flex-start" : "flex-end",
-            padding: "3px 1rem 2px",
-            pointerEvents: "none",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
-            {/* Hebrew: arrow LEFT of word, pointing left. English: word then arrow pointing right */}
-            {isHe && (
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2.5" strokeLinecap="round"
-                style={{ transform: "scaleX(-1)" }}>
-                <polyline points="9,18 15,12 9,6"/>
-              </svg>
-            )}
-            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "9px", letterSpacing: "0.1em", color: GOLD, textTransform: "uppercase" }}>
-              {isHe ? "עוד" : "more"}
-            </span>
-            {!isHe && (
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2.5" strokeLinecap="round">
-                <polyline points="9,18 15,12 9,6"/>
-              </svg>
-            )}
-          </div>
-        </div>
-      )}
+
 
       <div
         ref={scrollRef}
