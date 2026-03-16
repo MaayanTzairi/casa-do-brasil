@@ -1,10 +1,8 @@
 /**
  * CASA DO BRASIL — FAQ Page
- * Design: Clean white page, no hero image, no background
- * Typography: Frank Ruhl Libre (headings) + Heebo (body)
- * Colors: Bordeaux #3E0409, Gold #B9A167, off-white #FAFAF8
- * Accordion: smooth CSS height transition, gold underline on open
- * Bilingual: Hebrew RTL (all elements mirrored) / English LTR
+ * Design: Clean white page, no hero image
+ * Hebrew: full RTL — number on right, question text right-aligned, answer right-aligned
+ * Navbar: always white (forceScrolled) since page has white background
  */
 
 import { useState } from "react";
@@ -123,61 +121,60 @@ function AccordionItem({
 }) {
   return (
     <div style={{ borderBottom: `1px solid ${GOLD_MID}` }}>
+      {/*
+        Hebrew layout (RTL):
+          [שאלה טקסט .... 01] [chevron]
+        English layout (LTR):
+          [chevron] [01 question text ....]
+        We use dir="rtl"/"ltr" on the button so the browser handles flow naturally.
+      */}
       <button
         onClick={onToggle}
         aria-expanded={isOpen}
+        dir={isHe ? "rtl" : "ltr"}
         style={{
           width: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          gap: "1.5rem",
+          gap: "1.2rem",
           padding: "1.5rem 0",
           background: "none",
           border: "none",
           cursor: "pointer",
-          // RTL: reverse the row so number+text is on right, chevron on left
-          flexDirection: isHe ? "row-reverse" : "row",
-          textAlign: isHe ? "right" : "left",
         }}
       >
-        {/* Number + Question text */}
-        <div style={{
-          display: "flex",
-          alignItems: "flex-start",
-          gap: "1rem",
-          flex: 1,
-          // RTL: number appears after text visually (on the right side)
-          flexDirection: isHe ? "row-reverse" : "row",
+        {/* In RTL the browser places first child on the right automatically */}
+        {/* Number */}
+        <span style={{
+          fontFamily: "'Frank Ruhl Libre', serif",
+          fontWeight: 300,
+          fontSize: "0.75rem",
+          color: GOLD,
+          letterSpacing: "0.1em",
+          lineHeight: 1.8,
+          flexShrink: 0,
+          minWidth: "1.8rem",
+          textAlign: "center",
         }}>
-          <span style={{
-            fontFamily: "'Frank Ruhl Libre', serif",
-            fontWeight: 300,
-            fontSize: "0.75rem",
-            color: GOLD,
-            letterSpacing: "0.1em",
-            lineHeight: 1.8,
-            flexShrink: 0,
-            minWidth: "1.8rem",
-            textAlign: "center",
-          }}>
-            {String(index + 1).padStart(2, "0")}
-          </span>
-          <span style={{
-            fontFamily: isHe ? "'Heebo', sans-serif" : "'Frank Ruhl Libre', serif",
-            fontWeight: isHe ? 600 : 500,
-            fontSize: isHe ? "1.05rem" : "1.1rem",
-            color: isOpen ? BORDEAUX : "rgb(30,10,12)",
-            lineHeight: 1.5,
-            transition: "color 0.25s ease",
-            textAlign: isHe ? "right" : "left",
-            direction: isHe ? "rtl" : "ltr",
-          }}>
-            {item.q}
-          </span>
-        </div>
+          {String(index + 1).padStart(2, "0")}
+        </span>
 
-        {/* Chevron */}
+        {/* Question text — fills remaining space */}
+        <span style={{
+          fontFamily: isHe ? "'Heebo', sans-serif" : "'Frank Ruhl Libre', serif",
+          fontWeight: isHe ? 600 : 500,
+          fontSize: isHe ? "1.05rem" : "1.1rem",
+          color: isOpen ? BORDEAUX : "rgb(30,10,12)",
+          lineHeight: 1.5,
+          transition: "color 0.25s ease",
+          flex: 1,
+          textAlign: isHe ? "right" : "left",
+        }}>
+          {item.q}
+        </span>
+
+        {/* Chevron — in RTL this ends up on the left side (end of row) */}
         <svg
           width="18" height="18" viewBox="0 0 24 24"
           fill="none"
@@ -200,21 +197,21 @@ function AccordionItem({
         overflow: "hidden",
         transition: "max-height 0.4s cubic-bezier(0.4,0,0.2,1)",
       }}>
-        <div style={{
-          paddingBottom: "1.6rem",
-          // RTL: indent from the right side
-          paddingRight: isHe ? "2.8rem" : "0",
-          paddingLeft: isHe ? "0" : "2.8rem",
-          direction: isHe ? "rtl" : "ltr",
-        }}>
-          {/* Gold accent line — right-aligned in HE */}
+        <div
+          dir={isHe ? "rtl" : "ltr"}
+          style={{
+            paddingBottom: "1.6rem",
+            // Indent to align under the question text (past the number)
+            paddingRight: isHe ? "2.8rem" : "0",
+            paddingLeft: isHe ? "0" : "2.8rem",
+          }}
+        >
+          {/* Gold accent bar */}
           <div style={{
             width: "28px",
             height: "2px",
             background: GOLD,
             marginBottom: "0.85rem",
-            marginRight: isHe ? "0" : "auto",
-            marginLeft: isHe ? "auto" : "0",
           }} />
           <p style={{
             fontFamily: "'Heebo', sans-serif",
@@ -242,7 +239,9 @@ export default function FAQPage() {
 
   return (
     <>
-      <Navbar />
+      {/* forceScrolled: always show white navbar — page has white background */}
+      <Navbar forceScrolled={true} />
+
       <main
         dir={isHe ? "rtl" : "ltr"}
         style={{
@@ -259,19 +258,16 @@ export default function FAQPage() {
         }}>
 
           {/* ── Page Header ── */}
-          <header style={{
-            marginBottom: "3.5rem",
-            textAlign: isHe ? "right" : "left",
-            direction: isHe ? "rtl" : "ltr",
-          }}>
-            {/* Gold rule — right in HE, left in EN */}
+          <header
+            dir={isHe ? "rtl" : "ltr"}
+            style={{ marginBottom: "3.5rem" }}
+          >
+            {/* Gold rule — aligns to start (right in RTL, left in LTR) */}
             <div style={{
               width: "40px",
               height: "2px",
               background: GOLD,
               marginBottom: "1.4rem",
-              marginRight: isHe ? "0" : "auto",
-              marginLeft: isHe ? "auto" : "0",
             }} />
 
             {/* Eyebrow */}
@@ -283,7 +279,6 @@ export default function FAQPage() {
               textTransform: "uppercase",
               color: GOLD,
               margin: "0 0 0.8rem",
-              textAlign: isHe ? "right" : "left",
             }}>
               {isHe ? "כל מה שרצית לדעת" : "Everything you need to know"}
             </p>
@@ -296,7 +291,6 @@ export default function FAQPage() {
               color: BORDEAUX,
               margin: "0 0 1rem",
               lineHeight: 1.15,
-              textAlign: isHe ? "right" : "left",
             }}>
               {isHe ? "שאלות ותשובות" : "FAQ"}
             </h1>
@@ -310,10 +304,6 @@ export default function FAQPage() {
               margin: 0,
               lineHeight: 1.7,
               maxWidth: "520px",
-              textAlign: isHe ? "right" : "left",
-              // In HE: push to right edge
-              marginRight: isHe ? "0" : "auto",
-              marginLeft: isHe ? "auto" : "0",
             }}>
               {isHe
                 ? "מצאו תשובות לשאלות הנפוצות ביותר על קאסה דו ברזיל — שעות, הזמנות, תפריט ועוד."
@@ -326,7 +316,6 @@ export default function FAQPage() {
             background: "#fff",
             boxShadow: "0 2px 32px rgba(62,4,9,0.06)",
             padding: "0 clamp(1.2rem, 4vw, 2.5rem)",
-            // Top accent: right side in HE, left side in EN via border
             borderTop: `3px solid ${BORDEAUX}`,
           }}>
             {faqs.map((item, i) => (
@@ -342,22 +331,21 @@ export default function FAQPage() {
           </section>
 
           {/* ── CTA footer block ── */}
-          <div style={{
-            marginTop: "3rem",
-            padding: "2rem clamp(1.2rem, 4vw, 2.5rem)",
-            background: GOLD_LIGHT,
-            // Accent bar: right in HE, left in EN
-            borderRight: isHe ? `3px solid ${GOLD}` : "none",
-            borderLeft: isHe ? "none" : `3px solid ${GOLD}`,
-            direction: isHe ? "rtl" : "ltr",
-          }}>
+          <div
+            dir={isHe ? "rtl" : "ltr"}
+            style={{
+              marginTop: "3rem",
+              padding: "2rem clamp(1.2rem, 4vw, 2.5rem)",
+              background: GOLD_LIGHT,
+              borderInlineStart: `3px solid ${GOLD}`,
+            }}
+          >
             <p style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 600,
               fontSize: "0.95rem",
               color: BORDEAUX,
               margin: "0 0 0.4rem",
-              textAlign: isHe ? "right" : "left",
             }}>
               {isHe ? "לא מצאתם תשובה?" : "Didn't find your answer?"}
             </p>
@@ -367,7 +355,6 @@ export default function FAQPage() {
               fontSize: "0.88rem",
               color: "rgba(62,4,9,0.7)",
               margin: "0 0 1rem",
-              textAlign: isHe ? "right" : "left",
             }}>
               {isHe
                 ? "צרו קשר ישירות בטלפון 08-6323032 ונשמח לעזור."
@@ -397,6 +384,7 @@ export default function FAQPage() {
 
         </div>
       </main>
+
       <Footer />
     </>
   );

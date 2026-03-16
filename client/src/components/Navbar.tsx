@@ -158,8 +158,9 @@ function ReservationsBtn({ scrolled, label }: { scrolled: boolean; label: string
   );
 }
 
-export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+export default function Navbar({ forceScrolled }: { forceScrolled?: boolean } = {}) {
+  const [scrolledState, setScrolledState] = useState(false);
+  const scrolled = forceScrolled ?? scrolledState;
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const { lang } = useLanguage();
@@ -169,7 +170,7 @@ export default function Navbar() {
   const allLinks = isHe ? ALL_LINKS_HE : ALL_LINKS_EN;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolledState(window.scrollY > 60);
     const onResize = () => setIsMobile(window.innerWidth < 900);
     onScroll(); onResize();
     window.addEventListener("scroll", onScroll, { passive: true });
