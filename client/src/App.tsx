@@ -3,6 +3,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { lazy, Suspense } from "react";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import StickyReservationBtn from "./components/StickyReservationBtn";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
@@ -63,6 +64,7 @@ function App() {
             <TooltipProvider>
               <Toaster />
               <Router />
+              <StickyReservationBtn />
             </TooltipProvider>
           </ThemeProvider>
       </LanguageProvider>
