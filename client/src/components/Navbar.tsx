@@ -278,19 +278,33 @@ export default function Navbar() {
              Always LTR so logo stays centered via absolute positioning.
           */
           <>
-            {/* Left column: nav links */}
+            {/*
+              EN (LTR): left=nav links | center=logo | right=reservations+lang
+              HE (RTL): left=reservations+lang | center=logo | right=nav links
+              The nav is always dir=ltr so we manually mirror for Hebrew.
+            */}
+
+            {/* Left column */}
             <div style={{
               display: "flex", alignItems: "center",
               gap: "clamp(1.2rem, 2vw, 2.4rem)",
               flex: 1,
               justifyContent: "flex-start",
             }}>
-              {/* EN: show links as-is | HE: show reversed so rightmost is closest to logo */}
-              {(isHe ? [...navLinks].reverse() : navLinks).map((link) => (
-                <NavLink key={link.label} href={link.href} color={linkColor} scrolled={scrolled} isHe={isHe}>
-                  {link.label}
-                </NavLink>
-              ))}
+              {isHe ? (
+                /* HE left: הזמנת מקום + lang */
+                <>
+                  <ReservationsBtn scrolled={scrolled} label="הזמנת מקום" />
+                  <LangToggle scrolled={scrolled} />
+                </>
+              ) : (
+                /* EN left: MENU STORY GALLERY CONTACT */
+                navLinks.map((link) => (
+                  <NavLink key={link.label} href={link.href} color={linkColor} scrolled={scrolled} isHe={isHe}>
+                    {link.label}
+                  </NavLink>
+                ))
+              )}
             </div>
 
             {/* Center: Logo (absolute so it's truly centered) */}
@@ -307,18 +321,27 @@ export default function Navbar() {
               </div>
             </a>
 
-            {/* Right column: Reservations CTA + Lang toggle */}
+            {/* Right column */}
             <div style={{
               display: "flex", alignItems: "center",
               gap: "clamp(1rem, 1.8vw, 2rem)",
               flex: 1,
               justifyContent: "flex-end",
             }}>
-              <ReservationsBtn
-                scrolled={scrolled}
-                label={isHe ? "הזמנת מקום" : "RESERVATIONS"}
-              />
-              <LangToggle scrolled={scrolled} />
+              {isHe ? (
+                /* HE right: צור קשר · גלריה · סיפור · תפריט (RTL visual order) */
+                [...navLinks].reverse().map((link) => (
+                  <NavLink key={link.label} href={link.href} color={linkColor} scrolled={scrolled} isHe={isHe}>
+                    {link.label}
+                  </NavLink>
+                ))
+              ) : (
+                /* EN right: RESERVATIONS + lang */
+                <>
+                  <ReservationsBtn scrolled={scrolled} label="RESERVATIONS" />
+                  <LangToggle scrolled={scrolled} />
+                </>
+              )}
             </div>
           </>
         )}
