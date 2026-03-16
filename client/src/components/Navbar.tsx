@@ -1,9 +1,10 @@
 /**
  * CASA DO BRASIL — Sticky Navbar
- * Bilingual EN/HE with language toggle icon
- * - On Hero: transparent, white links
- * - After scroll: white bg + blur, bordeaux links
- * - No framer-motion — pure CSS transitions
+ * Desktop 3-column layout:
+ *   EN (LTR): [MENU · STORY · GALLERY · CONTACT] | LOGO | [RESERVATIONS · 🌐]
+ *   HE (RTL): [תפריט · סיפור · גלריה · צור קשר] | LOGO | [הזמנת מקום · 🌐]
+ * Mobile: [RESERVE] | LOGO (center) | [🌐 · ☰]
+ * No framer-motion — pure CSS transitions
  */
 
 import { useEffect, useState } from "react";
@@ -29,31 +30,36 @@ const LOGO_URL =
 
 const GOLD = "#B9A167";
 const BORDEAUX = "rgb(62,4,9)";
+const RESERVATIONS_URL =
+  "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73";
 
-const LINKS_EN = {
-  left: [
-    { label: "MENU",       href: "/menu" },
-    { label: "OUR STORY", href: "/story" },
-    { label: "GALLERY",    href: "/gallery" },
-  ],
-  right: [
-    { label: "RESERVATIONS", href: "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73", cta: true },
-    { label: "CONTACT",      href: "#contact" },
-  ],
-};
+// EN: left nav links (no RESERVATIONS, no CONTACT here — they go right)
+const NAV_LINKS_EN = [
+  { label: "MENU",    href: "/menu" },
+  { label: "STORY",   href: "/story" },
+  { label: "GALLERY", href: "/gallery" },
+  { label: "CONTACT", href: "#contact" },
+];
 
-const LINKS_HE = {
-  left: [
-    { label: "תפריט",    href: "/menu" },
-    { label: "הסיפור שלנו", href: "/story" },
-    { label: "גלריה",    href: "/gallery" },
-  ],
-  right: [
-    { label: "הזמנת מקום", href: "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73", cta: true },
-    { label: "צור קשר",   href: "#contact" },
-  ],
-};
+// HE: right nav links (mirrored)
+const NAV_LINKS_HE = [
+  { label: "תפריט",   href: "/menu" },
+  { label: "סיפור",   href: "/story" },
+  { label: "גלריה",   href: "/gallery" },
+  { label: "צור קשר", href: "#contact" },
+];
 
+// All links for mobile overlay
+const ALL_LINKS_EN = [
+  ...NAV_LINKS_EN,
+  { label: "RESERVATIONS", href: RESERVATIONS_URL },
+];
+const ALL_LINKS_HE = [
+  ...NAV_LINKS_HE,
+  { label: "הזמנת מקום", href: RESERVATIONS_URL },
+];
+
+/* ─── Logo Badge ─── */
 function LogoBadge({ size, scrolled }: { size: number; scrolled: boolean }) {
   const pad = size * 0.1;
   return (
@@ -76,6 +82,7 @@ function LogoBadge({ size, scrolled }: { size: number; scrolled: boolean }) {
   );
 }
 
+/* ─── Language Toggle ─── */
 function LangToggle({ scrolled }: { scrolled: boolean }) {
   const { lang, setLang } = useLanguage();
   const isHe = lang === "he";
@@ -115,14 +122,50 @@ function LangToggle({ scrolled }: { scrolled: boolean }) {
   );
 }
 
+/* ─── Reservations CTA button ─── */
+function ReservationsBtn({ scrolled, label }: { scrolled: boolean; label: string }) {
+  return (
+    <a
+      href={RESERVATIONS_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+        fontSize: "0.65rem", letterSpacing: "0.18em",
+        textTransform: "uppercase", textDecoration: "none",
+        color: scrolled ? "#fff" : GOLD,
+        background: scrolled ? BORDEAUX : "transparent",
+        border: `1.5px solid ${scrolled ? BORDEAUX : GOLD}`,
+        padding: "0.5rem 1.2rem",
+        transition: "all 0.3s ease",
+        whiteSpace: "nowrap",
+        flexShrink: 0,
+      }}
+      onMouseEnter={e => {
+        const el = e.currentTarget as HTMLAnchorElement;
+        el.style.background = GOLD; el.style.borderColor = GOLD; el.style.color = "#fff";
+      }}
+      onMouseLeave={e => {
+        const el = e.currentTarget as HTMLAnchorElement;
+        el.style.background = scrolled ? BORDEAUX : "transparent";
+        el.style.borderColor = scrolled ? BORDEAUX : GOLD;
+        el.style.color = scrolled ? "#fff" : GOLD;
+      }}
+    >
+      {label}
+    </a>
+  );
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const { lang } = useLanguage();
   const isHe = lang === "he";
-  const links = isHe ? LINKS_HE : LINKS_EN;
-  const ALL_LINKS = [...links.left, ...links.right];
+
+  const navLinks = isHe ? NAV_LINKS_HE : NAV_LINKS_EN;
+  const allLinks = isHe ? ALL_LINKS_HE : ALL_LINKS_EN;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -167,10 +210,14 @@ export default function Navbar() {
         }}
       >
         {isMobile ? (
+          /* ── MOBILE LAYOUT ──
+             [RESERVE] | LOGO (center) | [🌐 ☰]
+          */
           <>
+            {/* Left: Reserve button */}
             <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
               <a
-                href="https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73"
+                href={RESERVATIONS_URL}
                 target="_blank" rel="noopener noreferrer"
                 style={{
                   fontFamily: "'Heebo', sans-serif", fontWeight: 700,
@@ -187,6 +234,7 @@ export default function Navbar() {
               </a>
             </div>
 
+            {/* Center: Logo */}
             <a href="/" style={{
               position: "absolute", left: "50%", transform: "translateX(-50%)",
               display: "flex", alignItems: "center", zIndex: 1,
@@ -194,6 +242,7 @@ export default function Navbar() {
               <LogoBadge size={44} scrolled={scrolled} />
             </a>
 
+            {/* Right: Lang toggle + Hamburger */}
             <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", justifyContent: "flex-end", flex: 1 }}>
               <LangToggle scrolled={scrolled} />
               <button
@@ -223,20 +272,34 @@ export default function Navbar() {
             </div>
           </>
         ) : (
+          /* ── DESKTOP LAYOUT ──
+             EN: [MENU STORY GALLERY CONTACT] | LOGO | [RESERVATIONS 🌐]
+             HE: [תפריט סיפור גלריה צור קשר] | LOGO | [הזמנת מקום 🌐]
+             Always LTR so logo stays centered via absolute positioning.
+          */
           <>
-            <div style={{ display: "flex", alignItems: "center", gap: "clamp(1.4rem, 2.2vw, 2.8rem)" }}>
-              {links.left.map((link) => (
+            {/* Left column: nav links */}
+            <div style={{
+              display: "flex", alignItems: "center",
+              gap: "clamp(1.2rem, 2vw, 2.4rem)",
+              flex: 1,
+              justifyContent: "flex-start",
+            }}>
+              {/* EN: show links as-is | HE: show reversed so rightmost is closest to logo */}
+              {(isHe ? [...navLinks].reverse() : navLinks).map((link) => (
                 <NavLink key={link.label} href={link.href} color={linkColor} scrolled={scrolled} isHe={isHe}>
                   {link.label}
                 </NavLink>
               ))}
             </div>
 
+            {/* Center: Logo (absolute so it's truly centered) */}
             <a href="/" style={{
               position: "absolute", left: "50%", transform: "translateX(-50%)",
               display: "flex", alignItems: "center",
             }}>
-              <div style={{ transition: "transform 0.25s ease" }}
+              <div
+                style={{ transition: "transform 0.25s ease" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.transform = "scale(1.06)"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.transform = "scale(1)"; }}
               >
@@ -244,51 +307,24 @@ export default function Navbar() {
               </div>
             </a>
 
-            <div style={{ display: "flex", alignItems: "center", gap: "clamp(1.2rem, 2vw, 2.4rem)" }}>
-              {links.right.map((link) =>
-                link.cta ? (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target={link.href.startsWith('http') ? '_blank' : undefined}
-                    rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    style={{
-                      fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                      fontSize: "0.65rem", letterSpacing: isHe ? "0.06em" : "0.2em",
-                      textTransform: "uppercase", textDecoration: "none",
-                      color: scrolled ? "#fff" : GOLD,
-                      background: scrolled ? BORDEAUX : "transparent",
-                      border: `1.5px solid ${scrolled ? BORDEAUX : GOLD}`,
-                      padding: "0.5rem 1.2rem",
-                      transition: "all 0.3s ease",
-                      whiteSpace: "nowrap",
-                    }}
-                    onMouseEnter={e => {
-                      const el = e.currentTarget as HTMLAnchorElement;
-                      el.style.background = GOLD; el.style.borderColor = GOLD; el.style.color = "#fff";
-                    }}
-                    onMouseLeave={e => {
-                      const el = e.currentTarget as HTMLAnchorElement;
-                      el.style.background = scrolled ? BORDEAUX : "transparent";
-                      el.style.borderColor = scrolled ? BORDEAUX : GOLD;
-                      el.style.color = scrolled ? "#fff" : GOLD;
-                    }}
-                  >
-                    {link.label}
-                  </a>
-                ) : (
-                  <NavLink key={link.label} href={link.href} color={linkColor} scrolled={scrolled} isHe={isHe}>
-                    {link.label}
-                  </NavLink>
-                )
-              )}
+            {/* Right column: Reservations CTA + Lang toggle */}
+            <div style={{
+              display: "flex", alignItems: "center",
+              gap: "clamp(1rem, 1.8vw, 2rem)",
+              flex: 1,
+              justifyContent: "flex-end",
+            }}>
+              <ReservationsBtn
+                scrolled={scrolled}
+                label={isHe ? "הזמנת מקום" : "RESERVATIONS"}
+              />
               <LangToggle scrolled={scrolled} />
             </div>
           </>
         )}
       </nav>
 
-      {/* Mobile overlay — CSS transition */}
+      {/* Mobile overlay menu */}
       {isMobile && (
         <div
           dir={isHe ? "rtl" : "ltr"}
@@ -305,7 +341,7 @@ export default function Navbar() {
         >
           <div style={{ position: "absolute", top: "80px", left: "2rem", right: "2rem", height: "1px", background: "rgba(185,161,103,0.3)" }} />
 
-          {ALL_LINKS.map((link, i) => (
+          {allLinks.map((link, i) => (
             <a
               key={link.label}
               href={link.href}
