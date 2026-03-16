@@ -53,15 +53,16 @@ export default function HeroSection() {
       style={{ height: "100svh", minHeight: "600px" }}
     >
       {/* ── Background Image with Ken Burns (CSS) + Parallax ── */}
+      {/* NOTE: img must NOT have aria-hidden and must be visible for Lighthouse LCP detection */}
       <div ref={imgWrapRef} className="absolute inset-0 w-full h-full" style={{ willChange: "transform" }}>
         <img
           src={HERO_IMAGE}
           srcSet={`${HERO_IMAGE_SM} 900w, ${HERO_IMAGE} 1920w`}
           sizes="100vw"
-          alt=""
-          aria-hidden="true"
+          alt="Casa do Brasil — Brazilian Grill and Churrascaria in Eilat"
           fetchPriority="high"
-          decoding="sync"
+          loading="eager"
+          decoding="async"
           width={1920}
           height={1080}
           style={{
@@ -72,7 +73,6 @@ export default function HeroSection() {
             objectFit: "cover",
             objectPosition: "center 30%",
             animation: "kenBurns 28s ease-in-out infinite alternate",
-            willChange: "transform",
           }}
         />
       </div>
