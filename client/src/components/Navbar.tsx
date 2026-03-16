@@ -26,7 +26,7 @@ function navigateToHash(href: string, e: React.MouseEvent) {
 }
 
 const LOGO_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-v2_v2_36399d31.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/casa-logo-v2_478ec750.webp";
 
 const GOLD = "#B9A167";
 const BORDEAUX = "rgb(62,4,9)";
@@ -61,24 +61,22 @@ const ALL_LINKS_HE = [
 
 /* ─── Logo Badge ─── */
 function LogoBadge({ size, scrolled }: { size: number; scrolled: boolean }) {
-  const pad = size * 0.1;
   return (
-    <div style={{
-      display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-      background: scrolled ? "transparent" : "rgba(255,255,255,0.92)",
-      border: `1px solid ${scrolled ? "rgba(185,161,103,0.45)" : "rgba(185,161,103,0.6)"}`,
-      borderRadius: "50%",
-      width: size, height: size,
-      backdropFilter: scrolled ? "none" : "blur(4px)",
-      WebkitBackdropFilter: scrolled ? "none" : "blur(4px)",
-      boxShadow: scrolled ? "none" : "0 2px 16px rgba(0,0,0,0.18)",
-      transition: "background 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease",
-    }}>
-      <img src={LOGO_URL} alt="Casa do Brasil" width={80} height={80} style={{
-        width: size - pad * 2, height: size - pad * 2,
-        objectFit: "contain", display: "block",
-      }} />
-    </div>
+    <img
+      src={LOGO_URL}
+      alt="Casa do Brasil"
+      width={size}
+      height={Math.round(size * 1.11)}
+      style={{
+        width: size,
+        height: "auto",
+        objectFit: "contain",
+        display: "block",
+        flexShrink: 0,
+        filter: scrolled ? "none" : "drop-shadow(0 2px 8px rgba(0,0,0,0.45))",
+        transition: "filter 0.4s ease",
+      }}
+    />
   );
 }
 

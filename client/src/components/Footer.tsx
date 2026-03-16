@@ -13,7 +13,7 @@ const GOLD_LIGHT = "rgba(185,161,103,0.35)";
 const BORDEAUX = "rgb(22,1,3)";
 
 const LOGO_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-v2_v2_36399d31.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/casa-logo-v2_478ec750.webp";
 
 export default function Footer() {
   const { isHe } = useLanguage();
@@ -59,16 +59,7 @@ export default function Footer() {
 
           {/* Logo */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.8rem" }}>
-            <div style={{
-              width: "64px", height: "64px",
-              borderRadius: "50%",
-              border: `1px solid ${GOLD_LIGHT}`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              padding: "7px",
-              background: "rgba(255,255,255,0.92)",
-            }}>
-              <img src={LOGO_URL} alt="Casa do Brasil" width={80} height={80} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-            </div>
+            <img src={LOGO_URL} alt="Casa do Brasil" width={64} height={71} style={{ width: "64px", height: "auto", objectFit: "contain", display: "block" }} />
             <div style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 900,
@@ -215,16 +206,7 @@ export default function Footer() {
 
           {/* Center — Logo */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
-            <div style={{
-              width: "72px", height: "72px",
-              borderRadius: "50%",
-              border: `1px solid ${GOLD_LIGHT}`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              padding: "8px",
-              background: "rgba(255,255,255,0.92)",
-            }}>
-              <img src={LOGO_URL} alt="Casa do Brasil" width={80} height={80} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-            </div>
+            <img src={LOGO_URL} alt="Casa do Brasil" width={72} height={80} style={{ width: "72px", height: "auto", objectFit: "contain", display: "block" }} />
             <div style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 900,
