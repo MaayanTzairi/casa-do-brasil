@@ -127,6 +127,7 @@ function ReservationsBtn({ scrolled, label }: { scrolled: boolean; label: string
       href={RESERVATIONS_URL}
       target="_blank"
       rel="noopener noreferrer"
+      className="reservations-btn"
       style={{
         fontFamily: "'Heebo', sans-serif", fontWeight: 700,
         fontSize: "0.78rem", letterSpacing: "0.14em",
