@@ -232,7 +232,7 @@ export default function Navbar({ forceScrolled }: { forceScrolled?: boolean } = 
                   whiteSpace: "nowrap", transition: "all 0.3s ease",
                 }}
               >
-                {isHe ? "הזמנה" : "RESERVE"}
+                {isHe ? "הזמנת מקום" : "RESERVATION"}
               </a>
             </div>
 
