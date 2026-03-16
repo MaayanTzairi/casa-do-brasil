@@ -38,6 +38,7 @@ const NAV_LINKS_EN = [
   { label: "MENU",    href: "/menu" },
   { label: "STORY",   href: "/story" },
   { label: "GALLERY", href: "/gallery" },
+  { label: "FAQ",     href: "/faq" },
   { label: "CONTACT", href: "#contact" },
 ];
 
@@ -46,6 +47,7 @@ const NAV_LINKS_HE = [
   { label: "תפריט",   href: "/menu" },
   { label: "סיפור",   href: "/story" },
   { label: "גלריה",   href: "/gallery" },
+  { label: "שאלות",   href: "/faq" },
   { label: "צור קשר", href: "#contact" },
 ];
 
