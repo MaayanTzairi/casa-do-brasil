@@ -1,10 +1,9 @@
 /**
  * StickyReservationBtn
- * A circular floating button with the bull logo and "RESERVATION" / "הזמן מקום" text.
- * - Appears only after the hero section (section 2 enters viewport)
- * - EN: bottom-right corner
- * - HE: bottom-left corner
- * - Smooth scale-in / scale-out animation
+ * Always-open pill button: bull logo + "RESERVATION" / "הזמן מקום"
+ * - Appears after scrolling past the hero (window.scrollY > 80vh)
+ * - EN: bottom-right | HE: bottom-left
+ * - Smooth scale-in animation on entry
  */
 
 import { useEffect, useState } from "react";
@@ -25,109 +24,82 @@ export default function StickyReservationBtn() {
   const [visible, setVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
 
-  // Show button once the #experience section (section 2) has been scrolled past
   useEffect(() => {
-    const observe = () => {
-      const target = document.getElementById("experience");
-      if (!target) return;
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          // visible once section 2 has entered or passed the viewport
-          setVisible(entry.isIntersecting || entry.boundingClientRect.top < 0);
-        },
-        { threshold: 0.1 }
-      );
-      observer.observe(target);
-      return observer;
+    const threshold = window.innerHeight * 0.75;
+    const onScroll = () => {
+      setVisible(window.scrollY > threshold);
     };
-
-    // Retry after a short delay in case the DOM isn't ready yet (lazy-loaded pages)
-    let obs = observe();
-    if (!obs) {
-      const t = setTimeout(() => { obs = observe(); }, 600);
-      return () => clearTimeout(t);
-    }
-    return () => obs?.disconnect();
+    onScroll(); // check on mount
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const side = isHe ? { left: "1.5rem", right: "auto" } : { right: "1.5rem", left: "auto" };
 
   return (
     <a
-        href={RESERVATIONS_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={isHe ? "הזמן מקום" : "Make a Reservation"}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
+      href={RESERVATIONS_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={isHe ? "הזמן מקום" : "Make a Reservation"}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        position: "fixed",
+        bottom: "2rem",
+        ...(isHe ? { left: "1.5rem", right: "auto" } : { right: "1.5rem", left: "auto" }),
+        zIndex: 999,
+        display: "flex",
+        alignItems: "center",
+        gap: "0.55rem",
+        padding: "0.55rem 1.1rem 0.55rem 0.65rem",
+        borderRadius: "999px",
+        background: hovered ? GOLD : BORDEAUX,
+        border: `2px solid ${GOLD}`,
+        textDecoration: "none",
+        cursor: "pointer",
+        boxShadow: hovered
+          ? `0 8px 32px rgba(185,161,103,0.5), 0 2px 8px rgba(62,4,9,0.3)`
+          : `0 4px 24px rgba(62,4,9,0.45), 0 1px 6px rgba(0,0,0,0.25)`,
+        transform: visible ? "translateY(0) scale(1)" : "translateY(30px) scale(0.7)",
+        opacity: visible ? 1 : 0,
+        pointerEvents: visible ? "auto" : "none",
+        transition: [
+          "transform 0.5s cubic-bezier(0.34,1.56,0.64,1)",
+          "opacity 0.35s ease",
+          "background 0.3s ease",
+          "box-shadow 0.3s ease",
+        ].join(", "),
+        whiteSpace: "nowrap",
+        flexDirection: isHe ? "row-reverse" : "row",
+      }}
+    >
+      {/* Bull logo */}
+      <img
+        src={LOGO_URL}
+        alt=""
+        aria-hidden="true"
         style={{
-          position: "fixed",
-          bottom: "2rem",
-          ...side,
-          zIndex: 100,
-          width: hovered ? "130px" : "72px",
-          height: "72px",
-          borderRadius: "999px",
-          background: hovered ? GOLD : BORDEAUX,
-          border: `2px solid ${GOLD}`,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "0.5rem",
-          textDecoration: "none",
-          cursor: "pointer",
-          overflow: "hidden",
-          boxShadow: hovered
-            ? `0 8px 32px rgba(185,161,103,0.45), 0 2px 8px rgba(62,4,9,0.3)`
-            : `0 4px 20px rgba(62,4,9,0.4), 0 1px 4px rgba(0,0,0,0.2)`,
-          transform: visible ? "scale(1) translateY(0)" : "scale(0.6) translateY(20px)",
-          opacity: visible ? 1 : 0,
-          pointerEvents: visible ? "auto" : "none",
-          transition: [
-            "transform 0.45s cubic-bezier(0.34,1.56,0.64,1)",
-            "opacity 0.35s ease",
-            "width 0.35s cubic-bezier(0.25,0.46,0.45,0.94)",
-            "background 0.3s ease",
-            "box-shadow 0.3s ease",
-          ].join(", "),
+          width: "34px",
+          height: "34px",
+          objectFit: "contain",
           flexShrink: 0,
-          whiteSpace: "nowrap",
+          filter: "brightness(0) invert(1)",
+        }}
+      />
+
+      {/* Label — always visible */}
+      <span
+        style={{
+          fontFamily: "'Heebo', sans-serif",
+          fontWeight: 700,
+          fontSize: isHe ? "0.72rem" : "0.65rem",
+          letterSpacing: isHe ? "0.05em" : "0.13em",
+          textTransform: "uppercase",
+          color: "#fff",
+          lineHeight: 1.25,
         }}
       >
-        {/* Bull logo */}
-        <img
-          src={LOGO_URL}
-          alt=""
-          aria-hidden="true"
-          style={{
-            width: "38px",
-            height: "38px",
-            objectFit: "contain",
-            flexShrink: 0,
-            filter: "brightness(0) invert(1)",
-            transition: "filter 0.3s ease",
-          }}
-        />
-
-        {/* Label — slides in on hover */}
-        <span
-          style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 700,
-            fontSize: isHe ? "0.62rem" : "0.58rem",
-            letterSpacing: isHe ? "0.04em" : "0.12em",
-            textTransform: "uppercase",
-            color: "#fff",
-            lineHeight: 1.2,
-            maxWidth: hovered ? "60px" : "0px",
-            overflow: "hidden",
-            opacity: hovered ? 1 : 0,
-            transition: "max-width 0.35s ease, opacity 0.25s ease",
-            display: "block",
-          }}
-        >
-          {isHe ? "הזמן\nמקום" : "RESER-\nVATION"}
-        </span>
+        {isHe ? "הזמן מקום" : "RESERVATION"}
+      </span>
     </a>
   );
 }
