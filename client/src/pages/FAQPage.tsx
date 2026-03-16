@@ -4,16 +4,18 @@
  * Typography: Frank Ruhl Libre (headings) + Heebo (body)
  * Colors: Bordeaux #3E0409, Gold #B9A167, off-white #FAFAF8
  * Accordion: smooth CSS height transition, gold underline on open
- * Bilingual: Hebrew RTL / English LTR
+ * Bilingual: Hebrew RTL (all elements mirrored) / English LTR
  */
 
 import { useState } from "react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const BORDEAUX = "rgb(62,4,9)";
 const GOLD = "#B9A167";
-const GOLD_LIGHT = "rgba(185,161,103,0.18)";
 const GOLD_MID = "rgba(185,161,103,0.4)";
+const GOLD_LIGHT = "rgba(185,161,103,0.15)";
 
 interface FAQItem {
   q: string;
@@ -120,12 +122,7 @@ function AccordionItem({
   isHe: boolean;
 }) {
   return (
-    <div
-      style={{
-        borderBottom: `1px solid ${GOLD_MID}`,
-        transition: "background 0.2s ease",
-      }}
-    >
+    <div style={{ borderBottom: `1px solid ${GOLD_MID}` }}>
       <button
         onClick={onToggle}
         aria-expanded={isOpen}
@@ -139,17 +136,19 @@ function AccordionItem({
           background: "none",
           border: "none",
           cursor: "pointer",
-          textAlign: isHe ? "right" : "left",
+          // RTL: reverse the row so number+text is on right, chevron on left
           flexDirection: isHe ? "row-reverse" : "row",
+          textAlign: isHe ? "right" : "left",
         }}
       >
-        {/* Question number + text */}
+        {/* Number + Question text */}
         <div style={{
           display: "flex",
           alignItems: "flex-start",
           gap: "1rem",
-          flexDirection: isHe ? "row-reverse" : "row",
           flex: 1,
+          // RTL: number appears after text visually (on the right side)
+          flexDirection: isHe ? "row-reverse" : "row",
         }}>
           <span style={{
             fontFamily: "'Frank Ruhl Libre', serif",
@@ -159,7 +158,7 @@ function AccordionItem({
             letterSpacing: "0.1em",
             lineHeight: 1.8,
             flexShrink: 0,
-            minWidth: "1.5rem",
+            minWidth: "1.8rem",
             textAlign: "center",
           }}>
             {String(index + 1).padStart(2, "0")}
@@ -172,21 +171,19 @@ function AccordionItem({
             lineHeight: 1.5,
             transition: "color 0.25s ease",
             textAlign: isHe ? "right" : "left",
+            direction: isHe ? "rtl" : "ltr",
           }}>
             {item.q}
           </span>
         </div>
 
-        {/* Chevron icon */}
+        {/* Chevron */}
         <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
+          width="18" height="18" viewBox="0 0 24 24"
           fill="none"
-          stroke={isOpen ? GOLD : "rgba(62,4,9,0.4)"}
+          stroke={isOpen ? GOLD : "rgba(62,4,9,0.35)"}
           strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          strokeLinecap="round" strokeLinejoin="round"
           style={{
             flexShrink: 0,
             transition: "transform 0.35s ease, stroke 0.25s ease",
@@ -197,34 +194,34 @@ function AccordionItem({
         </svg>
       </button>
 
-      {/* Answer — CSS height transition via max-height */}
-      <div
-        style={{
-          maxHeight: isOpen ? "400px" : "0",
-          overflow: "hidden",
-          transition: "max-height 0.4s cubic-bezier(0.4,0,0.2,1)",
-        }}
-      >
+      {/* Answer */}
+      <div style={{
+        maxHeight: isOpen ? "500px" : "0",
+        overflow: "hidden",
+        transition: "max-height 0.4s cubic-bezier(0.4,0,0.2,1)",
+      }}>
         <div style={{
-          paddingBottom: "1.5rem",
-          paddingLeft: isHe ? "0" : "2.5rem",
-          paddingRight: isHe ? "2.5rem" : "0",
+          paddingBottom: "1.6rem",
+          // RTL: indent from the right side
+          paddingRight: isHe ? "2.8rem" : "0",
+          paddingLeft: isHe ? "0" : "2.8rem",
+          direction: isHe ? "rtl" : "ltr",
         }}>
-          {/* Gold accent line */}
+          {/* Gold accent line — right-aligned in HE */}
           <div style={{
             width: "28px",
             height: "2px",
             background: GOLD,
             marginBottom: "0.85rem",
-            marginLeft: isHe ? "auto" : "0",
             marginRight: isHe ? "0" : "auto",
+            marginLeft: isHe ? "auto" : "0",
           }} />
           <p style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 300,
             fontSize: "0.95rem",
             lineHeight: 1.85,
-            color: "rgba(40,10,12,0.78)",
+            color: "rgba(40,10,12,0.75)",
             margin: 0,
             textAlign: isHe ? "right" : "left",
           }}>
@@ -244,151 +241,163 @@ export default function FAQPage() {
   const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
 
   return (
-    <main
-      dir={isHe ? "rtl" : "ltr"}
-      style={{
-        minHeight: "100vh",
-        background: "#FAFAF8",
-        paddingTop: "calc(70px + 4rem)",
-        paddingBottom: "6rem",
-      }}
-    >
-      <div style={{
-        maxWidth: "780px",
-        margin: "0 auto",
-        padding: "0 clamp(1.2rem, 5vw, 3rem)",
-      }}>
-
-        {/* ── Page Header ── */}
-        <header style={{ marginBottom: "3.5rem", textAlign: isHe ? "right" : "left" }}>
-          {/* Gold rule */}
-          <div style={{
-            width: "40px",
-            height: "2px",
-            background: GOLD,
-            marginBottom: "1.4rem",
-            marginLeft: isHe ? "auto" : "0",
-          }} />
-
-          {/* Eyebrow */}
-          <p style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 700,
-            fontSize: "0.7rem",
-            letterSpacing: "0.3em",
-            textTransform: "uppercase",
-            color: GOLD,
-            margin: "0 0 0.8rem",
-          }}>
-            {isHe ? "כל מה שרצית לדעת" : "Everything you need to know"}
-          </p>
-
-          {/* Main title */}
-          <h1 style={{
-            fontFamily: isHe ? "'Heebo', sans-serif" : "'Frank Ruhl Libre', serif",
-            fontWeight: isHe ? 800 : 700,
-            fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
-            color: BORDEAUX,
-            margin: "0 0 1rem",
-            lineHeight: 1.15,
-            letterSpacing: isHe ? "-0.01em" : "0.01em",
-          }}>
-            {isHe ? "שאלות ותשובות" : "FAQ"}
-          </h1>
-
-          {/* Subtitle */}
-          <p style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 300,
-            fontSize: "1rem",
-            color: "rgba(62,4,9,0.6)",
-            margin: 0,
-            lineHeight: 1.7,
-            maxWidth: "480px",
-            marginLeft: isHe ? "auto" : "0",
-          }}>
-            {isHe
-              ? "מצאו תשובות לשאלות הנפוצות ביותר על קאסה דו ברזיל — שעות, הזמנות, תפריט ועוד."
-              : "Find answers to the most common questions about Casa do Brasil — hours, reservations, menu, and more."}
-          </p>
-        </header>
-
-        {/* ── Accordion ── */}
-        <section style={{
-          background: "#fff",
-          borderRadius: "2px",
-          boxShadow: "0 2px 32px rgba(62,4,9,0.06)",
-          padding: "0 clamp(1.2rem, 4vw, 2.5rem)",
-          borderTop: `3px solid ${BORDEAUX}`,
-        }}>
-          {faqs.map((item, i) => (
-            <AccordionItem
-              key={i}
-              item={item}
-              index={i}
-              isOpen={openIndex === i}
-              onToggle={() => toggle(i)}
-              isHe={isHe}
-            />
-          ))}
-        </section>
-
-        {/* ── CTA footer ── */}
+    <>
+      <Navbar />
+      <main
+        dir={isHe ? "rtl" : "ltr"}
+        style={{
+          minHeight: "100vh",
+          background: "#FAFAF8",
+          paddingTop: "calc(70px + 4rem)",
+          paddingBottom: "6rem",
+        }}
+      >
         <div style={{
-          marginTop: "3rem",
-          padding: "2rem clamp(1.2rem, 4vw, 2.5rem)",
-          background: GOLD_LIGHT,
-          borderLeft: isHe ? "none" : `3px solid ${GOLD}`,
-          borderRight: isHe ? `3px solid ${GOLD}` : "none",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: isHe ? "flex-end" : "flex-start",
-          gap: "0.6rem",
+          maxWidth: "780px",
+          margin: "0 auto",
+          padding: "0 clamp(1.2rem, 5vw, 3rem)",
         }}>
-          <p style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 600,
-            fontSize: "0.95rem",
-            color: BORDEAUX,
-            margin: 0,
+
+          {/* ── Page Header ── */}
+          <header style={{
+            marginBottom: "3.5rem",
+            textAlign: isHe ? "right" : "left",
+            direction: isHe ? "rtl" : "ltr",
           }}>
-            {isHe ? "לא מצאתם תשובה?" : "Didn't find your answer?"}
-          </p>
-          <p style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 300,
-            fontSize: "0.88rem",
-            color: "rgba(62,4,9,0.7)",
-            margin: 0,
-          }}>
-            {isHe
-              ? "צרו קשר ישירות בטלפון 08-6323032 ונשמח לעזור."
-              : "Call us directly at 08-6323032 and we'll be happy to help."}
-          </p>
-          <a
-            href="tel:08-6323032"
-            style={{
-              marginTop: "0.4rem",
+            {/* Gold rule — right in HE, left in EN */}
+            <div style={{
+              width: "40px",
+              height: "2px",
+              background: GOLD,
+              marginBottom: "1.4rem",
+              marginRight: isHe ? "0" : "auto",
+              marginLeft: isHe ? "auto" : "0",
+            }} />
+
+            {/* Eyebrow */}
+            <p style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 700,
-              fontSize: "0.72rem",
-              letterSpacing: "0.18em",
+              fontSize: "0.7rem",
+              letterSpacing: "0.28em",
               textTransform: "uppercase",
-              textDecoration: "none",
-              color: "#fff",
-              background: BORDEAUX,
-              padding: "0.55rem 1.4rem",
-              transition: "background 0.25s ease",
-              display: "inline-block",
-            }}
-            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = GOLD; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = BORDEAUX; }}
-          >
-            {isHe ? "התקשרו אלינו" : "Call Us"}
-          </a>
-        </div>
+              color: GOLD,
+              margin: "0 0 0.8rem",
+              textAlign: isHe ? "right" : "left",
+            }}>
+              {isHe ? "כל מה שרצית לדעת" : "Everything you need to know"}
+            </p>
 
-      </div>
-    </main>
+            {/* Main title */}
+            <h1 style={{
+              fontFamily: isHe ? "'Heebo', sans-serif" : "'Frank Ruhl Libre', serif",
+              fontWeight: isHe ? 800 : 700,
+              fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
+              color: BORDEAUX,
+              margin: "0 0 1rem",
+              lineHeight: 1.15,
+              textAlign: isHe ? "right" : "left",
+            }}>
+              {isHe ? "שאלות ותשובות" : "FAQ"}
+            </h1>
+
+            {/* Subtitle */}
+            <p style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 300,
+              fontSize: "1rem",
+              color: "rgba(62,4,9,0.6)",
+              margin: 0,
+              lineHeight: 1.7,
+              maxWidth: "520px",
+              textAlign: isHe ? "right" : "left",
+              // In HE: push to right edge
+              marginRight: isHe ? "0" : "auto",
+              marginLeft: isHe ? "auto" : "0",
+            }}>
+              {isHe
+                ? "מצאו תשובות לשאלות הנפוצות ביותר על קאסה דו ברזיל — שעות, הזמנות, תפריט ועוד."
+                : "Find answers to the most common questions about Casa do Brasil — hours, reservations, menu, and more."}
+            </p>
+          </header>
+
+          {/* ── Accordion card ── */}
+          <section style={{
+            background: "#fff",
+            boxShadow: "0 2px 32px rgba(62,4,9,0.06)",
+            padding: "0 clamp(1.2rem, 4vw, 2.5rem)",
+            // Top accent: right side in HE, left side in EN via border
+            borderTop: `3px solid ${BORDEAUX}`,
+          }}>
+            {faqs.map((item, i) => (
+              <AccordionItem
+                key={i}
+                item={item}
+                index={i}
+                isOpen={openIndex === i}
+                onToggle={() => toggle(i)}
+                isHe={isHe}
+              />
+            ))}
+          </section>
+
+          {/* ── CTA footer block ── */}
+          <div style={{
+            marginTop: "3rem",
+            padding: "2rem clamp(1.2rem, 4vw, 2.5rem)",
+            background: GOLD_LIGHT,
+            // Accent bar: right in HE, left in EN
+            borderRight: isHe ? `3px solid ${GOLD}` : "none",
+            borderLeft: isHe ? "none" : `3px solid ${GOLD}`,
+            direction: isHe ? "rtl" : "ltr",
+          }}>
+            <p style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 600,
+              fontSize: "0.95rem",
+              color: BORDEAUX,
+              margin: "0 0 0.4rem",
+              textAlign: isHe ? "right" : "left",
+            }}>
+              {isHe ? "לא מצאתם תשובה?" : "Didn't find your answer?"}
+            </p>
+            <p style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 300,
+              fontSize: "0.88rem",
+              color: "rgba(62,4,9,0.7)",
+              margin: "0 0 1rem",
+              textAlign: isHe ? "right" : "left",
+            }}>
+              {isHe
+                ? "צרו קשר ישירות בטלפון 08-6323032 ונשמח לעזור."
+                : "Call us directly at 08-6323032 and we'll be happy to help."}
+            </p>
+            <a
+              href="tel:08-6323032"
+              style={{
+                display: "inline-block",
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 700,
+                fontSize: "0.72rem",
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                color: "#fff",
+                background: BORDEAUX,
+                padding: "0.55rem 1.4rem",
+                transition: "background 0.25s ease",
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = GOLD; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = BORDEAUX; }}
+            >
+              {isHe ? "התקשרו אלינו" : "Call Us"}
+            </a>
+          </div>
+
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 }
