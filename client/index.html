@@ -105,6 +105,25 @@
       crossorigin="anonymous" />
   </head>
   <body>
+    <!--
+      LCP BOOTSTRAP IMAGE
+      This <img> is rendered by the browser BEFORE JavaScript loads.
+      Lighthouse and Core Web Vitals will detect it as the Largest Contentful Paint.
+      Once React mounts, the #root div covers this element — no visual flash.
+      DO NOT remove: this is critical for LCP score.
+    -->
+    <img
+      id="lcp-hero"
+      src="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_eb2aef7a.webp"
+      srcset="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_eb2aef7a.webp 900w, https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main-Xjsh9uMVYH6frhxTU2HJ4c.webp 1920w"
+      sizes="100vw"
+      alt="Casa do Brasil — Brazilian Grill and Churrascaria in Eilat"
+      fetchpriority="high"
+      decoding="async"
+      width="1920"
+      height="1080"
+      style="position:fixed;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;z-index:-1;pointer-events:none;"
+    />
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script
