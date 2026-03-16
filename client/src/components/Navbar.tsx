@@ -8,6 +8,7 @@
  */
 
 import { useEffect, useState } from "react";
+import { useLocation } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 /** Navigate to a hash link, handling cross-page navigation */
@@ -76,7 +77,7 @@ function LogoBadge({ size, scrolled }: { size: number; scrolled: boolean }) {
         display: "block",
         flexShrink: 0,
         filter: scrolled ? "none" : "drop-shadow(0 2px 8px rgba(0,0,0,0.45))",
-        transition: "filter 0.4s ease",
+        transition: "width 0.45s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease",
       }}
     />
   );
@@ -165,6 +166,12 @@ export default function Navbar({ forceScrolled }: { forceScrolled?: boolean } = 
   const [isMobile, setIsMobile] = useState(false);
   const { lang } = useLanguage();
   const isHe = lang === "he";
+  const [location] = useLocation();
+  const isHome = location === "/";
+
+  // Logo sizes: large on homepage hero, normal after scroll or on other pages
+  const logoSizeDesktop = isHome && !scrolled ? 84 : 56;
+  const logoSizeMobile  = isHome && !scrolled ? 60 : 44;
 
   const navLinks = isHe ? NAV_LINKS_HE : NAV_LINKS_EN;
   const allLinks = isHe ? ALL_LINKS_HE : ALL_LINKS_EN;
@@ -241,7 +248,7 @@ export default function Navbar({ forceScrolled }: { forceScrolled?: boolean } = 
               position: "absolute", left: "50%", transform: "translateX(-50%)",
               display: "flex", alignItems: "center", zIndex: 1,
             }}>
-              <LogoBadge size={44} scrolled={scrolled} />
+              <LogoBadge size={logoSizeMobile} scrolled={scrolled} />
             </a>
 
             {/* Right: Lang toggle + Hamburger */}
@@ -319,7 +326,7 @@ export default function Navbar({ forceScrolled }: { forceScrolled?: boolean } = 
                 onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.transform = "scale(1.06)"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.transform = "scale(1)"; }}
               >
-                <LogoBadge size={56} scrolled={scrolled} />
+                <LogoBadge size={logoSizeDesktop} scrolled={scrolled} />
               </div>
             </a>
 
