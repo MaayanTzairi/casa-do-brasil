@@ -1,9 +1,9 @@
 /**
  * StickyReservationBtn
  * Always-open pill button: bull logo + "RESERVATION" / "הזמן מקום"
- * - Appears after scrolling past the hero (window.scrollY > 80vh)
- * - EN: bottom-right | HE: bottom-left
- * - Smooth scale-in animation on entry
+ * - Appears after scrolling past the hero (window.scrollY > 75vh)
+ * - Mobile: centered bottom
+ * - Desktop EN: bottom-right | Desktop HE: bottom-left
  */
 
 import { useEffect, useState } from "react";
@@ -23,16 +23,37 @@ export default function StickyReservationBtn() {
   const isHe = lang === "he";
   const [visible, setVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   useEffect(() => {
     const threshold = window.innerHeight * 0.75;
-    const onScroll = () => {
-      setVisible(window.scrollY > threshold);
-    };
-    onScroll(); // check on mount
+    const onScroll = () => setVisible(window.scrollY > threshold);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Position: mobile = centered, desktop = side
+  const positionStyle: React.CSSProperties = isMobile
+    ? { left: "50%", right: "auto" }
+    : isHe
+    ? { left: "1.5rem", right: "auto" }
+    : { right: "1.5rem", left: "auto" };
+
+  // Transform: mobile needs translateX(-50%) for centering
+  const transformVisible = isMobile
+    ? "translateX(-50%) translateY(0) scale(1)"
+    : "translateY(0) scale(1)";
+  const transformHidden = isMobile
+    ? "translateX(-50%) translateY(30px) scale(0.7)"
+    : "translateY(30px) scale(0.7)";
 
   return (
     <a
@@ -45,7 +66,7 @@ export default function StickyReservationBtn() {
       style={{
         position: "fixed",
         bottom: "2rem",
-        ...(isHe ? { left: "1.5rem", right: "auto" } : { right: "1.5rem", left: "auto" }),
+        ...positionStyle,
         zIndex: 999,
         display: "flex",
         alignItems: "center",
@@ -59,7 +80,7 @@ export default function StickyReservationBtn() {
         boxShadow: hovered
           ? `0 8px 32px rgba(185,161,103,0.5), 0 2px 8px rgba(62,4,9,0.3)`
           : `0 4px 24px rgba(62,4,9,0.45), 0 1px 6px rgba(0,0,0,0.25)`,
-        transform: visible ? "translateY(0) scale(1)" : "translateY(30px) scale(0.7)",
+        transform: visible ? transformVisible : transformHidden,
         opacity: visible ? 1 : 0,
         pointerEvents: visible ? "auto" : "none",
         transition: [
