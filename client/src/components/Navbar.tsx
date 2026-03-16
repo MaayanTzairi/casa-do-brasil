@@ -129,11 +129,11 @@ function ReservationsBtn({ scrolled, label }: { scrolled: boolean; label: string
       rel="noopener noreferrer"
       style={{
         fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-        fontSize: "0.65rem", letterSpacing: "0.18em",
+        fontSize: "0.78rem", letterSpacing: "0.14em",
         textTransform: "uppercase", textDecoration: "none",
-        color: scrolled ? "#fff" : GOLD,
-        background: scrolled ? BORDEAUX : "transparent",
-        border: `1.5px solid ${scrolled ? BORDEAUX : GOLD}`,
+        color: "#fff",
+        background: BORDEAUX,
+        border: `1.5px solid ${BORDEAUX}`,
         padding: "0.5rem 1.2rem",
         transition: "all 0.3s ease",
         whiteSpace: "nowrap",
@@ -145,9 +145,9 @@ function ReservationsBtn({ scrolled, label }: { scrolled: boolean; label: string
       }}
       onMouseLeave={e => {
         const el = e.currentTarget as HTMLAnchorElement;
-        el.style.background = scrolled ? BORDEAUX : "transparent";
-        el.style.borderColor = scrolled ? BORDEAUX : GOLD;
-        el.style.color = scrolled ? "#fff" : GOLD;
+        el.style.background = BORDEAUX;
+        el.style.borderColor = BORDEAUX;
+        el.style.color = "#fff";
       }}
     >
       {label}
@@ -219,11 +219,11 @@ export default function Navbar() {
                 target="_blank" rel="noopener noreferrer"
                 style={{
                   fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-                  fontSize: "0.55rem", letterSpacing: isHe ? "0.04em" : "0.14em",
+                  fontSize: "0.65rem", letterSpacing: isHe ? "0.04em" : "0.14em",
                   textTransform: "uppercase", textDecoration: "none",
-                  color: scrolled ? "#fff" : GOLD,
-                  background: scrolled ? BORDEAUX : "transparent",
-                  border: `1.5px solid ${scrolled ? BORDEAUX : GOLD}`,
+                  color: "#fff",
+                  background: BORDEAUX,
+                  border: `1.5px solid ${BORDEAUX}`,
                   padding: "0.35rem 0.7rem",
                   whiteSpace: "nowrap", transition: "all 0.3s ease",
                 }}
@@ -411,7 +411,7 @@ function NavLink({
       onMouseLeave={() => setHovered(false)}
       style={{
         fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-        fontSize: "0.65rem", letterSpacing: isHe ? "0.04em" : "0.2em",
+        fontSize: "0.78rem", letterSpacing: isHe ? "0.05em" : "0.18em",
         textTransform: "uppercase", textDecoration: "none",
         color: hovered ? GOLD : color,
         transition: "color 0.25s ease",
