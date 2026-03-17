@@ -183,14 +183,14 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* ── Social Icons — desktop only ── */}
-      {!isMobile && (
+      {/* ── Social Icons — visible on all screen sizes ── */}
+      {(
         <div
           className="absolute z-20 flex flex-col items-center gap-4"
           style={{
-            bottom: "9rem",
-            right: isHe ? undefined : "2.5rem",
-            left: isHe ? "2.5rem" : undefined,
+            bottom: isMobile ? "5.5rem" : "9rem",
+            right: isHe ? undefined : (isMobile ? "0.9rem" : "2.5rem"),
+            left: isHe ? (isMobile ? "0.9rem" : "2.5rem") : undefined,
             animation: "fadeIn 1s 2.4s ease both",
           }}
         >
