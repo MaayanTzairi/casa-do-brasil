@@ -148,7 +148,7 @@ export default function MenuSection() {
         {/* ── LEFT: TWO CARDS ── */}
         <div style={{ flex: mobile ? "none" : "0 0 52%", display:"flex", flexDirection:"row", gap: mobile ? "1.2rem" : "1.4rem", order: mobile ? 2 : (isHe ? 2 : 1), paddingTop: mobile ? "0" : "2.5rem", paddingBottom: mobile ? "0" : "0.5rem", alignItems:"stretch" }}>
           <MenuCard img={CHURRASCARIA_IMG} name={isHe ? "צ'וראסקריה" : "CHURRASCARIA"} subtitle={isHe ? "כל כלול" : "All You Can Eat"} href="/menu?tab=churrascaria" dark delay={0.15} inView={inView} />
-          <MenuCard img={CLASSIC_IMG} name={isHe ? "תפריט קלאסי" : "CLASSIC MENU"} subtitle={isHe ? "בחירות אישיות" : "Individual Selections"} href="/menu?tab=classic" delay={0.28} inView={inView} />
+          <MenuCard img={CLASSIC_IMG} name={isHe ? "עקריות" : "ENTRÉES"} subtitle={isHe ? "בחירות אישיות" : "Individual Selections"} href="/menu?tab=classic" delay={0.28} inView={inView} />
         </div>
 
         {/* ── TITLE BLOCK ── */}

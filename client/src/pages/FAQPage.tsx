@@ -31,7 +31,7 @@ const FAQ_EN: FAQItem[] = [
   },
   {
     q: "Is the restaurant kosher?",
-    a: "Casa do Brasil is not kosher. We serve authentic Brazilian churrasco, including a full selection of beef, lamb, and chicken cuts.",
+    a: "Casa do Brasil is not kosher. We serve authentic Brazilian Fogo de Chão, including a full selection of beef, lamb, and chicken cuts.",
   },
   {
     q: "Do you have a menu for children?",
@@ -51,7 +51,7 @@ const FAQ_EN: FAQItem[] = [
   },
   {
     q: "What is the churrascaria experience?",
-    a: "Churrascaria is the traditional Brazilian style of dining where our gauchos bring freshly carved meats directly to your table on large skewers. You eat at your own pace — as much as you like.",
+    a: "Fogo de Chão is the traditional Brazilian style of dining where our passadors bring freshly carved meats directly to your table on large skewers. You eat at your own pace — as much as you like.",
   },
   {
     q: "Is there live music?",
@@ -74,7 +74,7 @@ const FAQ_HE: FAQItem[] = [
   },
   {
     q: "האם המסעדה כשרה?",
-    a: "קאסה דו ברזיל אינה כשרה. אנו מגישים צ׳וראסקו ברזילאי אותנטי, כולל מגוון רחב של נתחי בקר, כבש ועוף.",
+    a: "קאסה דו ברזיל אינה כשרה. אנו מגישים פושידו קוהידו ברזילאי אותנטי, כולל מגוון רחב של נתחי בקר, כבש ועוף.",
   },
   {
     q: "האם יש תפריט לילדים?",
@@ -93,8 +93,8 @@ const FAQ_HE: FAQItem[] = [
     a: "בהחלט. אנו מקבלים אירועים פרטיים, ארוחות עסקיות וחגיגות. צרו קשר בטלפון 08-6323032 לתיאום זמינות ותפריט מותאם.",
   },
   {
-    q: "מה זה חוויית הצ׳וראסקריה?",
-    a: "צ׳וראסקריה היא שיטת האכילה הברזילאית המסורתית שבה הגאוצ׳וס שלנו מביאים בשר פרוס טרי ישירות לשולחנכם על שיפודים גדולים. אוכלים בקצב שלכם — כמה שרוצים.",
+    q: "מה זה חוויית הפושידו קוהידו?",
+    a: "פושידו קוהידו היא שיטת האכילה הברזילאית המסורתית שבה הפאסדורס שלנו מביאים בשר פרוס טרי ישירות לשולחנכם על שיפודים גדולים. אוכלים בקצב שלכם — כמה שרוצים.",
   },
   {
     q: "האם יש מוזיקה חיה?",

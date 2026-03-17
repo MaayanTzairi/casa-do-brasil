@@ -374,7 +374,7 @@ export default function ReviewsSection() {
           {/* Stat 1 — Guests */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: mobile ? "0.3rem" : "0.5rem", padding: mobile ? "0 0.5rem" : "0 1.5rem" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: BORDEAUX, lineHeight: 1, letterSpacing: "-0.02em" }}>1M</span>
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: BORDEAUX, lineHeight: 1, letterSpacing: "-0.02em" }}>2M</span>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: GOLD, lineHeight: 1 }}>+</span>
             </div>
             <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "0.6rem" : "clamp(11px, 0.82vw, 13px)", color: "rgba(62,4,9,0.45)", letterSpacing: mobile ? "0.08em" : "0.18em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3 }}>
