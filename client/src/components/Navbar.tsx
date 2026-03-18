@@ -354,39 +354,12 @@ export default function Navbar({ forceScrolled }: { forceScrolled?: boolean } = 
               )}
             </div>
 
-            {/* Center: CASA DO BRASIL text before scroll, bull logo after scroll */}
+            {/* Center: Dancing Script gold text before scroll, bull logo after scroll */}
             <a href="/" style={{
               position: "absolute", left: "50%", transform: "translateX(-50%)",
               display: "flex", alignItems: "center",
             }}>
-              {scrolled ? (
-                /* After scroll: bull logo */
-                <div
-                  style={{ transition: "transform 0.25s ease" }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.transform = "scale(1.06)"; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.transform = "scale(1)"; }}
-                >
-                  <LogoBadge size={56} scrolled={scrolled} />
-                </div>
-              ) : (
-                /* Before scroll (on hero): elegant CASA DO BRASIL text */
-                <span
-                  style={{
-                    fontFamily: "'Heebo', sans-serif",
-                    fontWeight: 900,
-                    fontSize: "0.72rem",
-                    letterSpacing: "0.28em",
-                    textTransform: "uppercase",
-                    color: "#FFFFFF",
-                    whiteSpace: "nowrap",
-                    opacity: 0.92,
-                    textShadow: "0 1px 8px rgba(0,0,0,0.5)",
-                    transition: "opacity 0.4s ease",
-                  }}
-                >
-                  CASA DO BRASIL
-                </span>
-              )}
+              <LogoBadge size={56} scrolled={scrolled} />
             </a>
 
             {/* Right column */}
