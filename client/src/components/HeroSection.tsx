@@ -22,7 +22,6 @@ const BORDEAUX = "rgb(40,3,6)";
 export default function HeroSection() {
   const heroRef    = useRef<HTMLDivElement>(null);
   const imgWrapRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const { isHe } = useLanguage();
 
@@ -33,15 +32,12 @@ export default function HeroSection() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Lightweight CSS parallax
+  // Lightweight CSS parallax — image only, not content
   useEffect(() => {
     const onScroll = () => {
       const scrollY = window.scrollY;
       if (imgWrapRef.current) {
         imgWrapRef.current.style.transform = `translateY(${scrollY * 0.25}px)`;
-      }
-      if (contentRef.current) {
-        contentRef.current.style.transform = `translateY(${scrollY * 0.12}px)`;
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -102,15 +98,14 @@ export default function HeroSection() {
 
       {/* ── Hero Content ── */}
       <div
-        ref={contentRef}
         className="absolute inset-0 z-10 flex flex-col justify-end"
         style={{
+          paddingTop:    isMobile ? "70px" : "90px",
           paddingBottom: isMobile ? "clamp(3rem, 10vw, 5rem)" : "clamp(3rem, 6vw, 6rem)",
           paddingLeft:   isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           paddingRight:  isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           alignItems: "stretch",
           direction: isHe ? "rtl" : "ltr",
-          willChange: "transform",
         }}
       >
         {/* Title */}
