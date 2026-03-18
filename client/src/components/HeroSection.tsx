@@ -4,6 +4,10 @@
  * Colors: White · Gold (185,161,103) · Deep Red (98,7,14) · Bordeaux (62,4,9)
  * Font: Heebo Black/Bold/Regular/Light only
  * Animation: CSS-only — no framer-motion
+ *
+ * Large bull logo sits beside the hero text (right for EN, left for HE).
+ * On scroll the bull flies up to the navbar center and shrinks into the logo.
+ * On scroll back to top it returns to hero.
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -13,15 +17,22 @@ const HERO_IMAGE =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main-Xjsh9uMVYH6frhxTU2HJ4c.webp";
 const HERO_IMAGE_SM =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_eb2aef7a.webp";
+const LOGO_URL =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_951b2ffb.png";
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(40,3,6)";
+
+// How many px of scroll before the bull is fully "in" the navbar
+const SCROLL_THRESHOLD = 80;
 
 export default function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null);
   const imgWrapRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const bullRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0); // 0 = hero, 1 = navbar
   const { isHe } = useLanguage();
 
   useEffect(() => {
@@ -41,10 +52,26 @@ export default function HeroSection() {
       if (contentRef.current) {
         contentRef.current.style.transform = `translateY(${scrollY * 0.12}px)`;
       }
+      // Progress 0→1 over first SCROLL_THRESHOLD px
+      const progress = Math.min(1, scrollY / SCROLL_THRESHOLD);
+      setScrollProgress(progress);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Bull size: large in hero, small (navbar size) when scrolled
+  const BULL_HERO_SIZE = isMobile ? 0 : 220; // hidden on mobile
+  const BULL_NAV_SIZE = 56;
+
+  // Interpolated size
+  const bullSize = BULL_HERO_SIZE + (BULL_NAV_SIZE - BULL_HERO_SIZE) * scrollProgress;
+
+  // Opacity of the bull in hero position (fades out as it "flies" to navbar)
+  const bullHeroOpacity = 1 - scrollProgress;
+
+  // The bull in the hero is only visible on desktop
+  const showHeroBull = !isMobile;
 
   return (
     <section
@@ -182,6 +209,40 @@ export default function HeroSection() {
           <ExploreButton isMobile={isMobile} />
         </div>
       </div>
+
+      {/* ── Large Bull Logo — Desktop only, beside the text ── */}
+      {showHeroBull && (
+        <div
+          ref={bullRef}
+          style={{
+            position: "absolute",
+            // Vertically centered in the hero, slightly above center
+            top: "50%",
+            transform: "translateY(-50%)",
+            // EN: right side, HE: left side
+            right: isHe ? undefined : "clamp(3rem, 8vw, 8rem)",
+            left: isHe ? "clamp(3rem, 8vw, 8rem)" : undefined,
+            zIndex: 15,
+            opacity: bullHeroOpacity,
+            pointerEvents: "none",
+            transition: "none", // We control via JS scroll
+            animation: "fadeIn 1s 1.8s ease both",
+          }}
+        >
+          <img
+            src={LOGO_URL}
+            alt=""
+            aria-hidden="true"
+            style={{
+              width: `${bullSize}px`,
+              height: "auto",
+              objectFit: "contain",
+              display: "block",
+              filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.55))",
+            }}
+          />
+        </div>
+      )}
 
       {/* ── Social Icons — visible on all screen sizes ── */}
       {(

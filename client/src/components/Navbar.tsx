@@ -62,23 +62,50 @@ const ALL_LINKS_HE = [
 ];
 
 /* ─── Logo Badge ─── */
-function LogoBadge({ size, scrolled }: { size: number; scrolled: boolean }) {
+// Before scroll (on homepage hero): show elegant text "CASA DO BRASIL"
+// After scroll: show the bull logo image
+function LogoBadge({ size, scrolled, forceScrolled }: { size: number; scrolled: boolean; forceScrolled?: boolean }) {
+  const isOnHome = typeof window !== 'undefined' && window.location.pathname === '/';
+  const showText = isOnHome && !scrolled && !forceScrolled;
   return (
-    <img
-      src={LOGO_URL}
-      alt="Casa do Brasil"
-      width={size}
-      height={Math.round(size * 1.11)}
-      style={{
-        width: size,
-        height: "auto",
-        objectFit: "contain",
-        display: "block",
-        flexShrink: 0,
-        filter: scrolled ? "none" : "drop-shadow(0 2px 8px rgba(0,0,0,0.45))",
-        transition: "filter 0.4s ease",
-      }}
-    />
+    <div style={{ position: 'relative', width: size, height: Math.round(size * 1.11), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {/* Bull logo — visible when scrolled */}
+      <img
+        src={LOGO_URL}
+        alt="Casa do Brasil"
+        width={size}
+        height={Math.round(size * 1.11)}
+        style={{
+          width: size,
+          height: "auto",
+          objectFit: "contain",
+          display: "block",
+          flexShrink: 0,
+          filter: scrolled ? "none" : "drop-shadow(0 2px 8px rgba(0,0,0,0.45))",
+          opacity: showText ? 0 : 1,
+          transition: "opacity 0.45s ease, filter 0.4s ease",
+          position: 'absolute',
+        }}
+      />
+      {/* Text — visible before scroll on homepage */}
+      <span
+        style={{
+          fontFamily: "'Heebo', sans-serif",
+          fontWeight: 900,
+          fontSize: "0.72rem",
+          letterSpacing: "0.22em",
+          textTransform: "uppercase",
+          color: "#FFFFFF",
+          whiteSpace: "nowrap",
+          opacity: showText ? 1 : 0,
+          transition: "opacity 0.45s ease",
+          pointerEvents: showText ? 'auto' : 'none',
+          lineHeight: 1,
+        }}
+      >
+        CASA DO BRASIL
+      </span>
+    </div>
   );
 }
 
@@ -241,7 +268,7 @@ export default function Navbar({ forceScrolled }: { forceScrolled?: boolean } = 
               position: "absolute", left: "50%", transform: "translateX(-50%)",
               display: "flex", alignItems: "center", zIndex: 1,
             }}>
-              <LogoBadge size={44} scrolled={scrolled} />
+              <LogoBadge size={44} scrolled={scrolled} forceScrolled={forceScrolled} />
             </a>
 
             {/* Right: Lang toggle + Hamburger */}
@@ -319,7 +346,7 @@ export default function Navbar({ forceScrolled }: { forceScrolled?: boolean } = 
                 onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.transform = "scale(1.06)"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.transform = "scale(1)"; }}
               >
-                <LogoBadge size={56} scrolled={scrolled} />
+                <LogoBadge size={56} scrolled={scrolled} forceScrolled={forceScrolled} />
               </div>
             </a>
 
