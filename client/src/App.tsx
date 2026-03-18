@@ -4,6 +4,7 @@ import { lazy, Suspense } from "react";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import StickyReservationBtn from "./components/StickyReservationBtn";
+import FlyingBull from "./components/FlyingBull";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
@@ -65,6 +66,7 @@ function App() {
               <Toaster />
               <Router />
               <StickyReservationBtn />
+              <FlyingBull />
             </TooltipProvider>
           </ThemeProvider>
       </LanguageProvider>

@@ -62,14 +62,16 @@ const ALL_LINKS_HE = [
 ];
 
 /* ─── Logo Badge ─── */
-// Before scroll (on homepage hero): show elegant text "CASA DO BRASIL"
-// After scroll: show the bull logo image
+// On homepage: FlyingBull handles the logo (fixed-position, moves from hero to navbar on scroll).
+// So on homepage we show "CASA DO BRASIL" text always (FlyingBull lands on top of it).
+// On other pages: show the bull logo image normally.
 function LogoBadge({ size, scrolled, forceScrolled }: { size: number; scrolled: boolean; forceScrolled?: boolean }) {
   const isOnHome = typeof window !== 'undefined' && window.location.pathname === '/';
-  const showText = isOnHome && !scrolled && !forceScrolled;
+  // On homepage, always show text (FlyingBull overlays the logo slot)
+  const showText = isOnHome && !forceScrolled;
   return (
     <div style={{ position: 'relative', width: size, height: Math.round(size * 1.11), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      {/* Bull logo — visible when scrolled */}
+      {/* Bull logo — shown on non-homepage pages */}
       <img
         src={LOGO_URL}
         alt="Casa do Brasil"
@@ -83,11 +85,12 @@ function LogoBadge({ size, scrolled, forceScrolled }: { size: number; scrolled: 
           flexShrink: 0,
           filter: scrolled ? "none" : "drop-shadow(0 2px 8px rgba(0,0,0,0.45))",
           opacity: showText ? 0 : 1,
-          transition: "opacity 0.45s ease, filter 0.4s ease",
+          transition: "opacity 0.35s ease, filter 0.4s ease",
           position: 'absolute',
+          pointerEvents: showText ? 'none' : 'auto',
         }}
       />
-      {/* Text — visible before scroll on homepage */}
+      {/* Text — shown on homepage (FlyingBull lands here on scroll) */}
       <span
         style={{
           fontFamily: "'Heebo', sans-serif",
@@ -95,10 +98,10 @@ function LogoBadge({ size, scrolled, forceScrolled }: { size: number; scrolled: 
           fontSize: "0.72rem",
           letterSpacing: "0.22em",
           textTransform: "uppercase",
-          color: "#FFFFFF",
+          color: scrolled ? "rgb(62,4,9)" : "#FFFFFF",
           whiteSpace: "nowrap",
           opacity: showText ? 1 : 0,
-          transition: "opacity 0.45s ease",
+          transition: "opacity 0.35s ease, color 0.35s ease",
           pointerEvents: showText ? 'auto' : 'none',
           lineHeight: 1,
         }}
