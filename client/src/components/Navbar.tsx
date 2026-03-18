@@ -356,8 +356,10 @@ export default function Navbar({ forceScrolled }: { forceScrolled?: boolean } = 
 
             {/* Center: Dancing Script gold text before scroll, bull logo after scroll */}
             <a href="/" style={{
-              position: "absolute", left: "50%", transform: "translateX(-50%)",
+              position: "absolute", left: "50%",
+              top: "50%", transform: "translate(-50%, -50%)",
               display: "flex", alignItems: "center",
+              paddingTop: !scrolled ? "10px" : "0",
             }}>
               <LogoBadge size={56} scrolled={scrolled} />
             </a>
