@@ -123,7 +123,8 @@ export default function FlyingBull() {
   const r1 = size * 0.72;
   const r2 = size * 0.98;
   const r3 = size * 1.28;
-  const r4 = size * 1.60; // outermost drift layer
+  const r4 = size * 1.70; // outermost drift layer
+  const r0 = size * 0.55; // inner dark glow
 
   const ringBase: React.CSSProperties = {
     position: "fixed",
@@ -136,16 +137,27 @@ export default function FlyingBull() {
 
   return (
     <>
+      {/* Inner dark glow — solid shadow behind bull */}
+      <div style={{
+        ...ringBase,
+        left: cx - r0 / 2,
+        top:  cy - r0 / 2,
+        width: r0, height: r0,
+        background: `radial-gradient(circle, rgba(20,5,2,0.75) 0%, rgba(40,10,5,0.55) 50%, transparent 80%)`,
+        filter: "blur(18px)",
+        opacity: smokeOpacity * 0.85,
+      }} />
+
       {/* Smoke layer 4 — outermost soft drift */}
       <div style={{
         ...ringBase,
         left: cx - r4 / 2,
         top:  cy - r4 / 2,
         width: r4, height: r4,
-        background: `radial-gradient(circle, rgba(60,30,10,0.22) 0%, rgba(30,10,5,0.12) 45%, transparent 70%)`,
+        background: `radial-gradient(circle, rgba(60,30,10,0.45) 0%, rgba(30,10,5,0.28) 45%, transparent 70%)`,
         filter: "blur(28px)",
         animation: `smokeDrift 5.5s ease-in-out infinite`,
-        opacity: smokeOpacity * 0.22,
+        opacity: smokeOpacity * 0.55,
       }} />
 
       {/* Smoke ring 3 — outer halo */}
@@ -162,7 +174,7 @@ export default function FlyingBull() {
         )`,
         filter: "blur(20px)",
         animation: `smokeRing3 6s ease-in-out infinite`,
-        opacity: smokeOpacity * 0.18,
+        opacity: smokeOpacity * 0.45,
       }} />
 
       {/* Smoke ring 2 — mid ring */}
@@ -179,7 +191,7 @@ export default function FlyingBull() {
         )`,
         filter: "blur(14px)",
         animation: `smokeRing2 4.8s ease-in-out infinite`,
-        opacity: smokeOpacity * 0.35,
+        opacity: smokeOpacity * 0.65,
       }} />
 
       {/* Smoke ring 1 — inner tight ring */}
@@ -196,7 +208,7 @@ export default function FlyingBull() {
         )`,
         filter: "blur(8px)",
         animation: `smokeRing1 3.8s ease-in-out infinite`,
-        opacity: smokeOpacity * 0.55,
+        opacity: smokeOpacity * 0.80,
       }} />
 
       {/* Bull image */}
