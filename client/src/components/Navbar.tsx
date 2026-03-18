@@ -85,7 +85,7 @@ function LogoBadge({ size, scrolled, forceScrolled }: { size: number; scrolled: 
   // Text opacity: full at p=0, gone at p=0.6
   const textOpacity = showText ? Math.max(0, 1 - bullP / 0.6) : 0;
   return (
-    <div style={{ position: 'relative', width: size, height: Math.round(size * 1.11), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ position: 'relative', width: showText ? 'auto' : size, minWidth: size, height: Math.round(size * 1.11), display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'visible' }}>
       {/* Bull logo — shown on non-homepage pages */}
       <img
         src={LOGO_URL}
