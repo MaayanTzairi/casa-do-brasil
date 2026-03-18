@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { lazy, Suspense } from "react";
-import { Route, Switch } from "wouter";
+import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import StickyReservationBtn from "./components/StickyReservationBtn";
 import FlyingBull from "./components/FlyingBull";
@@ -40,6 +40,12 @@ function PageLoader() {
   );
 }
 
+function ConditionalFlyingBull() {
+  const [location] = useLocation();
+  if (location !== "/") return null;
+  return <FlyingBull />;
+}
+
 function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
@@ -66,7 +72,7 @@ function App() {
               <Toaster />
               <Router />
               <StickyReservationBtn />
-              <FlyingBull />
+              <ConditionalFlyingBull />
             </TooltipProvider>
           </ThemeProvider>
       </LanguageProvider>
