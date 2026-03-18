@@ -5,8 +5,6 @@
  *
  * Hero position:  right side (EN) or left side (HE), vertically centered
  * Navbar position: horizontally centered, vertically centered in 70px navbar
- *
- * The scroll range is 0 → SCROLL_THRESHOLD px.
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -16,7 +14,7 @@ const LOGO_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_951b2ffb.png";
 
 const SCROLL_THRESHOLD = 120; // px of scroll to complete the journey
-const BULL_HERO_SIZE = 220;   // px — large in hero
+const BULL_HERO_SIZE = 290;   // px — larger in hero
 const BULL_NAV_SIZE  = 56;    // px — logo size in navbar
 
 function lerp(a: number, b: number, t: number) {
@@ -39,11 +37,14 @@ export default function FlyingBull() {
     setIsMobile(mobile);
     if (mobile) return;
 
-    // Hero: vertically centered, horizontally on the side
     const heroSize = BULL_HERO_SIZE;
+
+    // Hero: vertically centered, pushed further to the side
+    // EN: right side — 6% from right edge
+    // HE: left side — 6% from left edge
     const heroX = isHe
-      ? lerp(0, vw, 0.08)                          // left side for HE
-      : vw - lerp(0, vw, 0.08) - heroSize;         // right side for EN
+      ? lerp(0, vw, 0.04)                          // left side for HE
+      : vw - lerp(0, vw, 0.04) - heroSize;         // right side for EN (more to the right)
     const heroY = vh / 2 - heroSize / 2;
 
     // Navbar: horizontally centered, vertically centered in 70px bar
@@ -90,27 +91,57 @@ export default function FlyingBull() {
   const y    = lerp(heroPos.y, navPos.y, t);
   const size = lerp(BULL_HERO_SIZE, BULL_NAV_SIZE, t);
 
-  // Shadow fades out as it reaches navbar
-  const shadowOpacity = lerp(0.55, 0, t);
+  // Smoke/glow circle: fades out as bull travels to navbar
+  const smokeOpacity = lerp(1, 0, t);
+  const smokeSize = size * 1.55;
+  const smokeCenterX = x + size / 2;
+  const smokeCenterY = y + size / 2;
 
   return (
-    <img
-      src={LOGO_URL}
-      alt="Casa do Brasil"
-      aria-hidden="true"
-      style={{
-        position: "fixed",
-        left: x,
-        top: y,
-        width: size,
-        height: "auto",
-        objectFit: "contain",
-        zIndex: 60, // above navbar (z-50) so it's visible during flight
-        pointerEvents: "none",
-        filter: `drop-shadow(0 8px 32px rgba(0,0,0,${shadowOpacity}))`,
-        // No CSS transition — position is driven by scroll JS
-        willChange: "transform, width",
-      }}
-    />
+    <>
+      {/* Smoke / glow circle behind the bull */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "fixed",
+          left: smokeCenterX - smokeSize / 2,
+          top: smokeCenterY - smokeSize / 2,
+          width: smokeSize,
+          height: smokeSize,
+          borderRadius: "50%",
+          background: `radial-gradient(circle,
+            rgba(255,255,255,0.13) 0%,
+            rgba(220,190,130,0.10) 30%,
+            rgba(180,100,40,0.07) 55%,
+            transparent 75%
+          )`,
+          boxShadow: `0 0 ${smokeSize * 0.5}px ${smokeSize * 0.2}px rgba(220,180,100,0.12),
+                      0 0 ${smokeSize * 0.8}px ${smokeSize * 0.1}px rgba(255,255,255,0.06)`,
+          opacity: smokeOpacity,
+          zIndex: 59,
+          pointerEvents: "none",
+          filter: "blur(18px)",
+          willChange: "opacity, left, top, width, height",
+        }}
+      />
+      {/* Bull image */}
+      <img
+        src={LOGO_URL}
+        alt="Casa do Brasil"
+        aria-hidden="true"
+        style={{
+          position: "fixed",
+          left: x,
+          top: y,
+          width: size,
+          height: "auto",
+          objectFit: "contain",
+          zIndex: 60,
+          pointerEvents: "none",
+          filter: `drop-shadow(0 8px 32px rgba(0,0,0,${lerp(0.45, 0, t)}))`,
+          willChange: "transform, width",
+        }}
+      />
+    </>
   );
 }
