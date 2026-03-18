@@ -8,6 +8,7 @@
  */
 
 import { useEffect, useState } from "react";
+import { useLocation } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 /** Navigate to a hash link, handling cross-page navigation */
@@ -66,10 +67,15 @@ const ALL_LINKS_HE = [
 // Navbar center shows handwriting gold text that fades out as the bull arrives.
 // On other pages: show the bull logo image normally.
 function LogoBadge({ size, scrolled, forceScrolled }: { size: number; scrolled: boolean; forceScrolled?: boolean }) {
-  const isOnHome = typeof window !== 'undefined' && window.location.pathname === '/';
+  const [location] = useLocation();
+  const isOnHome = location === '/';
   const showText = isOnHome && !forceScrolled;
   // Listen to FlyingBull progress to fade text out as bull approaches
   const [bullP, setBullP] = useState(0);
+  useEffect(() => {
+    // Reset when navigating back to home
+    if (showText) setBullP(0);
+  }, [showText]);
   useEffect(() => {
     if (!showText) return;
     const handler = (e: Event) => setBullP((e as CustomEvent<number>).detail);
