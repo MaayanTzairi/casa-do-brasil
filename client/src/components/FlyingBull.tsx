@@ -68,6 +68,8 @@ export default function FlyingBull() {
       rafRef.current = requestAnimationFrame(() => {
         const p = Math.min(1, Math.max(0, window.scrollY / SCROLL_THRESHOLD));
         setProgress(p);
+        // Broadcast progress so Navbar can fade its text
+        window.dispatchEvent(new CustomEvent('bullProgress', { detail: p }));
       });
     };
     window.addEventListener("scroll", onScroll, { passive: true });

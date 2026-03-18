@@ -62,13 +62,22 @@ const ALL_LINKS_HE = [
 ];
 
 /* ─── Logo Badge ─── */
-// On homepage: FlyingBull handles the logo (fixed-position, moves from hero to navbar on scroll).
-// So on homepage we show "CASA DO BRASIL" text always (FlyingBull lands on top of it).
+// On homepage: FlyingBull handles the logo.
+// Navbar center shows handwriting gold text that fades out as the bull arrives.
 // On other pages: show the bull logo image normally.
 function LogoBadge({ size, scrolled, forceScrolled }: { size: number; scrolled: boolean; forceScrolled?: boolean }) {
   const isOnHome = typeof window !== 'undefined' && window.location.pathname === '/';
-  // On homepage, always show text (FlyingBull overlays the logo slot)
   const showText = isOnHome && !forceScrolled;
+  // Listen to FlyingBull progress to fade text out as bull approaches
+  const [bullP, setBullP] = useState(0);
+  useEffect(() => {
+    if (!showText) return;
+    const handler = (e: Event) => setBullP((e as CustomEvent<number>).detail);
+    window.addEventListener('bullProgress', handler);
+    return () => window.removeEventListener('bullProgress', handler);
+  }, [showText]);
+  // Text opacity: full at p=0, gone at p=0.6
+  const textOpacity = showText ? Math.max(0, 1 - bullP / 0.6) : 0;
   return (
     <div style={{ position: 'relative', width: size, height: Math.round(size * 1.11), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       {/* Bull logo — shown on non-homepage pages */}
@@ -90,23 +99,23 @@ function LogoBadge({ size, scrolled, forceScrolled }: { size: number; scrolled: 
           pointerEvents: showText ? 'none' : 'auto',
         }}
       />
-      {/* Text — shown on homepage (FlyingBull lands here on scroll) */}
+      {/* Handwriting gold text — fades out as FlyingBull arrives */}
       <span
         style={{
-          fontFamily: "'Heebo', sans-serif",
-          fontWeight: 900,
-          fontSize: "0.72rem",
-          letterSpacing: "0.22em",
-          textTransform: "uppercase",
-          color: scrolled ? "rgb(62,4,9)" : "#FFFFFF",
+          fontFamily: "'Dancing Script', cursive",
+          fontWeight: 600,
+          fontSize: "1.25rem",
+          letterSpacing: "0.04em",
+          color: scrolled ? "rgba(145,118,60,0.9)" : "rgba(215,188,120,0.92)",
           whiteSpace: "nowrap",
-          opacity: showText ? 1 : 0,
-          transition: "opacity 0.35s ease, color 0.35s ease",
-          pointerEvents: showText ? 'auto' : 'none',
+          opacity: textOpacity,
+          pointerEvents: textOpacity > 0.05 ? 'auto' : 'none',
           lineHeight: 1,
+          textShadow: scrolled ? "none" : "0 1px 8px rgba(0,0,0,0.35)",
+          transition: "color 0.4s ease, text-shadow 0.4s ease",
         }}
       >
-        CASA DO BRASIL
+        Casa do Brasil
       </span>
     </div>
   );
