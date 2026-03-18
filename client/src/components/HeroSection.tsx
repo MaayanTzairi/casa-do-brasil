@@ -117,7 +117,7 @@ export default function HeroSection() {
                 style={{
                   fontFamily: "'Heebo', sans-serif",
                   fontWeight: 900,
-                  fontSize: isMobile ? "clamp(52px, 17vw, 90px)" : "clamp(68px, 11.5vw, 155px)",
+                  fontSize: isMobile ? "clamp(48px, 15vw, 80px)" : "clamp(58px, 9.5vw, 125px)",
                   color: "#FFFFFF",
                   letterSpacing: "-0.02em",
                   lineHeight: 0.88,
