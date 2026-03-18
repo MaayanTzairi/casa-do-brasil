@@ -82,8 +82,8 @@ function LogoBadge({ size, scrolled, forceScrolled }: { size: number; scrolled: 
     window.addEventListener('bullProgress', handler);
     return () => window.removeEventListener('bullProgress', handler);
   }, [showText]);
-  // Text opacity: full at p=0, gone at p=0.6
-  const textOpacity = showText ? Math.max(0, 1 - bullP / 0.6) : 0;
+  // Text opacity: full at p=0, gone at p=0.5 (faster on mobile so bull arrives in time)
+  const textOpacity = showText ? Math.max(0, 1 - bullP / 0.5) : 0;
   return (
     <div style={{ position: 'relative', width: showText ? 'auto' : size, minWidth: size, height: Math.round(size * 1.11), display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'visible' }}>
       {/* Bull logo — shown on non-homepage pages */}
