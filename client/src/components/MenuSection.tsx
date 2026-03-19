@@ -1,11 +1,13 @@
 /**
  * CASA DO BRASIL — MENU — Section 3
+ * Connected to Sanity CMS with fallback to hardcoded values.
  * No framer-motion — CSS transitions + IntersectionObserver
  */
 
 import { useRef, useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useInViewCSS } from "@/hooks/useInViewCSS";
+import { useSanityQuery, QUERIES, type OurMenuSection } from "@/lib/sanity";
 
 const CHURRASCARIA_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-churrascaria-v2_v2_cb04fc5f.webp";
@@ -65,17 +67,17 @@ function BotanicalBg() {
 interface CardProps {
   img: string;
   name: string;
-  nameLine2?: string;
   subtitle: string;
+  btnText: string;
   href: string;
   dark?: boolean;
   delay?: number;
   inView: boolean;
+  isHe: boolean;
 }
 
-function MenuCard({ img, name, nameLine2, subtitle, href, dark=false, delay=0, inView }: CardProps) {
+function MenuCard({ img, name, subtitle, btnText, href, dark=false, delay=0, inView, isHe }: CardProps) {
   const [hovered, setHovered] = useState(false);
-  const { isHe } = useLanguage();
 
   return (
     <div
@@ -116,11 +118,11 @@ function MenuCard({ img, name, nameLine2, subtitle, href, dark=false, delay=0, i
       <div style={{ padding:"1.3rem 1.5rem 1.7rem", display:"flex", flexDirection:"column", flex:1, position:"relative", zIndex:2 }}>
         <div style={{ width:"22px", height:"1px", background:`linear-gradient(to right, ${GOLD}, ${GOLD_R}0.15))`, marginBottom:"0.85rem" }} />
         <div style={{ fontFamily:"'Heebo', sans-serif", fontWeight:900, fontSize:"clamp(12px, 1.4vw, 20px)", color: dark ? "#fff" : BORDEAUX, lineHeight:1.1, letterSpacing:"0.02em", marginBottom:"0.5rem", whiteSpace:"normal", overflow:"visible", wordBreak:"break-word" }}>
-          {name}{nameLine2 && <><br />{nameLine2}</>}
+          {name}
         </div>
         <div style={{ fontFamily:"'Heebo', sans-serif", fontWeight:300, fontStyle:"italic", fontSize:"clamp(13px, 1vw, 15px)", color:GOLD, marginBottom:"1.2rem", letterSpacing:"0.02em" }}>{subtitle}</div>
         <a href={href} style={{ display:"inline-flex", alignItems:"center", gap:"0.4rem", fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.65rem", letterSpacing:"0.26em", textTransform:"uppercase", textDecoration:"none", color: dark ? GOLD : BORDEAUX, borderBottom:`1px solid ${GOLD_R}0.5)`, paddingBottom:"2px", alignSelf:"flex-start", marginTop:"auto", opacity: hovered ? 0.6 : 1, transition:"opacity 0.2s" }}>
-          {isHe ? (<>לצפייה בתפריט <span style={{ fontSize:"0.78rem" }}>←</span></>) : (<>VIEW MENU <span style={{ fontSize:"0.78rem" }}>→</span></>)}
+          {btnText} <span style={{ fontSize:"0.78rem" }}>{isHe ? "←" : "→"}</span>
         </a>
       </div>
     </div>
@@ -132,11 +134,35 @@ export default function MenuSection() {
   const [mobile, setMobile] = useState(false);
   const { isHe } = useLanguage();
 
+  const { data: cms } = useSanityQuery<OurMenuSection>(QUERIES.ourMenu);
+
   useEffect(() => {
     const fn = () => setMobile(window.innerWidth < 900);
     fn(); window.addEventListener("resize", fn);
     return () => window.removeEventListener("resize", fn);
   }, []);
+
+  // ── CMS values with fallbacks ──
+  const label       = isHe ? (cms?.labelHe ?? "התפריט שלנו") : (cms?.labelEn ?? "OUR MENU");
+  const line1       = isHe ? (cms?.headlineLine1He ?? "חווייה") : (cms?.headlineLine1En ?? "AUTHENTIC");
+  const line2       = isHe ? (cms?.headlineLine2He ?? "ברזילאית") : (cms?.headlineLine2En ?? "BRAZILIAN");
+  const line3       = isHe ? (cms?.headlineLine3He ?? "אותנטית") : (cms?.headlineLine3En ?? "EXPERIENCE");
+  const ctaBtnText  = isHe ? (cms?.ctaBtnHe ?? "התפריט המלא") : (cms?.ctaBtnEn ?? "Full Menu");
+  const ctaBtnUrl   = cms?.ctaBtnUrl ?? "/menu";
+
+  // Card 1
+  const card1Img    = cms?.card1Image?.asset?.url ?? CHURRASCARIA_IMG;
+  const card1Name   = isHe ? (cms?.card1NameHe ?? "צ'וראסקריה") : (cms?.card1NameEn ?? "CHURRASCARIA");
+  const card1Type   = isHe ? (cms?.card1TypeHe ?? "הכול כלול") : (cms?.card1TypeEn ?? "All Inclusive");
+  const card1Btn    = isHe ? (cms?.card1BtnHe ?? "לצפייה בתפריט") : (cms?.card1BtnEn ?? "View Menu");
+  const card1Url    = cms?.card1BtnUrl ?? "/menu?tab=churrascaria";
+
+  // Card 2
+  const card2Img    = cms?.card2Image?.asset?.url ?? CLASSIC_IMG;
+  const card2Name   = isHe ? (cms?.card2NameHe ?? "עקריות") : (cms?.card2NameEn ?? "ENTRÉES");
+  const card2Type   = isHe ? (cms?.card2TypeHe ?? "בחירות אישיות") : (cms?.card2TypeEn ?? "Individual Selections");
+  const card2Btn    = isHe ? (cms?.card2BtnHe ?? "לצפייה בתפריט") : (cms?.card2BtnEn ?? "View Menu");
+  const card2Url    = cms?.card2BtnUrl ?? "/menu?tab=classic";
 
   return (
     <div
@@ -147,8 +173,8 @@ export default function MenuSection() {
 
         {/* ── LEFT: TWO CARDS ── */}
         <div style={{ flex: mobile ? "none" : "0 0 52%", display:"flex", flexDirection:"row", gap: mobile ? "1.2rem" : "1.4rem", order: mobile ? 2 : (isHe ? 2 : 1), paddingTop: mobile ? "0" : "2.5rem", paddingBottom: mobile ? "0" : "0.5rem", alignItems:"stretch" }}>
-          <MenuCard img={CHURRASCARIA_IMG} name={isHe ? "צ'וראסקריה" : "CHURRASCARIA"} subtitle={isHe ? "כל כלול" : "All You Can Eat"} href="/menu?tab=churrascaria" dark delay={0.15} inView={inView} />
-          <MenuCard img={CLASSIC_IMG} name={isHe ? "עקריות" : "ENTRÉES"} subtitle={isHe ? "בחירות אישיות" : "Individual Selections"} href="/menu?tab=classic" delay={0.28} inView={inView} />
+          <MenuCard img={card1Img} name={card1Name} subtitle={card1Type} btnText={card1Btn} href={card1Url} dark delay={0.15} inView={inView} isHe={isHe} />
+          <MenuCard img={card2Img} name={card2Name} subtitle={card2Type} btnText={card2Btn} href={card2Url} delay={0.28} inView={inView} isHe={isHe} />
         </div>
 
         {/* ── TITLE BLOCK ── */}
@@ -156,21 +182,21 @@ export default function MenuSection() {
 
           <div style={{ ...animStyle(inView, 0.05), display:"flex", alignItems:"center", gap:"0.7rem", marginBottom:"1.4rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start", width:"100%" }}>
             <div style={{ width:"20px", height:"1px", background:GOLD }} />
-            <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.78rem", letterSpacing: isHe ? "0.08em" : "0.44em", textTransform:"uppercase", color:GOLD }}>{isHe ? "התפריט שלנו" : "OUR MENU"}</span>
+            <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.78rem", letterSpacing: isHe ? "0.08em" : "0.44em", textTransform:"uppercase", color:GOLD }}>{label}</span>
           </div>
 
           <h2 style={{ ...animStyle(inView, 0.15), fontFamily:"'Heebo', sans-serif", fontWeight:900, fontSize: mobile ? "clamp(36px, 10vw, 52px)" : "clamp(36px, 3.8vw, 58px)", color:BORDEAUX, margin:0, lineHeight:0.9, letterSpacing:"0.01em", textAlign: isHe ? "right" : "left", width:"100%" }}>
-            {isHe ? <>חווייה<br />ברזילאית<br />אותנטית</> : <>AUTHENTIC<br />BRAZILIAN<br />EXPERIENCE</>}
+            {line1}<br />{line2}<br />{line3}
           </h2>
 
           <div style={{ ...animStyle(inView, 0.32), width:"48px", height:"1.5px", background:`linear-gradient(to right, ${GOLD}, ${GOLD_R}0.2))`, margin:"1.8rem 0 2rem", transformOrigin: isHe ? "right" : "left", marginLeft: isHe ? "auto" : undefined, marginRight: isHe ? 0 : undefined, alignSelf:"flex-start" }} />
 
           <div style={{ ...animStyle(inView, 0.42), display:"flex", justifyContent: mobile ? "center" : "flex-start", width:"100%" }}>
-            <a href="/menu" style={{ display:"inline-flex", alignItems:"center", gap:"0.7rem", fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.65rem", letterSpacing:"0.28em", textTransform:"uppercase", textDecoration:"none", color:BORDEAUX, padding:"0.85rem 2rem", border:`1.5px solid ${GOLD}`, transition:"background 0.28s, color 0.28s" }}
+            <a href={ctaBtnUrl} style={{ display:"inline-flex", alignItems:"center", gap:"0.7rem", fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.65rem", letterSpacing:"0.28em", textTransform:"uppercase", textDecoration:"none", color:BORDEAUX, padding:"0.85rem 2rem", border:`1.5px solid ${GOLD}`, transition:"background 0.28s, color 0.28s" }}
               onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background=BORDEAUX; el.style.color="#fff"; }}
               onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background="transparent"; el.style.color=BORDEAUX; }}
             >
-              {isHe ? (<>התפריט המלא <span style={{ fontSize:"0.9rem" }}>←</span></>) : (<>VIEW FULL MENU <span style={{ fontSize:"0.9rem" }}>→</span></>)}
+              {ctaBtnText} <span style={{ fontSize:"0.9rem" }}>{isHe ? "←" : "→"}</span>
             </a>
           </div>
         </div>

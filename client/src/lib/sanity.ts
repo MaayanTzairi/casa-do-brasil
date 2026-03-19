@@ -113,6 +113,22 @@ export const QUERIES = {
     image2TitleHe, image2TitleEn
   }`,
 
+  /** Our Menu section (home page) */
+  ourMenu: `*[_type == "ourMenu"][0]{
+    labelHe, labelEn,
+    headlineLine1He, headlineLine2He, headlineLine3He,
+    headlineLine1En, headlineLine2En, headlineLine3En,
+    ctaBtnHe, ctaBtnEn, ctaBtnUrl,
+    card1Image{ asset->{ url } },
+    card1NameHe, card1NameEn,
+    card1TypeHe, card1TypeEn,
+    card1BtnHe, card1BtnEn, card1BtnUrl,
+    card2Image{ asset->{ url } },
+    card2NameHe, card2NameEn,
+    card2TypeHe, card2TypeEn,
+    card2BtnHe, card2BtnEn, card2BtnUrl
+  }`,
+
   /** Story page */
   storyPage: `*[_type == "storyPage"][0]{
     titleHe, titleEn, bodyHe, bodyEn,
@@ -246,6 +262,36 @@ export interface OurStorySection {
   image2LabelEn?: string;
   image2TitleHe?: string;
   image2TitleEn?: string;
+}
+
+export interface OurMenuSection {
+  labelHe?: string;
+  labelEn?: string;
+  headlineLine1He?: string;
+  headlineLine2He?: string;
+  headlineLine3He?: string;
+  headlineLine1En?: string;
+  headlineLine2En?: string;
+  headlineLine3En?: string;
+  ctaBtnHe?: string;
+  ctaBtnEn?: string;
+  ctaBtnUrl?: string;
+  card1Image?: SanityImage;
+  card1NameHe?: string;
+  card1NameEn?: string;
+  card1TypeHe?: string;
+  card1TypeEn?: string;
+  card1BtnHe?: string;
+  card1BtnEn?: string;
+  card1BtnUrl?: string;
+  card2Image?: SanityImage;
+  card2NameHe?: string;
+  card2NameEn?: string;
+  card2TypeHe?: string;
+  card2TypeEn?: string;
+  card2BtnHe?: string;
+  card2BtnEn?: string;
+  card2BtnUrl?: string;
 }
 
 export interface GalleryImage {
