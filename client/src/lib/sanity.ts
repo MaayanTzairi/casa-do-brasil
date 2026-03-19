@@ -75,6 +75,17 @@ export const QUERIES = {
     image{ asset->{ url, metadata{ dimensions } } }
   }`,
 
+  /** Navbar text */
+  navbar: `*[_type == "navbar"][0]{
+    menuHe, menuEn,
+    storyHe, storyEn,
+    galleryHe, galleryEn,
+    faqHe, faqEn,
+    contactHe, contactEn,
+    brandNameHe, brandNameEn,
+    reservationHe, reservationEn
+  }`,
+
   /** Story page */
   storyPage: `*[_type == "storyPage"][0]{
     titleHe, titleEn, bodyHe, bodyEn,
@@ -146,6 +157,23 @@ export interface MenuCategory {
   nameEn: string;
   descriptionHe?: string;
   descriptionEn?: string;
+}
+
+export interface NavbarContent {
+  menuHe?: string;
+  menuEn?: string;
+  storyHe?: string;
+  storyEn?: string;
+  galleryHe?: string;
+  galleryEn?: string;
+  faqHe?: string;
+  faqEn?: string;
+  contactHe?: string;
+  contactEn?: string;
+  brandNameHe?: string;
+  brandNameEn?: string;
+  reservationHe?: string;
+  reservationEn?: string;
 }
 
 export interface GalleryImage {
