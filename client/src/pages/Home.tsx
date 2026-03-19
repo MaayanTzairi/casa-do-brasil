@@ -12,6 +12,7 @@ import SectionDivider2 from "@/components/SectionDivider2";
 import GallerySection from "@/components/GallerySection";
 import Footer from "@/components/Footer";
 import ReviewsSection from "@/components/ReviewsSection";
+
 export default function Home() {
   return (
     <>
