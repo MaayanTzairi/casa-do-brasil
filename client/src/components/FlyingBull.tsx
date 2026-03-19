@@ -12,11 +12,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSanityQuery, QUERIES, type HeroSection } from "@/lib/sanity";
 
-const LOGO_URL =
+const LOGO_URL_DEFAULT =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_951b2ffb.png";
 
-const PHOTO_URL =
+const PHOTO_URL_DEFAULT =
   "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80&fit=crop";
 
 const SCROLL_THRESHOLD_DESKTOP = 130;
@@ -38,6 +39,11 @@ export default function FlyingBull() {
   const { isHe } = useLanguage();
   const [progress, setProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Fetch CMS data for circle image and logo
+  const { data: cms } = useSanityQuery<HeroSection>(QUERIES.heroSection);
+  const LOGO_URL  = cms?.logoImage?.asset?.url  || LOGO_URL_DEFAULT;
+  const PHOTO_URL = cms?.circleImage?.asset?.url || PHOTO_URL_DEFAULT;
 
   // Desktop positions
   const [dHeroPos, setDHeroPos] = useState<{ x: number; y: number } | null>(null);
