@@ -68,7 +68,7 @@ export default function HeroSection() {
   const bgImage = cms?.backgroundImage?.asset?.url || HERO_IMAGE_DEFAULT;
 
   // Title words — split by space for the stacked animation
-  const titleWords = (isHe ? t.titleEn : t.titleEn).split(" ");
+  const titleWords = (isHe ? t.titleHe : t.titleEn).split(" ");
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 900);
