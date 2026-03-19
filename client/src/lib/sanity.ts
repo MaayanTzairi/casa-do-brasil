@@ -98,6 +98,21 @@ export const QUERIES = {
     instagramUrl, facebookUrl, tiktokUrl
   }`,
 
+  /** Our Story section (home page) */
+  ourStory: `*[_type == "ourStory"][0]{
+    labelHe, labelEn,
+    headlineLine1He, headlineLine2He, headlineLine3He,
+    headlineLine1En, headlineLine2En, headlineLine3En,
+    descriptionHe, descriptionEn,
+    ctaBtnHe, ctaBtnEn, ctaBtnUrl,
+    image1{ asset->{ url } },
+    image1LabelHe, image1LabelEn,
+    image1TitleHe, image1TitleEn,
+    image2{ asset->{ url } },
+    image2LabelHe, image2LabelEn,
+    image2TitleHe, image2TitleEn
+  }`,
+
   /** Story page */
   storyPage: `*[_type == "storyPage"][0]{
     titleHe, titleEn, bodyHe, bodyEn,
@@ -205,6 +220,32 @@ export interface HeroSection {
   instagramUrl?: string;
   facebookUrl?: string;
   tiktokUrl?: string;
+}
+
+export interface OurStorySection {
+  labelHe?: string;
+  labelEn?: string;
+  headlineLine1He?: string;
+  headlineLine2He?: string;
+  headlineLine3He?: string;
+  headlineLine1En?: string;
+  headlineLine2En?: string;
+  headlineLine3En?: string;
+  descriptionHe?: string;
+  descriptionEn?: string;
+  ctaBtnHe?: string;
+  ctaBtnEn?: string;
+  ctaBtnUrl?: string;
+  image1?: SanityImage;
+  image1LabelHe?: string;
+  image1LabelEn?: string;
+  image1TitleHe?: string;
+  image1TitleEn?: string;
+  image2?: SanityImage;
+  image2LabelHe?: string;
+  image2LabelEn?: string;
+  image2TitleHe?: string;
+  image2TitleEn?: string;
 }
 
 export interface GalleryImage {

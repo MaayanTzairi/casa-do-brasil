@@ -1,11 +1,12 @@
 /**
  * CASA DO BRASIL — OUR STORY — Section 2
- * No framer-motion — CSS animations + IntersectionObserver
+ * Connected to Sanity CMS — No framer-motion — CSS animations + IntersectionObserver
  */
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useInViewCSS } from "@/hooks/useInViewCSS";
+import { useSanityQuery, QUERIES, OurStorySection } from "@/lib/sanity";
 
 const MEAT_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/meat-v2_v2_c9250c58.webp";
@@ -54,6 +55,58 @@ export default function CasaVibesSection() {
   const [mobile, setMobile] = useState(false);
   const { isHe } = useLanguage();
 
+  // Fetch CMS data
+  const { data: cms } = useSanityQuery<OurStorySection>(QUERIES.ourStory);
+
+  // ── Derived values with fallbacks ──
+  const label = isHe
+    ? (cms?.labelHe ?? "הסיפור שלנו")
+    : (cms?.labelEn ?? "OUR STORY");
+
+  const headlineLines = isHe
+    ? [
+        cms?.headlineLine1He ?? "בשר.",
+        cms?.headlineLine2He ?? "מוזיקה.",
+        cms?.headlineLine3He ?? "ברזיל.",
+      ]
+    : [
+        cms?.headlineLine1En ?? "MEAT.",
+        cms?.headlineLine2En ?? "MUSIC.",
+        cms?.headlineLine3En ?? "BRASIL.",
+      ];
+
+  const description = isHe
+    ? (cms?.descriptionHe ?? "קאסה דו ברזיל היא יותר מארוחה — זו חגיגה. פושידו קוהידו אותנטי, שנחתך ליד השולחן על ידי הפאסדורס שלנו, בצירת הקצב, הצבע והנשמה של הקרנבל. כל ביקור הוא חג לכל החושים.")
+    : (cms?.descriptionEn ?? "Casa do Brasil is more than a meal — it is a celebration. Authentic Brazilian churrasco, carved tableside by our passadors, paired with the rhythm, color and soul of carnival. Every visit is a feast for all the senses.");
+
+  const ctaText = isHe
+    ? (cms?.ctaBtnHe ?? "הסיפור של קאזה דו ברזיל")
+    : (cms?.ctaBtnEn ?? "Casa Do Brasil Story");
+
+  const ctaUrl = cms?.ctaBtnUrl ?? "/story";
+
+  // Image 1
+  const img1Src = cms?.image1?.asset?.url ?? MEAT_URL;
+  const img1SrcSm = cms?.image1?.asset?.url ?? MEAT_URL_SM;
+  const img1Label = isHe
+    ? (cms?.image1LabelHe ?? "CHURRASCO")
+    : (cms?.image1LabelEn ?? "CHURRASCO");
+  const img1TitleRaw = isHe
+    ? (cms?.image1TitleHe ?? "אמנות\nהאש")
+    : (cms?.image1TitleEn ?? "THE ART\nOF FIRE");
+  const img1TitleLines = img1TitleRaw.split("\\n").join("\n").split("\n");
+
+  // Image 2
+  const img2Src = cms?.image2?.asset?.url ?? CARNIVAL_URL;
+  const img2SrcSm = cms?.image2?.asset?.url ?? CARNIVAL_URL_SM;
+  const img2Label = isHe
+    ? (cms?.image2LabelHe ?? "CARNIVAL")
+    : (cms?.image2LabelEn ?? "CARNIVAL");
+  const img2TitleRaw = isHe
+    ? (cms?.image2TitleHe ?? "הנשמה\nשל ברזיל")
+    : (cms?.image2TitleEn ?? "THE SOUL\nOF BRASIL");
+  const img2TitleLines = img2TitleRaw.split("\\n").join("\n").split("\n");
+
   useEffect(() => {
     const fn = () => setMobile(window.innerWidth < 768);
     fn(); window.addEventListener("resize", fn);
@@ -89,13 +142,13 @@ export default function CasaVibesSection() {
           <div style={{ ...animStyle(inView, 0), display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.4rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start", width: "100%" }}>
             <div style={{ width: "28px", height: "1px", background: GOLD }} />
             <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.78rem", letterSpacing: isHe ? "0.08em" : "0.38em", textTransform: "uppercase", color: GOLD }}>
-              {isHe ? "הסיפור שלנו" : "OUR STORY"}
+              {label}
             </span>
           </div>
 
-          {/* Big headline */}
-          {(isHe ? ["בשר.", "מוזיקה.", "ברזיל."] : ["MEAT.", "MUSIC.", "BRASIL."]).map((word, i) => (
-            <div key={word} style={{ overflow: "hidden" }}>
+          {/* Big headline — 3 lines from CMS */}
+          {headlineLines.map((word, i) => (
+            <div key={i} style={{ overflow: "hidden" }}>
               <h2 style={{
                 ...animStyle(inView, 0.08 + i * 0.11),
                 fontFamily: "'Heebo', sans-serif", fontWeight: 900,
@@ -124,15 +177,12 @@ export default function CasaVibesSection() {
             color: "rgb(90,35,35)", lineHeight: 1.85, maxWidth: "380px", marginBottom: "2rem",
             marginRight: isHe ? 0 : undefined, marginLeft: isHe ? "auto" : undefined,
           }}>
-            {isHe
-              ? "קאסה דו ברזיל היא יותר מארוחה — זו חגיגה. פושידו קוהידו אותנטי, שנחתך ליד השולחן על ידי הפאסדורס שלנו, בצירת הקצב, הצבע והנשמה של הקרנבל. כל ביקור הוא חג לכל החושים."
-              : "Casa do Brasil is more than a meal — it is a celebration. Authentic Brazilian churrasco, carved tableside by our passadors, paired with the rhythm, color and soul of carnival. Every visit is a feast for all the senses."
-            }
+            {description}
           </p>
 
           {/* CTA */}
           <div style={{ ...animStyle(inView, 0.76), display: "flex", justifyContent: mobile ? "center" : "flex-start", width: "100%" }}>
-            <a href="/story" style={{
+            <a href={ctaUrl} style={{
               display: "inline-flex", alignItems: "center", gap: "0.45rem",
               fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem",
               letterSpacing: "0.22em", textTransform: "uppercase", textDecoration: "none",
@@ -142,7 +192,10 @@ export default function CasaVibesSection() {
               onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = GOLD; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = BORDEAUX; }}
             >
-              {isHe ? (<>הסיפור של קאזה דו ברזיל <span style={{ fontSize: "0.85rem" }}>←</span></>) : (<>Casa Do Brasil Story <span style={{ fontSize: "0.85rem" }}>→</span></>)}
+              {isHe
+                ? (<>{ctaText} <span style={{ fontSize: "0.85rem" }}>←</span></>)
+                : (<>{ctaText} <span style={{ fontSize: "0.85rem" }}>→</span></>)
+              }
             </a>
           </div>
         </div>
@@ -154,7 +207,12 @@ export default function CasaVibesSection() {
             {/* Image 1 — tall, anchored top-left */}
             <div style={{ ...animStyle(inView, 0.18), position: "absolute", top: 0, left: 0, width: "58%", zIndex: 2 }}>
               <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 24px 64px rgba(62,4,9,0.38), 0 8px 24px rgba(62,4,9,0.22)", borderRadius: "2px" }}>
-                <img src={MEAT_URL} srcSet={`${MEAT_URL_SM} 450w, ${MEAT_URL} 800w`} sizes="(max-width:768px) 60vw, 58%" alt="Meat" loading="lazy" decoding="async"
+                <img
+                  src={img1Src}
+                  srcSet={cms?.image1?.asset?.url ? undefined : `${img1SrcSm} 450w, ${img1Src} 800w`}
+                  sizes="(max-width:768px) 60vw, 58%"
+                  alt={img1Label}
+                  loading="lazy" decoding="async"
                   width={800} height={1067}
                   style={{ width: "100%", aspectRatio: "3/4", objectFit: "cover", objectPosition: "center 40%", display: "block", transition: "transform 1.1s ease" }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
@@ -162,8 +220,12 @@ export default function CasaVibesSection() {
                 />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 52%)", pointerEvents: "none" }} />
                 <div style={{ position: "absolute", bottom: "1.2rem", left: "1.2rem" }}>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.32em", color: GOLD, marginBottom: "0.25rem" }}>CHURRASCO</div>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(14px, 1.5vw, 19px)", color: "#fff", lineHeight: 1.1 }}>THE ART<br />OF FIRE</div>
+                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.32em", color: GOLD, marginBottom: "0.25rem" }}>{img1Label}</div>
+                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(14px, 1.5vw, 19px)", color: "#fff", lineHeight: 1.1 }}>
+                    {img1TitleLines.map((line, i) => (
+                      <span key={i}>{line}{i < img1TitleLines.length - 1 && <br />}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
               <CornerBrackets />
@@ -172,7 +234,12 @@ export default function CasaVibesSection() {
             {/* Image 2 — shorter, anchored bottom-right */}
             <div style={{ ...animStyle(inView, 0.32), position: "absolute", bottom: 0, right: 0, width: "55%", zIndex: 3 }}>
               <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 28px 72px rgba(62,4,9,0.42), 0 10px 28px rgba(62,4,9,0.25)", borderRadius: "2px" }}>
-                <img src={CARNIVAL_URL} srcSet={`${CARNIVAL_URL_SM} 450w, ${CARNIVAL_URL} 800w`} sizes="(max-width:768px) 56vw, 55%" alt="Carnival" loading="lazy" decoding="async"
+                <img
+                  src={img2Src}
+                  srcSet={cms?.image2?.asset?.url ? undefined : `${img2SrcSm} 450w, ${img2Src} 800w`}
+                  sizes="(max-width:768px) 56vw, 55%"
+                  alt={img2Label}
+                  loading="lazy" decoding="async"
                   width={800} height={1000}
                   style={{ width: "100%", aspectRatio: "4/5", objectFit: "cover", objectPosition: "center 20%", display: "block", transition: "transform 1.1s ease" }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
@@ -180,8 +247,12 @@ export default function CasaVibesSection() {
                 />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.80) 0%, transparent 52%)", pointerEvents: "none" }} />
                 <div style={{ position: "absolute", bottom: "1.2rem", left: "1.2rem" }}>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.32em", color: GOLD, marginBottom: "0.25rem" }}>CARNIVAL</div>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(14px, 1.5vw, 19px)", color: "#fff", lineHeight: 1.1 }}>THE SOUL<br />OF BRASIL</div>
+                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.32em", color: GOLD, marginBottom: "0.25rem" }}>{img2Label}</div>
+                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(14px, 1.5vw, 19px)", color: "#fff", lineHeight: 1.1 }}>
+                    {img2TitleLines.map((line, i) => (
+                      <span key={i}>{line}{i < img2TitleLines.length - 1 && <br />}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
               <CornerBrackets />
@@ -196,11 +267,23 @@ export default function CasaVibesSection() {
           {/* Left image — meat */}
           <div style={{ ...animStyle(inView, 0.1), flex: "1 1 0", minWidth: 0 }}>
             <div style={{ position: "relative", overflow: "hidden", height: "260px", boxShadow: "0 16px 48px rgba(62,4,9,0.36), 0 6px 18px rgba(62,4,9,0.20)", borderRadius: "2px" }}>
-              <img src={MEAT_URL} srcSet={`${MEAT_URL_SM} 450w, ${MEAT_URL} 800w`} sizes="50vw" alt="Meat" loading="lazy" decoding="async" width={600} height={800} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%", display: "block" }} />
+              <img
+                src={img1Src}
+                srcSet={cms?.image1?.asset?.url ? undefined : `${img1SrcSm} 450w, ${img1Src} 800w`}
+                sizes="50vw"
+                alt={img1Label}
+                loading="lazy" decoding="async"
+                width={600} height={800}
+                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%", display: "block" }}
+              />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 52%)", pointerEvents: "none" }} />
               <div style={{ position: "absolute", bottom: "0.75rem", left: "0.75rem" }}>
-                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>CHURRASCO</div>
-                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(12px, 3.5vw, 16px)", color: "#fff", lineHeight: 1.1 }}>THE ART<br />OF FIRE</div>
+                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>{img1Label}</div>
+                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(12px, 3.5vw, 16px)", color: "#fff", lineHeight: 1.1 }}>
+                  {img1TitleLines.map((line, i) => (
+                    <span key={i}>{line}{i < img1TitleLines.length - 1 && <br />}</span>
+                  ))}
+                </div>
               </div>
             </div>
             <CornerBrackets offset={-6} len={12} w={1} />
@@ -208,11 +291,23 @@ export default function CasaVibesSection() {
           {/* Right image — carnival */}
           <div style={{ ...animStyle(inView, 0.22), flex: "1 1 0", minWidth: 0 }}>
             <div style={{ position: "relative", overflow: "hidden", height: "260px", boxShadow: "0 20px 56px rgba(62,4,9,0.40), 0 8px 22px rgba(62,4,9,0.22)", borderRadius: "2px" }}>
-              <img src={CARNIVAL_URL} srcSet={`${CARNIVAL_URL_SM} 450w, ${CARNIVAL_URL} 800w`} sizes="50vw" alt="Carnival" loading="lazy" decoding="async" width={600} height={750} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%", display: "block" }} />
+              <img
+                src={img2Src}
+                srcSet={cms?.image2?.asset?.url ? undefined : `${img2SrcSm} 450w, ${img2Src} 800w`}
+                sizes="50vw"
+                alt={img2Label}
+                loading="lazy" decoding="async"
+                width={600} height={750}
+                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%", display: "block" }}
+              />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.80) 0%, transparent 52%)", pointerEvents: "none" }} />
               <div style={{ position: "absolute", bottom: "0.75rem", left: "0.75rem" }}>
-                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>CARNIVAL</div>
-                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(12px, 3.5vw, 16px)", color: "#fff", lineHeight: 1.1 }}>THE SOUL<br />OF BRASIL</div>
+                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>{img2Label}</div>
+                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(12px, 3.5vw, 16px)", color: "#fff", lineHeight: 1.1 }}>
+                  {img2TitleLines.map((line, i) => (
+                    <span key={i}>{line}{i < img2TitleLines.length - 1 && <br />}</span>
+                  ))}
+                </div>
               </div>
             </div>
             <CornerBrackets offset={-6} len={12} w={1} />
