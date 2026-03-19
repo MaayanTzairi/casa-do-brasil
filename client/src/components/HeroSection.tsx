@@ -317,8 +317,6 @@ function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: st
   const [hovered, setHovered] = useState(false);
   return (
     <a href={href}
-      target={href.startsWith("http") ? "_blank" : undefined}
-      rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
         display: "inline-flex", alignItems: "center", gap: "0.6rem",
