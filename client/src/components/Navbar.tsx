@@ -289,7 +289,7 @@ export default function Navbar({
     reservationEn: cmsNavbar?.reservationEn || DEFAULTS.reservationEn,
   };
 
-  const brandName = isHe ? t.brandNameHe : t.brandNameEn;
+  const brandName = t.brandNameEn; // Always show English name in navbar center
 
   const navLinks = isHe
     ? [

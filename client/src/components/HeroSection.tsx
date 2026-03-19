@@ -6,24 +6,69 @@
  *
  * The large bull logo is rendered by <FlyingBull /> (fixed-position, desktop only).
  * This component only handles the background, text, buttons and social icons.
+ * Text and links are fetched from Sanity CMS with hardcoded fallbacks.
  */
 
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSanityQuery, QUERIES, type HeroSection as HeroSectionData } from "@/lib/sanity";
 
-const HERO_IMAGE =
+const HERO_IMAGE_DEFAULT =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main-Xjsh9uMVYH6frhxTU2HJ4c.webp";
-const HERO_IMAGE_SM =
+const HERO_IMAGE_SM_DEFAULT =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_eb2aef7a.webp";
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(40,3,6)";
+
+// Hardcoded fallbacks — used when CMS has no data yet
+const DEFAULTS = {
+  titleHe: "CASA DO BRASIL",
+  titleEn: "CASA DO BRASIL",
+  subtitleHe: "גריל ברזילאי — מוזיקה וצ'וראסקריה",
+  subtitleEn: "Brazilian Grill - Music & Churrascaria",
+  reserveBtnHe: "הזמן שולחן",
+  reserveBtnEn: "RESERVE A TABLE",
+  reserveBtnUrl: "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73",
+  menuBtnHe: "לתפריט",
+  menuBtnEn: "EXPLORE MENU",
+  menuBtnUrl: "#menu",
+  instagramUrl: "https://www.instagram.com",
+  facebookUrl: "https://www.facebook.com",
+  tiktokUrl: "https://www.tiktok.com",
+};
 
 export default function HeroSection() {
   const heroRef    = useRef<HTMLDivElement>(null);
   const imgWrapRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const { isHe } = useLanguage();
+
+  // Fetch CMS data
+  const { data: cms } = useSanityQuery<HeroSectionData>(QUERIES.heroSection);
+
+  // Merge CMS with fallbacks
+  const t = {
+    titleHe:       cms?.titleHe       || DEFAULTS.titleHe,
+    titleEn:       cms?.titleEn       || DEFAULTS.titleEn,
+    subtitleHe:    cms?.subtitleHe    || DEFAULTS.subtitleHe,
+    subtitleEn:    cms?.subtitleEn    || DEFAULTS.subtitleEn,
+    reserveBtnHe:  cms?.reserveBtnHe  || DEFAULTS.reserveBtnHe,
+    reserveBtnEn:  cms?.reserveBtnEn  || DEFAULTS.reserveBtnEn,
+    reserveBtnUrl: cms?.reserveBtnUrl || DEFAULTS.reserveBtnUrl,
+    menuBtnHe:     cms?.menuBtnHe     || DEFAULTS.menuBtnHe,
+    menuBtnEn:     cms?.menuBtnEn     || DEFAULTS.menuBtnEn,
+    menuBtnUrl:    cms?.menuBtnUrl    || DEFAULTS.menuBtnUrl,
+    instagramUrl:  cms?.instagramUrl  || DEFAULTS.instagramUrl,
+    facebookUrl:   cms?.facebookUrl   || DEFAULTS.facebookUrl,
+    tiktokUrl:     cms?.tiktokUrl     || DEFAULTS.tiktokUrl,
+  };
+
+  // Background image — use CMS if available, else default
+  const bgImage = cms?.backgroundImage?.asset?.url || HERO_IMAGE_DEFAULT;
+
+  // Title words — split by space for the stacked animation
+  const titleWords = (isHe ? t.titleEn : t.titleEn).split(" ");
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 900);
@@ -54,8 +99,8 @@ export default function HeroSection() {
       {/* ── Background Image + Parallax ── */}
       <div ref={imgWrapRef} className="absolute inset-0 w-full h-full" style={{ willChange: "transform" }}>
         <img
-          src={HERO_IMAGE}
-          srcSet={`${HERO_IMAGE_SM} 900w, ${HERO_IMAGE} 1920w`}
+          src={bgImage}
+          srcSet={cms?.backgroundImage?.asset?.url ? undefined : `${HERO_IMAGE_SM_DEFAULT} 900w, ${HERO_IMAGE_DEFAULT} 1920w`}
           sizes="100vw"
           alt="Casa do Brasil — Brazilian Grill and Churrascaria in Eilat"
           fetchPriority="high"
@@ -110,8 +155,8 @@ export default function HeroSection() {
       >
         {/* Title */}
         <div className="mb-4" style={{ width: "100%", textAlign: isHe ? "right" : "left" }}>
-          {["CASA", "DO", "BRASIL"].map((word, i) => (
-            <div key={word} className="overflow-hidden">
+          {titleWords.map((word, i) => (
+            <div key={i} className="overflow-hidden">
               <h1
                 className="block select-none"
                 style={{
@@ -160,7 +205,7 @@ export default function HeroSection() {
             animation: "fadeUp 0.8s 1.3s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
-          {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקריה" : "Brazilian Grill - Music & Churrascaria"}
+          {isHe ? t.subtitleHe : t.subtitleEn}
         </p>
 
         {/* CTA Buttons */}
@@ -172,8 +217,8 @@ export default function HeroSection() {
             animation: "fadeUp 0.8s 1.6s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
-          <ReserveButton isMobile={isMobile} />
-          <ExploreButton isMobile={isMobile} />
+          <ReserveButton isMobile={isMobile} label={isHe ? t.reserveBtnHe : t.reserveBtnEn} href={t.reserveBtnUrl} />
+          <ExploreButton isMobile={isMobile} label={isHe ? t.menuBtnHe : t.menuBtnEn} href={t.menuBtnUrl} />
         </div>
       </div>
 
@@ -187,17 +232,17 @@ export default function HeroSection() {
           animation: "fadeIn 1s 2.4s ease both",
         }}
       >
-        <SocialIcon href="https://www.instagram.com" label="Instagram" hoverColor="#E1306C" icon={
+        <SocialIcon href={t.instagramUrl} label="Instagram" hoverColor="#E1306C" icon={
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
           </svg>
         } />
-        <SocialIcon href="https://www.facebook.com" label="Facebook" hoverColor="#1877F2" icon={
+        <SocialIcon href={t.facebookUrl} label="Facebook" hoverColor="#1877F2" icon={
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
           </svg>
         } />
-        <SocialIcon href="https://www.tiktok.com" label="TikTok" hoverColor="#69C9D0" icon={
+        <SocialIcon href={t.tiktokUrl} label="TikTok" hoverColor="#69C9D0" icon={
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="none">
             <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
           </svg>
@@ -243,12 +288,13 @@ function SocialIcon({ href, label, icon, hoverColor }: { href: string; label: st
 }
 
 /* ── Reserve A Table Button ── */
-function ReserveButton({ isMobile }: { isMobile: boolean }) {
+function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: string; href: string }) {
   const [hovered, setHovered] = useState(false);
   const { isHe } = useLanguage();
   return (
-    <a href="https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73"
-      target="_blank" rel="noopener noreferrer"
+    <a href={href}
+      target={href.startsWith("http") ? "_blank" : undefined}
+      rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
         display: "inline-flex", alignItems: "center", gap: "0.6rem",
@@ -261,19 +307,18 @@ function ReserveButton({ isMobile }: { isMobile: boolean }) {
         transition: "all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
       }}
     >
-      {isHe
-        ? (<>הזמן שולחן <span style={{ fontSize: "1rem", lineHeight: 1 }}>←</span></>)
-        : (<>RESERVE A TABLE <span style={{ fontSize: "1rem", lineHeight: 1 }}>→</span></>)}
+      {label} <span style={{ fontSize: "1rem", lineHeight: 1 }}>{isHe ? "←" : "→"}</span>
     </a>
   );
 }
 
 /* ── Explore Menu Button ── */
-function ExploreButton({ isMobile }: { isMobile: boolean }) {
+function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: string; href: string }) {
   const [hovered, setHovered] = useState(false);
-  const { isHe } = useLanguage();
   return (
-    <a href="#menu"
+    <a href={href}
+      target={href.startsWith("http") ? "_blank" : undefined}
+      rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
         display: "inline-flex", alignItems: "center", gap: "0.6rem",
@@ -286,7 +331,7 @@ function ExploreButton({ isMobile }: { isMobile: boolean }) {
         transition: "all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
       }}
     >
-      {isHe ? "לתפריט" : "EXPLORE MENU"}
+      {label}
     </a>
   );
 }

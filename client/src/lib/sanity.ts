@@ -86,6 +86,18 @@ export const QUERIES = {
     reservationHe, reservationEn
   }`,
 
+  /** Hero section */
+  heroSection: `*[_type == "heroSection"][0]{
+    titleHe, titleEn,
+    subtitleHe, subtitleEn,
+    reserveBtnHe, reserveBtnEn, reserveBtnUrl,
+    menuBtnHe, menuBtnEn, menuBtnUrl,
+    logoImage{ asset->{ url } },
+    circleImage{ asset->{ url } },
+    backgroundImage{ asset->{ url } },
+    instagramUrl, facebookUrl, tiktokUrl
+  }`,
+
   /** Story page */
   storyPage: `*[_type == "storyPage"][0]{
     titleHe, titleEn, bodyHe, bodyEn,
@@ -174,6 +186,25 @@ export interface NavbarContent {
   brandNameEn?: string;
   reservationHe?: string;
   reservationEn?: string;
+}
+
+export interface HeroSection {
+  titleHe?: string;
+  titleEn?: string;
+  subtitleHe?: string;
+  subtitleEn?: string;
+  reserveBtnHe?: string;
+  reserveBtnEn?: string;
+  reserveBtnUrl?: string;
+  menuBtnHe?: string;
+  menuBtnEn?: string;
+  menuBtnUrl?: string;
+  logoImage?: SanityImage;
+  circleImage?: SanityImage;
+  backgroundImage?: SanityImage;
+  instagramUrl?: string;
+  facebookUrl?: string;
+  tiktokUrl?: string;
 }
 
 export interface GalleryImage {
