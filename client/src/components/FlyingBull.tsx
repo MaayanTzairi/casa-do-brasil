@@ -41,9 +41,10 @@ export default function FlyingBull() {
   const [isMobile, setIsMobile] = useState(false);
 
   // Fetch CMS data for circle image and logo
-  const { data: cms } = useSanityQuery<HeroSection>(QUERIES.heroSection);
-  const LOGO_URL  = cms?.logoImage?.asset?.url  || LOGO_URL_DEFAULT;
-  const PHOTO_URL = cms?.circleImage?.asset?.url || PHOTO_URL_DEFAULT;
+  const { data: cms, loading: cmsLoading } = useSanityQuery<HeroSection>(QUERIES.heroSection);
+  // Only use fallback if CMS has loaded and returned no image (not while still loading)
+  const LOGO_URL  = !cmsLoading ? (cms?.logoImage?.asset?.url  || LOGO_URL_DEFAULT) : (cms?.logoImage?.asset?.url  || null);
+  const PHOTO_URL = !cmsLoading ? (cms?.circleImage?.asset?.url || PHOTO_URL_DEFAULT) : (cms?.circleImage?.asset?.url || null);
 
   // Desktop positions
   const [dHeroPos, setDHeroPos] = useState<{ x: number; y: number } | null>(null);
@@ -142,10 +143,10 @@ export default function FlyingBull() {
           position: "fixed", left: circleX, top: circleY,
           width: circleSize, height: circleSize,
           borderRadius: "50%", overflow: "hidden",
-          opacity: circleAlpha, pointerEvents: "none", zIndex: 57,
+          opacity: PHOTO_URL ? circleAlpha : 0, pointerEvents: "none", zIndex: 57,
           boxShadow: "0 8px 48px rgba(0,0,0,0.55)",
         }}>
-          <img src={PHOTO_URL} alt="" aria-hidden="true"
+          <img src={PHOTO_URL || ''} alt="" aria-hidden="true"
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
           <div style={{
             position: "absolute", inset: 0,
@@ -193,13 +194,15 @@ export default function FlyingBull() {
         </svg>
 
         {/* Bull */}
-        <img src={LOGO_URL} alt="Casa do Brasil" aria-hidden="true" style={{
-          position: "fixed", left: bullX, top: bullY,
-          width: bullSz, height: "auto", objectFit: "contain",
-          zIndex: 60, pointerEvents: "none",
-          filter: `drop-shadow(0 4px 20px rgba(0,0,0,${lerp(0.5, 0, t)}))`,
-          willChange: "left, top, width",
-        }} />
+        {LOGO_URL && (
+          <img src={LOGO_URL} alt="Casa do Brasil" aria-hidden="true" style={{
+            position: "fixed", left: bullX, top: bullY,
+            width: bullSz, height: "auto", objectFit: "contain",
+            zIndex: 60, pointerEvents: "none",
+            filter: `drop-shadow(0 4px 20px rgba(0,0,0,${lerp(0.5, 0, t)}))`,
+            willChange: "left, top, width",
+          }} />
+        )}
       </>
     );
   }
@@ -227,10 +230,10 @@ export default function FlyingBull() {
           position: "fixed", left: circleX, top: circleY,
           width: circleSize, height: circleSize,
           borderRadius: "50%", overflow: "hidden",
-          opacity: circleAlpha, pointerEvents: "none", zIndex: 57,
+          opacity: PHOTO_URL ? circleAlpha : 0, pointerEvents: "none", zIndex: 57,
           boxShadow: "0 6px 32px rgba(0,0,0,0.50)",
         }}>
-          <img src={PHOTO_URL} alt="" aria-hidden="true"
+          <img src={PHOTO_URL || ''} alt="" aria-hidden="true"
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
           <div style={{
             position: "absolute", inset: 0,
@@ -275,13 +278,15 @@ export default function FlyingBull() {
         </svg>
 
         {/* Bull — mobile */}
-        <img src={LOGO_URL} alt="Casa do Brasil" aria-hidden="true" style={{
-          position: "fixed", left: bullX, top: bullY,
-          width: bullSz, height: "auto", objectFit: "contain",
-          zIndex: 60, pointerEvents: "none",
-          filter: `drop-shadow(0 3px 14px rgba(0,0,0,${lerp(0.5, 0, t)}))`,
-          willChange: "left, top, width",
-        }} />
+        {LOGO_URL && (
+          <img src={LOGO_URL} alt="Casa do Brasil" aria-hidden="true" style={{
+            position: "fixed", left: bullX, top: bullY,
+            width: bullSz, height: "auto", objectFit: "contain",
+            zIndex: 60, pointerEvents: "none",
+            filter: `drop-shadow(0 3px 14px rgba(0,0,0,${lerp(0.5, 0, t)}))`,
+            willChange: "left, top, width",
+          }} />
+        )}
       </>
     );
   }
