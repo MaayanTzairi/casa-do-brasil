@@ -129,6 +129,20 @@ export const QUERIES = {
     card2BtnHe, card2BtnEn, card2BtnUrl
   }`,
 
+  /** Our Gallery section (home page) */
+  ourGallery: `*[_type == "ourGallery"][0]{
+    sectionLabelHe, sectionLabelEn,
+    headlineLine1He, headlineLine2He, headlineLine3He,
+    headlineLine1En, headlineLine2En, headlineLine3En,
+    descriptionHe, descriptionEn,
+    btnLabelHe, btnLabelEn, btnUrl,
+    image1{ asset->{ url } },
+    image2{ asset->{ url } },
+    image3{ asset->{ url } },
+    image4{ asset->{ url } },
+    image5{ asset->{ url } }
+  }`,
+
   /** Story page */
   storyPage: `*[_type == "storyPage"][0]{
     titleHe, titleEn, bodyHe, bodyEn,
@@ -292,6 +306,27 @@ export interface OurMenuSection {
   card2BtnHe?: string;
   card2BtnEn?: string;
   card2BtnUrl?: string;
+}
+
+export interface OurGallerySection {
+  sectionLabelHe?: string;
+  sectionLabelEn?: string;
+  headlineLine1He?: string;
+  headlineLine2He?: string;
+  headlineLine3He?: string;
+  headlineLine1En?: string;
+  headlineLine2En?: string;
+  headlineLine3En?: string;
+  descriptionHe?: string;
+  descriptionEn?: string;
+  btnLabelHe?: string;
+  btnLabelEn?: string;
+  btnUrl?: string;
+  image1?: SanityImage;
+  image2?: SanityImage;
+  image3?: SanityImage;
+  image4?: SanityImage;
+  image5?: SanityImage;
 }
 
 export interface GalleryImage {
