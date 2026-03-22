@@ -11,6 +11,7 @@ import {
   getMenuCategories, createMenuCategory, updateMenuCategory, deleteMenuCategory,
   getMenuItems, createMenuItem, updateMenuItem, deleteMenuItem,
   getGalleryImages, createGalleryImage, updateGalleryImage, deleteGalleryImage,
+  getFooterContent, upsertFooterContent,
 } from "../db";
 
 // Admin guard middleware
@@ -240,4 +241,34 @@ export const cmsRouter = router({
   })).mutation(({ input: { id, ...data } }) => updateGalleryImage(id, data)),
 
   deleteGalleryImage: adminProcedure.input(z.object({ id: z.number() })).mutation(({ input }) => deleteGalleryImage(input.id)),
+
+  // Footer Content
+  getFooter: publicProcedure.query(() => getFooterContent()),
+  updateFooter: adminProcedure.input(z.object({
+    logoUrl: z.string().optional(),
+    findUsLabelHe: z.string().optional(),
+    findUsLabelEn: z.string().optional(),
+    addressHe: z.string().optional(),
+    addressEn: z.string().optional(),
+    neighborhoodHe: z.string().optional(),
+    neighborhoodEn: z.string().optional(),
+    phone: z.string().optional(),
+    hoursLabelHe: z.string().optional(),
+    hoursLabelEn: z.string().optional(),
+    hoursDaysHe: z.string().optional(),
+    hoursDaysEn: z.string().optional(),
+    hoursTimeHe: z.string().optional(),
+    hoursTimeEn: z.string().optional(),
+    copyrightHe: z.string().optional(),
+    copyrightEn: z.string().optional(),
+    privacyLabelHe: z.string().optional(),
+    privacyLabelEn: z.string().optional(),
+    privacyUrl: z.string().optional(),
+    accessibilityLabelHe: z.string().optional(),
+    accessibilityLabelEn: z.string().optional(),
+    accessibilityUrl: z.string().optional(),
+    instagramUrl: z.string().optional(),
+    facebookUrl: z.string().optional(),
+    tiktokUrl: z.string().optional(),
+  })).mutation(({ input }) => upsertFooterContent(input)),
 });

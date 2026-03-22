@@ -10,6 +10,13 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import NavbarEditor from "./admin/NavbarEditor";
+import FooterEditor from "./admin/FooterEditor";
+import HeroEditor from "./admin/HeroEditor";
+import OurStoryEditor from "./admin/OurStoryEditor";
+import OurMenuEditor from "./admin/OurMenuEditor";
+import GallerySectionEditor from "./admin/GallerySectionEditor";
+import StatisticsEditor from "./admin/StatisticsEditor";
+import ReviewsEditor from "./admin/ReviewsEditor";
 import {
   Home,
   UtensilsCrossed,
@@ -427,6 +434,20 @@ function SectionContent({ sectionId }: { sectionId: SectionId }) {
   switch (sectionId) {
     case "navbar":
       return <NavbarEditor />;
+    case "footer":
+      return <FooterEditor />;
+    case "home-hero":
+      return <HeroEditor />;
+    case "home-story":
+      return <OurStoryEditor />;
+    case "home-menu":
+      return <OurMenuEditor />;
+    case "home-gallery":
+      return <GallerySectionEditor />;
+    case "home-statistics":
+      return <StatisticsEditor />;
+    case "home-reviews":
+      return <ReviewsEditor />;
     default:
       return <SectionPlaceholder sectionId={sectionId} />;
   }

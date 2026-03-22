@@ -219,3 +219,39 @@ export const galleryImages = mysqlTable("gallery_images", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
+
+// ── CMS: Footer Content ───────────────────────────────────────────────────────
+export const footerContent = mysqlTable("footer_content", {
+  id: int("id").autoincrement().primaryKey(),
+  // Logo
+  logoUrl: text("logoUrl"),
+  // Find Us section
+  findUsLabelHe: varchar("findUsLabelHe", { length: 64 }),
+  findUsLabelEn: varchar("findUsLabelEn", { length: 64 }),
+  addressHe: varchar("addressHe", { length: 255 }),
+  addressEn: varchar("addressEn", { length: 255 }),
+  neighborhoodHe: varchar("neighborhoodHe", { length: 255 }),
+  neighborhoodEn: varchar("neighborhoodEn", { length: 255 }),
+  phone: varchar("phone", { length: 32 }),
+  // Hours section
+  hoursLabelHe: varchar("hoursLabelHe", { length: 64 }),
+  hoursLabelEn: varchar("hoursLabelEn", { length: 64 }),
+  hoursDaysHe: varchar("hoursDaysHe", { length: 128 }),
+  hoursDaysEn: varchar("hoursDaysEn", { length: 128 }),
+  hoursTimeHe: varchar("hoursTimeHe", { length: 64 }),
+  hoursTimeEn: varchar("hoursTimeEn", { length: 64 }),
+  // Copyright & Legal links
+  copyrightHe: varchar("copyrightHe", { length: 255 }),
+  copyrightEn: varchar("copyrightEn", { length: 255 }),
+  privacyLabelHe: varchar("privacyLabelHe", { length: 128 }),
+  privacyLabelEn: varchar("privacyLabelEn", { length: 128 }),
+  privacyUrl: varchar("privacyUrl", { length: 512 }),
+  accessibilityLabelHe: varchar("accessibilityLabelHe", { length: 128 }),
+  accessibilityLabelEn: varchar("accessibilityLabelEn", { length: 128 }),
+  accessibilityUrl: varchar("accessibilityUrl", { length: 512 }),
+  // Social media
+  instagramUrl: varchar("instagramUrl", { length: 512 }),
+  facebookUrl: varchar("facebookUrl", { length: 512 }),
+  tiktokUrl: varchar("tiktokUrl", { length: 512 }),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});

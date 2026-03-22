@@ -22,6 +22,13 @@
       "when": 1774181895850,
       "tag": "0002_rare_barracuda",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1774183299883,
+      "tag": "0003_dapper_lionheart",
+      "breakpoints": true
     }
   ]
 }

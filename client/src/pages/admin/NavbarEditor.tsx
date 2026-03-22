@@ -147,47 +147,50 @@ export default function NavbarEditor() {
 
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "success" | "error">("idle");
 
-  // Form state
-  const [form, setForm] = useState({
-    menuHe: "", menuEn: "",
-    storyHe: "", storyEn: "",
-    galleryHe: "", galleryEn: "",
-    faqHe: "", faqEn: "",
-    contactHe: "", contactEn: "",
-    brandNameHe: "", brandNameEn: "",
-    reservationHe: "", reservationEn: "",
-    reservationUrl: "",
-    menuHref: "",
-    storyHref: "",
-    galleryHref: "",
-    faqHref: "",
-    contactHref: "",
-  });
+  // Real default values (mirrors Navbar.tsx DEFAULTS)
+  const NAVBAR_DEFAULTS = {
+    menuHe: "תפריט", menuEn: "MENU",
+    storyHe: "סיפור", storyEn: "STORY",
+    galleryHe: "גלריה", galleryEn: "GALLERY",
+    faqHe: "שאלות", faqEn: "FAQ",
+    contactHe: "צור קשר", contactEn: "CONTACT",
+    brandNameHe: "קאסה דו ברזיל", brandNameEn: "Casa do Brasil",
+    reservationHe: "הזמנת מקום", reservationEn: "RESERVATIONS",
+    reservationUrl: "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73",
+    menuHref: "/menu",
+    storyHref: "/story",
+    galleryHref: "/gallery",
+    faqHref: "/faq",
+    contactHref: "#contact",
+  };
 
-  // Sync CMS data into form when loaded
+  // Form state — initialized with real defaults
+  const [form, setForm] = useState(NAVBAR_DEFAULTS);
+
+  // Sync CMS data into form when loaded (CMS values override defaults)
   useEffect(() => {
     if (!cms) return;
     setForm({
-      menuHe: cms.menuHe ?? "",
-      menuEn: cms.menuEn ?? "",
-      storyHe: cms.storyHe ?? "",
-      storyEn: cms.storyEn ?? "",
-      galleryHe: cms.galleryHe ?? "",
-      galleryEn: cms.galleryEn ?? "",
-      faqHe: cms.faqHe ?? "",
-      faqEn: cms.faqEn ?? "",
-      contactHe: cms.contactHe ?? "",
-      contactEn: cms.contactEn ?? "",
-      brandNameHe: cms.brandNameHe ?? "",
-      brandNameEn: cms.brandNameEn ?? "",
-      reservationHe: cms.reservationHe ?? "",
-      reservationEn: cms.reservationEn ?? "",
-      reservationUrl: cms.reservationUrl ?? "",
-      menuHref: cms.menuHref ?? "",
-      storyHref: cms.storyHref ?? "",
-      galleryHref: cms.galleryHref ?? "",
-      faqHref: cms.faqHref ?? "",
-      contactHref: cms.contactHref ?? "",
+      menuHe: cms.menuHe || NAVBAR_DEFAULTS.menuHe,
+      menuEn: cms.menuEn || NAVBAR_DEFAULTS.menuEn,
+      storyHe: cms.storyHe || NAVBAR_DEFAULTS.storyHe,
+      storyEn: cms.storyEn || NAVBAR_DEFAULTS.storyEn,
+      galleryHe: cms.galleryHe || NAVBAR_DEFAULTS.galleryHe,
+      galleryEn: cms.galleryEn || NAVBAR_DEFAULTS.galleryEn,
+      faqHe: cms.faqHe || NAVBAR_DEFAULTS.faqHe,
+      faqEn: cms.faqEn || NAVBAR_DEFAULTS.faqEn,
+      contactHe: cms.contactHe || NAVBAR_DEFAULTS.contactHe,
+      contactEn: cms.contactEn || NAVBAR_DEFAULTS.contactEn,
+      brandNameHe: cms.brandNameHe || NAVBAR_DEFAULTS.brandNameHe,
+      brandNameEn: cms.brandNameEn || NAVBAR_DEFAULTS.brandNameEn,
+      reservationHe: cms.reservationHe || NAVBAR_DEFAULTS.reservationHe,
+      reservationEn: cms.reservationEn || NAVBAR_DEFAULTS.reservationEn,
+      reservationUrl: cms.reservationUrl || NAVBAR_DEFAULTS.reservationUrl,
+      menuHref: cms.menuHref || NAVBAR_DEFAULTS.menuHref,
+      storyHref: cms.storyHref || NAVBAR_DEFAULTS.storyHref,
+      galleryHref: cms.galleryHref || NAVBAR_DEFAULTS.galleryHref,
+      faqHref: cms.faqHref || NAVBAR_DEFAULTS.faqHref,
+      contactHref: cms.contactHref || NAVBAR_DEFAULTS.contactHref,
     });
   }, [cms]);
 

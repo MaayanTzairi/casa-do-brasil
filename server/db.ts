@@ -102,6 +102,7 @@ import {
   menuCategories,
   menuItems,
   galleryImages,
+  footerContent,
 } from "../drizzle/schema";
 
 async function getDbInstance() {
@@ -295,4 +296,22 @@ export async function updateGalleryImage(id: number, data: Partial<typeof galler
 export async function deleteGalleryImage(id: number) {
   const db = await getDbInstance();
   await db.delete(galleryImages).where(eq(galleryImages.id, id));
+}
+
+// ── Footer Content ────────────────────────────────────────────────────────────
+export async function getFooterContent() {
+  const db = await getDbInstance();
+  const rows = await db.select().from(footerContent).limit(1);
+  return rows[0] ?? null;
+}
+
+export async function upsertFooterContent(data: Partial<typeof footerContent.$inferInsert>) {
+  const db = await getDbInstance();
+  const existing = await getFooterContent();
+  if (existing) {
+    await db.update(footerContent).set(data).where(eq(footerContent.id, existing.id));
+  } else {
+    await db.insert(footerContent).values(data as typeof footerContent.$inferInsert);
+  }
+  return getFooterContent();
 }

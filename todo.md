@@ -37,3 +37,10 @@
 - [ ] Navbar editor: center logo text field
 - [ ] Navbar editor: reservation button text + URL
 - [ ] Navbar editor: live mini-preview panel
+
+## Current Sprint
+- [ ] Fix Navbar editor to show real DB values (not placeholders)
+- [ ] Add Footer schema fields to drizzle/schema.ts
+- [ ] Add Footer tRPC procedures (getFooter, updateFooter)
+- [ ] Build Footer CMS editor with bilingual fields + logo upload
+- [ ] Logo upload: convert to WebP, max 200KB, store in S3
