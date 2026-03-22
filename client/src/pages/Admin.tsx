@@ -590,15 +590,14 @@ export default function Admin() {
   if (user.role !== "admin") return <NoAccessScreen />;
 
   return (
-    // RTL: sidebar on the right, content on the left
-    <div className="flex h-screen overflow-hidden flex-row-reverse" dir="rtl">
+    <div className="flex h-screen overflow-hidden flex-row">
+      <ContentArea activeSection={activeSection} />
       <Sidebar
         collapsed={collapsed}
         onToggle={() => setCollapsed((c) => !c)}
         activeSection={activeSection}
         onSelectSection={setActiveSection}
       />
-      <ContentArea activeSection={activeSection} />
     </div>
   );
 }
