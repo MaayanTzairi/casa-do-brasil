@@ -16,6 +16,7 @@ const StoryPage = lazy(() => import("./pages/StoryPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const PlaylistPage = lazy(() => import("./pages/PlaylistPage"));
 const FAQPage = lazy(() => import("./pages/FAQPage"));
+const Admin = lazy(() => import("./pages/Admin"));
 
 // Minimal loading fallback — keeps the background colour consistent
 function PageLoader() {
@@ -56,6 +57,7 @@ function Router() {
         <Route path={"/story"} component={StoryPage} />
         <Route path={"/playlist"} component={PlaylistPage} />
         <Route path={"/faq"} component={FAQPage} />
+        <Route path={"/admin"} component={Admin} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>

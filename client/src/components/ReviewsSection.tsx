@@ -9,6 +9,7 @@
 import { useRef, useEffect, useState } from "react";
 import { useInViewCSS } from "@/hooks/useInViewCSS";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { trpc } from "@/lib/trpc";
 
 const GOLD = "#B9A167";
 const GOLD_R = "rgba(185,161,103,";
@@ -298,6 +299,18 @@ function ReviewCard({ review, isHe }: { review: Review; isHe: boolean }) {
 /* ─── MAIN SECTION ─── */
 export default function ReviewsSection() {
   const { isHe } = useLanguage();
+  const { data: statsData } = trpc.cms.getStatistics.useQuery();
+
+  // CMS values with hardcoded fallbacks
+  const customersValue = statsData?.customersValue ?? "2M";
+  const customersSuffix = isHe ? (statsData?.customersSuffixHe ?? "+") : (statsData?.customersSuffixEn ?? "+");
+  const customersLabel = isHe ? (statsData?.customersLabelHe ?? "לקוחות שמחו איתנו") : (statsData?.customersLabelEn ?? "Happy Guests");
+  const yearsValue = statsData?.yearsValue ?? "25";
+  const yearsSuffix = isHe ? (statsData?.yearsSuffixHe ?? "+") : (statsData?.yearsSuffixEn ?? "+");
+  const yearsLabel = isHe ? (statsData?.yearsLabelHe ?? "שנות מסורת") : (statsData?.yearsLabelEn ?? "Years of Brazilian Tradition");
+  const ratingValue = statsData?.ratingValue ?? "4.3";
+  const ratingSymbol = statsData?.ratingSymbol ?? "★";
+  const ratingCount = isHe ? (statsData?.ratingCountHe ?? "5,123 ביקורות") : (statsData?.ratingCountEn ?? "5,123 Google Reviews");
   const trackRef = useRef<HTMLDivElement>(null);
   const animRef = useRef<number>(0);
   const posRef = useRef<number>(0);
@@ -374,11 +387,11 @@ export default function ReviewsSection() {
           {/* Stat 1 — Guests */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: mobile ? "0.3rem" : "0.5rem", padding: mobile ? "0 0.5rem" : "0 1.5rem" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: BORDEAUX, lineHeight: 1, letterSpacing: "-0.02em" }}>2M</span>
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: GOLD, lineHeight: 1 }}>+</span>
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: BORDEAUX, lineHeight: 1, letterSpacing: "-0.02em" }}>{customersValue}</span>
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: GOLD, lineHeight: 1 }}>{customersSuffix}</span>
             </div>
             <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "0.6rem" : "clamp(11px, 0.82vw, 13px)", color: "rgba(62,4,9,0.45)", letterSpacing: mobile ? "0.08em" : "0.18em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3 }}>
-              {isHe ? "לקוחות שמחו איתנו" : (mobile ? "Happy\nGuests" : "Happy Guests")}
+              {customersLabel}
             </span>
           </div>
 
@@ -388,11 +401,11 @@ export default function ReviewsSection() {
           {/* Stat 2 — Years */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: mobile ? "0.3rem" : "0.5rem", padding: mobile ? "0 0.5rem" : "0 1.5rem" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: BORDEAUX, lineHeight: 1, letterSpacing: "-0.02em" }}>25</span>
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: GOLD, lineHeight: 1 }}>+</span>
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: BORDEAUX, lineHeight: 1, letterSpacing: "-0.02em" }}>{yearsValue}</span>
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: GOLD, lineHeight: 1 }}>{yearsSuffix}</span>
             </div>
             <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "0.6rem" : "clamp(11px, 0.82vw, 13px)", color: "rgba(62,4,9,0.45)", letterSpacing: mobile ? "0.08em" : "0.18em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3 }}>
-              {isHe ? "שנות מסורת" : (mobile ? "Years of\nTradition" : "Years of Brazilian Tradition")}
+              {yearsLabel}
             </span>
           </div>
 
@@ -403,8 +416,8 @@ export default function ReviewsSection() {
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: mobile ? "0.3rem" : "0.5rem", padding: mobile ? "0 0.5rem" : "0 1.5rem" }}>
             {/* Number + star */}
             <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: BORDEAUX, lineHeight: 1, letterSpacing: "-0.02em" }}>4.3</span>
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: GOLD, lineHeight: 1 }}>★</span>
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: BORDEAUX, lineHeight: 1, letterSpacing: "-0.02em" }}>{ratingValue}</span>
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: GOLD, lineHeight: 1 }}>{ratingSymbol}</span>
             </div>
             {/* Sub-line: review count + Google badge */}
             <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", flexWrap: mobile ? "wrap" : "nowrap", justifyContent: "center" }}>
@@ -417,7 +430,7 @@ export default function ReviewsSection() {
                 </svg>
               )}
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "0.6rem" : "clamp(11px, 0.82vw, 13px)", color: "rgba(62,4,9,0.45)", letterSpacing: mobile ? "0.06em" : "0.12em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3 }}>
-                {isHe ? "5,123 ביקורות" : (mobile ? "5,123\nGoogle" : "5,123 Google Reviews")}
+                {ratingCount}
               </span>
             </div>
           </div>

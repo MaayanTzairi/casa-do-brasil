@@ -2,11 +2,11 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
-import { sanityRouter } from "./routers/sanity";
+import { cmsRouter } from "./routers/cms";
 
 export const appRouter = router({
   system: systemRouter,
-  sanity: sanityRouter,
+  cms: cmsRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {

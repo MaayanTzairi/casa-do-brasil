@@ -1,23 +1,26 @@
 # Casa do Brasil — Project TODO
 
-## CMS Integration
+## CMS Migration (Sanity → Built-in Admin Panel)
 
-- [x] Sanity Studio setup and deployed
-- [x] Navbar schema connected to CMS
-- [x] Hero section schema and component connected to CMS
-- [x] Our Story section schema created (ourStory.ts)
-- [x] Our Story section component connected to CMS (CasaVibesSection.tsx)
+- [x] Remove all Sanity CMS code from the project
+- [x] Create database schema for all editable content sections (11 tables)
+- [x] Create tRPC CMS router with public read + admin write endpoints
+- [x] Create Admin Panel page (/admin)
+- [x] Add /admin route to App.tsx
+- [x] Connect HeroSection to tRPC CMS
+- [x] Connect CasaVibesSection (Our Story) to tRPC CMS
+- [x] Connect MenuSection to tRPC CMS
+- [x] Connect GallerySection to tRPC CMS
+- [x] Connect ReviewsSection (Statistics) to tRPC CMS
+- [x] Connect Navbar to tRPC CMS
+- [x] Connect FlyingBull to tRPC CMS
+- [x] Push database migrations (11 tables created)
+- [x] Verify admin user exists (Maayan Tzairi = admin)
 
-## Pending CMS Sections
+## Pending
 
-- [ ] Gallery section connected to CMS
-- [ ] Menu section connected to CMS
-- [ ] Numbers/Stats section connected to CMS
-- [ ] Customer testimonials connected to CMS
-- [ ] Footer connected to CMS
-
-## Content Population
-
-- [ ] Client to upload real images for Our Story section (image1, image2)
-- [ ] Client to enter real social media URLs in Hero section
-- [ ] Client to populate all bilingual text fields in Studio
+- [ ] Test Admin Panel UI end-to-end
+- [ ] Add image upload support to Admin Panel
+- [ ] Connect Footer to CMS (phone, email, address, social links)
+- [ ] Add settings section to Admin Panel (restaurant name, contact info)
+- [ ] Client to populate all content via Admin Panel

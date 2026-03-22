@@ -11,7 +11,18 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useSanityQuery, QUERIES, type NavbarContent } from "@/lib/sanity";
+import { trpc } from "@/lib/trpc";
+
+// NavbarContent type defined locally
+interface NavbarContent {
+  menuHe?: string; menuEn?: string;
+  storyHe?: string; storyEn?: string;
+  galleryHe?: string; galleryEn?: string;
+  faqHe?: string; faqEn?: string;
+  contactHe?: string; contactEn?: string;
+  brandNameHe?: string; brandNameEn?: string;
+  reservationHe?: string; reservationEn?: string;
+}
 
 /** Navigate to a hash link, handling cross-page navigation */
 function navigateToHash(href: string, e: React.MouseEvent) {
@@ -268,8 +279,8 @@ export default function Navbar({
   const { lang } = useLanguage();
   const isHe = lang === "he";
 
-  // Fetch navbar text from Sanity CMS
-  const { data: cmsNavbar } = useSanityQuery<NavbarContent>(QUERIES.navbar);
+  // Fetch navbar text from CMS
+  const { data: cmsNavbar } = trpc.cms.getNavbar.useQuery();
 
   // Merge CMS values with defaults (CMS wins when available)
   const t: Required<NavbarContent> = {

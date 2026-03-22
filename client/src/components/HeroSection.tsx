@@ -11,7 +11,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useSanityQuery, QUERIES, type HeroSection as HeroSectionData } from "@/lib/sanity";
+import { trpc } from "@/lib/trpc";
+
 
 const HERO_IMAGE_DEFAULT =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main-Xjsh9uMVYH6frhxTU2HJ4c.webp";
@@ -44,8 +45,9 @@ export default function HeroSection() {
   const [isMobile, setIsMobile] = useState(false);
   const { isHe } = useLanguage();
 
-  // Fetch CMS data
-  const { data: cms } = useSanityQuery<HeroSectionData>(QUERIES.heroSection);
+  // Fetch from internal CMS
+  const { data: cmsRaw } = trpc.cms.getHeroSection.useQuery();
+  const cms = cmsRaw as any;
 
   // Merge CMS with fallbacks
   const t = {
@@ -65,7 +67,7 @@ export default function HeroSection() {
   };
 
   // Background image — use CMS if available, else default
-  const bgImage = cms?.backgroundImage?.asset?.url || HERO_IMAGE_DEFAULT;
+  const bgImage = cms?.backgroundImageUrl || HERO_IMAGE_DEFAULT;
 
   // Title words — split by space for the stacked animation
   const titleWords = (isHe ? t.titleHe : t.titleEn).split(" ");
@@ -100,7 +102,7 @@ export default function HeroSection() {
       <div ref={imgWrapRef} className="absolute inset-0 w-full h-full" style={{ willChange: "transform" }}>
         <img
           src={bgImage}
-          srcSet={cms?.backgroundImage?.asset?.url ? undefined : `${HERO_IMAGE_SM_DEFAULT} 900w, ${HERO_IMAGE_DEFAULT} 1920w`}
+          srcSet={cms?.backgroundImageUrl ? undefined : `${HERO_IMAGE_SM_DEFAULT} 900w, ${HERO_IMAGE_DEFAULT} 1920w`}
           sizes="100vw"
           alt="Casa do Brasil — Brazilian Grill and Churrascaria in Eilat"
           fetchPriority="high"

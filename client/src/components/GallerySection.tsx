@@ -7,7 +7,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useInViewCSS } from "@/hooks/useInViewCSS";
-import { useSanityQuery, QUERIES, OurGallerySection } from "@/lib/sanity";
+import { trpc } from "@/lib/trpc";
 
 const GOLD = "#B9A167";
 const GOLD_R = "rgba(185,161,103,";
@@ -58,7 +58,8 @@ export default function GallerySection() {
   const [mobile, setMobile] = useState(false);
 
   // Fetch CMS data
-  const { data: cms } = useSanityQuery<OurGallerySection>(QUERIES.ourGallery);
+  const { data: cmsRaw } = trpc.cms.getOurGallery.useQuery();
+  const cms = cmsRaw as any;
 
   // ── Derived values with fallbacks ──
   const sectionLabel = isHe
@@ -89,11 +90,11 @@ export default function GallerySection() {
 
   // Build images array from CMS or fallback
   const images = [
-    cms?.image1?.asset?.url ?? FALLBACK_IMAGES[0],
-    cms?.image2?.asset?.url ?? FALLBACK_IMAGES[1],
-    cms?.image3?.asset?.url ?? FALLBACK_IMAGES[2],
-    cms?.image4?.asset?.url ?? FALLBACK_IMAGES[3],
-    cms?.image5?.asset?.url ?? FALLBACK_IMAGES[4],
+    cms?.image1Url ?? FALLBACK_IMAGES[0],
+    cms?.image2Url ?? FALLBACK_IMAGES[1],
+    cms?.image3Url ?? FALLBACK_IMAGES[2],
+    cms?.image4Url ?? FALLBACK_IMAGES[3],
+    cms?.image5Url ?? FALLBACK_IMAGES[4],
   ];
 
   useEffect(() => {

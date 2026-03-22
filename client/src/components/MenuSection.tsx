@@ -7,7 +7,7 @@
 import { useRef, useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useInViewCSS } from "@/hooks/useInViewCSS";
-import { useSanityQuery, QUERIES, type OurMenuSection } from "@/lib/sanity";
+import { trpc } from "@/lib/trpc";
 
 const CHURRASCARIA_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-churrascaria-v2_v2_cb04fc5f.webp";
@@ -134,7 +134,8 @@ export default function MenuSection() {
   const [mobile, setMobile] = useState(false);
   const { isHe } = useLanguage();
 
-  const { data: cms } = useSanityQuery<OurMenuSection>(QUERIES.ourMenu);
+  const { data: cmsRaw } = trpc.cms.getOurMenu.useQuery();
+  const cms = cmsRaw as any;
 
   useEffect(() => {
     const fn = () => setMobile(window.innerWidth < 900);
@@ -151,14 +152,14 @@ export default function MenuSection() {
   const ctaBtnUrl   = cms?.ctaBtnUrl ?? "/menu";
 
   // Card 1
-  const card1Img    = cms?.card1Image?.asset?.url ?? CHURRASCARIA_IMG;
+  const card1Img    = cms?.card1ImageUrl ?? CHURRASCARIA_IMG;
   const card1Name   = isHe ? (cms?.card1NameHe ?? "צ'וראסקריה") : (cms?.card1NameEn ?? "CHURRASCARIA");
   const card1Type   = isHe ? (cms?.card1TypeHe ?? "הכול כלול") : (cms?.card1TypeEn ?? "All Inclusive");
   const card1Btn    = isHe ? (cms?.card1BtnHe ?? "לצפייה בתפריט") : (cms?.card1BtnEn ?? "View Menu");
   const card1Url    = cms?.card1BtnUrl ?? "/menu?tab=churrascaria";
 
   // Card 2
-  const card2Img    = cms?.card2Image?.asset?.url ?? CLASSIC_IMG;
+  const card2Img    = cms?.card2ImageUrl ?? CLASSIC_IMG;
   const card2Name   = isHe ? (cms?.card2NameHe ?? "עקריות") : (cms?.card2NameEn ?? "ENTRÉES");
   const card2Type   = isHe ? (cms?.card2TypeHe ?? "בחירות אישיות") : (cms?.card2TypeEn ?? "Individual Selections");
   const card2Btn    = isHe ? (cms?.card2BtnHe ?? "לצפייה בתפריט") : (cms?.card2BtnEn ?? "View Menu");

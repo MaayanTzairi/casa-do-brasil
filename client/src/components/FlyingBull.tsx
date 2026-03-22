@@ -12,7 +12,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useSanityQuery, QUERIES, type HeroSection } from "@/lib/sanity";
+import { trpc } from "@/lib/trpc";
 
 const LOGO_URL_DEFAULT =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_951b2ffb.png";
@@ -41,10 +41,11 @@ export default function FlyingBull() {
   const [isMobile, setIsMobile] = useState(false);
 
   // Fetch CMS data for circle image and logo
-  const { data: cms, loading: cmsLoading } = useSanityQuery<HeroSection>(QUERIES.heroSection);
+  const { data: cmsRaw, isLoading: cmsLoading } = trpc.cms.getHeroSection.useQuery();
+  const cms = cmsRaw as any;
   // Only use fallback if CMS has loaded and returned no image (not while still loading)
-  const LOGO_URL  = !cmsLoading ? (cms?.logoImage?.asset?.url  || LOGO_URL_DEFAULT) : (cms?.logoImage?.asset?.url  || null);
-  const PHOTO_URL = !cmsLoading ? (cms?.circleImage?.asset?.url || PHOTO_URL_DEFAULT) : (cms?.circleImage?.asset?.url || null);
+  const LOGO_URL  = !cmsLoading ? (cms?.logoImageUrl  || LOGO_URL_DEFAULT) : null;
+  const PHOTO_URL = !cmsLoading ? (cms?.circleImageUrl || PHOTO_URL_DEFAULT) : null;
 
   // Desktop positions
   const [dHeroPos, setDHeroPos] = useState<{ x: number; y: number } | null>(null);

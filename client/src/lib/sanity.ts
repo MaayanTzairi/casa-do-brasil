@@ -1,157 +1,18 @@
 /**
- * Frontend Sanity utility.
- *
- * All queries go through the tRPC backend proxy so the API token
- * is never exposed in the browser.
- *
- * Usage:
- *   import { useSanityQuery } from "@/lib/sanity";
- *
- *   const { data, isLoading } = useSanityQuery<Settings>(
- *     QUERIES.settings
- *   );
+ * Sanity CMS removed — content is now managed via the built-in admin panel.
+ * This file is kept as a stub so existing imports don't break during transition.
+ * All useSanityQuery calls return null data (components fall back to hardcoded defaults).
  */
 
-import { trpc } from "./trpc";
-
-// ── React hook ──────────────────────────────────────────────────────────────
-
-/**
- * React hook that fetches a GROQ query via the tRPC Sanity proxy.
- * Returns the same shape as tRPC useQuery.
- */
-export function useSanityQuery<T = unknown>(
-  groq: string,
-  params?: Record<string, unknown>,
-  options?: { enabled?: boolean }
-) {
-  return trpc.sanity.query.useQuery(
-    { groq, params },
-    { enabled: options?.enabled ?? true, staleTime: 1000 * 60 * 5 } // 5 min cache
-  ) as ReturnType<typeof trpc.sanity.query.useQuery> & { data: T | undefined };
+// Stub hook — always returns null, components use their hardcoded DEFAULTS
+export function useSanityQuery<T = unknown>(_groq: string, _params?: Record<string, unknown>) {
+  return { data: null as T | null, loading: false, error: null };
 }
 
-// ── GROQ Queries ────────────────────────────────────────────────────────────
+// Empty QUERIES object
+export const QUERIES: Record<string, string> = {};
 
-export const QUERIES = {
-  /** Global site settings */
-  settings: `*[_type == "settings"][0]{
-    restaurantNameHe, restaurantNameEn,
-    logo, phone, email,
-    addressHe, addressEn,
-    openingHoursHe, openingHoursEn,
-    instagramUrl, facebookUrl, tiktokUrl,
-    reservationUrl
-  }`,
-
-  /** Home page content */
-  homePage: `*[_type == "homePage"][0]{
-    heroSection{
-      backgroundImage, subtitleHe, subtitleEn,
-      ctaReserveHe, ctaReserveEn, ctaMenuHe, ctaMenuEn
-    },
-    stats[]{valueHe, valueEn, labelHe, labelEn},
-    reviews[]{nameHe, nameEn, dateHe, dateEn, textHe, textEn}
-  }`,
-
-  /** Menu categories (sorted) */
-  menuCategories: `*[_type == "menuCategory" && active == true] | order(sortOrder asc){
-    _id, nameHe, nameEn, descriptionHe, descriptionEn, sortOrder
-  }`,
-
-  /** All active menu items with category reference */
-  menuItems: `*[_type == "menuItem" && active == true] | order(category->sortOrder asc, sortOrder asc){
-    _id, nameHe, nameEn, descriptionHe, descriptionEn,
-    price, badges, sortOrder,
-    image{ asset->{ url, metadata{ dimensions } } },
-    "categoryId": category->_id,
-    "categoryNameHe": category->nameHe,
-    "categoryNameEn": category->nameEn
-  }`,
-
-  /** Gallery images (sorted) */
-  gallery: `*[_type == "galleryImage" && active == true] | order(sortOrder asc){
-    _id, captionHe, captionEn,
-    image{ asset->{ url, metadata{ dimensions } } }
-  }`,
-
-  /** Navbar text */
-  navbar: `*[_type == "navbar"][0]{
-    menuHe, menuEn,
-    storyHe, storyEn,
-    galleryHe, galleryEn,
-    faqHe, faqEn,
-    contactHe, contactEn,
-    brandNameHe, brandNameEn,
-    reservationHe, reservationEn
-  }`,
-
-  /** Hero section */
-  heroSection: `*[_type == "heroSection"][0]{
-    titleHe, titleEn,
-    subtitleHe, subtitleEn,
-    reserveBtnHe, reserveBtnEn, reserveBtnUrl,
-    menuBtnHe, menuBtnEn, menuBtnUrl,
-    logoImage{ asset->{ url } },
-    circleImage{ asset->{ url } },
-    backgroundImage{ asset->{ url } },
-    instagramUrl, facebookUrl, tiktokUrl
-  }`,
-
-  /** Our Story section (home page) */
-  ourStory: `*[_type == "ourStory"][0]{
-    labelHe, labelEn,
-    headlineLine1He, headlineLine2He, headlineLine3He,
-    headlineLine1En, headlineLine2En, headlineLine3En,
-    descriptionHe, descriptionEn,
-    ctaBtnHe, ctaBtnEn, ctaBtnUrl,
-    image1{ asset->{ url } },
-    image1LabelHe, image1LabelEn,
-    image1TitleHe, image1TitleEn,
-    image2{ asset->{ url } },
-    image2LabelHe, image2LabelEn,
-    image2TitleHe, image2TitleEn
-  }`,
-
-  /** Our Menu section (home page) */
-  ourMenu: `*[_type == "ourMenu"][0]{
-    labelHe, labelEn,
-    headlineLine1He, headlineLine2He, headlineLine3He,
-    headlineLine1En, headlineLine2En, headlineLine3En,
-    ctaBtnHe, ctaBtnEn, ctaBtnUrl,
-    card1Image{ asset->{ url } },
-    card1NameHe, card1NameEn,
-    card1TypeHe, card1TypeEn,
-    card1BtnHe, card1BtnEn, card1BtnUrl,
-    card2Image{ asset->{ url } },
-    card2NameHe, card2NameEn,
-    card2TypeHe, card2TypeEn,
-    card2BtnHe, card2BtnEn, card2BtnUrl
-  }`,
-
-  /** Our Gallery section (home page) */
-  ourGallery: `*[_type == "ourGallery"][0]{
-    sectionLabelHe, sectionLabelEn,
-    headlineLine1He, headlineLine2He, headlineLine3He,
-    headlineLine1En, headlineLine2En, headlineLine3En,
-    descriptionHe, descriptionEn,
-    btnLabelHe, btnLabelEn, btnUrl,
-    image1{ asset->{ url } },
-    image2{ asset->{ url } },
-    image3{ asset->{ url } },
-    image4{ asset->{ url } },
-    image5{ asset->{ url } }
-  }`,
-
-  /** Story page */
-  storyPage: `*[_type == "storyPage"][0]{
-    titleHe, titleEn, bodyHe, bodyEn,
-    images[]{ asset->{ url } },
-    quoteHe, quoteEn
-  }`,
-} as const;
-
-// ── TypeScript types ─────────────────────────────────────────────────────────
+// ── TypeScript type stubs ─────────────────────────────────────────────────────
 
 export interface SanityImageAsset {
   url: string;
@@ -176,44 +37,6 @@ export interface Settings {
   facebookUrl?: string;
   tiktokUrl?: string;
   reservationUrl?: string;
-}
-
-export interface Stat {
-  valueHe: string;
-  valueEn: string;
-  labelHe: string;
-  labelEn: string;
-}
-
-export interface Review {
-  nameHe: string;
-  nameEn?: string;
-  dateHe?: string;
-  dateEn?: string;
-  textHe: string;
-  textEn?: string;
-}
-
-export interface MenuItem {
-  _id: string;
-  nameHe: string;
-  nameEn: string;
-  descriptionHe?: string;
-  descriptionEn?: string;
-  price?: number;
-  badges?: string[];
-  image?: SanityImage;
-  categoryId: string;
-  categoryNameHe: string;
-  categoryNameEn: string;
-}
-
-export interface MenuCategory {
-  _id: string;
-  nameHe: string;
-  nameEn: string;
-  descriptionHe?: string;
-  descriptionEn?: string;
 }
 
 export interface NavbarContent {
@@ -329,9 +152,48 @@ export interface OurGallerySection {
   image5?: SanityImage;
 }
 
+export interface StatisticsSection {
+  customersValue?: string;
+  customersSuffixHe?: string;
+  customersSuffixEn?: string;
+  customersLabelHe?: string;
+  customersLabelEn?: string;
+  yearsValue?: string;
+  yearsSuffixHe?: string;
+  yearsSuffixEn?: string;
+  yearsLabelHe?: string;
+  yearsLabelEn?: string;
+  ratingValue?: string;
+  ratingSymbol?: string;
+  ratingCountHe?: string;
+  ratingCountEn?: string;
+}
+
 export interface GalleryImage {
   _id: string;
   captionHe?: string;
   captionEn?: string;
   image: SanityImage;
+}
+
+export interface MenuItem {
+  _id: string;
+  nameHe: string;
+  nameEn: string;
+  descriptionHe?: string;
+  descriptionEn?: string;
+  price?: number;
+  badges?: string[];
+  image?: SanityImage;
+  categoryId: string;
+  categoryNameHe: string;
+  categoryNameEn: string;
+}
+
+export interface MenuCategory {
+  _id: string;
+  nameHe: string;
+  nameEn: string;
+  descriptionHe?: string;
+  descriptionEn?: string;
 }

@@ -6,7 +6,7 @@
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useInViewCSS } from "@/hooks/useInViewCSS";
-import { useSanityQuery, QUERIES, OurStorySection } from "@/lib/sanity";
+import { trpc } from "@/lib/trpc";
 
 const MEAT_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/meat-v2_v2_c9250c58.webp";
@@ -56,7 +56,7 @@ export default function CasaVibesSection() {
   const { isHe } = useLanguage();
 
   // Fetch CMS data
-  const { data: cms } = useSanityQuery<OurStorySection>(QUERIES.ourStory);
+  const { data: cms } = trpc.cms.getOurStory.useQuery();
 
   // ── Derived values with fallbacks ──
   const label = isHe
@@ -86,8 +86,8 @@ export default function CasaVibesSection() {
   const ctaUrl = cms?.ctaBtnUrl ?? "/story";
 
   // Image 1
-  const img1Src = cms?.image1?.asset?.url ?? MEAT_URL;
-  const img1SrcSm = cms?.image1?.asset?.url ?? MEAT_URL_SM;
+  const img1Src = (cms as any)?.image1Url ?? MEAT_URL;
+  const img1SrcSm = (cms as any)?.image1Url ?? MEAT_URL_SM;
   const img1Label = isHe
     ? (cms?.image1LabelHe ?? "CHURRASCO")
     : (cms?.image1LabelEn ?? "CHURRASCO");
@@ -97,8 +97,8 @@ export default function CasaVibesSection() {
   const img1TitleLines = img1TitleRaw.split("\\n").join("\n").split("\n");
 
   // Image 2
-  const img2Src = cms?.image2?.asset?.url ?? CARNIVAL_URL;
-  const img2SrcSm = cms?.image2?.asset?.url ?? CARNIVAL_URL_SM;
+  const img2Src = (cms as any)?.image2Url ?? CARNIVAL_URL;
+  const img2SrcSm = (cms as any)?.image2Url ?? CARNIVAL_URL_SM;
   const img2Label = isHe
     ? (cms?.image2LabelHe ?? "CARNIVAL")
     : (cms?.image2LabelEn ?? "CARNIVAL");
@@ -209,7 +209,7 @@ export default function CasaVibesSection() {
               <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 24px 64px rgba(62,4,9,0.38), 0 8px 24px rgba(62,4,9,0.22)", borderRadius: "2px" }}>
                 <img
                   src={img1Src}
-                  srcSet={cms?.image1?.asset?.url ? undefined : `${img1SrcSm} 450w, ${img1Src} 800w`}
+                  srcSet={(cms as any)?.image1Url ? undefined : `${img1SrcSm} 450w, ${img1Src} 800w`}
                   sizes="(max-width:768px) 60vw, 58%"
                   alt={img1Label}
                   loading="lazy" decoding="async"
@@ -236,7 +236,7 @@ export default function CasaVibesSection() {
               <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 28px 72px rgba(62,4,9,0.42), 0 10px 28px rgba(62,4,9,0.25)", borderRadius: "2px" }}>
                 <img
                   src={img2Src}
-                  srcSet={cms?.image2?.asset?.url ? undefined : `${img2SrcSm} 450w, ${img2Src} 800w`}
+                  srcSet={(cms as any)?.image2Url ? undefined : `${img2SrcSm} 450w, ${img2Src} 800w`}
                   sizes="(max-width:768px) 56vw, 55%"
                   alt={img2Label}
                   loading="lazy" decoding="async"
