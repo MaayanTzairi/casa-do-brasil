@@ -589,15 +589,23 @@ export default function Admin() {
   if (!user) return <LoginScreen />;
   if (user.role !== "admin") return <NoAccessScreen />;
 
+  const sidebarWidth = collapsed ? 60 : 260;
+
   return (
-    <div className="flex h-screen overflow-hidden flex-row">
-      <ContentArea activeSection={activeSection} />
-      <Sidebar
-        collapsed={collapsed}
-        onToggle={() => setCollapsed((c) => !c)}
-        activeSection={activeSection}
-        onSelectSection={setActiveSection}
-      />
+    <div className="flex h-screen overflow-hidden" style={{ direction: "ltr" }}>
+      {/* Content fills remaining space on the LEFT */}
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <ContentArea activeSection={activeSection} />
+      </div>
+      {/* Sidebar fixed on the RIGHT */}
+      <div style={{ width: sidebarWidth, flexShrink: 0 }}>
+        <Sidebar
+          collapsed={collapsed}
+          onToggle={() => setCollapsed((c) => !c)}
+          activeSection={activeSection}
+          onSelectSection={setActiveSection}
+        />
+      </div>
     </div>
   );
 }
