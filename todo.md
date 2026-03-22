@@ -44,3 +44,7 @@
 - [ ] Add Footer tRPC procedures (getFooter, updateFooter)
 - [ ] Build Footer CMS editor with bilingual fields + logo upload
 - [ ] Logo upload: convert to WebP, max 200KB, store in S3
+
+## Navbar Visual Fixes
+- [x] Shrink center title font — smaller, perfectly centered, vertically aligned with nav links
+- [x] Mobile: shrink Reservations button width

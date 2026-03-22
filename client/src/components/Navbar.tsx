@@ -136,13 +136,13 @@ function LogoBadge({
         style={{
           fontFamily: "'Dancing Script', cursive",
           fontWeight: 600,
-          fontSize: "clamp(0.7rem, 2.5vw, 1.1rem)",
+          fontSize: "clamp(0.6rem, 1.5vw, 0.82rem)",
           letterSpacing: "0.03em",
           color: scrolled
             ? "rgba(145,118,60,0.9)"
             : "rgba(215,188,120,0.92)",
           whiteSpace: "nowrap",
-          maxWidth: "120px",
+          maxWidth: "96px",
           overflow: "hidden",
           textOverflow: "ellipsis",
           opacity: textOpacity,
@@ -395,14 +395,14 @@ export default function Navbar({
                 style={{
                   fontFamily: "'Heebo', sans-serif",
                   fontWeight: 700,
-                  fontSize: "0.65rem",
-                  letterSpacing: isHe ? "0.04em" : "0.14em",
+                  fontSize: "0.55rem",
+                  letterSpacing: isHe ? "0.02em" : "0.1em",
                   textTransform: "uppercase",
                   textDecoration: "none",
                   color: scrolled ? "#fff" : BORDEAUX,
                   background: scrolled ? BORDEAUX : "#fff",
                   border: `1.5px solid ${scrolled ? BORDEAUX : "#fff"}`,
-                  padding: "0.35rem 0.7rem",
+                  padding: "0.26rem 0.45rem",
                   whiteSpace: "nowrap",
                   transition: "all 0.3s ease",
                 }}
@@ -530,11 +530,11 @@ export default function Navbar({
                 transform: "translate(-50%, -50%)",
                 display: "flex",
                 alignItems: "center",
-                paddingTop: !scrolled ? "10px" : "0",
+                paddingTop: 0,
               }}
             >
               <LogoBadge
-                size={56}
+                size={48}
                 scrolled={scrolled}
                 brandName={brandName}
               />
