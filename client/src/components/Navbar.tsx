@@ -95,8 +95,8 @@ function LogoBadge({
     window.addEventListener("bullProgress", handler);
     return () => window.removeEventListener("bullProgress", handler);
   }, [showText]);
-  // Text opacity: full at p=0, gone at p=0.5 (faster on mobile so bull arrives in time)
-  const textOpacity = showText ? Math.max(0, 1 - bullP / 0.5) : 0;
+  // Text opacity: full at p=0, gone at p=0.75 — slower fade so text stays visible longer
+  const textOpacity = showText ? Math.max(0, 1 - bullP / 0.75) : 0;
   return (
     <div
       style={{
@@ -142,14 +142,12 @@ function LogoBadge({
             ? "rgba(145,118,60,0.9)"
             : "rgba(215,188,120,0.92)",
           whiteSpace: "nowrap",
-          maxWidth: "96px",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
+          overflow: "visible",
           opacity: textOpacity,
           pointerEvents: textOpacity > 0.05 ? "auto" : "none",
           lineHeight: 1,
           textShadow: scrolled ? "none" : "0 1px 8px rgba(0,0,0,0.35)",
-          transition: "color 0.4s ease, text-shadow 0.4s ease",
+          transition: "color 0.4s ease, text-shadow 0.4s ease, opacity 0.6s ease",
         }}
       >
         {brandName}
