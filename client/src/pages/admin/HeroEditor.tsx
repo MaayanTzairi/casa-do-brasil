@@ -60,14 +60,14 @@ function UrlField({ label, value, placeholder, onChange }: { label: string; valu
 }
 
 const DEFAULTS = {
-  titleHe: "ברוכים הבאים לקאסה דו ברזיל", titleEn: "Welcome to Casa do Brasil",
-  subtitleHe: "חוויית בשרים ברזילאית אותנטית באילת", subtitleEn: "Authentic Brazilian Steakhouse Experience in Eilat",
-  reserveBtnHe: "הזמנת מקום", reserveBtnEn: "RESERVE A TABLE",
+  titleHe: "CASA DO BRASIL", titleEn: "CASA DO BRASIL",
+  subtitleHe: "גריל ברזילאי — מוזיקה וצ'וראסקריה", subtitleEn: "Brazilian Grill - Music & Churrascaria",
+  reserveBtnHe: "הזמן שולחן", reserveBtnEn: "RESERVE A TABLE",
   reserveBtnUrl: "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73",
-  menuBtnHe: "לתפריט", menuBtnEn: "VIEW MENU",
-  menuBtnUrl: "/menu",
-  instagramUrl: "", facebookUrl: "", tiktokUrl: "",
-  backgroundImageUrl: "",
+  menuBtnHe: "לתפריט", menuBtnEn: "EXPLORE MENU",
+  menuBtnUrl: "#menu",
+  instagramUrl: "https://www.instagram.com", facebookUrl: "https://www.facebook.com", tiktokUrl: "https://www.tiktok.com",
+  backgroundImageUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_eb2aef7a.webp",
 };
 
 export default function HeroEditor() {

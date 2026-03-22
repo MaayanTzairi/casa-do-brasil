@@ -60,17 +60,17 @@ function UrlField({ label, value, placeholder, onChange }: { label: string; valu
 
 const DEFAULTS = {
   labelHe: "התפריט שלנו", labelEn: "OUR MENU",
-  headlineLine1He: "טעמים", headlineLine1En: "Flavors",
-  headlineLine2He: "מהלב", headlineLine2En: "from the",
-  headlineLine3He: "של ברזיל", headlineLine3En: "Heart of Brazil",
-  ctaBtnHe: "לתפריט המלא", ctaBtnEn: "VIEW FULL MENU",
+  headlineLine1He: "חווייה", headlineLine1En: "AUTHENTIC",
+  headlineLine2He: "ברזילאית", headlineLine2En: "BRAZILIAN",
+  headlineLine3He: "אותנטית", headlineLine3En: "EXPERIENCE",
+  ctaBtnHe: "התפריט המלא", ctaBtnEn: "Full Menu",
   ctaBtnUrl: "/menu",
-  card1ImageUrl: "", card1NameHe: "בשרים", card1NameEn: "Meats",
-  card1TypeHe: "מנות עיקריות", card1TypeEn: "Main Courses",
-  card1BtnHe: "לצפייה", card1BtnEn: "VIEW", card1BtnUrl: "/menu#meats",
-  card2ImageUrl: "", card2NameHe: "תוספות", card2NameEn: "Sides",
-  card2TypeHe: "מנות צד", card2TypeEn: "Side Dishes",
-  card2BtnHe: "לצפייה", card2BtnEn: "VIEW", card2BtnUrl: "/menu#sides",
+  card1ImageUrl: "", card1NameHe: "צ'וראסקריה", card1NameEn: "CHURRASCARIA",
+  card1TypeHe: "הכול כלול", card1TypeEn: "All Inclusive",
+  card1BtnHe: "לצפייה בתפריט", card1BtnEn: "View Menu", card1BtnUrl: "/menu?tab=churrascaria",
+  card2ImageUrl: "", card2NameHe: "עקריות", card2NameEn: "ENTRÉES",
+  card2TypeHe: "בחירות אישיות", card2TypeEn: "Individual Selections",
+  card2BtnHe: "לצפייה בתפריט", card2BtnEn: "View Menu", card2BtnUrl: "/menu?tab=classic",
 };
 
 export default function OurMenuEditor() {

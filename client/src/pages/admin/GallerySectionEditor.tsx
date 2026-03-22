@@ -59,12 +59,12 @@ function UrlField({ label, value, placeholder, onChange }: { label: string; valu
 }
 
 const DEFAULTS = {
-  sectionLabelHe: "הגלריה שלנו", sectionLabelEn: "OUR GALLERY",
-  headlineLine1He: "רגעים", headlineLine1En: "Moments",
-  headlineLine2He: "בלתי", headlineLine2En: "Unforgettable",
-  headlineLine3He: "נשכחים", headlineLine3En: "Experiences",
-  descriptionHe: "הצצה לעולם של קאסה דו ברזיל", descriptionEn: "A glimpse into the world of Casa do Brasil",
-  btnLabelHe: "גלריה מלאה", btnLabelEn: "FULL GALLERY",
+  sectionLabelHe: "גלריה", sectionLabelEn: "GALLERY",
+  headlineLine1He: "להיות באילת,", headlineLine1En: "BE IN EILAT,",
+  headlineLine2He: "ולהרגיש", headlineLine2En: "FEEL",
+  headlineLine3He: "בברזיל", headlineLine3En: "IN BRAZIL",
+  descriptionHe: "צלילים, ריחות וצבעים — הגלריה שלנו מזמינה אתכם להציץ לתוך הנשמה של קאסה דו ברזיל.", descriptionEn: "Sounds, aromas and colors — our gallery invites you to glimpse the soul of Casa do Brasil.",
+  btnLabelHe: "לגלריה המלאה", btnLabelEn: "Full Gallery",
   btnUrl: "/gallery",
   image1Url: "", image2Url: "", image3Url: "", image4Url: "", image5Url: "",
 };

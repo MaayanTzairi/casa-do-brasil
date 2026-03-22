@@ -59,15 +59,15 @@ function SingleField({ label, value, onChange, placeholder }: { label: string; v
 }
 
 const DEFAULTS = {
-  customersValue: "50,000+",
+  customersValue: "2M",
   customersSuffixHe: "+", customersSuffixEn: "+",
-  customersLabelHe: "לקוחות מרוצים", customersLabelEn: "Happy Customers",
-  yearsValue: "15",
-  yearsSuffixHe: "שנה", yearsSuffixEn: "Years",
-  yearsLabelHe: "שנות ניסיון", yearsLabelEn: "Years of Experience",
-  ratingValue: "4.8",
+  customersLabelHe: "לקוחות שמחו איתנו", customersLabelEn: "Happy Guests",
+  yearsValue: "25",
+  yearsSuffixHe: "+", yearsSuffixEn: "+",
+  yearsLabelHe: "שנות מסורת", yearsLabelEn: "Years of Brazilian Tradition",
+  ratingValue: "4.3",
   ratingSymbol: "★",
-  ratingCountHe: "מתוך 1,200+ ביקורות", ratingCountEn: "from 1,200+ reviews",
+  ratingCountHe: "5,123 ביקורות", ratingCountEn: "5,123 Google Reviews",
 };
 
 export default function StatisticsEditor() {

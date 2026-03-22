@@ -72,17 +72,17 @@ function UrlField({ label, value, placeholder, onChange }: { label: string; valu
 
 const DEFAULTS = {
   labelHe: "הסיפור שלנו", labelEn: "OUR STORY",
-  headlineLine1He: "מסורת", headlineLine1En: "A Tradition",
-  headlineLine2He: "של טעם", headlineLine2En: "of Flavor",
-  headlineLine3He: "ברזילאי", headlineLine3En: "from Brazil",
-  descriptionHe: "קאסה דו ברזיל נולדה מאהבה עמוקה לתרבות הברזילאית ולאמנות הצלייה.",
-  descriptionEn: "Casa do Brasil was born from a deep love for Brazilian culture and the art of grilling.",
-  ctaBtnHe: "קרא את הסיפור שלנו", ctaBtnEn: "READ OUR STORY",
+  headlineLine1He: "בשר.", headlineLine1En: "MEAT.",
+  headlineLine2He: "מוזיקה.", headlineLine2En: "MUSIC.",
+  headlineLine3He: "ברזיל.", headlineLine3En: "BRASIL.",
+  descriptionHe: "קאסה דו ברזיל היא יותר מארוחה — זו חגיגה. פושידו קוהידו אותנטי, שנחתך ליד השולחן על ידי הפאסדורס שלנו, בצירת הקצב, הצבע והנשמה של הקרנבל. כל ביקור הוא חג לכל החושים.",
+  descriptionEn: "Casa do Brasil is more than a meal — it is a celebration. Authentic Brazilian churrasco, carved tableside by our passadors, paired with the rhythm, color and soul of carnival. Every visit is a feast for all the senses.",
+  ctaBtnHe: "הסיפור של קאזה דו ברזיל", ctaBtnEn: "Casa Do Brasil Story",
   ctaBtnUrl: "/story",
-  image1Url: "", image1LabelHe: "מסעדה", image1LabelEn: "Restaurant",
-  image1TitleHe: "האווירה שלנו", image1TitleEn: "Our Atmosphere",
-  image2Url: "", image2LabelHe: "שף", image2LabelEn: "Chef",
-  image2TitleHe: "השף שלנו", image2TitleEn: "Our Chef",
+  image1Url: "", image1LabelHe: "CHURRASCO", image1LabelEn: "CHURRASCO",
+  image1TitleHe: "אמנות\nהאש", image1TitleEn: "THE ART\nOF FIRE",
+  image2Url: "", image2LabelHe: "CARNIVAL", image2LabelEn: "CARNIVAL",
+  image2TitleHe: "הנשמה\nשל ברזיל", image2TitleEn: "THE SOUL\nOF BRASIL",
 };
 
 export default function OurStoryEditor() {

@@ -55,3 +55,7 @@
 
 ## Sidebar Position Fix
 - [x] Move Admin CMS sidebar to right side of screen
+
+## CMS Real Defaults
+- [x] Seed DB with real values from all website components (Navbar, Hero, Story, Menu, Gallery, Statistics)
+- [x] All CMS editors show real current website values when DB is empty
