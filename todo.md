@@ -52,3 +52,6 @@
 ## Admin CMS RTL
 - [x] Convert Admin.tsx shell to full RTL (sidebar right, content left, all text RTL)
 - [x] Convert all editor components to RTL (labels, buttons, cards)
+
+## Sidebar Position Fix
+- [x] Move Admin CMS sidebar to right side of screen
