@@ -147,8 +147,8 @@ export default function FlyingBull() {
           opacity: PHOTO_URL ? circleAlpha : 0, pointerEvents: "none", zIndex: 57,
           boxShadow: "0 8px 48px rgba(0,0,0,0.55)",
         }}>
-          <img src={PHOTO_URL || ''} alt="" aria-hidden="true"
-            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          {PHOTO_URL && <img src={PHOTO_URL} alt="" aria-hidden="true"
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />}
           <div style={{
             position: "absolute", inset: 0,
             background: "radial-gradient(circle at 50% 60%, rgba(10,5,0,0.10) 0%, rgba(10,5,0,0.45) 100%)",
@@ -234,8 +234,8 @@ export default function FlyingBull() {
           opacity: PHOTO_URL ? circleAlpha : 0, pointerEvents: "none", zIndex: 57,
           boxShadow: "0 6px 32px rgba(0,0,0,0.50)",
         }}>
-          <img src={PHOTO_URL || ''} alt="" aria-hidden="true"
-            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          {PHOTO_URL && <img src={PHOTO_URL} alt="" aria-hidden="true"
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />}
           <div style={{
             position: "absolute", inset: 0,
             background: "radial-gradient(circle at 50% 60%, rgba(10,5,0,0.08) 0%, rgba(10,5,0,0.40) 100%)",

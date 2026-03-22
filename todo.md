@@ -59,3 +59,6 @@
 ## CMS Real Defaults
 - [x] Seed DB with real values from all website components (Navbar, Hero, Story, Menu, Gallery, Statistics)
 - [x] All CMS editors show real current website values when DB is empty
+
+## Bug Fixes
+- [x] Fix empty string src attribute error — guard all img tags to only render when URL is non-empty
