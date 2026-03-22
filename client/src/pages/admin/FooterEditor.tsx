@@ -570,9 +570,9 @@ export default function FooterEditor() {
           className="bg-[#8B1A1A] hover:bg-[#6d1414] text-white border-0 px-6"
         >
           {saveStatus === "saving" ? (
-            <><Loader2 className="w-4 h-4 mr-2 animate-spin" />שומר...</>
+            <><Loader2 className="w-4 h-4 ml-2 animate-spin" />שומר...</>
           ) : (
-            <><Save className="w-4 h-4 mr-2" />שמור שינויים</>
+            <><Save className="w-4 h-4 ml-2" />שמור שינויים</>
           )}
         </Button>
       </div>

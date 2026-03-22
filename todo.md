@@ -48,3 +48,7 @@
 ## Navbar Visual Fixes
 - [x] Shrink center title font — smaller, perfectly centered, vertically aligned with nav links
 - [x] Mobile: shrink Reservations button width
+
+## Admin CMS RTL
+- [x] Convert Admin.tsx shell to full RTL (sidebar right, content left, all text RTL)
+- [x] Convert all editor components to RTL (labels, buttons, cards)

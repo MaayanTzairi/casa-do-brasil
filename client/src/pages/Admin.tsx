@@ -1,7 +1,6 @@
 /**
  * CASA DO BRASIL — Admin Dashboard
- * Professional CMS interface with sidebar navigation
- * Organized by: Pages → Sections within each page
+ * Professional CMS interface with sidebar navigation — Full RTL
  */
 
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -24,10 +23,10 @@ import {
   Images,
   HelpCircle,
   LayoutTemplate,
-  PanelLeftClose,
-  PanelLeftOpen,
+  PanelRightClose,
+  PanelRightOpen,
   ChevronDown,
-  ChevronRight,
+  ChevronLeft,
   LogOut,
   ExternalLink,
   Loader2,
@@ -78,8 +77,8 @@ const NAV_PAGES: NavPage[] = [
     label: "גלובלי",
     icon: LayoutTemplate,
     sections: [
-      { id: "navbar", label: "Navbar — תפריט עליון", icon: Navigation },
-      { id: "footer", label: "Footer — פוטר", icon: Footprints },
+      { id: "navbar", label: "תפריט עליון — Navbar", icon: Navigation },
+      { id: "footer", label: "פוטר — Footer", icon: Footprints },
     ],
   },
   {
@@ -158,8 +157,9 @@ function Sidebar({
 
   return (
     <aside
+      dir="rtl"
       className={cn(
-        "flex flex-col h-screen bg-[#0f0f0f] border-r border-white/[0.08] transition-all duration-300 shrink-0",
+        "flex flex-col h-screen bg-[#0f0f0f] border-l border-white/[0.08] transition-all duration-300 shrink-0",
         collapsed ? "w-[60px]" : "w-[260px]"
       )}
     >
@@ -177,7 +177,7 @@ function Sidebar({
               <p className="text-white text-xs font-bold tracking-widest uppercase truncate">
                 Casa do Brasil
               </p>
-              <p className="text-white/40 text-[10px] tracking-wider">Admin CMS</p>
+              <p className="text-white/40 text-[10px] tracking-wider">ממשק ניהול</p>
             </div>
           </div>
         )}
@@ -191,9 +191,9 @@ function Sidebar({
           className="text-white/40 hover:text-white/80 transition-colors p-1 rounded shrink-0"
         >
           {collapsed ? (
-            <PanelLeftOpen className="w-4 h-4" />
+            <PanelRightOpen className="w-4 h-4" />
           ) : (
-            <PanelLeftClose className="w-4 h-4" />
+            <PanelRightClose className="w-4 h-4" />
           )}
         </button>
       </div>
@@ -214,7 +214,7 @@ function Sidebar({
                 onClick={() => togglePage(page.id)}
                 title={collapsed ? page.label : undefined}
                 className={cn(
-                  "w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md text-left transition-colors group",
+                  "w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md text-right transition-colors group",
                   hasActiveSectionInPage
                     ? "text-white/90"
                     : "text-white/50 hover:text-white/80 hover:bg-white/5",
@@ -231,13 +231,13 @@ function Sidebar({
                 />
                 {!collapsed && (
                   <>
-                    <span className="flex-1 text-xs font-semibold tracking-wide uppercase truncate">
+                    <span className="flex-1 text-xs font-semibold tracking-wide uppercase truncate text-right">
                       {page.label}
                     </span>
                     {isExpanded ? (
                       <ChevronDown className="w-3 h-3 text-white/30 shrink-0" />
                     ) : (
-                      <ChevronRight className="w-3 h-3 text-white/30 shrink-0" />
+                      <ChevronLeft className="w-3 h-3 text-white/30 shrink-0" />
                     )}
                   </>
                 )}
@@ -245,7 +245,7 @@ function Sidebar({
 
               {/* Sections list */}
               {!collapsed && isExpanded && page.sections && (
-                <div className="mt-0.5 mb-1 ml-3 pl-3 border-l border-white/10 space-y-0.5">
+                <div className="mt-0.5 mb-1 mr-3 pr-3 border-r border-white/10 space-y-0.5">
                   {page.sections.map((section) => {
                     const SectionIcon = section.icon;
                     const isActive = activeSection === section.id;
@@ -254,7 +254,7 @@ function Sidebar({
                         key={section.id}
                         onClick={() => onSelectSection(section.id)}
                         className={cn(
-                          "w-full flex items-center gap-2 px-2.5 py-1.5 rounded-md text-left transition-all text-xs",
+                          "w-full flex items-center gap-2 px-2.5 py-1.5 rounded-md text-right transition-all text-xs",
                           isActive
                             ? "bg-[#8B1A1A]/80 text-white font-medium"
                             : "text-white/45 hover:text-white/80 hover:bg-white/5"
@@ -266,9 +266,9 @@ function Sidebar({
                             isActive ? "text-[#B9A167]" : "text-white/30"
                           )}
                         />
-                        <span className="truncate">{section.label}</span>
+                        <span className="truncate flex-1 text-right">{section.label}</span>
                         {isActive && (
-                          <div className="ml-auto w-1.5 h-1.5 rounded-full bg-[#B9A167] shrink-0" />
+                          <div className="mr-auto w-1.5 h-1.5 rounded-full bg-[#B9A167] shrink-0" />
                         )}
                       </button>
                     );
@@ -284,17 +284,6 @@ function Sidebar({
       <div className="border-t border-white/[0.08] px-3 py-3">
         {!collapsed ? (
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-full bg-[#8B1A1A]/60 border border-[#B9A167]/30 flex items-center justify-center shrink-0">
-              <span className="text-[#B9A167] text-xs font-bold">
-                {user?.name?.charAt(0).toUpperCase() ?? "A"}
-              </span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-white/80 text-xs font-medium truncate">
-                {user?.name ?? "Admin"}
-              </p>
-              <p className="text-white/30 text-[10px] truncate">מנהל</p>
-            </div>
             <button
               onClick={logout}
               className="text-white/30 hover:text-white/70 transition-colors p-1"
@@ -302,6 +291,17 @@ function Sidebar({
             >
               <LogOut className="w-3.5 h-3.5" />
             </button>
+            <div className="flex-1 min-w-0 text-right">
+              <p className="text-white/80 text-xs font-medium truncate">
+                {user?.name ?? "Admin"}
+              </p>
+              <p className="text-white/30 text-[10px] truncate">מנהל</p>
+            </div>
+            <div className="w-7 h-7 rounded-full bg-[#8B1A1A]/60 border border-[#B9A167]/30 flex items-center justify-center shrink-0">
+              <span className="text-[#B9A167] text-xs font-bold">
+                {user?.name?.charAt(0).toUpperCase() ?? "A"}
+              </span>
+            </div>
           </div>
         ) : (
           <button
@@ -317,7 +317,7 @@ function Sidebar({
   );
 }
 
-// ── Section Placeholder ───────────────────────────────────────────────────────
+// ── Section Meta ──────────────────────────────────────────────────────────────
 
 const SECTION_META: Record<SectionId, { title: string; description: string; badge: string; icon: React.ComponentType<{ className?: string }> }> = {
   "home-hero": {
@@ -357,13 +357,13 @@ const SECTION_META: Record<SectionId, { title: string; description: string; badg
     icon: AlignJustify,
   },
   navbar: {
-    title: "Navbar — תפריט עליון",
+    title: "תפריט עליון — Navbar",
     description: "טקסטים של קישורי הניווט וכפתור ההזמנה",
     badge: "גלובלי",
     icon: Navigation,
   },
   footer: {
-    title: "Footer — פוטר",
+    title: "פוטר — Footer",
     description: "כתובת, שעות פתיחה, טלפון וקישורים",
     badge: "גלובלי",
     icon: Footprints,
@@ -399,14 +399,13 @@ function SectionPlaceholder({ sectionId }: { sectionId: SectionId }) {
   const Icon = meta.icon;
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Section header card */}
+    <div className="flex flex-col h-full" dir="rtl">
       <div className="bg-white rounded-xl border border-gray-200 p-6 mb-5 flex items-start gap-4">
         <div className="w-12 h-12 rounded-xl bg-[#8B1A1A]/8 border border-[#8B1A1A]/15 flex items-center justify-center shrink-0">
           <Icon className="w-5 h-5 text-[#8B1A1A]/60" />
         </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
+        <div className="flex-1 min-w-0 text-right">
+          <div className="flex items-center gap-2 mb-1 justify-end">
             <span className="text-[10px] font-bold tracking-widest uppercase text-[#B9A167] bg-[#B9A167]/10 px-2 py-0.5 rounded-full">
               {meta.badge}
             </span>
@@ -416,7 +415,6 @@ function SectionPlaceholder({ sectionId }: { sectionId: SectionId }) {
         </div>
       </div>
 
-      {/* Coming soon placeholder */}
       <div className="flex-1 bg-white rounded-xl border border-dashed border-gray-200 flex flex-col items-center justify-center py-16 text-center">
         <div className="w-14 h-14 rounded-2xl bg-gray-50 border border-gray-200 flex items-center justify-center mb-4">
           <Columns2 className="w-6 h-6 text-gray-300" />
@@ -460,25 +458,16 @@ function ContentArea({ activeSection }: { activeSection: SectionId }) {
   const activeSecMeta = activePage?.sections?.find((s) => s.id === activeSection);
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-[#f8f7f5] overflow-hidden">
+    <div className="flex-1 flex flex-col min-h-screen bg-[#f8f7f5] overflow-hidden" dir="rtl">
       {/* Top bar */}
       <header className="bg-white border-b border-gray-200 px-6 py-3.5 flex items-center justify-between shrink-0">
+        {/* Breadcrumb — RTL: section > page */}
         <div className="flex items-center gap-2 text-sm">
-          <span className="text-gray-400 text-xs">{activePage?.label}</span>
-          <ChevronRight className="w-3.5 h-3.5 text-gray-300" />
           <span className="text-gray-800 text-xs font-medium">{activeSecMeta?.label}</span>
+          <ChevronLeft className="w-3.5 h-3.5 text-gray-300" />
+          <span className="text-gray-400 text-xs">{activePage?.label}</span>
         </div>
         <div className="flex items-center gap-3">
-          <a
-            href="/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-700 transition-colors"
-          >
-            <ExternalLink className="w-3.5 h-3.5" />
-            צפה באתר
-          </a>
-          <div className="w-px h-4 bg-gray-200" />
           <span className="text-xs text-gray-400">
             {new Date().toLocaleDateString("he-IL", {
               day: "numeric",
@@ -486,6 +475,16 @@ function ContentArea({ activeSection }: { activeSection: SectionId }) {
               year: "numeric",
             })}
           </span>
+          <div className="w-px h-4 bg-gray-200" />
+          <a
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-700 transition-colors"
+          >
+            צפה באתר
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
         </div>
       </header>
 
@@ -497,17 +496,17 @@ function ContentArea({ activeSection }: { activeSection: SectionId }) {
             const Icon = meta.icon;
             return (
               <>
-                <div className="w-10 h-10 rounded-xl bg-[#8B1A1A]/8 border border-[#8B1A1A]/15 flex items-center justify-center shrink-0">
-                  <Icon className="w-4.5 h-4.5 text-[#8B1A1A]/60" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-0.5">
+                <div className="flex-1 text-right">
+                  <div className="flex items-center gap-2 mb-0.5 justify-end">
                     <span className="text-[10px] font-bold tracking-widest uppercase text-[#B9A167] bg-[#B9A167]/10 px-2 py-0.5 rounded-full">
                       {meta.badge}
                     </span>
                   </div>
                   <h2 className="text-base font-bold text-gray-900 leading-tight">{meta.title}</h2>
                   <p className="text-xs text-gray-400 mt-0.5">{meta.description}</p>
+                </div>
+                <div className="w-10 h-10 rounded-xl bg-[#8B1A1A]/8 border border-[#8B1A1A]/15 flex items-center justify-center shrink-0">
+                  <Icon className="w-4 h-4 text-[#8B1A1A]/60" />
                 </div>
               </>
             );
@@ -540,7 +539,7 @@ function LoadingScreen() {
 
 function LoginScreen() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0f0f0f]">
+    <div className="min-h-screen flex items-center justify-center bg-[#0f0f0f]" dir="rtl">
       <div className="flex flex-col items-center gap-6 p-8 max-w-sm w-full">
         <div className="w-14 h-14 rounded-2xl bg-[#8B1A1A] flex items-center justify-center">
           <span className="text-white font-black text-xl">C</span>
@@ -562,7 +561,7 @@ function LoginScreen() {
 
 function NoAccessScreen() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0f0f0f]">
+    <div className="min-h-screen flex items-center justify-center bg-[#0f0f0f]" dir="rtl">
       <div className="flex flex-col items-center gap-4 p-8 max-w-sm w-full text-center">
         <div className="w-14 h-14 rounded-2xl bg-red-900/30 border border-red-800/50 flex items-center justify-center">
           <span className="text-red-400 text-2xl">✕</span>
@@ -591,7 +590,8 @@ export default function Admin() {
   if (user.role !== "admin") return <NoAccessScreen />;
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    // RTL: sidebar on the right, content on the left
+    <div className="flex h-screen overflow-hidden flex-row-reverse" dir="rtl">
       <Sidebar
         collapsed={collapsed}
         onToggle={() => setCollapsed((c) => !c)}

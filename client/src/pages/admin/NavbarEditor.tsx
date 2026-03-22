@@ -211,7 +211,7 @@ export default function NavbarEditor() {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5" dir="rtl">
       {/* ── Brand name ── */}
       <SectionCard title="שם המותג — Brand Name">
         <BilingualField
@@ -355,7 +355,24 @@ export default function NavbarEditor() {
       </SectionCard>
 
       {/* ── Save button ── */}
-      <div className="flex items-center justify-between pt-1">
+      <div className="flex items-center justify-between pt-1" dir="rtl">
+        <Button
+          onClick={handleSave}
+          disabled={saveStatus === "saving"}
+          className="bg-[#8B1A1A] hover:bg-[#6d1414] text-white border-0 px-6"
+        >
+          {saveStatus === "saving" ? (
+            <>
+              <Loader2 className="w-4 h-4 ml-2 animate-spin" />
+              שומר...
+            </>
+          ) : (
+            <>
+              <Save className="w-4 h-4 ml-2" />
+              שמור שינויים
+            </>
+          )}
+        </Button>
         <div className="flex items-center gap-2 text-sm">
           {saveStatus === "success" && (
             <span className="flex items-center gap-1.5 text-green-600">
@@ -370,23 +387,6 @@ export default function NavbarEditor() {
             </span>
           )}
         </div>
-        <Button
-          onClick={handleSave}
-          disabled={saveStatus === "saving"}
-          className="bg-[#8B1A1A] hover:bg-[#6d1414] text-white border-0 px-6"
-        >
-          {saveStatus === "saving" ? (
-            <>
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              שומר...
-            </>
-          ) : (
-            <>
-              <Save className="w-4 h-4 mr-2" />
-              שמור שינויים
-            </>
-          )}
-        </Button>
       </div>
     </div>
   );
