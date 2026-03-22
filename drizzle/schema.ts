@@ -169,6 +169,12 @@ export const navbarContent = mysqlTable("navbar_content", {
   brandNameEn: varchar("brandNameEn", { length: 128 }),
   reservationHe: varchar("reservationHe", { length: 128 }),
   reservationEn: varchar("reservationEn", { length: 128 }),
+  reservationUrl: varchar("reservationUrl", { length: 512 }),
+  menuHref: varchar("menuHref", { length: 256 }),
+  storyHref: varchar("storyHref", { length: 256 }),
+  galleryHref: varchar("galleryHref", { length: 256 }),
+  faqHref: varchar("faqHref", { length: 256 }),
+  contactHref: varchar("contactHref", { length: 256 }),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 

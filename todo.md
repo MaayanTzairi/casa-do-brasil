@@ -17,10 +17,23 @@
 - [x] Push database migrations (11 tables created)
 - [x] Verify admin user exists (Maayan Tzairi = admin)
 
-## Pending
+## Admin Panel Redesign
 
-- [ ] Test Admin Panel UI end-to-end
-- [ ] Add image upload support to Admin Panel
-- [ ] Connect Footer to CMS (phone, email, address, social links)
-- [ ] Add settings section to Admin Panel (restaurant name, contact info)
-- [ ] Client to populate all content via Admin Panel
+- [ ] Build professional Admin Panel layout with sidebar navigation
+- [ ] Sidebar: Dashboard overview, Home page sections, future pages
+- [ ] Home page sections in Admin: Navbar, Hero, Our Story, Our Menu, Gallery, Statistics, Reviews, Footer
+- [ ] Each section: bilingual fields (Hebrew + English side by side)
+- [ ] Image fields: URL input only (no upload)
+- [ ] Dark/professional design theme for admin
+- [ ] Save button per section with success/error feedback
+- [ ] Test all sections save and display correctly
+- [ ] Add footer CMS schema + tRPC procedures
+- [ ] Add reviews/customers CMS schema + tRPC procedures
+
+## Navbar CMS Editor
+
+- [ ] Build Navbar CMS editor with bilingual fields (Hebrew RTL / English LTR)
+- [ ] Navbar editor: 5 nav links (text + href) for HE and EN
+- [ ] Navbar editor: center logo text field
+- [ ] Navbar editor: reservation button text + URL
+- [ ] Navbar editor: live mini-preview panel

@@ -157,7 +157,7 @@ export default function HeroSection() {
       >
         {/* Title */}
         <div className="mb-4" style={{ width: "100%", textAlign: isHe ? "right" : "left" }}>
-          {titleWords.map((word, i) => (
+          {titleWords.map((word: string, i: number) => (
             <div key={i} className="overflow-hidden">
               <h1
                 className="block select-none"

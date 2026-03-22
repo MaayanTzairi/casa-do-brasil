@@ -15,6 +15,13 @@
       "when": 1774178817731,
       "tag": "0001_great_justin_hammer",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1774181895850,
+      "tag": "0002_rare_barracuda",
+      "breakpoints": true
     }
   ]
 }

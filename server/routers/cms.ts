@@ -161,6 +161,12 @@ export const cmsRouter = router({
     brandNameEn: z.string().optional(),
     reservationHe: z.string().optional(),
     reservationEn: z.string().optional(),
+    reservationUrl: z.string().optional(),
+    menuHref: z.string().optional(),
+    storyHref: z.string().optional(),
+    galleryHref: z.string().optional(),
+    faqHref: z.string().optional(),
+    contactHref: z.string().optional(),
   })).mutation(({ input }) => upsertNavbarContent(input)),
 
   // Menu categories CRUD

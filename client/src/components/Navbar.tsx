@@ -302,27 +302,35 @@ export default function Navbar({
 
   const brandName = t.brandNameEn; // Always show English name in navbar center
 
+  // Use CMS hrefs if set, otherwise use defaults
+  const menuHref = cmsNavbar?.menuHref || "/menu";
+  const storyHref = cmsNavbar?.storyHref || "/story";
+  const galleryHref = cmsNavbar?.galleryHref || "/gallery";
+  const faqHref = cmsNavbar?.faqHref || "/faq";
+  const contactHref = cmsNavbar?.contactHref || "#contact";
+  const reservationHref = cmsNavbar?.reservationUrl || RESERVATIONS_URL;
+
   const navLinks = isHe
     ? [
-        { label: t.menuHe, href: "/menu" },
-        { label: t.storyHe, href: "/story" },
-        { label: t.galleryHe, href: "/gallery" },
-        { label: t.faqHe, href: "/faq" },
-        { label: t.contactHe, href: "#contact" },
+        { label: t.menuHe, href: menuHref },
+        { label: t.storyHe, href: storyHref },
+        { label: t.galleryHe, href: galleryHref },
+        { label: t.faqHe, href: faqHref },
+        { label: t.contactHe, href: contactHref },
       ]
     : [
-        { label: t.menuEn, href: "/menu" },
-        { label: t.storyEn, href: "/story" },
-        { label: t.galleryEn, href: "/gallery" },
-        { label: t.faqEn, href: "/faq" },
-        { label: t.contactEn, href: "#contact" },
+        { label: t.menuEn, href: menuHref },
+        { label: t.storyEn, href: storyHref },
+        { label: t.galleryEn, href: galleryHref },
+        { label: t.faqEn, href: faqHref },
+        { label: t.contactEn, href: contactHref },
       ];
 
   const allLinks = [
     ...navLinks,
     {
       label: isHe ? t.reservationHe : t.reservationEn,
-      href: RESERVATIONS_URL,
+      href: reservationHref,
     },
   ];
 

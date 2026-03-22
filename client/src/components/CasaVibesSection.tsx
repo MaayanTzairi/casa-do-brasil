@@ -269,7 +269,7 @@ export default function CasaVibesSection() {
             <div style={{ position: "relative", overflow: "hidden", height: "260px", boxShadow: "0 16px 48px rgba(62,4,9,0.36), 0 6px 18px rgba(62,4,9,0.20)", borderRadius: "2px" }}>
               <img
                 src={img1Src}
-                srcSet={cms?.image1?.asset?.url ? undefined : `${img1SrcSm} 450w, ${img1Src} 800w`}
+                srcSet={cms?.image1Url ? undefined : `${img1SrcSm} 450w, ${img1Src} 800w`}
                 sizes="50vw"
                 alt={img1Label}
                 loading="lazy" decoding="async"
@@ -293,7 +293,7 @@ export default function CasaVibesSection() {
             <div style={{ position: "relative", overflow: "hidden", height: "260px", boxShadow: "0 20px 56px rgba(62,4,9,0.40), 0 8px 22px rgba(62,4,9,0.22)", borderRadius: "2px" }}>
               <img
                 src={img2Src}
-                srcSet={cms?.image2?.asset?.url ? undefined : `${img2SrcSm} 450w, ${img2Src} 800w`}
+                srcSet={cms?.image2Url ? undefined : `${img2SrcSm} 450w, ${img2Src} 800w`}
                 sizes="50vw"
                 alt={img2Label}
                 loading="lazy" decoding="async"
