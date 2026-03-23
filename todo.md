@@ -67,3 +67,6 @@
 - [x] Build AdminLogin page with hardcoded credentials (test@casatest.com / 12345)
 - [x] Protect /admin route — redirect to login if not authenticated
 - [x] Store auth state in sessionStorage so login persists on refresh
+
+## Remove OAuth from Admin
+- [x] Remove useAuth/OAuth from Admin.tsx — CMS should open directly without any OAuth screens

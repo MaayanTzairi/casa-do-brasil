@@ -3,8 +3,7 @@
  * Professional CMS interface with sidebar navigation — Full RTL
  */
 
-import { useAuth } from "@/_core/hooks/useAuth";
-import { getLoginUrl } from "@/const";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -144,7 +143,10 @@ function Sidebar({
   const [expandedPages, setExpandedPages] = useState<Set<PageId>>(
     () => new Set(["global", "home"] as PageId[])
   );
-  const { logout, user } = useAuth();
+  const adminLogout = () => {
+    sessionStorage.removeItem("admin_authenticated");
+    window.location.href = "/admin/login";
+  };
 
   const togglePage = (pageId: PageId) => {
     setExpandedPages((prev) => {
@@ -285,7 +287,7 @@ function Sidebar({
         {!collapsed ? (
           <div className="flex items-center gap-2.5">
             <button
-              onClick={logout}
+              onClick={adminLogout}
               className="text-white/30 hover:text-white/70 transition-colors p-1"
               title="התנתק"
             >
@@ -293,19 +295,19 @@ function Sidebar({
             </button>
             <div className="flex-1 min-w-0 text-right">
               <p className="text-white/80 text-xs font-medium truncate">
-                {user?.name ?? "Admin"}
+                Admin
               </p>
               <p className="text-white/30 text-[10px] truncate">מנהל</p>
             </div>
             <div className="w-7 h-7 rounded-full bg-[#8B1A1A]/60 border border-[#B9A167]/30 flex items-center justify-center shrink-0">
               <span className="text-[#B9A167] text-xs font-bold">
-                {user?.name?.charAt(0).toUpperCase() ?? "A"}
+                A
               </span>
             </div>
           </div>
         ) : (
           <button
-            onClick={logout}
+            onClick={adminLogout}
             className="w-full flex justify-center text-white/30 hover:text-white/70 transition-colors p-1"
             title="התנתק"
           >
@@ -549,10 +551,10 @@ function LoginScreen() {
           <p className="text-white/40 text-sm">ממשק ניהול — Admin CMS</p>
         </div>
         <Button
-          onClick={() => (window.location.href = getLoginUrl())}
+          onClick={() => (window.location.href = "/admin/login")}
           className="w-full bg-[#8B1A1A] hover:bg-[#6d1414] text-white border-0"
         >
-          התחבר לניהול
+          כניסה למערכת
         </Button>
       </div>
     </div>
@@ -581,13 +583,14 @@ function NoAccessScreen() {
 // ── Main Admin Page ───────────────────────────────────────────────────────────
 
 export default function Admin() {
-  const { user, loading } = useAuth();
+  const isAuthenticated = sessionStorage.getItem("admin_authenticated") === "true";
   const [collapsed, setCollapsed] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionId>("home-hero");
 
-  if (loading) return <LoadingScreen />;
-  if (!user) return <LoginScreen />;
-  if (user.role !== "admin") return <NoAccessScreen />;
+  if (!isAuthenticated) {
+    window.location.href = "/admin/login";
+    return null;
+  }
 
   const sidebarWidth = collapsed ? 60 : 260;
 
