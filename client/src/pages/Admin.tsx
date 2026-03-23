@@ -583,14 +583,8 @@ function NoAccessScreen() {
 // ── Main Admin Page ───────────────────────────────────────────────────────────
 
 export default function Admin() {
-  const isAuthenticated = sessionStorage.getItem("admin_authenticated") === "true";
   const [collapsed, setCollapsed] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionId>("home-hero");
-
-  if (!isAuthenticated) {
-    window.location.href = "/admin/login";
-    return null;
-  }
 
   const sidebarWidth = collapsed ? 60 : 260;
 

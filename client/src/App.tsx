@@ -7,7 +7,6 @@ import StickyReservationBtn from "./components/StickyReservationBtn";
 import FlyingBull from "./components/FlyingBull";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
-import { isAdminAuthenticated } from "./pages/AdminLogin";
 
 // Lazy-load all pages so each is a separate chunk loaded on demand
 const Home = lazy(() => import("./pages/Home"));
@@ -18,8 +17,6 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const PlaylistPage = lazy(() => import("./pages/PlaylistPage"));
 const FAQPage = lazy(() => import("./pages/FAQPage"));
 const Admin = lazy(() => import("./pages/Admin"));
-const AdminLogin = lazy(() => import("./pages/AdminLogin"));
-
 // Minimal loading fallback — keeps the background colour consistent
 function PageLoader() {
   return (
@@ -43,18 +40,6 @@ function PageLoader() {
   );
 }
 
-// Protected route — redirects to /admin/login if not authenticated
-function ProtectedAdmin() {
-  if (!isAdminAuthenticated()) {
-    return <Redirect to="/admin/login" />;
-  }
-  return (
-    <Suspense fallback={<PageLoader />}>
-      <Admin />
-    </Suspense>
-  );
-}
-
 function ConditionalFlyingBull() {
   const [location] = useLocation();
   if (location !== "/") return null;
@@ -71,8 +56,7 @@ function Router() {
         <Route path={"/story"} component={StoryPage} />
         <Route path={"/playlist"} component={PlaylistPage} />
         <Route path={"/faq"} component={FAQPage} />
-        <Route path={"/admin/login"} component={AdminLogin} />
-        <Route path={"/admin"} component={ProtectedAdmin} />
+        <Route path={"/admin"} component={Admin} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>

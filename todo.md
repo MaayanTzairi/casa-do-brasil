@@ -70,3 +70,6 @@
 
 ## Remove OAuth from Admin
 - [x] Remove useAuth/OAuth from Admin.tsx — CMS should open directly without any OAuth screens
+
+## Remove Admin Login Screen
+- [x] Remove AdminLogin route — /admin opens CMS directly with no login screen
