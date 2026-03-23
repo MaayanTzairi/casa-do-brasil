@@ -1,12 +1,13 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { lazy, Suspense } from "react";
-import { Route, Switch, useLocation } from "wouter";
+import { Route, Switch, useLocation, Redirect } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import StickyReservationBtn from "./components/StickyReservationBtn";
 import FlyingBull from "./components/FlyingBull";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { isAdminAuthenticated } from "./pages/AdminLogin";
 
 // Lazy-load all pages so each is a separate chunk loaded on demand
 const Home = lazy(() => import("./pages/Home"));
@@ -17,6 +18,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const PlaylistPage = lazy(() => import("./pages/PlaylistPage"));
 const FAQPage = lazy(() => import("./pages/FAQPage"));
 const Admin = lazy(() => import("./pages/Admin"));
+const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 
 // Minimal loading fallback — keeps the background colour consistent
 function PageLoader() {
@@ -41,13 +43,25 @@ function PageLoader() {
   );
 }
 
+// Protected route — redirects to /admin/login if not authenticated
+function ProtectedAdmin() {
+  if (!isAdminAuthenticated()) {
+    return <Redirect to="/admin/login" />;
+  }
+  return (
+    <Suspense fallback={<PageLoader />}>
+      <Admin />
+    </Suspense>
+  );
+}
+
 function ConditionalFlyingBull() {
   const [location] = useLocation();
   if (location !== "/") return null;
   return <FlyingBull />;
 }
+
 function Router() {
-  // make sure to consider if you need authentication for certain routes
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>
@@ -57,7 +71,8 @@ function Router() {
         <Route path={"/story"} component={StoryPage} />
         <Route path={"/playlist"} component={PlaylistPage} />
         <Route path={"/faq"} component={FAQPage} />
-        <Route path={"/admin"} component={Admin} />
+        <Route path={"/admin/login"} component={AdminLogin} />
+        <Route path={"/admin"} component={ProtectedAdmin} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>

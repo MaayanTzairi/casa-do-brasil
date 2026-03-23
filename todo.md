@@ -62,3 +62,8 @@
 
 ## Bug Fixes
 - [x] Fix empty string src attribute error — guard all img tags to only render when URL is non-empty
+
+## Admin Login
+- [x] Build AdminLogin page with hardcoded credentials (test@casatest.com / 12345)
+- [x] Protect /admin route — redirect to login if not authenticated
+- [x] Store auth state in sessionStorage so login persists on refresh
