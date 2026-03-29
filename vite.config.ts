@@ -167,15 +167,58 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    // Use Terser for maximum minification (removes dead code, mangles names)
+    minify: "terser",
+    terserOptions: {
+      compress: {
+        drop_console: true,   // strip all console.* calls in production
+        drop_debugger: true,
+        pure_funcs: ["console.log", "console.info", "console.debug"],
+        passes: 2,            // two compression passes for smaller output
+      },
+      mangle: { toplevel: true },
+    },
     // Increase chunk size warning threshold
     chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
-        manualChunks: {
-          // Split heavy vendor libs into separate cached chunks
-          "vendor-react": ["react", "react-dom"],
-          "vendor-ui": ["@radix-ui/react-tooltip", "@radix-ui/react-dialog", "@radix-ui/react-select"],
-          "vendor-trpc": ["@trpc/client", "@trpc/react-query", "@tanstack/react-query"],
+        manualChunks(id) {
+          // React core — tiny, loaded first
+          if (id.includes("node_modules/react/") || id.includes("node_modules/react-dom/")) {
+            return "vendor-react";
+          }
+          // tRPC + React Query — needed for all data fetching
+          if (id.includes("@trpc") || id.includes("@tanstack/react-query")) {
+            return "vendor-trpc";
+          }
+          // All Radix UI primitives — large but shared across pages
+          if (id.includes("@radix-ui")) {
+            return "vendor-radix";
+          }
+          // Lucide icons — large icon set, separate chunk
+          if (id.includes("lucide-react")) {
+            return "vendor-icons";
+          }
+          // Superjson + date-fns — utility libs
+          if (id.includes("superjson") || id.includes("date-fns")) {
+            return "vendor-utils";
+          }
+          // Heavy AI/markdown libs — only used in AIChatBox (admin/chat pages)
+          if (id.includes("streamdown") || id.includes("@streamdown")) {
+            return "vendor-ai-markdown";
+          }
+          // Recharts — only used in chart.tsx (admin analytics)
+          if (id.includes("recharts") || id.includes("d3-") || id.includes("victory")) {
+            return "vendor-charts";
+          }
+          // Framer Motion — only used in admin/animated pages
+          if (id.includes("framer-motion")) {
+            return "vendor-animation";
+          }
+          // AI SDK — server-side only, should not be in client bundle at all
+          if (id.includes("@ai-sdk") || id.includes("/ai/")) {
+            return "vendor-ai-sdk";
+          }
         },
       },
     },

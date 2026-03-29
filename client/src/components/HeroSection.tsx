@@ -66,8 +66,14 @@ export default function HeroSection() {
     tiktokUrl:     cms?.tiktokUrl     || DEFAULTS.tiktokUrl,
   };
 
-  // Background image — use CMS if available, else default
-  const bgImage = cms?.backgroundImageUrl || HERO_IMAGE_DEFAULT;
+  // Background image — use DEFAULT immediately for LCP, swap to CMS url only after it loads.
+  // This ensures the preloaded hero image is the LCP element, not blocked by tRPC.
+  const [bgImage, setBgImage] = useState(HERO_IMAGE_DEFAULT);
+  useEffect(() => {
+    if (cms?.backgroundImageUrl && cms.backgroundImageUrl !== HERO_IMAGE_DEFAULT) {
+      setBgImage(cms.backgroundImageUrl);
+    }
+  }, [cms?.backgroundImageUrl]);
 
   // Title words — split by space for the stacked animation
   const titleWords = (isHe ? t.titleHe : t.titleEn).split(" ");

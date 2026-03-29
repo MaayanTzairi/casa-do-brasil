@@ -100,3 +100,19 @@
 - [x] React Query staleTime=60s — no re-fetch on page navigation within 60s window
 - [x] FlyingBull + StickyReservationBtn lazy-loaded (home-only components removed from initial bundle)
 - [x] Cache invalidation on all admin upsert/delete operations
+
+## Sub-500ms Sprint
+- [ ] Add MenuPage prefetch on home page hover/mount
+- [ ] Prefetch MenuPage tRPC data (categories + items) on home page mount
+- [ ] Inline critical above-fold CSS to eliminate render-blocking stylesheet
+- [ ] Add HTTP compression headers (gzip/brotli) on Express server
+- [ ] Preload hero image on HeroSection mount via JS for instant display
+
+## Lighthouse Score Sprint (Target 90+)
+- [x] Enable Terser minification in Vite build (drop_console, passes:2, mangle toplevel)
+- [x] Aggressive chunk splitting: react, trpc, radix, icons, utils, ai-markdown, charts, animation as separate chunks
+- [x] Fix LCP 4.1s: hero image rendered immediately with default URL (not blocked by tRPC CMS response)
+- [x] Defer unused JS: streamdown, recharts, framer-motion, AI SDK each in own deferred chunk
+- [x] Add Express gzip compression middleware (production)
+- [x] Add 1-year immutable cache headers for hashed static assets
+- [x] Add MenuPage JS chunk prefetch + tRPC data prefetch on home page idle

@@ -1,10 +1,11 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Route, Switch, useLocation, Redirect } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { trpc } from "@/lib/trpc";
 
 // Lazy-load home-only heavy components to keep initial bundle lean
 const StickyReservationBtn = lazy(() => import("./components/StickyReservationBtn"));
@@ -51,9 +52,43 @@ function ConditionalFlyingBull() {
   return <FlyingBull />;
 }
 
+/**
+ * On home page: prefetch the MenuPage JS chunk + its tRPC data so the
+ * menu page opens instantly when the user clicks "VIEW MENU".
+ */
+function HomePrefetcher() {
+  const [location] = useLocation();
+  // Prefetch menu data via tRPC (result goes into React Query cache)
+  trpc.cms.getMenuCategories.useQuery(undefined, {
+    enabled: location === "/",
+    staleTime: 60_000,
+  });
+  trpc.cms.getMenuItems.useQuery({}, {
+    enabled: location === "/",
+    staleTime: 60_000,
+  });
+  useEffect(() => {
+    if (location !== "/") return;
+    // Prefetch the MenuPage JS chunk after a short idle delay
+    const hasRIC = typeof (window as any).requestIdleCallback === "function";
+    let id: number;
+    if (hasRIC) {
+      id = (window as any).requestIdleCallback(() => { import("./pages/MenuPage"); });
+    } else {
+      id = window.setTimeout(() => { import("./pages/MenuPage"); }, 1500);
+    }
+    return () => {
+      if (hasRIC) (window as any).cancelIdleCallback(id);
+      else clearTimeout(id);
+    };
+  }, [location]);
+  return null;
+}
+
 function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
+      <HomePrefetcher />
       <Switch>
         <Route path={"/"} component={Home} />
         <Route path={"/gallery"} component={Gallery} />
