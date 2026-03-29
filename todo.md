@@ -116,3 +116,13 @@
 - [x] Add Express gzip compression middleware (production)
 - [x] Add 1-year immutable cache headers for hashed static assets
 - [x] Add MenuPage JS chunk prefetch + tRPC data prefetch on home page idle
+
+## Lighthouse 90+ Sprint (Based on PageSpeed PDF)
+- [x] Fix LCP element: FlyingBull changed from lazy() to eager import — eliminates 2,020ms render delay
+- [x] FlyingBull logo preloaded in <head> with fetchpriority=high
+- [x] FlyingBull: use default URLs immediately, don’t wait for CMS loading
+- [x] FlyingBull: fetchPriority=high + loading=eager + decoding=sync on img tags
+- [x] Unsplash image in FlyingBull: added ?fm=webp&q=75&w=400 — save 53KB
+- [x] Inline critical CSS in <head>: body font, hero bg, img max-width, scrollbar-gutter
+- [x] Cache headers on static assets: 1-year immutable (Express already configured)
+- [x] srcset already present on CasaVibes images (carnival, meat) with -sm variants

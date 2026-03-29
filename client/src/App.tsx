@@ -7,9 +7,10 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { trpc } from "@/lib/trpc";
 
-// Lazy-load home-only heavy components to keep initial bundle lean
+// FlyingBull is the LCP element — must be eager to avoid 2s render delay
+import FlyingBull from "./components/FlyingBull";
+// StickyReservationBtn is below-fold, keep lazy
 const StickyReservationBtn = lazy(() => import("./components/StickyReservationBtn"));
-const FlyingBull = lazy(() => import("./components/FlyingBull"));
 
 // Lazy-load all pages so each is a separate chunk loaded on demand
 const Home = lazy(() => import("./pages/Home"));
@@ -113,7 +114,7 @@ function App() {
               <Toaster />
               <Router />
               <Suspense fallback={null}><StickyReservationBtn /></Suspense>
-              <Suspense fallback={null}><ConditionalFlyingBull /></Suspense>
+              <ConditionalFlyingBull />
             </TooltipProvider>
           </ThemeProvider>
       </LanguageProvider>

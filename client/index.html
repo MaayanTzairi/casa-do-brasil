@@ -121,6 +121,27 @@
         src: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/dancing-script-700_8fcbf856.woff2') format('woff2');
       }
     </style>
+    <!-- Critical above-the-fold CSS — inlined to eliminate render-blocking -->
+    <style>
+      /* Navbar skeleton */
+      nav, header { display: block; }
+      /* Hero section — dark background shows immediately before image loads */
+      .hero-section, [data-hero] {
+        background-color: rgb(28, 2, 4);
+        min-height: 100vh;
+        position: relative;
+      }
+      /* Prevent layout shift from font loading */
+      body {
+        font-family: 'Heebo', system-ui, -apple-system, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      /* Prevent CLS from images without dimensions */
+      img { max-width: 100%; height: auto; }
+      /* Prevent scrollbar layout shift */
+      html { overflow-y: scroll; scrollbar-gutter: stable; }
+    </style>
     <!-- Preload LCP hero image — must match srcset in HeroSection.tsx exactly -->
     <link rel="preload" as="image"
       href="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main_opt_ea3703c2.webp"
@@ -128,6 +149,10 @@
       imagesizes="100vw"
       fetchpriority="high"
       crossorigin="anonymous" />
+    <!-- Preload FlyingBull logo — detected as LCP element by Lighthouse -->
+    <link rel="preload" as="image"
+      href="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp"
+      fetchpriority="high" />
   </head>
   <body>
     <!-- React root -->

@@ -18,7 +18,7 @@ const LOGO_URL_DEFAULT =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp";
 
 const PHOTO_URL_DEFAULT =
-  "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80&fit=crop";
+  "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=75&fit=crop&fm=webp";
 
 const SCROLL_THRESHOLD_DESKTOP = 130;
 const SCROLL_THRESHOLD_MOBILE  = 90;
@@ -41,11 +41,12 @@ export default function FlyingBull() {
   const [isMobile, setIsMobile] = useState(false);
 
   // Fetch CMS data for circle image and logo
-  const { data: cmsRaw, isLoading: cmsLoading } = trpc.cms.getHeroSection.useQuery();
+  // Use default URLs immediately (don't wait for CMS) — this prevents LCP delay
+  // CMS URL replaces default once loaded, causing a seamless swap
+  const { data: cmsRaw } = trpc.cms.getHeroSection.useQuery();
   const cms = cmsRaw as any;
-  // Only use fallback if CMS has loaded and returned no image (not while still loading)
-  const LOGO_URL  = !cmsLoading ? (cms?.logoImageUrl  || LOGO_URL_DEFAULT) : null;
-  const PHOTO_URL = !cmsLoading ? (cms?.circleImageUrl || PHOTO_URL_DEFAULT) : null;
+  const LOGO_URL  = cms?.logoImageUrl  || LOGO_URL_DEFAULT;
+  const PHOTO_URL = cms?.circleImageUrl || PHOTO_URL_DEFAULT;
 
   // Desktop positions
   const [dHeroPos, setDHeroPos] = useState<{ x: number; y: number } | null>(null);
@@ -196,7 +197,11 @@ export default function FlyingBull() {
 
         {/* Bull */}
         {LOGO_URL && (
-          <img src={LOGO_URL} alt="Casa do Brasil" aria-hidden="true" style={{
+          <img src={LOGO_URL} alt="Casa do Brasil" aria-hidden="true"
+            loading="eager"
+            fetchPriority="high"
+            decoding="sync"
+            style={{
             position: "fixed", left: bullX, top: bullY,
             width: bullSz, height: "auto", objectFit: "contain",
             zIndex: 60, pointerEvents: "none",
@@ -280,7 +285,11 @@ export default function FlyingBull() {
 
         {/* Bull — mobile */}
         {LOGO_URL && (
-          <img src={LOGO_URL} alt="Casa do Brasil" aria-hidden="true" style={{
+          <img src={LOGO_URL} alt="Casa do Brasil" aria-hidden="true"
+            loading="eager"
+            fetchPriority="high"
+            decoding="sync"
+            style={{
             position: "fixed", left: bullX, top: bullY,
             width: bullSz, height: "auto", objectFit: "contain",
             zIndex: 60, pointerEvents: "none",
