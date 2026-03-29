@@ -35,7 +35,7 @@ export default function SectionDivider2() {
     <div
       style={{
         width: "100%",
-        background: "transparent",
+        background: "#ffffff",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -43,7 +43,7 @@ export default function SectionDivider2() {
         gap: "clamp(16px, 2.5vw, 40px)",
         pointerEvents: "none",
         userSelect: "none",
-        overflow: "hidden",
+        overflow: "visible",
       }}
     >
       {/* Left gold line */}

@@ -90,3 +90,13 @@
 ## Bug Fixes — Post Performance Sprint
 - [x] Fix divider images (skewer/dancer/footer-panorama) — re-compressed with RGBA transparency preserved
 - [x] Fix LCP hero bootstrap image flashing on every page navigation — removed entirely, replaced with dark bordeaux body background
+
+## Critical Fixes — Divider Background + Max Speed
+- [x] Fix dark body background bleeding into SectionDivider — body bg set to #fff, dark bg scoped to HeroSection
+- [x] SectionDivider + SectionDivider2 given explicit white background to match surrounding sections
+- [x] Page-by-page performance audit: Home — server-side in-memory TTL cache (60s) for all 10 CMS queries
+- [x] Page-by-page performance audit: Menu, Gallery, Story, FAQ — lazy loading confirmed, images optimized
+- [x] Eliminate render-blocking Google Fonts — Dancing Script self-hosted on CDN with preload
+- [x] React Query staleTime=60s — no re-fetch on page navigation within 60s window
+- [x] FlyingBull + StickyReservationBtn lazy-loaded (home-only components removed from initial bundle)
+- [x] Cache invalidation on all admin upsert/delete operations

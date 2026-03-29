@@ -3,10 +3,12 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { lazy, Suspense } from "react";
 import { Route, Switch, useLocation, Redirect } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
-import StickyReservationBtn from "./components/StickyReservationBtn";
-import FlyingBull from "./components/FlyingBull";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
+
+// Lazy-load home-only heavy components to keep initial bundle lean
+const StickyReservationBtn = lazy(() => import("./components/StickyReservationBtn"));
+const FlyingBull = lazy(() => import("./components/FlyingBull"));
 
 // Lazy-load all pages so each is a separate chunk loaded on demand
 const Home = lazy(() => import("./pages/Home"));
@@ -75,8 +77,8 @@ function App() {
             <TooltipProvider>
               <Toaster />
               <Router />
-              <StickyReservationBtn />
-              <ConditionalFlyingBull />
+              <Suspense fallback={null}><StickyReservationBtn /></Suspense>
+              <Suspense fallback={null}><ConditionalFlyingBull /></Suspense>
             </TooltipProvider>
           </ThemeProvider>
       </LanguageProvider>

@@ -3,6 +3,26 @@ import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
+// ── In-memory TTL cache for read-only CMS queries ─────────────────────────────
+// Avoids repeated DB round-trips for content that changes rarely.
+// TTL: 60 seconds for section data, 30 seconds for dynamic lists.
+const _cache = new Map<string, { value: unknown; expiresAt: number }>();
+
+function cacheGet<T>(key: string): T | undefined {
+  const entry = _cache.get(key);
+  if (!entry) return undefined;
+  if (Date.now() > entry.expiresAt) { _cache.delete(key); return undefined; }
+  return entry.value as T;
+}
+
+function cacheSet(key: string, value: unknown, ttlMs = 60_000) {
+  _cache.set(key, { value, expiresAt: Date.now() + ttlMs });
+}
+
+export function invalidateCmsCache() {
+  _cache.clear();
+}
+
 let _db: ReturnType<typeof drizzle> | null = null;
 
 // Lazily create the drizzle instance so local tooling can run without a DB.
@@ -113,9 +133,13 @@ async function getDbInstance() {
 
 // ── Hero Section ──────────────────────────────────────────────────────────────
 export async function getHeroSection() {
+  const cached = cacheGet<typeof heroSection.$inferSelect | null>('hero');
+  if (cached !== undefined) return cached;
   const db = await getDbInstance();
   const rows = await db.select().from(heroSection).limit(1);
-  return rows[0] ?? null;
+  const result = rows[0] ?? null;
+  cacheSet('hero', result);
+  return result;
 }
 
 export async function upsertHeroSection(data: Partial<typeof heroSection.$inferInsert>) {
@@ -126,14 +150,19 @@ export async function upsertHeroSection(data: Partial<typeof heroSection.$inferI
   } else {
     await db.insert(heroSection).values(data as typeof heroSection.$inferInsert);
   }
+  _cache.delete('hero');
   return getHeroSection();
 }
 
 // ── Our Story Section ─────────────────────────────────────────────────────────
 export async function getOurStorySection() {
+  const cached = cacheGet<typeof ourStorySection.$inferSelect | null>('ourStory');
+  if (cached !== undefined) return cached;
   const db = await getDbInstance();
   const rows = await db.select().from(ourStorySection).limit(1);
-  return rows[0] ?? null;
+  const result = rows[0] ?? null;
+  cacheSet('ourStory', result);
+  return result;
 }
 
 export async function upsertOurStorySection(data: Partial<typeof ourStorySection.$inferInsert>) {
@@ -144,14 +173,19 @@ export async function upsertOurStorySection(data: Partial<typeof ourStorySection
   } else {
     await db.insert(ourStorySection).values(data as typeof ourStorySection.$inferInsert);
   }
+  _cache.delete('ourStory');
   return getOurStorySection();
 }
 
 // ── Our Menu Section ──────────────────────────────────────────────────────────
 export async function getOurMenuSection() {
+  const cached = cacheGet<typeof ourMenuSection.$inferSelect | null>('ourMenu');
+  if (cached !== undefined) return cached;
   const db = await getDbInstance();
   const rows = await db.select().from(ourMenuSection).limit(1);
-  return rows[0] ?? null;
+  const result = rows[0] ?? null;
+  cacheSet('ourMenu', result);
+  return result;
 }
 
 export async function upsertOurMenuSection(data: Partial<typeof ourMenuSection.$inferInsert>) {
@@ -162,14 +196,19 @@ export async function upsertOurMenuSection(data: Partial<typeof ourMenuSection.$
   } else {
     await db.insert(ourMenuSection).values(data as typeof ourMenuSection.$inferInsert);
   }
+  _cache.delete('ourMenu');
   return getOurMenuSection();
 }
 
 // ── Our Gallery Section ───────────────────────────────────────────────────────
 export async function getOurGallerySection() {
+  const cached = cacheGet<typeof ourGallerySection.$inferSelect | null>('ourGallery');
+  if (cached !== undefined) return cached;
   const db = await getDbInstance();
   const rows = await db.select().from(ourGallerySection).limit(1);
-  return rows[0] ?? null;
+  const result = rows[0] ?? null;
+  cacheSet('ourGallery', result);
+  return result;
 }
 
 export async function upsertOurGallerySection(data: Partial<typeof ourGallerySection.$inferInsert>) {
@@ -180,14 +219,19 @@ export async function upsertOurGallerySection(data: Partial<typeof ourGallerySec
   } else {
     await db.insert(ourGallerySection).values(data as typeof ourGallerySection.$inferInsert);
   }
+  _cache.delete('ourGallery');
   return getOurGallerySection();
 }
 
 // ── Statistics Section ────────────────────────────────────────────────────────
 export async function getStatisticsSection() {
+  const cached = cacheGet<typeof statisticsSection.$inferSelect | null>('statistics');
+  if (cached !== undefined) return cached;
   const db = await getDbInstance();
   const rows = await db.select().from(statisticsSection).limit(1);
-  return rows[0] ?? null;
+  const result = rows[0] ?? null;
+  cacheSet('statistics', result);
+  return result;
 }
 
 export async function upsertStatisticsSection(data: Partial<typeof statisticsSection.$inferInsert>) {
@@ -198,14 +242,19 @@ export async function upsertStatisticsSection(data: Partial<typeof statisticsSec
   } else {
     await db.insert(statisticsSection).values(data as typeof statisticsSection.$inferInsert);
   }
+  _cache.delete('statistics');
   return getStatisticsSection();
 }
 
 // ── Navbar Content ────────────────────────────────────────────────────────────
 export async function getNavbarContent() {
+  const cached = cacheGet<typeof navbarContent.$inferSelect | null>('navbar');
+  if (cached !== undefined) return cached;
   const db = await getDbInstance();
   const rows = await db.select().from(navbarContent).limit(1);
-  return rows[0] ?? null;
+  const result = rows[0] ?? null;
+  cacheSet('navbar', result);
+  return result;
 }
 
 export async function upsertNavbarContent(data: Partial<typeof navbarContent.$inferInsert>) {
@@ -216,18 +265,24 @@ export async function upsertNavbarContent(data: Partial<typeof navbarContent.$in
   } else {
     await db.insert(navbarContent).values(data as typeof navbarContent.$inferInsert);
   }
+  _cache.delete('navbar');
   return getNavbarContent();
 }
 
 // ── Menu Categories ───────────────────────────────────────────────────────────
 export async function getMenuCategories() {
+  const cached = cacheGet<(typeof menuCategories.$inferSelect)[]>('menuCategories');
+  if (cached !== undefined) return cached;
   const db = await getDbInstance();
-  return db.select().from(menuCategories).orderBy(menuCategories.sortOrder);
+  const result = await db.select().from(menuCategories).orderBy(menuCategories.sortOrder);
+  cacheSet('menuCategories', result, 30_000);
+  return result;
 }
 
 export async function createMenuCategory(data: Omit<typeof menuCategories.$inferInsert, "id" | "createdAt" | "updatedAt">) {
   const db = await getDbInstance();
   const result = await db.insert(menuCategories).values(data);
+  _cache.delete('menuCategories');
   const rows = await db.select().from(menuCategories).where(eq(menuCategories.id, result[0].insertId));
   return rows[0];
 }
@@ -235,6 +290,7 @@ export async function createMenuCategory(data: Omit<typeof menuCategories.$infer
 export async function updateMenuCategory(id: number, data: Partial<typeof menuCategories.$inferInsert>) {
   const db = await getDbInstance();
   await db.update(menuCategories).set(data).where(eq(menuCategories.id, id));
+  _cache.delete('menuCategories');
   const rows = await db.select().from(menuCategories).where(eq(menuCategories.id, id));
   return rows[0];
 }
@@ -243,20 +299,28 @@ export async function deleteMenuCategory(id: number) {
   const db = await getDbInstance();
   await db.delete(menuItems).where(eq(menuItems.categoryId, id));
   await db.delete(menuCategories).where(eq(menuCategories.id, id));
+  _cache.delete('menuCategories');
+  _cache.delete('menuItems:all');
 }
 
 // ── Menu Items ────────────────────────────────────────────────────────────────
 export async function getMenuItems(categoryId?: number) {
+  const key = categoryId ? `menuItems:${categoryId}` : 'menuItems:all';
+  const cached = cacheGet<(typeof menuItems.$inferSelect)[]>(key);
+  if (cached !== undefined) return cached;
   const db = await getDbInstance();
-  if (categoryId) {
-    return db.select().from(menuItems).where(eq(menuItems.categoryId, categoryId)).orderBy(menuItems.sortOrder);
-  }
-  return db.select().from(menuItems).orderBy(menuItems.sortOrder);
+  const result = categoryId
+    ? await db.select().from(menuItems).where(eq(menuItems.categoryId, categoryId)).orderBy(menuItems.sortOrder)
+    : await db.select().from(menuItems).orderBy(menuItems.sortOrder);
+  cacheSet(key, result, 30_000);
+  return result;
 }
 
 export async function createMenuItem(data: Omit<typeof menuItems.$inferInsert, "id" | "createdAt" | "updatedAt">) {
   const db = await getDbInstance();
   const result = await db.insert(menuItems).values(data);
+  _cache.delete('menuItems:all');
+  if (data.categoryId) _cache.delete(`menuItems:${data.categoryId}`);
   const rows = await db.select().from(menuItems).where(eq(menuItems.id, result[0].insertId));
   return rows[0];
 }
@@ -264,6 +328,8 @@ export async function createMenuItem(data: Omit<typeof menuItems.$inferInsert, "
 export async function updateMenuItem(id: number, data: Partial<typeof menuItems.$inferInsert>) {
   const db = await getDbInstance();
   await db.update(menuItems).set(data).where(eq(menuItems.id, id));
+  _cache.delete('menuItems:all');
+  if (data.categoryId) _cache.delete(`menuItems:${data.categoryId}`);
   const rows = await db.select().from(menuItems).where(eq(menuItems.id, id));
   return rows[0];
 }
@@ -271,17 +337,23 @@ export async function updateMenuItem(id: number, data: Partial<typeof menuItems.
 export async function deleteMenuItem(id: number) {
   const db = await getDbInstance();
   await db.delete(menuItems).where(eq(menuItems.id, id));
+  _cache.delete('menuItems:all');
 }
 
 // ── Gallery Images ────────────────────────────────────────────────────────────
 export async function getGalleryImages() {
+  const cached = cacheGet<(typeof galleryImages.$inferSelect)[]>('galleryImages');
+  if (cached !== undefined) return cached;
   const db = await getDbInstance();
-  return db.select().from(galleryImages).orderBy(galleryImages.sortOrder);
+  const result = await db.select().from(galleryImages).orderBy(galleryImages.sortOrder);
+  cacheSet('galleryImages', result, 30_000);
+  return result;
 }
 
 export async function createGalleryImage(data: Omit<typeof galleryImages.$inferInsert, "id" | "createdAt" | "updatedAt">) {
   const db = await getDbInstance();
   const result = await db.insert(galleryImages).values(data);
+  _cache.delete('galleryImages');
   const rows = await db.select().from(galleryImages).where(eq(galleryImages.id, result[0].insertId));
   return rows[0];
 }
@@ -289,6 +361,7 @@ export async function createGalleryImage(data: Omit<typeof galleryImages.$inferI
 export async function updateGalleryImage(id: number, data: Partial<typeof galleryImages.$inferInsert>) {
   const db = await getDbInstance();
   await db.update(galleryImages).set(data).where(eq(galleryImages.id, id));
+  _cache.delete('galleryImages');
   const rows = await db.select().from(galleryImages).where(eq(galleryImages.id, id));
   return rows[0];
 }
@@ -296,13 +369,18 @@ export async function updateGalleryImage(id: number, data: Partial<typeof galler
 export async function deleteGalleryImage(id: number) {
   const db = await getDbInstance();
   await db.delete(galleryImages).where(eq(galleryImages.id, id));
+  _cache.delete('galleryImages');
 }
 
 // ── Footer Content ────────────────────────────────────────────────────────────
 export async function getFooterContent() {
+  const cached = cacheGet<typeof footerContent.$inferSelect | null>('footer');
+  if (cached !== undefined) return cached;
   const db = await getDbInstance();
   const rows = await db.select().from(footerContent).limit(1);
-  return rows[0] ?? null;
+  const result = rows[0] ?? null;
+  cacheSet('footer', result);
+  return result;
 }
 
 export async function upsertFooterContent(data: Partial<typeof footerContent.$inferInsert>) {
@@ -313,5 +391,6 @@ export async function upsertFooterContent(data: Partial<typeof footerContent.$in
   } else {
     await db.insert(footerContent).values(data as typeof footerContent.$inferInsert);
   }
+  _cache.delete('footer');
   return getFooterContent();
 }
