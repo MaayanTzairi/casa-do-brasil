@@ -40,7 +40,7 @@ function navigateToHash(href: string, e: React.MouseEvent) {
 }
 
 const LOGO_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_951b2ffb.png";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp";
 
 const GOLD = "#B9A167";
 const BORDEAUX = "rgb(62,4,9)";
@@ -116,6 +116,9 @@ function LogoBadge({
         alt="Casa do Brasil"
         width={size}
         height={Math.round(size * 1.11)}
+        loading="eager"
+        decoding="async"
+        fetchPriority="high"
         style={{
           width: size,
           height: "auto",

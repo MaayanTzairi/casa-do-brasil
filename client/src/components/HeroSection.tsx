@@ -15,9 +15,9 @@ import { trpc } from "@/lib/trpc";
 
 
 const HERO_IMAGE_DEFAULT =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main-Xjsh9uMVYH6frhxTU2HJ4c.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main_opt_ea3703c2.webp";
 const HERO_IMAGE_SM_DEFAULT =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_eb2aef7a.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_opt_4d593302.webp";
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(40,3,6)";

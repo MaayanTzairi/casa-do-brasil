@@ -167,12 +167,15 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    // Increase chunk size warning threshold
+    chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
         manualChunks: {
           // Split heavy vendor libs into separate cached chunks
           "vendor-react": ["react", "react-dom"],
           "vendor-ui": ["@radix-ui/react-tooltip", "@radix-ui/react-dialog", "@radix-ui/react-select"],
+          "vendor-trpc": ["@trpc/client", "@trpc/react-query", "@tanstack/react-query"],
         },
       },
     },

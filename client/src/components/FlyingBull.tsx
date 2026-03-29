@@ -15,7 +15,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { trpc } from "@/lib/trpc";
 
 const LOGO_URL_DEFAULT =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_951b2ffb.png";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp";
 
 const PHOTO_URL_DEFAULT =
   "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80&fit=crop";

@@ -12,7 +12,7 @@
  */
 
 const PANORAMA_IMG =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-footer_80a01222.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-footer_opt_e74702e9.webp";
 
 const GOLD = "rgba(185,161,103,";
 

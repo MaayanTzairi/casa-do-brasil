@@ -73,3 +73,16 @@
 
 ## Remove Admin Login Screen
 - [x] Remove AdminLogin route — /admin opens CMS directly with no login screen
+
+## Performance Optimization (Speed Sprint)
+- [x] Audit all images and identify heavy files (logo 1.1MB, gallery 292KB, etc.)
+- [x] Compress all images to WebP with quality 82 — saved 1.7MB (59% reduction)
+- [x] Logo: 1.1MB PNG → 28KB WebP (97% reduction)
+- [x] Update all CDN URLs in all components (HeroSection, CasaVibesSection, MenuSection, GallerySection, SectionDivider, SectionDivider2, HeroDivider, Navbar, Footer, FlyingBull, StickyReservationBtn, Gallery page, HeroEditor)
+- [x] Fix LCP bootstrap image flash bug — fade out with opacity transition instead of display:none jump
+- [x] Update index.html preload tags with new optimized image URLs
+- [x] Add loading="lazy" + decoding="async" to MenuCard images
+- [x] Add fetchPriority="high" to Navbar logo (above-fold)
+- [x] Add content-visibility CSS for below-fold sections
+- [x] Add prefers-reduced-motion CSS rule
+- [x] Split tRPC vendor chunk in Vite build config

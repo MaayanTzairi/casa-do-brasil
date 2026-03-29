@@ -10,9 +10,9 @@ import { useInViewCSS } from "@/hooks/useInViewCSS";
 import { trpc } from "@/lib/trpc";
 
 const CHURRASCARIA_IMG =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-churrascaria-v2_v2_cb04fc5f.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-churrascaria_opt_10fbb0e3.webp";
 const CLASSIC_IMG =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-classic-v2_v2_7709ebb5.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-classic_opt_83d78618.webp";
 
 const GOLD = "#B9A167";
 const GOLD_R = "rgba(185,161,103,";
@@ -100,7 +100,7 @@ function MenuCard({ img, name, subtitle, btnText, href, dark=false, delay=0, inV
       <GoldCorners opacity={hovered ? 0.85 : 0.5} />
 
       <div style={{ position:"relative", paddingBottom:"62%", overflow:"hidden", flexShrink:0 }}>
-        <img src={img} alt={name} width={600} height={372} style={{
+        <img src={img} alt={name} width={600} height={372} loading="lazy" decoding="async" style={{
           position:"absolute", inset:0, width:"100%", height:"100%",
           objectFit:"cover", objectPosition:"center 28%",
           transform: hovered ? "scale(1.06)" : "scale(1)",

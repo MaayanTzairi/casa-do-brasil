@@ -9,13 +9,13 @@ import { useInViewCSS } from "@/hooks/useInViewCSS";
 import { trpc } from "@/lib/trpc";
 
 const MEAT_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/meat-v2_v2_c9250c58.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/meat-v2_opt_93cfd53b.webp";
 const MEAT_URL_SM =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/meat-sm_a7ea00f1.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/meat-sm_opt_90f71825.webp";
 const CARNIVAL_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/carnival-v2_v2_942d1bb1.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/carnival-v2_opt_7472ba91.webp";
 const CARNIVAL_URL_SM =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/carnival-sm_8d307eab.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/carnival-sm_opt_62eb6e6d.webp";
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(62,4,9)";

@@ -102,8 +102,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
     <!-- Preload LCP hero image — must match srcset in HeroSection.tsx exactly -->
     <link rel="preload" as="image"
-      href="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main-Xjsh9uMVYH6frhxTU2HJ4c.webp"
-      imagesrcset="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_eb2aef7a.webp 900w, https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main-Xjsh9uMVYH6frhxTU2HJ4c.webp 1920w"
+      href="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main_opt_ea3703c2.webp"
+      imagesrcset="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_opt_4d593302.webp 900w, https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main_opt_ea3703c2.webp 1920w"
       imagesizes="100vw"
       fetchpriority="high"
       crossorigin="anonymous" />
@@ -118,15 +118,15 @@
     -->
     <img
       id="lcp-hero"
-      src="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_eb2aef7a.webp"
-      srcset="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_eb2aef7a.webp 900w, https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main-Xjsh9uMVYH6frhxTU2HJ4c.webp 1920w"
+      src="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_opt_4d593302.webp"
+      srcset="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_opt_4d593302.webp 900w, https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main_opt_ea3703c2.webp 1920w"
       sizes="100vw"
       alt="Casa do Brasil — Brazilian Grill and Churrascaria in Eilat"
       fetchpriority="high"
       decoding="async"
       width="1920"
       height="1080"
-      style="position:fixed;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;z-index:0;pointer-events:none;"
+      style="position:fixed;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;z-index:0;pointer-events:none;transition:opacity 0.3s ease;"
     />
     <!-- React root sits above the LCP image once JS loads -->
     <div id="root" style="position:relative;z-index:1;"></div>

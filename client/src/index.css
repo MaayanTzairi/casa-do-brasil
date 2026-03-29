@@ -379,3 +379,31 @@
   animation-delay: 1.2s;
   pointer-events: none;
 }
+
+/* ── Performance: content-visibility for below-fold sections ── */
+/* Skips rendering of off-screen sections until they scroll into view */
+#experience,
+#menu,
+#gallery,
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
+}
+
+/* ── Performance: image rendering optimization ── */
+img {
+  image-rendering: auto;
+  /* Prevent layout shift from images without explicit dimensions */
+  max-width: 100%;
+}
+
+/* ── Performance: reduce animation on low-power devices ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

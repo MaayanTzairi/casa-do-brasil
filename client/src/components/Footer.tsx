@@ -13,7 +13,7 @@ const GOLD_LIGHT = "rgba(185,161,103,0.35)";
 const BORDEAUX = "rgb(22,1,3)";
 
 const LOGO_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_951b2ffb.png";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp";
 
 export default function Footer() {
   const { isHe } = useLanguage();
