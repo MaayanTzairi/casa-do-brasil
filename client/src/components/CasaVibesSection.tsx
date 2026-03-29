@@ -214,7 +214,7 @@ export default function CasaVibesSection() {
 
             {/* Image 1 — tall, anchored top-left */}
             <div style={{ ...animStyle(inView, 0.18), position: "absolute", top: 0, left: 0, width: "58%", zIndex: 2 }}>
-              <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 24px 64px rgba(62,4,9,0.38), 0 8px 24px rgba(62,4,9,0.22)", borderRadius: "2px" }}>
+              <div style={{ position: "relative", overflow: "hidden", borderRadius: "2px" }}>
                 <img
                   src={img1Src}
                   srcSet={(cms as any)?.image1Url ? undefined : `${MEAT_URL_350} 350w, ${MEAT_URL_400} 400w, ${img1SrcSm} 450w, ${img1Src} 800w`}
@@ -226,22 +226,13 @@ export default function CasaVibesSection() {
                   onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
                 />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 52%)", pointerEvents: "none" }} />
-                <div style={{ position: "absolute", bottom: "1.2rem", left: "1.2rem" }}>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.32em", color: GOLD, marginBottom: "0.25rem" }}>{img1Label}</div>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(14px, 1.5vw, 19px)", color: "#fff", lineHeight: 1.1 }}>
-                    {img1TitleLines.map((line, i) => (
-                      <span key={i}>{line}{i < img1TitleLines.length - 1 && <br />}</span>
-                    ))}
-                  </div>
-                </div>
               </div>
               <CornerBrackets />
             </div>
 
             {/* Image 2 — shorter, anchored bottom-right */}
             <div style={{ ...animStyle(inView, 0.32), position: "absolute", bottom: 0, right: 0, width: "55%", zIndex: 3 }}>
-              <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 28px 72px rgba(62,4,9,0.42), 0 10px 28px rgba(62,4,9,0.25)", borderRadius: "2px" }}>
+              <div style={{ position: "relative", overflow: "hidden", borderRadius: "2px" }}>
                 <img
                   src={img2Src}
                   srcSet={(cms as any)?.image2Url ? undefined : `${CARNIVAL_URL_350} 350w, ${CARNIVAL_URL_400} 400w, ${img2SrcSm} 450w, ${img2Src} 800w`}
@@ -253,15 +244,6 @@ export default function CasaVibesSection() {
                   onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
                 />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.80) 0%, transparent 52%)", pointerEvents: "none" }} />
-                <div style={{ position: "absolute", bottom: "1.2rem", left: "1.2rem" }}>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.32em", color: GOLD, marginBottom: "0.25rem" }}>{img2Label}</div>
-                  <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(14px, 1.5vw, 19px)", color: "#fff", lineHeight: 1.1 }}>
-                    {img2TitleLines.map((line, i) => (
-                      <span key={i}>{line}{i < img2TitleLines.length - 1 && <br />}</span>
-                    ))}
-                  </div>
-                </div>
               </div>
               <CornerBrackets />
             </div>
@@ -274,7 +256,7 @@ export default function CasaVibesSection() {
         <div style={{ display: "flex", gap: "10px", width: "100%", maxWidth: "1280px", margin: "2.5rem auto 0", alignItems: "stretch" }}>
           {/* Left image — meat */}
           <div style={{ ...animStyle(inView, 0.1), flex: "1 1 0", minWidth: 0 }}>
-            <div style={{ position: "relative", overflow: "hidden", height: "260px", boxShadow: "0 16px 48px rgba(62,4,9,0.36), 0 6px 18px rgba(62,4,9,0.20)", borderRadius: "2px" }}>
+            <div style={{ position: "relative", overflow: "hidden", height: "260px", borderRadius: "2px" }}>
               <img
                 src={img1Src}
                 srcSet={cms?.image1Url ? undefined : `${MEAT_URL_350} 350w, ${MEAT_URL_400} 400w, ${img1SrcSm} 450w, ${img1Src} 800w`}
@@ -284,21 +266,12 @@ export default function CasaVibesSection() {
                 width={600} height={800}
                 style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%", display: "block" }}
               />
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.78) 0%, transparent 52%)", pointerEvents: "none" }} />
-              <div style={{ position: "absolute", bottom: "0.75rem", left: "0.75rem" }}>
-                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>{img1Label}</div>
-                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(12px, 3.5vw, 16px)", color: "#fff", lineHeight: 1.1 }}>
-                  {img1TitleLines.map((line, i) => (
-                    <span key={i}>{line}{i < img1TitleLines.length - 1 && <br />}</span>
-                  ))}
-                </div>
-              </div>
             </div>
             <CornerBrackets offset={-6} len={12} w={1} />
           </div>
           {/* Right image — carnival */}
           <div style={{ ...animStyle(inView, 0.22), flex: "1 1 0", minWidth: 0 }}>
-            <div style={{ position: "relative", overflow: "hidden", height: "260px", boxShadow: "0 20px 56px rgba(62,4,9,0.40), 0 8px 22px rgba(62,4,9,0.22)", borderRadius: "2px" }}>
+            <div style={{ position: "relative", overflow: "hidden", height: "260px", borderRadius: "2px" }}>
               <img
                 src={img2Src}
                 srcSet={cms?.image2Url ? undefined : `${img2SrcSm} 450w, ${img2Src} 800w`}
@@ -308,15 +281,6 @@ export default function CasaVibesSection() {
                 width={600} height={750}
                 style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%", display: "block" }}
               />
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(62,4,9,0.80) 0%, transparent 52%)", pointerEvents: "none" }} />
-              <div style={{ position: "absolute", bottom: "0.75rem", left: "0.75rem" }}>
-                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.28em", color: GOLD, marginBottom: "0.15rem" }}>{img2Label}</div>
-                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(12px, 3.5vw, 16px)", color: "#fff", lineHeight: 1.1 }}>
-                  {img2TitleLines.map((line, i) => (
-                    <span key={i}>{line}{i < img2TitleLines.length - 1 && <br />}</span>
-                  ))}
-                </div>
-              </div>
             </div>
             <CornerBrackets offset={-6} len={12} w={1} />
           </div>

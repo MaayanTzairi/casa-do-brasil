@@ -13,7 +13,7 @@ const GOLD_LIGHT = "rgba(185,161,103,0.35)";
 const BORDEAUX = "rgb(22,1,3)";
 
 const LOGO_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-footer-transparent_99ea5143.webp";
 
 export default function Footer() {
   const { isHe } = useLanguage();
@@ -59,17 +59,7 @@ export default function Footer() {
 
           {/* Logo */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.8rem" }}>
-            <img src={LOGO_URL} alt="Casa do Brasil" width={64} height={71} style={{ width: "64px", height: "auto", objectFit: "contain", display: "block" }} />
-            <div style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 900,
-              fontSize: "0.65rem",
-              letterSpacing: "0.28em",
-              textTransform: "uppercase",
-              color: "rgba(255,255,255,0.5)",
-            }}>
-              CASA DO BRASIL
-            </div>
+            <img src={LOGO_URL} alt="Casa do Brasil" width={140} height={100} style={{ width: "140px", height: "auto", objectFit: "contain", display: "block" }} />
           </div>
 
           {/* Address */}
@@ -206,17 +196,7 @@ export default function Footer() {
 
           {/* Center — Logo */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
-            <img src={LOGO_URL} alt="Casa do Brasil" width={72} height={80} style={{ width: "72px", height: "auto", objectFit: "contain", display: "block" }} />
-            <div style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 900,
-              fontSize: "0.65rem",
-              letterSpacing: "0.28em",
-              textTransform: "uppercase",
-              color: "rgba(255,255,255,0.5)",
-            }}>
-              CASA DO BRASIL
-            </div>
+            <img src={LOGO_URL} alt="Casa do Brasil" width={160} height={116} style={{ width: "160px", height: "auto", objectFit: "contain", display: "block" }} />
           </div>
 
           {/* Right — Hours */}

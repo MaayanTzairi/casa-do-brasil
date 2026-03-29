@@ -145,3 +145,10 @@
 - [ ] Fix oversized images: menu cards (604px served, 302px displayed on mobile)
 - [ ] Fix oversized images: divider images (560px served, 347px displayed)
 - [ ] Fix oversized images: logo-bull (359px served, 260px displayed)
+
+## UI Changes — Content & Design Round
+- [x] OurStory section: remove text overlays from both images (EN + HE, mobile + desktop)
+- [x] OurStory section: remove bordeaux/dark overlay effect from images
+- [x] Statistics section: replace 4.3 rating with "מעל 5000 ביקורות של לקוחות מרוצים" + 5 stars + Google icon
+- [x] Reviews section: add small Google icon + "לתגובה המלאה" link next to each reviewer name
+- [x] Footer: replace current logo with uploaded PDF logo (no purple background, logo + text only)
