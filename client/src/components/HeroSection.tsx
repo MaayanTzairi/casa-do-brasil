@@ -161,8 +161,8 @@ export default function HeroSection() {
           direction: isHe ? "rtl" : "ltr",
         }}
       >
-        {/* Title */}
-        <div className="mb-4" style={{ width: "100%", textAlign: isHe ? "right" : "left" }}>
+        {/* Title — min-height prevents CLS before font loads */}
+        <div className="mb-4" style={{ width: "100%", textAlign: isHe ? "right" : "left", minHeight: isMobile ? "clamp(144px, 45vw, 240px)" : "clamp(174px, 28.5vw, 375px)" }}>
           {titleWords.map((word: string, i: number) => (
             <div key={i} className="overflow-hidden">
               <h1

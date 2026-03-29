@@ -136,3 +136,12 @@
 - [ ] Fix oversized Unsplash circle in FlyingBull (300x300 served, 231px displayed)
 - [ ] Fix LCP element render delay 980ms: defer non-critical JS to reduce main thread blocking
 - [ ] Fix robots.txt errors (231 errors found in SEO audit)
+
+## Lighthouse 90+ Final Sprint (Real Production URL)
+- [ ] Fix render-blocking CSS (170ms) — index-BZuGhwGW.css blocks FCP/LCP
+- [ ] Fix LCP element render delay (990ms mobile / 760ms desktop) — FlyingBull blocked by JS chain
+- [ ] Fix CLS 0.025 — HeroSection text div (mb-4) layout shift
+- [ ] Fix oversized images: carnival/meat (713px served, 318px displayed on desktop)
+- [ ] Fix oversized images: menu cards (604px served, 302px displayed on mobile)
+- [ ] Fix oversized images: divider images (560px served, 347px displayed)
+- [ ] Fix oversized images: logo-bull (359px served, 260px displayed)

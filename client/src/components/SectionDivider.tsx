@@ -8,6 +8,8 @@
 
 const SKEWER_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider1-v2_fixed_98ac2a78.webp";
+const SKEWER_IMG_380 =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider1-380w_1efabdd3.webp";
 const SKEWER_IMG_SM =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider1-sm_fixed_b9bb4035.webp";
 
@@ -59,7 +61,7 @@ export default function SectionDivider() {
       >
         <img
           src={SKEWER_IMG}
-          srcSet={`${SKEWER_IMG_SM} 320w, ${SKEWER_IMG} 560w`}
+          srcSet={`${SKEWER_IMG_SM} 320w, ${SKEWER_IMG_380} 380w, ${SKEWER_IMG} 560w`}
           sizes="clamp(160px, 26vw, 360px)"
           alt=""
           aria-hidden="true"

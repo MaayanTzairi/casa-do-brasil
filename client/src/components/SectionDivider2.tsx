@@ -8,6 +8,8 @@
 
 const DANCER_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider2-v2_fixed_af05e66d.webp";
+const DANCER_IMG_380 =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider2-380w_60920805.webp";
 const DANCER_IMG_SM =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider2-sm_fixed_953640e3.webp";
 
@@ -59,7 +61,7 @@ export default function SectionDivider2() {
       >
         <img
           src={DANCER_IMG}
-          srcSet={`${DANCER_IMG_SM} 320w, ${DANCER_IMG} 560w`}
+          srcSet={`${DANCER_IMG_SM} 320w, ${DANCER_IMG_380} 380w, ${DANCER_IMG} 560w`}
           sizes="clamp(160px, 26vw, 360px)"
           alt=""
           aria-hidden="true"

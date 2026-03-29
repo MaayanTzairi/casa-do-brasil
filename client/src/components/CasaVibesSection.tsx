@@ -12,10 +12,18 @@ const MEAT_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/meat-v2_opt_93cfd53b.webp";
 const MEAT_URL_SM =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/meat-sm_opt_90f71825.webp";
+const MEAT_URL_400 =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/meat-400w_6739f157.webp";
+const MEAT_URL_350 =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/meat-350w_9594a773.webp";
 const CARNIVAL_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/carnival-v2_opt_7472ba91.webp";
 const CARNIVAL_URL_SM =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/carnival-sm_opt_62eb6e6d.webp";
+const CARNIVAL_URL_400 =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/carnival-400w_f394bf6d.webp";
+const CARNIVAL_URL_350 =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/carnival-350w_19a7d469.webp";
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(62,4,9)";
@@ -209,8 +217,8 @@ export default function CasaVibesSection() {
               <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 24px 64px rgba(62,4,9,0.38), 0 8px 24px rgba(62,4,9,0.22)", borderRadius: "2px" }}>
                 <img
                   src={img1Src}
-                  srcSet={(cms as any)?.image1Url ? undefined : `${img1SrcSm} 450w, ${img1Src} 800w`}
-                  sizes="(max-width:768px) 60vw, 58%"
+                  srcSet={(cms as any)?.image1Url ? undefined : `${MEAT_URL_350} 350w, ${MEAT_URL_400} 400w, ${img1SrcSm} 450w, ${img1Src} 800w`}
+                  sizes="(max-width:768px) 60vw, (max-width:1200px) 35vw, 400px"
                   alt={img1Label}
                   loading="lazy" decoding="async"
                   width={800} height={1067}
@@ -236,8 +244,8 @@ export default function CasaVibesSection() {
               <div style={{ position: "relative", overflow: "hidden", boxShadow: "0 28px 72px rgba(62,4,9,0.42), 0 10px 28px rgba(62,4,9,0.25)", borderRadius: "2px" }}>
                 <img
                   src={img2Src}
-                  srcSet={(cms as any)?.image2Url ? undefined : `${img2SrcSm} 450w, ${img2Src} 800w`}
-                  sizes="(max-width:768px) 56vw, 55%"
+                  srcSet={(cms as any)?.image2Url ? undefined : `${CARNIVAL_URL_350} 350w, ${CARNIVAL_URL_400} 400w, ${img2SrcSm} 450w, ${img2Src} 800w`}
+                  sizes="(max-width:768px) 56vw, (max-width:1200px) 33vw, 400px"
                   alt={img2Label}
                   loading="lazy" decoding="async"
                   width={800} height={1000}
@@ -269,7 +277,7 @@ export default function CasaVibesSection() {
             <div style={{ position: "relative", overflow: "hidden", height: "260px", boxShadow: "0 16px 48px rgba(62,4,9,0.36), 0 6px 18px rgba(62,4,9,0.20)", borderRadius: "2px" }}>
               <img
                 src={img1Src}
-                srcSet={cms?.image1Url ? undefined : `${img1SrcSm} 450w, ${img1Src} 800w`}
+                srcSet={cms?.image1Url ? undefined : `${MEAT_URL_350} 350w, ${MEAT_URL_400} 400w, ${img1SrcSm} 450w, ${img1Src} 800w`}
                 sizes="50vw"
                 alt={img1Label}
                 loading="lazy" decoding="async"

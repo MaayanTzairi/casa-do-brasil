@@ -16,6 +16,10 @@ import { trpc } from "@/lib/trpc";
 
 const LOGO_URL_DEFAULT =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp";
+const LOGO_URL_300 =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-300w_8c97b1ca.webp";
+const LOGO_URL_100 =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-100w_66f2659e.webp";
 
 const PHOTO_URL_DEFAULT =
   "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=75&fit=crop&fm=webp";
@@ -226,7 +230,10 @@ export default function FlyingBull() {
 
         {/* Bull */}
         {LOGO_URL && (
-          <img src={LOGO_URL} alt="Casa do Brasil" aria-hidden="true"
+          <img src={LOGO_URL}
+            srcSet={!cms?.logoImageUrl ? `${LOGO_URL_100} 100w, ${LOGO_URL_300} 300w, ${LOGO_URL_DEFAULT} 360w` : undefined}
+            sizes="(max-width:899px) 88px, 260px"
+            alt="Casa do Brasil" aria-hidden="true"
             loading="eager"
             fetchPriority="high"
             decoding="sync"
@@ -314,7 +321,10 @@ export default function FlyingBull() {
 
         {/* Bull — mobile */}
         {LOGO_URL && (
-          <img src={LOGO_URL} alt="Casa do Brasil" aria-hidden="true"
+          <img src={LOGO_URL}
+            srcSet={!cms?.logoImageUrl ? `${LOGO_URL_100} 100w, ${LOGO_URL_300} 300w, ${LOGO_URL_DEFAULT} 360w` : undefined}
+            sizes="(max-width:899px) 88px, 260px"
+            alt="Casa do Brasil" aria-hidden="true"
             loading="eager"
             fetchPriority="high"
             decoding="sync"

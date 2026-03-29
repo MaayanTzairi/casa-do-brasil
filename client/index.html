@@ -159,8 +159,11 @@
       fetchpriority="high"
       crossorigin="anonymous" />
     <!-- Preload FlyingBull logo — detected as LCP element by Lighthouse -->
+    <!-- Mobile gets 100w, desktop gets 300w, full-res fallback at 360w -->
     <link rel="preload" as="image"
       href="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp"
+      imagesrcset="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-100w_66f2659e.webp 100w, https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-300w_8c97b1ca.webp 300w, https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp 360w"
+      imagesizes="(max-width:899px) 88px, 260px"
       fetchpriority="high" />
   </head>
   <body>
