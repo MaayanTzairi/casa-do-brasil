@@ -7,9 +7,9 @@
  */
 
 const DANCER_IMG =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider2-v2_opt_7ef8bfb7.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider2-v2_fixed_af05e66d.webp";
 const DANCER_IMG_SM =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider2-sm_opt_e69b19ea.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider2-sm_fixed_953640e3.webp";
 
 const GOLD = "rgba(185,161,103,";
 

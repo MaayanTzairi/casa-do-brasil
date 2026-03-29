@@ -7,9 +7,9 @@
  */
 
 const SKEWER_IMG =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider1-v2_opt_f61ae07a.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider1-v2_fixed_98ac2a78.webp";
 const SKEWER_IMG_SM =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider1-sm_opt_015028c3.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider1-sm_fixed_b9bb4035.webp";
 
 const GOLD = "rgba(185,161,103,";
 

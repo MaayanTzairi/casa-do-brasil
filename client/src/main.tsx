@@ -53,17 +53,4 @@ createRoot(document.getElementById("root")!).render(
   </trpc.Provider>
 );
 
-// Fade out the LCP bootstrap image once React has mounted and painted.
-// Using opacity fade instead of display:none to prevent visual flash.
-requestAnimationFrame(() => {
-  requestAnimationFrame(() => {
-    const lcpHero = document.getElementById("lcp-hero");
-    if (lcpHero) {
-      lcpHero.style.opacity = "0";
-      // Remove from layout after fade completes
-      setTimeout(() => {
-        if (lcpHero) lcpHero.style.display = "none";
-      }, 350);
-    }
-  });
-});
+

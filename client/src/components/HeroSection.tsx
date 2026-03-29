@@ -96,7 +96,7 @@ export default function HeroSection() {
       ref={heroRef}
       id="hero"
       className="relative w-full overflow-hidden"
-      style={{ height: "100svh", minHeight: "600px" }}
+      style={{ height: "100svh", minHeight: "600px", background: "rgb(28,2,4)" }}
     >
       {/* ── Background Image + Parallax ── */}
       <div ref={imgWrapRef} className="absolute inset-0 w-full h-full" style={{ willChange: "transform" }}>

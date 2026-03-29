@@ -17,12 +17,15 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const PlaylistPage = lazy(() => import("./pages/PlaylistPage"));
 const FAQPage = lazy(() => import("./pages/FAQPage"));
 const Admin = lazy(() => import("./pages/Admin"));
-// Minimal loading fallback — keeps the background colour consistent
+// Minimal loading fallback — dark bordeaux bg prevents white flash on page transitions
 function PageLoader() {
+  const [location] = useLocation();
+  // Use bordeaux for home page (hero is dark), white for other pages
+  const isHome = location === "/";
   return (
     <div style={{
       minHeight: "100vh",
-      background: "#fff",
+      background: isHome ? "rgb(28,2,4)" : "#fff",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",

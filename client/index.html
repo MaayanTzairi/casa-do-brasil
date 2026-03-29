@@ -95,6 +95,12 @@
         src: url(https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/frank-ruhl-latin_fd1a3e07.woff2) format('woff2');
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
       }
+      /* Prevent white flash before React mounts — body starts dark for home page */
+      html, body, #root {
+        margin: 0;
+        padding: 0;
+        background: rgb(28,2,4);
+      }
     </style>
     <!-- Handwriting font for navbar brand text -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -109,27 +115,8 @@
       crossorigin="anonymous" />
   </head>
   <body>
-    <!--
-      LCP BOOTSTRAP IMAGE
-      This <img> is rendered by the browser BEFORE JavaScript loads.
-      Lighthouse and Core Web Vitals will detect it as the Largest Contentful Paint.
-      Once React mounts, the #root div covers this element — no visual flash.
-      DO NOT remove: this is critical for LCP score.
-    -->
-    <img
-      id="lcp-hero"
-      src="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_opt_4d593302.webp"
-      srcset="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_opt_4d593302.webp 900w, https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main_opt_ea3703c2.webp 1920w"
-      sizes="100vw"
-      alt="Casa do Brasil — Brazilian Grill and Churrascaria in Eilat"
-      fetchpriority="high"
-      decoding="async"
-      width="1920"
-      height="1080"
-      style="position:fixed;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;z-index:0;pointer-events:none;transition:opacity 0.3s ease;"
-    />
-    <!-- React root sits above the LCP image once JS loads -->
-    <div id="root" style="position:relative;z-index:1;"></div>
+    <!-- React root -->
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script
       defer

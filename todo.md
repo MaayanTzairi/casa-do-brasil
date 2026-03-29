@@ -86,3 +86,7 @@
 - [x] Add content-visibility CSS for below-fold sections
 - [x] Add prefers-reduced-motion CSS rule
 - [x] Split tRPC vendor chunk in Vite build config
+
+## Bug Fixes — Post Performance Sprint
+- [x] Fix divider images (skewer/dancer/footer-panorama) — re-compressed with RGBA transparency preserved
+- [x] Fix LCP hero bootstrap image flashing on every page navigation — removed entirely, replaced with dark bordeaux body background
