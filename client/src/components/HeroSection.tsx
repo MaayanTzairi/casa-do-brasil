@@ -312,7 +312,9 @@ function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: st
         textDecoration: "none", border: "1.5px solid #FFFFFF",
         color: hovered ? BORDEAUX : "#FFFFFF",
         background: hovered ? "#FFFFFF" : "transparent",
-        transition: "all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        // Use only composited properties (color/background) — avoid animating padding/border
+        transition: "color 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        willChange: "color, background-color",
       }}
     >
       {label} <span style={{ fontSize: "1rem", lineHeight: 1 }}>{isHe ? "←" : "→"}</span>
@@ -334,7 +336,9 @@ function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: st
         textDecoration: "none", border: `1.5px solid ${GOLD}`,
         color: hovered ? BORDEAUX : GOLD,
         background: hovered ? GOLD : "transparent",
-        transition: "all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        // Use only composited properties — avoid animating padding/border
+        transition: "color 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        willChange: "color, background-color",
       }}
     >
       {label}

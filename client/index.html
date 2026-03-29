@@ -141,6 +141,15 @@
       img { max-width: 100%; height: auto; }
       /* Prevent scrollbar layout shift */
       html { overflow-y: scroll; scrollbar-gutter: stable; }
+      /* Prevent CLS: Navbar logo explicit reserve space */
+      .navbar-logo { width: 44px; height: 49px; display: block; }
+      /* Prevent CLS: Hero title min-height so text area doesn't shift */
+      .hero-title-area { min-height: 1em; }
+      /* Composited transitions only — use transform/opacity, not padding */
+      .hero-btn {
+        will-change: transform;
+        transform: translateZ(0);
+      }
     </style>
     <!-- Preload LCP hero image — must match srcset in HeroSection.tsx exactly -->
     <link rel="preload" as="image"

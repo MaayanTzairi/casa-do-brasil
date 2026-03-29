@@ -126,3 +126,13 @@
 - [x] Inline critical CSS in <head>: body font, hero bg, img max-width, scrollbar-gutter
 - [x] Cache headers on static assets: 1-year immutable (Express already configured)
 - [x] srcset already present on CasaVibes images (carnival, meat) with -sm variants
+
+## Mobile Lighthouse 90+ Sprint
+- [ ] Fix render-blocking CSS 160ms: defer main stylesheet, expand inline critical CSS
+- [ ] Fix CLS 0.025: add explicit height to Navbar logo img (currently unsized)
+- [ ] Fix CLS: HeroSection title div causes layout shift — add min-height
+- [ ] Fix non-composited animations on RESERVE/VIEW MENU buttons (padding CSS property unsupported)
+- [ ] Fix oversized mobile images: MenuSection cards (604px served, 302px displayed — 35KB wasted each)
+- [ ] Fix oversized Unsplash circle in FlyingBull (300x300 served, 231px displayed)
+- [ ] Fix LCP element render delay 980ms: defer non-critical JS to reduce main thread blocking
+- [ ] Fix robots.txt errors (231 errors found in SEO audit)

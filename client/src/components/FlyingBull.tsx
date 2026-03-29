@@ -35,10 +35,39 @@ function easeInOut(t: number) {
   return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 }
 
+function computeInitialPositions(isHe: boolean) {
+  if (typeof window === "undefined") return null;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const mobile = vw < 900;
+  if (!mobile) {
+    const heroX = isHe ? vw * 0.28 - BULL_HERO_DESKTOP / 2 : vw * 0.72 - BULL_HERO_DESKTOP / 2;
+    const heroY = vh / 2 - BULL_HERO_DESKTOP / 2 - 20;
+    const navX = vw / 2 - BULL_NAV_SIZE / 2;
+    const navY = 70 / 2 - BULL_NAV_SIZE / 2;
+    return { mobile, dHeroPos: { x: heroX, y: heroY }, dNavPos: { x: navX, y: navY }, mHeroPos: null, mNavPos: null };
+  } else {
+    const navbarH = 56;
+    const heroTextTop = vh * 0.42;
+    const badgeCircleSize = BULL_HERO_MOBILE * 1.5;
+    const badgeCenterY = navbarH + (heroTextTop - navbarH) / 2;
+    const heroX = vw / 2 - BULL_HERO_MOBILE / 2;
+    const heroY = badgeCenterY - BULL_HERO_MOBILE / 2;
+    const minY = navbarH + 8 - (badgeCircleSize - BULL_HERO_MOBILE) / 2;
+    const safeHeroY = Math.max(minY, heroY);
+    const navX = vw / 2 - BULL_NAV_SIZE / 2;
+    const navY = navbarH / 2 - BULL_NAV_SIZE / 2;
+    return { mobile, dHeroPos: null, dNavPos: null, mHeroPos: { x: heroX, y: safeHeroY }, mNavPos: { x: navX, y: navY } };
+  }
+}
+
 export default function FlyingBull() {
   const { isHe } = useLanguage();
   const [progress, setProgress] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+
+  // Compute positions synchronously on first render — eliminates LCP delay from useEffect
+  const initial = computeInitialPositions(isHe);
+  const [isMobile, setIsMobile] = useState(initial?.mobile ?? false);
 
   // Fetch CMS data for circle image and logo
   // Use default URLs immediately (don't wait for CMS) — this prevents LCP delay
@@ -48,13 +77,13 @@ export default function FlyingBull() {
   const LOGO_URL  = cms?.logoImageUrl  || LOGO_URL_DEFAULT;
   const PHOTO_URL = cms?.circleImageUrl || PHOTO_URL_DEFAULT;
 
-  // Desktop positions
-  const [dHeroPos, setDHeroPos] = useState<{ x: number; y: number } | null>(null);
-  const [dNavPos,  setDNavPos]  = useState<{ x: number; y: number } | null>(null);
+  // Desktop positions — initialized synchronously for zero-delay first paint
+  const [dHeroPos, setDHeroPos] = useState<{ x: number; y: number } | null>(initial?.dHeroPos ?? null);
+  const [dNavPos,  setDNavPos]  = useState<{ x: number; y: number } | null>(initial?.dNavPos ?? null);
 
-  // Mobile positions
-  const [mHeroPos, setMHeroPos] = useState<{ x: number; y: number } | null>(null);
-  const [mNavPos,  setMNavPos]  = useState<{ x: number; y: number } | null>(null);
+  // Mobile positions — initialized synchronously for zero-delay first paint
+  const [mHeroPos, setMHeroPos] = useState<{ x: number; y: number } | null>(initial?.mHeroPos ?? null);
+  const [mNavPos,  setMNavPos]  = useState<{ x: number; y: number } | null>(initial?.mNavPos ?? null);
 
   const rafRef = useRef<number | null>(null);
 

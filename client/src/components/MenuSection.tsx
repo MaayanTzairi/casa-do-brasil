@@ -11,8 +11,12 @@ import { trpc } from "@/lib/trpc";
 
 const CHURRASCARIA_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-churrascaria_opt_10fbb0e3.webp";
+const CHURRASCARIA_IMG_MOBILE =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/churrascaria-mobile_bd78aa2c.webp";
 const CLASSIC_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-classic_opt_83d78618.webp";
+const CLASSIC_IMG_MOBILE =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/classic-mobile_6d9b2d33.webp";
 
 const GOLD = "#B9A167";
 const GOLD_R = "rgba(185,161,103,";
@@ -66,6 +70,7 @@ function BotanicalBg() {
 
 interface CardProps {
   img: string;
+  mobileSrc?: string;
   name: string;
   subtitle: string;
   btnText: string;
@@ -76,7 +81,7 @@ interface CardProps {
   isHe: boolean;
 }
 
-function MenuCard({ img, name, subtitle, btnText, href, dark=false, delay=0, inView, isHe }: CardProps) {
+function MenuCard({ img, mobileSrc, name, subtitle, btnText, href, dark=false, delay=0, inView, isHe }: CardProps) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -100,7 +105,10 @@ function MenuCard({ img, name, subtitle, btnText, href, dark=false, delay=0, inV
       <GoldCorners opacity={hovered ? 0.85 : 0.5} />
 
       <div style={{ position:"relative", paddingBottom:"62%", overflow:"hidden", flexShrink:0 }}>
-        <img src={img} alt={name} width={600} height={372} loading="lazy" decoding="async" style={{
+        <img src={img} alt={name} width={600} height={372} loading="lazy" decoding="async"
+          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+          srcSet={mobileSrc ? `${mobileSrc} 300w, ${img} 600w` : undefined}
+          style={{
           position:"absolute", inset:0, width:"100%", height:"100%",
           objectFit:"cover", objectPosition:"center 28%",
           transform: hovered ? "scale(1.06)" : "scale(1)",
@@ -174,8 +182,8 @@ export default function MenuSection() {
 
         {/* ── LEFT: TWO CARDS ── */}
         <div style={{ flex: mobile ? "none" : "0 0 52%", display:"flex", flexDirection:"row", gap: mobile ? "1.2rem" : "1.4rem", order: mobile ? 2 : (isHe ? 2 : 1), paddingTop: mobile ? "0" : "2.5rem", paddingBottom: mobile ? "0" : "0.5rem", alignItems:"stretch" }}>
-          <MenuCard img={card1Img} name={card1Name} subtitle={card1Type} btnText={card1Btn} href={card1Url} dark delay={0.15} inView={inView} isHe={isHe} />
-          <MenuCard img={card2Img} name={card2Name} subtitle={card2Type} btnText={card2Btn} href={card2Url} delay={0.28} inView={inView} isHe={isHe} />
+          <MenuCard img={card1Img} mobileSrc={!cms?.card1ImageUrl ? CHURRASCARIA_IMG_MOBILE : undefined} name={card1Name} subtitle={card1Type} btnText={card1Btn} href={card1Url} dark delay={0.15} inView={inView} isHe={isHe} />
+          <MenuCard img={card2Img} mobileSrc={!cms?.card2ImageUrl ? CLASSIC_IMG_MOBILE : undefined} name={card2Name} subtitle={card2Type} btnText={card2Btn} href={card2Url} delay={0.28} inView={inView} isHe={isHe} />
         </div>
 
         {/* ── TITLE BLOCK ── */}

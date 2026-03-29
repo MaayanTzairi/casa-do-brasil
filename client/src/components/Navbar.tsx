@@ -121,7 +121,7 @@ function LogoBadge({
         fetchPriority="high"
         style={{
           width: size,
-          height: "auto",
+          height: Math.round(size * 1.11),
           objectFit: "contain",
           display: "block",
           flexShrink: 0,
