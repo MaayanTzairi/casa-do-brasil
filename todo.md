@@ -152,3 +152,49 @@
 - [x] Statistics section: replace 4.3 rating with "מעל 5000 ביקורות של לקוחות מרוצים" + 5 stars + Google icon
 - [x] Reviews section: add small Google icon + "לתגובה המלאה" link next to each reviewer name
 - [x] Footer: replace current logo with uploaded PDF logo (no purple background, logo + text only)
+
+## Professional Production Upgrade
+
+### SEO Infrastructure
+- [ ] Add dynamic meta tags per page (title, description, keywords) — EN + HE
+- [ ] Add Open Graph tags (og:title, og:description, og:image, og:url, og:locale)
+- [ ] Add Twitter Card meta tags
+- [ ] Add JSON-LD structured data (LocalBusiness, Restaurant, Menu schema)
+- [ ] Create sitemap.xml (auto-generated, all pages)
+- [ ] Create robots.txt
+- [ ] Add canonical URL tags
+- [ ] Add hreflang tags for EN/HE language alternates
+- [ ] Add favicon + apple-touch-icon + web manifest
+
+### CMS Admin Panel — Professional Rebuild
+- [ ] Redesign Admin Panel with professional sidebar layout
+- [ ] Homepage sections: Hero, Our Story, Menu, Gallery, Statistics, Reviews, Footer
+- [ ] Each section: bilingual EN + HE fields side by side
+- [ ] Image fields: URL input + S3 upload button
+- [ ] Reviews CMS: add/edit/delete reviews with Google review URL field
+- [ ] Navbar CMS: all nav links, button text, center title
+- [ ] Footer CMS: address, phone, hours, logo
+- [ ] Live preview toggle (see EN vs HE)
+- [ ] Save with success/error toast feedback
+
+### Railway Deployment
+- [ ] Create Dockerfile for production build
+- [ ] Create railway.toml config
+- [ ] Create .env.example with all required variables
+- [ ] Add health check endpoint (/api/health)
+- [ ] Test production build locally
+
+## Production Upgrade — Completed (Mar 30 2026)
+- [x] SEO: Full meta tags, Open Graph, Twitter Card, hreflang, canonical in index.html
+- [x] SEO: robots.txt with admin/api exclusions in client/public
+- [x] SEO: Dynamic sitemap.xml endpoint (all 5 pages with hreflang)
+- [x] SEO: JSON-LD structured data (Restaurant + LocalBusiness + AggregateRating)
+- [x] SEO: Self-hosted fonts declared in index.html (Heebo, Frank Ruhl, Dancing Script)
+- [x] SEO: LCP preload hints for hero image and FlyingBull logo
+- [x] SEO: Health check endpoint /api/health
+- [x] CMS: ReviewsEditor — full CRUD UI with Google URL field per review
+- [x] CMS: Reviews — googleUrl field added to Review interface + REVIEWS array
+- [x] CMS: Reviews — "לתגובה המלאה" link now opens real Google URL (target=_blank)
+- [x] Deploy: Dockerfile (multi-stage Node 22 Alpine)
+- [x] Deploy: railway.toml with health check config
+- [x] Deploy: DEPLOY.md guide with step-by-step Railway instructions

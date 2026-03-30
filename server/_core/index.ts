@@ -41,6 +41,62 @@ async function startServer() {
   registerChatRoutes(app);
   // File upload routes
   registerUploadRoutes(app);
+  // Health check endpoint — used by Railway, Docker, and uptime monitors
+  app.get("/api/health", (_req, res) => {
+    res.status(200).json({
+      status: "ok",
+      service: "casa-do-brasil",
+      timestamp: new Date().toISOString(),
+    });
+  });
+
+  // Dynamic sitemap.xml
+  app.get("/sitemap.xml", (_req, res) => {
+    const baseUrl = process.env.SITE_URL || "https://casadobrasil-nsx3yzdw.manus.space";
+    const now = new Date().toISOString().split("T")[0];
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>${baseUrl}/</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="${baseUrl}/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="${baseUrl}/?lang=en"/>
+    <lastmod>${now}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/menu</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="${baseUrl}/menu"/>
+    <xhtml:link rel="alternate" hreflang="en" href="${baseUrl}/menu?lang=en"/>
+    <lastmod>${now}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/story</loc>
+    <lastmod>${now}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/gallery</loc>
+    <lastmod>${now}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/faq</loc>
+    <lastmod>${now}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>`;
+    res.set("Content-Type", "application/xml");
+    res.set("Cache-Control", "public, max-age=3600");
+    res.send(sitemap);
+  });
+
   // tRPC API
   app.use(
     "/api/trpc",

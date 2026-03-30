@@ -24,6 +24,7 @@ interface Review {
   rating: 5 | 4;
   date: string;
   dateHe: string;
+  googleUrl?: string;
 }
 
 const REVIEWS: Review[] = [
@@ -35,6 +36,7 @@ const REVIEWS: Review[] = [
     rating: 5,
     date: "January 2025",
     dateHe: "ינואר 2025",
+    googleUrl: "https://maps.google.com/maps?cid=CASA_DO_BRASIL_EILAT",
   },
   {
     author: "Daniel K.",
@@ -224,6 +226,7 @@ function Stars({ rating }: { rating: number }) {
 
 /* ─── REVIEW CARD ─── */
 function ReviewCard({ review, isHe }: { review: Review; isHe: boolean }) {
+  const googleReviewUrl = review.googleUrl || "https://www.google.com/maps/search/Casa+do+Brasil+Eilat";
   const text = isHe ? review.textHe : review.text;
   const author = isHe ? review.authorHe : review.author;
   const date = isHe ? review.dateHe : review.date;
@@ -302,7 +305,9 @@ function ReviewCard({ review, isHe }: { review: Review; isHe: boolean }) {
         </span>
         {/* View full review link */}
         <a
-          href="#"
+          href={googleReviewUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           style={{
             display: "inline-flex",
             alignItems: "center",
