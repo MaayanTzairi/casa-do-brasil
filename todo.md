@@ -198,3 +198,34 @@
 - [x] Deploy: Dockerfile (multi-stage Node 22 Alpine)
 - [x] Deploy: railway.toml with health check config
 - [x] Deploy: DEPLOY.md guide with step-by-step Railway instructions
+
+## Full CMS + Blog System
+- [ ] Audit current CMS/DB schema and plan full scope
+- [ ] DB: add blog_posts table (title EN/HE, slug, content EN/HE, excerpt EN/HE, cover image, author, published_at, seo fields)
+- [ ] DB: add seo_settings table (per-page: title EN/HE, description EN/HE, og_image, canonical, keywords)
+- [ ] DB: extend page_content tables for all editable sections
+- [ ] Server: tRPC procedures for blog CRUD (list, get by slug, create, update, delete, publish/unpublish)
+- [ ] Server: tRPC procedures for SEO settings (get/set per page)
+- [ ] Server: tRPC procedures for gallery image upload (S3)
+- [ ] Public: Blog list page (/blog) — bilingual, card grid, EN+HE
+- [ ] Public: Blog post page (/blog/:slug) — bilingual, full content, SEO meta
+- [ ] Admin: Blog editor panel (create/edit/delete posts, rich text, cover image upload)
+- [ ] Admin: SEO manager panel (per-page meta title, description, OG image, canonical, keywords)
+- [ ] Admin: Gallery upload panel (drag & drop, S3 upload, reorder, delete)
+- [ ] Admin: Visual page editors for all sections (hero, story, menu, reviews, VIP, footer)
+- [ ] Dynamic SEO: inject CMS meta tags per page (title, description, OG, canonical, JSON-LD)
+- [ ] Add Blog and VIP links to Footer nav
+
+## Full CMS + Blog System — Completed (Mar 31 2026)
+- [x] DB: blog_posts table with full bilingual fields + SEO fields
+- [x] DB: seo_settings table (per-page: title EN/HE, description EN/HE, OG, canonical, robots, schema JSON-LD)
+- [x] Server: tRPC procedures for blog CRUD (list published, list all admin, get by slug, create, update, delete)
+- [x] Server: tRPC procedures for SEO settings (getSeoSettings, upsertSeoSettings, getAllSeoSettings)
+- [x] Public: Blog list page (/blog) — bilingual, card grid, site design language
+- [x] Public: Blog post page (/blog/:slug) — bilingual, full content, dynamic SEO per post
+- [x] Admin: BlogEditor — full CRUD, bilingual fields, cover image upload, SEO accordion per post, publish toggle
+- [x] Admin: SeoEditor — per-page SEO (title, desc, keywords, OG, canonical, robots, schema JSON-LD)
+- [x] Admin: Blog + SEO sections added to Admin.tsx sidebar navigation
+- [x] Dynamic SEO: useSeoMeta hook — fetches CMS settings and injects meta tags into document head
+- [x] Dynamic SEO: wired to Home, Menu, Story, FAQ, VIP, Blog pages
+- [x] Dynamic SEO: BlogPostPage uses post-specific SEO fields (title, desc, keywords, OG image)

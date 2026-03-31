@@ -18,6 +18,66 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
+// ── CMS: Blog Posts ─────────────────────────────────────────────────────────
+export const blogPosts = mysqlTable("blog_posts", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  titleHe: varchar("titleHe", { length: 512 }).notNull(),
+  titleEn: varchar("titleEn", { length: 512 }).notNull(),
+  excerptHe: text("excerptHe"),
+  excerptEn: text("excerptEn"),
+  contentHe: text("contentHe"),
+  contentEn: text("contentEn"),
+  coverImageUrl: text("coverImageUrl"),
+  authorHe: varchar("authorHe", { length: 128 }),
+  authorEn: varchar("authorEn", { length: 128 }),
+  // SEO fields per post
+  seoTitleHe: varchar("seoTitleHe", { length: 255 }),
+  seoTitleEn: varchar("seoTitleEn", { length: 255 }),
+  seoDescriptionHe: text("seoDescriptionHe"),
+  seoDescriptionEn: text("seoDescriptionEn"),
+  seoKeywordsHe: text("seoKeywordsHe"),
+  seoKeywordsEn: text("seoKeywordsEn"),
+  ogImageUrl: text("ogImageUrl"),
+  published: boolean("published").default(false).notNull(),
+  publishedAt: timestamp("publishedAt"),
+  sortOrder: int("sortOrder").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type BlogPost = typeof blogPosts.$inferSelect;
+export type InsertBlogPost = typeof blogPosts.$inferInsert;
+
+// ── CMS: SEO Settings (per page) ─────────────────────────────────────────────
+export const seoSettings = mysqlTable("seo_settings", {
+  id: int("id").autoincrement().primaryKey(),
+  pageSlug: varchar("pageSlug", { length: 128 }).notNull().unique(), // e.g. 'home', 'menu', 'story', 'gallery', 'faq', 'vip', 'blog'
+  // Title
+  titleHe: varchar("titleHe", { length: 255 }),
+  titleEn: varchar("titleEn", { length: 255 }),
+  // Meta description
+  descriptionHe: text("descriptionHe"),
+  descriptionEn: text("descriptionEn"),
+  // Keywords
+  keywordsHe: text("keywordsHe"),
+  keywordsEn: text("keywordsEn"),
+  // Open Graph
+  ogTitle: varchar("ogTitle", { length: 255 }),
+  ogDescription: text("ogDescription"),
+  ogImageUrl: text("ogImageUrl"),
+  // Canonical URL override
+  canonicalUrl: text("canonicalUrl"),
+  // Schema markup override (JSON string)
+  schemaJson: text("schemaJson"),
+  // Robots directive
+  robots: varchar("robots", { length: 128 }).default("index, follow"),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type SeoSettings = typeof seoSettings.$inferSelect;
+export type InsertSeoSettings = typeof seoSettings.$inferInsert;
+
 // ── CMS: Site Settings ────────────────────────────────────────────────────────
 export const siteSettings = mysqlTable("site_settings", {
   id: int("id").autoincrement().primaryKey(),

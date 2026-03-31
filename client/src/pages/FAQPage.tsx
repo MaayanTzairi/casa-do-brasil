@@ -9,6 +9,7 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSeoMeta } from "@/hooks/useSeoMeta";
 
 const BORDEAUX = "rgb(62,4,9)";
 const GOLD = "#B9A167";
@@ -232,6 +233,12 @@ function AccordionItem({
 
 export default function FAQPage() {
   const { isHe } = useLanguage();
+  useSeoMeta("faq", {
+    titleHe: "שאלות ותשובות | Casa do Brasil",
+    titleEn: "FAQ | Casa do Brasil — Brazilian Steakhouse Eilat",
+    descriptionHe: "תשובות לשאלות נפוצות על מסעדת קאסה דו ברזיל באילת.",
+    descriptionEn: "Frequently asked questions about Casa do Brasil restaurant in Eilat.",
+  });
   const faqs = isHe ? FAQ_HE : FAQ_EN;
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 

@@ -12,6 +12,8 @@ import {
   getMenuItems, createMenuItem, updateMenuItem, deleteMenuItem,
   getGalleryImages, createGalleryImage, updateGalleryImage, deleteGalleryImage,
   getFooterContent, upsertFooterContent,
+  getBlogPosts, getBlogPostBySlug, getBlogPostById, createBlogPost, updateBlogPost, deleteBlogPost,
+  getSeoSettings, upsertSeoSettings, getAllSeoSettings,
 } from "../db";
 
 // Admin guard middleware
@@ -271,4 +273,91 @@ export const cmsRouter = router({
     facebookUrl: z.string().optional(),
     tiktokUrl: z.string().optional(),
   })).mutation(({ input }) => upsertFooterContent(input)),
+
+  // ── Blog: Public ────────────────────────────────────────────────────────────
+  getBlogPosts: publicProcedure.query(() => getBlogPosts(true)),
+  getBlogPostBySlug: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(({ input }) => getBlogPostBySlug(input.slug)),
+
+  // ── Blog: Admin ─────────────────────────────────────────────────────────────
+  getAllBlogPosts: adminProcedure.query(() => getBlogPosts(false)),
+  createBlogPost: adminProcedure.input(z.object({
+    slug: z.string().min(1),
+    titleHe: z.string().min(1),
+    titleEn: z.string().min(1),
+    excerptHe: z.string().optional(),
+    excerptEn: z.string().optional(),
+    contentHe: z.string().optional(),
+    contentEn: z.string().optional(),
+    coverImageUrl: z.string().optional(),
+    authorHe: z.string().optional(),
+    authorEn: z.string().optional(),
+    seoTitleHe: z.string().optional(),
+    seoTitleEn: z.string().optional(),
+    seoDescriptionHe: z.string().optional(),
+    seoDescriptionEn: z.string().optional(),
+    seoKeywordsHe: z.string().optional(),
+    seoKeywordsEn: z.string().optional(),
+    ogImageUrl: z.string().optional(),
+    published: z.boolean().optional(),
+    publishedAt: z.date().optional(),
+    sortOrder: z.number().optional(),
+  })).mutation(({ input }) => createBlogPost(input)),
+  updateBlogPost: adminProcedure.input(z.object({
+    id: z.number(),
+    slug: z.string().optional(),
+    titleHe: z.string().optional(),
+    titleEn: z.string().optional(),
+    excerptHe: z.string().optional(),
+    excerptEn: z.string().optional(),
+    contentHe: z.string().optional(),
+    contentEn: z.string().optional(),
+    coverImageUrl: z.string().optional(),
+    authorHe: z.string().optional(),
+    authorEn: z.string().optional(),
+    seoTitleHe: z.string().optional(),
+    seoTitleEn: z.string().optional(),
+    seoDescriptionHe: z.string().optional(),
+    seoDescriptionEn: z.string().optional(),
+    seoKeywordsHe: z.string().optional(),
+    seoKeywordsEn: z.string().optional(),
+    ogImageUrl: z.string().optional(),
+    published: z.boolean().optional(),
+    publishedAt: z.date().optional(),
+    sortOrder: z.number().optional(),
+  })).mutation(({ input }) => {
+    const { id, ...data } = input;
+    if (data.published && !data.publishedAt) {
+      (data as any).publishedAt = new Date();
+    }
+    return updateBlogPost(id, data);
+  }),
+  deleteBlogPost: adminProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(({ input }) => deleteBlogPost(input.id)),
+
+  // ── SEO Settings ────────────────────────────────────────────────────────────
+  getSeoSettings: publicProcedure
+    .input(z.object({ pageSlug: z.string() }))
+    .query(({ input }) => getSeoSettings(input.pageSlug)),
+  getAllSeoSettings: adminProcedure.query(() => getAllSeoSettings()),
+  upsertSeoSettings: adminProcedure.input(z.object({
+    pageSlug: z.string().min(1),
+    titleHe: z.string().optional(),
+    titleEn: z.string().optional(),
+    descriptionHe: z.string().optional(),
+    descriptionEn: z.string().optional(),
+    keywordsHe: z.string().optional(),
+    keywordsEn: z.string().optional(),
+    ogTitle: z.string().optional(),
+    ogDescription: z.string().optional(),
+    ogImageUrl: z.string().optional(),
+    canonicalUrl: z.string().optional(),
+    schemaJson: z.string().optional(),
+    robots: z.string().optional(),
+  })).mutation(({ input }) => {
+    const { pageSlug, ...data } = input;
+    return upsertSeoSettings(pageSlug, data);
+  }),
 });

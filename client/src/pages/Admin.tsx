@@ -15,6 +15,8 @@ import OurMenuEditor from "./admin/OurMenuEditor";
 import GallerySectionEditor from "./admin/GallerySectionEditor";
 import StatisticsEditor from "./admin/StatisticsEditor";
 import ReviewsEditor from "./admin/ReviewsEditor";
+import BlogEditor from "./admin/BlogEditor";
+import SeoEditor from "./admin/SeoEditor";
 import {
   Home,
   UtensilsCrossed,
@@ -35,6 +37,8 @@ import {
   Navigation,
   Footprints,
   LayoutDashboard,
+  Rss,
+  Search,
 } from "lucide-react";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -51,9 +55,11 @@ type SectionId =
   | "menu-page"
   | "story-page"
   | "gallery-page"
-  | "faq-page";
+  | "faq-page"
+  | "blog-posts"
+  | "seo-settings";
 
-type PageId = "home" | "menu" | "story" | "gallery" | "faq" | "global";
+type PageId = "home" | "menu" | "story" | "gallery" | "faq" | "global" | "blog" | "seo";
 
 interface NavSection {
   id: SectionId;
@@ -123,6 +129,22 @@ const NAV_PAGES: NavPage[] = [
     icon: HelpCircle,
     sections: [
       { id: "faq-page", label: "שאלות ותשובות", icon: HelpCircle },
+    ],
+  },
+  {
+    id: "blog",
+    label: "בלוג",
+    icon: Rss,
+    sections: [
+      { id: "blog-posts", label: "פוסטים", icon: Rss },
+    ],
+  },
+  {
+    id: "seo",
+    label: "SEO",
+    icon: Search,
+    sections: [
+      { id: "seo-settings", label: "הגדרות SEO", icon: Search },
     ],
   },
 ];
@@ -394,6 +416,18 @@ const SECTION_META: Record<SectionId, { title: string; description: string; badg
     badge: "FAQ",
     icon: HelpCircle,
   },
+  "blog-posts": {
+    title: "ניהול בלוג",
+    description: "יצירה, עריכה ופרסום פוסטים — עברית ואנגלית, כולל SEO לכל פוסט",
+    badge: "בלוג",
+    icon: Rss,
+  },
+  "seo-settings": {
+    title: "הגדרות SEO",
+    description: "כותרות, תיאורים, Open Graph, canonical ו-schema לכל עמוד",
+    badge: "SEO",
+    icon: Search,
+  },
 };
 
 function SectionPlaceholder({ sectionId }: { sectionId: SectionId }) {
@@ -448,6 +482,10 @@ function SectionContent({ sectionId }: { sectionId: SectionId }) {
       return <StatisticsEditor />;
     case "home-reviews":
       return <ReviewsEditor />;
+    case "blog-posts":
+      return <BlogEditor />;
+    case "seo-settings":
+      return <SeoEditor />;
     default:
       return <SectionPlaceholder sectionId={sectionId} />;
   }

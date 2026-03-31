@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSeoMeta } from "@/hooks/useSeoMeta";
 
 const GOLD     = "rgb(185,161,103)";
 const GOLD_A   = (a: number) => `rgba(185,161,103,${a})`;
@@ -185,6 +186,12 @@ function StoryHero({ isHe }: { isHe: boolean }) {
 
 export default function StoryPage() {
   const { isHe } = useLanguage();
+  useSeoMeta("story", {
+    titleHe: "הסיפור שלנו | Casa do Brasil — קאסה דו ברזיל",
+    titleEn: "Our Story | Casa do Brasil — Brazilian Steakhouse Eilat",
+    descriptionHe: "הכירו את הסיפור של קאסה דו ברזיל — מסע מברזיל לאילת.",
+    descriptionEn: "Discover the story of Casa do Brasil — a journey from Brazil to Eilat.",
+  });
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {

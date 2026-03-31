@@ -394,3 +394,96 @@ export async function upsertFooterContent(data: Partial<typeof footerContent.$in
   _cache.delete('footer');
   return getFooterContent();
 }
+
+// ── Blog Posts ────────────────────────────────────────────────────────────────
+import { blogPosts, seoSettings } from "../drizzle/schema";
+import { desc, asc } from "drizzle-orm";
+
+export async function getBlogPosts(publishedOnly = true) {
+  const key = publishedOnly ? 'blogPosts:published' : 'blogPosts:all';
+  const cached = cacheGet<(typeof blogPosts.$inferSelect)[]>(key);
+  if (cached !== undefined) return cached;
+  const db = await getDbInstance();
+  const query = db.select().from(blogPosts);
+  const result = publishedOnly
+    ? await db.select().from(blogPosts).where(eq(blogPosts.published, true)).orderBy(desc(blogPosts.publishedAt))
+    : await db.select().from(blogPosts).orderBy(desc(blogPosts.createdAt));
+  cacheSet(key, result, 30_000);
+  return result;
+}
+
+export async function getBlogPostBySlug(slug: string) {
+  const key = `blogPost:${slug}`;
+  const cached = cacheGet<typeof blogPosts.$inferSelect | null>(key);
+  if (cached !== undefined) return cached;
+  const db = await getDbInstance();
+  const rows = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug)).limit(1);
+  const result = rows[0] ?? null;
+  cacheSet(key, result, 30_000);
+  return result;
+}
+
+export async function getBlogPostById(id: number) {
+  const db = await getDbInstance();
+  const rows = await db.select().from(blogPosts).where(eq(blogPosts.id, id)).limit(1);
+  return rows[0] ?? null;
+}
+
+export async function createBlogPost(data: Omit<typeof blogPosts.$inferInsert, "id" | "createdAt" | "updatedAt">) {
+  const db = await getDbInstance();
+  const result = await db.insert(blogPosts).values(data);
+  _cache.delete('blogPosts:published');
+  _cache.delete('blogPosts:all');
+  return getBlogPostById(result[0].insertId);
+}
+
+export async function updateBlogPost(id: number, data: Partial<typeof blogPosts.$inferInsert>) {
+  const db = await getDbInstance();
+  await db.update(blogPosts).set(data).where(eq(blogPosts.id, id));
+  // Invalidate all blog caches
+  Array.from(_cache.keys()).filter(k => k.startsWith('blogPost')).forEach(k => _cache.delete(k));
+  _cache.delete('blogPosts:published');
+  _cache.delete('blogPosts:all');
+  return getBlogPostById(id);
+}
+
+export async function deleteBlogPost(id: number) {
+  const db = await getDbInstance();
+  await db.delete(blogPosts).where(eq(blogPosts.id, id));
+  Array.from(_cache.keys()).filter(k => k.startsWith('blogPost')).forEach(k => _cache.delete(k));
+  _cache.delete('blogPosts:published');
+  _cache.delete('blogPosts:all');
+}
+
+// ── SEO Settings ──────────────────────────────────────────────────────────────
+export async function getSeoSettings(pageSlug: string) {
+  const key = `seo:${pageSlug}`;
+  const cached = cacheGet<typeof seoSettings.$inferSelect | null>(key);
+  if (cached !== undefined) return cached;
+  const db = await getDbInstance();
+  const rows = await db.select().from(seoSettings).where(eq(seoSettings.pageSlug, pageSlug)).limit(1);
+  const result = rows[0] ?? null;
+  cacheSet(key, result, 60_000);
+  return result;
+}
+
+export async function upsertSeoSettings(pageSlug: string, data: Partial<Omit<typeof seoSettings.$inferInsert, "id" | "pageSlug" | "updatedAt">>) {
+  const db = await getDbInstance();
+  const existing = await getSeoSettings(pageSlug);
+  if (existing) {
+    await db.update(seoSettings).set(data).where(eq(seoSettings.pageSlug, pageSlug));
+  } else {
+    await db.insert(seoSettings).values({ pageSlug, ...data } as typeof seoSettings.$inferInsert);
+  }
+  _cache.delete(`seo:${pageSlug}`);
+  return getSeoSettings(pageSlug);
+}
+
+export async function getAllSeoSettings() {
+  const cached = cacheGet<(typeof seoSettings.$inferSelect)[]>('seo:all');
+  if (cached !== undefined) return cached;
+  const db = await getDbInstance();
+  const result = await db.select().from(seoSettings).orderBy(asc(seoSettings.pageSlug));
+  cacheSet('seo:all', result, 60_000);
+  return result;
+}

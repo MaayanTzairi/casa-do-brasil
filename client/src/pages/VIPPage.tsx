@@ -11,6 +11,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useInViewCSS } from "@/hooks/useInViewCSS";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useSeoMeta } from "@/hooks/useSeoMeta";
 
 /* ─── Design tokens (identical to rest of site) ─── */
 const GOLD      = "rgb(185,161,103)";
@@ -233,6 +234,12 @@ function Pillar({ num, title, text, isHe, inView, delay }: {
 
 export default function VIPPage() {
   const { isHe } = useLanguage();
+  useSeoMeta("vip", {
+    titleHe: "VIP | Casa do Brasil — חווייה פריווטית",
+    titleEn: "VIP | Casa do Brasil — Private Dining Experience",
+    descriptionHe: "חוויית בשרים יוצאת דופן במתחם פריווטי כולל שירותים נפרדים ושירות VIP.",
+    descriptionEn: "An extraordinary private dining experience with dedicated service and exclusive VIP amenities.",
+  });
   const t = isHe ? T.he : T.en;
   const [mobile, setMobile] = useState(false);
 

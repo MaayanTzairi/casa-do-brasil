@@ -12,6 +12,7 @@ import { useState, useRef, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSeoMeta } from "@/hooks/useSeoMeta";
 
 const GOLD = "#B9A167";
 const GOLD_R = "rgba(185,161,103,";
@@ -1311,6 +1312,12 @@ function MenuHero({ isHe }: { isHe: boolean }) {
 export default function MenuPage() {
   const { lang } = useLanguage();
   const isHe = lang === "he";
+  useSeoMeta("menu", {
+    titleHe: "תפריט | Casa do Brasil — קאסה דו ברזיל",
+    titleEn: "Menu | Casa do Brasil — Brazilian Steakhouse Eilat",
+    descriptionHe: "תפריט מסעדת קאסה דו ברזיל — שורסקריה, מנות מיוחדות, בשר טרי ועוד.",
+    descriptionEn: "Casa do Brasil full menu — Churrascaria, specials, fresh meat and more.",
+  });
 
   // Read ?tab= query param to open the correct tab when navigating from homepage cards
   const initialTab = (() => {
