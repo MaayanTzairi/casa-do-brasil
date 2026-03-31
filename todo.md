@@ -301,3 +301,6 @@
 - [x] Sticky tabs: not working on desktop or mobile — fix IntersectionObserver logic
 - [x] Hero label "קאסה דו ברזיל" must be right-aligned in Hebrew (currently left)
 - [x] Typo fix: עיקרייות → עיקריות
+
+## VIP Page Redesign — Apr 1 2026
+- [x] Redesign VIP page: full-screen hero + room photos + details + contact CTA, remove all complex sections
