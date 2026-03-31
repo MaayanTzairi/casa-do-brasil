@@ -6,7 +6,7 @@
  * Bilingual: EN (LTR) + HE (RTL)
  */
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useInViewCSS } from "@/hooks/useInViewCSS";
 import Navbar from "@/components/Navbar";
@@ -21,9 +21,6 @@ const WHITE     = "#fff";
 
 const RESERVATIONS_URL =
   "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73";
-
-/* ─── Placeholder image (user will replace) ─── */
-const VIP_PLACEHOLDER = null; // will render a styled placeholder
 
 /* ─── Content ─── */
 const T = {
@@ -47,6 +44,7 @@ const T = {
     imgCaption:    "VIP Suite — Photo Coming Soon",
     bottomTitle:   "Book Your Private VIP Room",
     bottomBadge:   "READY FOR THE EXPERIENCE?",
+    included:      "WHAT'S INCLUDED",
   },
   he: {
     badge:       "חוויה בלעדית",
@@ -68,10 +66,11 @@ const T = {
     imgCaption:    "חדר VIP — תמונה בקרוב",
     bottomTitle:   "הזמינו את חדר ה-VIP שלכם",
     bottomBadge:   "מוכנים לחוויה?",
+    included:      "מה כולל ה-VIP",
   },
 };
 
-/* ─── Fade-in animation helper (same as CasaVibesSection) ─── */
+/* ─── Fade-in animation helper ─── */
 function animStyle(inView: boolean, delay: number): React.CSSProperties {
   return {
     opacity:    inView ? 1 : 0,
@@ -80,12 +79,10 @@ function animStyle(inView: boolean, delay: number): React.CSSProperties {
   };
 }
 
-/* ─── Gold horizontal rule (same motif as homepage) ─── */
 function GoldRule({ width = 48 }: { width?: number }) {
   return <div style={{ width, height: 1.5, background: GOLD, margin: "1.6rem 0" }} />;
 }
 
-/* ─── Section label (same as OurStory "OUR STORY" label) ─── */
 function SectionLabel({ text, isHe }: { text: string; isHe: boolean }) {
   return (
     <div style={{
@@ -110,7 +107,6 @@ function SectionLabel({ text, isHe }: { text: string; isHe: boolean }) {
   );
 }
 
-/* ─── CTA Button (same style as Hero "RESERVE A TABLE") ─── */
 function CTAButton({ href, label, dark = false }: { href: string; label: string; dark?: boolean }) {
   const [hov, setHov] = useState(false);
   return (
@@ -141,20 +137,18 @@ function CTAButton({ href, label, dark = false }: { href: string; label: string;
   );
 }
 
-/* ─── Image placeholder (styled like the site's dark panels) ─── */
-function ImagePlaceholder({ caption, isHe }: { caption: string; isHe: boolean }) {
+function ImagePlaceholder({ caption }: { caption: string }) {
   return (
     <div style={{
-      width:      "100%",
-      aspectRatio: "4 / 3",
-      background: `linear-gradient(160deg, ${BORDEAUX} 0%, rgb(45,4,8) 100%)`,
-      position:   "relative",
-      overflow:   "hidden",
-      display:    "flex",
-      alignItems: "center",
+      width:          "100%",
+      aspectRatio:    "4 / 3",
+      background:     `linear-gradient(160deg, ${BORDEAUX} 0%, rgb(45,4,8) 100%)`,
+      position:       "relative",
+      overflow:       "hidden",
+      display:        "flex",
+      alignItems:     "center",
       justifyContent: "center",
     }}>
-      {/* Subtle gold grid texture */}
       <div style={{
         position:        "absolute",
         inset:           0,
@@ -164,24 +158,6 @@ function ImagePlaceholder({ caption, isHe }: { caption: string; isHe: boolean })
         `,
         backgroundSize: "40px 40px",
       }} />
-      {/* Corner brackets (same as CasaVibesSection) */}
-      {[
-        { top: 16, left: 16 },
-        { top: 16, right: 16 },
-        { bottom: 16, left: 16 },
-        { bottom: 16, right: 16 },
-      ].map((pos, i) => {
-        const isTop    = "top"    in pos;
-        const isLeft   = "left"   in pos;
-        return (
-          <svg key={i} width="20" height="20" viewBox="0 0 20 20" fill="none"
-            style={{ position: "absolute", ...pos, pointerEvents: "none" }}>
-            <line x1="0" y1="0" x2={isLeft ? 20 : 0}  y2="0"  stroke={GOLD_A(0.5)} strokeWidth="1.2" />
-            <line x1="0" y1="0" x2="0"                y2={isTop ? 20 : 0} stroke={GOLD_A(0.5)} strokeWidth="1.2" />
-          </svg>
-        );
-      })}
-      {/* Caption */}
       <span style={{
         fontFamily:    "'Heebo', sans-serif",
         fontWeight:    300,
@@ -200,7 +176,6 @@ function ImagePlaceholder({ caption, isHe }: { caption: string; isHe: boolean })
   );
 }
 
-/* ─── Pillar item (replaces emoji cards) ─── */
 function Pillar({ num, title, text, isHe, inView, delay }: {
   num: string; title: string; text: string; isHe: boolean; inView: boolean; delay: number;
 }) {
@@ -217,7 +192,6 @@ function Pillar({ num, title, text, isHe, inView, delay }: {
         alignItems:   "start",
       }}
     >
-      {/* Number */}
       <span style={{
         fontFamily:    "'Heebo', sans-serif",
         fontWeight:    900,
@@ -257,16 +231,15 @@ function Pillar({ num, title, text, isHe, inView, delay }: {
   );
 }
 
-/* ─── Main Page ─── */
 export default function VIPPage() {
   const { isHe } = useLanguage();
   const t = isHe ? T.he : T.en;
   const [mobile, setMobile] = useState(false);
 
-  const { ref: heroRef, inView: heroIn }     = useInViewCSS({ threshold: 0.1 });
-  const { ref: bodyRef, inView: bodyIn }     = useInViewCSS({ threshold: 0.1 });
+  const { ref: heroRef,    inView: heroIn }    = useInViewCSS({ threshold: 0.1 });
+  const { ref: bodyRef,    inView: bodyIn }    = useInViewCSS({ threshold: 0.1 });
   const { ref: pillarsRef, inView: pillarsIn } = useInViewCSS({ threshold: 0.05 });
-  const { ref: bottomRef, inView: bottomIn } = useInViewCSS({ threshold: 0.1 });
+  const { ref: bottomRef,  inView: bottomIn }  = useInViewCSS({ threshold: 0.1 });
 
   useEffect(() => {
     const fn = () => setMobile(window.innerWidth < 768);
@@ -279,10 +252,7 @@ export default function VIPPage() {
     <div style={{ background: "#fff", minHeight: "100vh" }}>
       <Navbar forceScrolled />
 
-      {/* ══════════════════════════════════════
-          HERO BANNER — dark bordeaux, same as
-          the hero of MenuPage / StoryPage
-      ══════════════════════════════════════ */}
+      {/* ── HERO ── */}
       <section
         ref={heroRef as any}
         dir={isHe ? "rtl" : "ltr"}
@@ -296,14 +266,12 @@ export default function VIPPage() {
           overflow:      "hidden",
         }}
       >
-        {/* Subtle vertical gold lines (same texture as StoryPage) */}
         <div style={{
           position:        "absolute",
           inset:           0,
           pointerEvents:   "none",
           backgroundImage: `repeating-linear-gradient(90deg, ${GOLD_A(0.03)} 0px, ${GOLD_A(0.03)} 1px, transparent 1px, transparent 100px)`,
         }} />
-        {/* Top gold line (same as StoryPage card top) */}
         <div style={{
           position:   "absolute",
           top:        0,
@@ -314,22 +282,13 @@ export default function VIPPage() {
         }} />
 
         <div style={{ maxWidth: "900px" }}>
-          {/* Badge — same as CasaVibesSection label */}
           <div style={{ ...animStyle(heroIn, 0), display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.6rem", flexDirection: isHe ? "row-reverse" : "row" }}>
             <div style={{ width: 32, height: 1, background: GOLD_A(0.6) }} />
-            <span style={{
-              fontFamily:    "'Heebo', sans-serif",
-              fontWeight:    700,
-              fontSize:      "0.62rem",
-              letterSpacing: isHe ? "0.08em" : "0.28em",
-              textTransform: "uppercase",
-              color:         GOLD,
-            }}>
+            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.62rem", letterSpacing: isHe ? "0.08em" : "0.28em", textTransform: "uppercase", color: GOLD }}>
               {t.badge}
             </span>
           </div>
 
-          {/* Title — same weight/style as StoryPage chapter titles */}
           <h1 style={{
             ...animStyle(heroIn, 0.1),
             fontFamily:    "'Heebo', sans-serif",
@@ -344,7 +303,6 @@ export default function VIPPage() {
             {t.title}
           </h1>
 
-          {/* Subtitle */}
           <p style={{
             ...animStyle(heroIn, 0.2),
             fontFamily: "'Heebo', sans-serif",
@@ -358,12 +316,10 @@ export default function VIPPage() {
             {t.subtitle}
           </p>
 
-          {/* Gold rule */}
           <div style={{ ...animStyle(heroIn, 0.3) }}>
             <GoldRule width={56} />
           </div>
 
-          {/* Stats row — same style as ReviewsSection stats */}
           <div style={{
             ...animStyle(heroIn, 0.35),
             display:        "flex",
@@ -376,23 +332,10 @@ export default function VIPPage() {
               { label: t.hoursLabel,    value: t.hours },
             ].map((s) => (
               <div key={s.label} style={{ textAlign: isHe ? "right" : "left" }}>
-                <div style={{
-                  fontFamily:    "'Heebo', sans-serif",
-                  fontWeight:    700,
-                  fontSize:      "0.58rem",
-                  letterSpacing: isHe ? "0.08em" : "0.25em",
-                  textTransform: "uppercase",
-                  color:         GOLD_A(0.7),
-                  marginBottom:  "0.3rem",
-                }}>
+                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: isHe ? "0.08em" : "0.25em", textTransform: "uppercase", color: GOLD_A(0.7), marginBottom: "0.3rem" }}>
                   {s.label}
                 </div>
-                <div style={{
-                  fontFamily: "'Heebo', sans-serif",
-                  fontWeight: 600,
-                  fontSize:   "0.95rem",
-                  color:      "rgba(255,255,255,0.85)",
-                }}>
+                <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 600, fontSize: "0.95rem", color: "rgba(255,255,255,0.85)" }}>
                   {s.value}
                 </div>
               </div>
@@ -401,10 +344,7 @@ export default function VIPPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════
-          BODY — two-column: image + text
-          Same grid as CasaVibesSection
-      ══════════════════════════════════════ */}
+      {/* ── BODY: image + text ── */}
       <section
         ref={bodyRef as any}
         dir={isHe ? "rtl" : "ltr"}
@@ -418,17 +358,14 @@ export default function VIPPage() {
           alignItems: "center",
         }}
       >
-        {/* Image — order flips for HE */}
         <div style={{ order: isHe && !mobile ? 2 : 1, ...animStyle(bodyIn, 0) }}>
-          <ImagePlaceholder caption={t.imgCaption} isHe={isHe} />
+          <ImagePlaceholder caption={t.imgCaption} />
         </div>
 
-        {/* Text block */}
         <div style={{ order: isHe && !mobile ? 1 : 2 }}>
           <div style={{ ...animStyle(bodyIn, 0.1) }}>
             <SectionLabel text={t.badge} isHe={isHe} />
           </div>
-
           <p style={{
             ...animStyle(bodyIn, 0.2),
             fontFamily: "'Heebo', sans-serif",
@@ -441,7 +378,6 @@ export default function VIPPage() {
           }}>
             {t.body}
           </p>
-
           <div style={{ ...animStyle(bodyIn, 0.3) }}>
             <CTAButton href={RESERVATIONS_URL} label={t.cta} />
           </div>
@@ -459,10 +395,7 @@ export default function VIPPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════
-          PILLARS — numbered list, no emoji
-          White bg with gold/bordeaux palette
-      ══════════════════════════════════════ */}
+      {/* ── PILLARS ── */}
       <section
         ref={pillarsRef as any}
         style={{
@@ -471,12 +404,9 @@ export default function VIPPage() {
         }}
       >
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          {/* Section header */}
           <div style={{ ...animStyle(pillarsIn, 0), textAlign: isHe ? "right" : "left", marginBottom: "0.5rem", direction: isHe ? "rtl" : "ltr" }}>
-            <SectionLabel text={isHe ? "מה כולל ה-VIP" : "WHAT'S INCLUDED"} isHe={isHe} />
+            <SectionLabel text={t.included} isHe={isHe} />
           </div>
-
-          {/* Two-column grid of pillars */}
           <div style={{
             display:             "grid",
             gridTemplateColumns: mobile ? "1fr" : "1fr 1fr",
@@ -497,22 +427,18 @@ export default function VIPPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════
-          BOTTOM CTA — dark bordeaux band
-          Same treatment as site-wide CTAs
-      ══════════════════════════════════════ */}
+      {/* ── BOTTOM CTA ── */}
       <section
         ref={bottomRef as any}
         dir={isHe ? "rtl" : "ltr"}
         style={{
-          background:    BORDEAUX,
-          padding:       mobile ? "4rem 1.5rem" : "5.5rem 8vw",
-          textAlign:     "center",
-          position:      "relative",
-          overflow:      "hidden",
+          background: BORDEAUX,
+          padding:    mobile ? "4rem 1.5rem" : "5.5rem 8vw",
+          textAlign:  "center",
+          position:   "relative",
+          overflow:   "hidden",
         }}
       >
-        {/* Top gold line */}
         <div style={{
           position:   "absolute",
           top:        0,
@@ -521,11 +447,9 @@ export default function VIPPage() {
           height:     "1.5px",
           background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)`,
         }} />
-
-        <div style={{ ...animStyle(bottomIn, 0), marginBottom: "1rem" }}>
+        <div style={{ ...animStyle(bottomIn, 0), display: "flex", justifyContent: "center" }}>
           <SectionLabel text={t.bottomBadge} isHe={isHe} />
         </div>
-
         <h2 style={{
           ...animStyle(bottomIn, 0.1),
           fontFamily:    "'Heebo', sans-serif",
@@ -539,7 +463,6 @@ export default function VIPPage() {
         }}>
           {t.bottomTitle}
         </h2>
-
         <div style={{ ...animStyle(bottomIn, 0.2) }}>
           <CTAButton href={RESERVATIONS_URL} label={t.cta} dark />
         </div>

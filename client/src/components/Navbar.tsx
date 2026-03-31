@@ -674,7 +674,7 @@ function NavLink({
   scrolled,
   children,
   isHe,
-  isVip,
+  isVip = false,
 }: {
   href: string;
   color: string;
@@ -692,17 +692,16 @@ function NavLink({
       onMouseLeave={() => setHovered(false)}
       style={{
         fontFamily: "'Heebo', sans-serif",
-        fontWeight: isVip ? 900 : 700,
+        fontWeight: 700,
         fontSize: "0.78rem",
-        letterSpacing: isVip ? (isHe ? "0.12em" : "0.28em") : (isHe ? "0.05em" : "0.18em"),
+        letterSpacing: isHe ? "0.05em" : "0.18em",
         textTransform: "uppercase",
         textDecoration: "none",
-        color: isVip ? (hovered ? "#fff" : GOLD) : (hovered ? GOLD : color),
+        color: isVip ? GOLD : (hovered ? GOLD : color),
         transition: "color 0.25s ease",
         position: "relative",
-        paddingBottom: isVip ? "3px" : "2px",
+        paddingBottom: "2px",
         whiteSpace: "nowrap",
-        textShadow: isVip && !scrolled ? "0 0 12px rgba(185,161,103,0.6)" : "none",
       }}
     >
       {children}
@@ -713,7 +712,7 @@ function NavLink({
           left: 0,
           width: hovered ? "100%" : "0%",
           height: "1px",
-          background: isVip ? GOLD : GOLD,
+          background: GOLD,
           transition: "width 0.3s ease",
           display: "block",
         }}
