@@ -188,24 +188,7 @@ export default function CasaVibesSection() {
             {description}
           </p>
 
-          {/* CTA */}
-          <div style={{ ...animStyle(inView, 0.76), display: "flex", justifyContent: mobile ? "center" : "flex-start", width: "100%" }}>
-            <a href={ctaUrl} style={{
-              display: "inline-flex", alignItems: "center", gap: "0.45rem",
-              fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem",
-              letterSpacing: "0.22em", textTransform: "uppercase", textDecoration: "none",
-              color: BORDEAUX, borderBottom: `1px solid ${GOLD}`, paddingBottom: "2px",
-              transition: "color 0.2s",
-            }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = GOLD; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = BORDEAUX; }}
-            >
-              {isHe
-                ? (<>{ctaText} <span style={{ fontSize: "0.85rem" }}>←</span></>)
-                : (<>{ctaText} <span style={{ fontSize: "0.85rem" }}>→</span></>)
-              }
-            </a>
-          </div>
+          {/* CTA button removed */}
         </div>
 
         {/* ══════════ RIGHT — IMAGES (desktop only in grid) ══════════ */}

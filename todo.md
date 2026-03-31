@@ -279,3 +279,7 @@
 ## Changes — Apr 1 2026 (2)
 - [x] Remove Story page entirely (route, navbar links, CMS references)
 - [x] Fix Hero HE mobile: buttons must be right-aligned (currently stuck to left)
+
+## Changes — Apr 1 2026 (3)
+- [x] Remove CTA button from Our Story section (CasaVibesSection) on homepage
+- [x] Fix hero HE button order: הזמנת מקום first (rightmost), then תפריט

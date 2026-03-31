@@ -232,11 +232,12 @@ export default function HeroSection() {
             animation: "fadeUp 0.8s 1.6s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
-          {/* In RTL the visual order is: תפריט (right) then הזמן שולחן (left of it) */}
+          {/* In RTL flex-start = visual right.
+              HE order: ReserveButton first in DOM = rightmost visually, then ExploreButton to its left. */}
           {isHe ? (
             <>
-              <ExploreButton isMobile={isMobile} label={t.menuBtnHe} href={t.menuBtnUrl} />
               <ReserveButton isMobile={isMobile} label={t.reserveBtnHe} href={t.reserveBtnUrl} />
+              <ExploreButton isMobile={isMobile} label={t.menuBtnHe} href={t.menuBtnUrl} />
             </>
           ) : (
             <>
