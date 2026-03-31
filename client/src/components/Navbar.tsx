@@ -5,7 +5,6 @@
  *   HE (RTL): [תפריט · סיפור · גלריה · צור קשר] | LOGO | [הזמנת מקום · 🌐]
  * Mobile: [RESERVE] | LOGO (center) | [🌐 · ☰]
  * No framer-motion — pure CSS transitions
- * Text content loaded from Sanity CMS with hardcoded fallbacks.
  */
 
 import { useEffect, useState } from "react";
@@ -13,7 +12,6 @@ import { useLocation } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { trpc } from "@/lib/trpc";
 
-// NavbarContent type defined locally
 interface NavbarContent {
   menuHe?: string; menuEn?: string;
   storyHe?: string; storyEn?: string;
@@ -24,7 +22,6 @@ interface NavbarContent {
   reservationHe?: string; reservationEn?: string;
 }
 
-/** Navigate to a hash link, handling cross-page navigation */
 function navigateToHash(href: string, e: React.MouseEvent) {
   if (href.startsWith("#")) {
     const isHome = window.location.pathname === "/";
@@ -47,7 +44,6 @@ const BORDEAUX = "rgb(62,4,9)";
 const RESERVATIONS_URL =
   "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73";
 
-// Default fallback values (used while CMS loads or if not configured)
 const DEFAULTS: Required<NavbarContent> = {
   menuHe: "תפריט",
   menuEn: "MENU",
@@ -66,9 +62,6 @@ const DEFAULTS: Required<NavbarContent> = {
 };
 
 /* ─── Logo Badge ─── */
-// On homepage: FlyingBull handles the logo.
-// Navbar center shows handwriting gold text that fades out as the bull arrives.
-// On other pages: show the bull logo image normally.
 function LogoBadge({
   size,
   scrolled,
@@ -83,10 +76,8 @@ function LogoBadge({
   const [location] = useLocation();
   const isOnHome = location === "/";
   const showText = isOnHome && !forceScrolled;
-  // Listen to FlyingBull progress to fade text out as bull approaches
   const [bullP, setBullP] = useState(0);
   useEffect(() => {
-    // Reset when navigating back to home
     if (showText) setBullP(0);
   }, [showText]);
   useEffect(() => {
@@ -95,7 +86,6 @@ function LogoBadge({
     window.addEventListener("bullProgress", handler);
     return () => window.removeEventListener("bullProgress", handler);
   }, [showText]);
-  // Text opacity: full at p=0, gone at p=0.75 — slower fade so text stays visible longer
   const textOpacity = showText ? Math.max(0, 1 - bullP / 0.75) : 0;
   return (
     <div
@@ -110,7 +100,6 @@ function LogoBadge({
         overflow: "visible",
       }}
     >
-      {/* Bull logo — shown on non-homepage pages */}
       <img
         src={LOGO_URL}
         alt="Casa do Brasil"
@@ -125,25 +114,20 @@ function LogoBadge({
           objectFit: "contain",
           display: "block",
           flexShrink: 0,
-          filter: scrolled
-            ? "none"
-            : "drop-shadow(0 2px 8px rgba(0,0,0,0.45))",
+          filter: scrolled ? "none" : "drop-shadow(0 2px 8px rgba(0,0,0,0.45))",
           opacity: showText ? 0 : 1,
           transition: "opacity 0.35s ease, filter 0.4s ease",
           position: "absolute",
           pointerEvents: showText ? "none" : "auto",
         }}
       />
-      {/* Handwriting gold text — fades out as FlyingBull arrives */}
       <span
         style={{
           fontFamily: "'Dancing Script', cursive",
           fontWeight: 600,
           fontSize: "clamp(0.6rem, 1.5vw, 0.82rem)",
           letterSpacing: "0.03em",
-          color: scrolled
-            ? "rgba(145,118,60,0.9)"
-            : "rgba(215,188,120,0.92)",
+          color: scrolled ? "rgba(145,118,60,0.9)" : "rgba(215,188,120,0.92)",
           whiteSpace: "nowrap",
           overflow: "visible",
           opacity: textOpacity,
@@ -160,13 +144,13 @@ function LogoBadge({
 }
 
 /* ─── Language Toggle ─── */
-function LangToggle({ scrolled }: { scrolled: boolean }) {
+function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: boolean }) {
   const { lang, setLang } = useLanguage();
   const isHe = lang === "he";
-  const color = scrolled ? BORDEAUX : "#fff";
-  const borderColor = scrolled
-    ? "rgba(62,4,9,0.3)"
-    : "rgba(255,255,255,0.4)";
+  const color = inOverlay ? "#fff" : (scrolled ? BORDEAUX : "#fff");
+  const borderColor = inOverlay
+    ? "rgba(185,161,103,0.4)"
+    : scrolled ? "rgba(62,4,9,0.3)" : "rgba(255,255,255,0.4)";
 
   return (
     <button
@@ -191,16 +175,7 @@ function LangToggle({ scrolled }: { scrolled: boolean }) {
         (e.currentTarget as HTMLButtonElement).style.borderColor = borderColor;
       }}
     >
-      <svg
-        width="13"
-        height="13"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke={GOLD}
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
         <line x1="2" y1="12" x2="22" y2="12" />
         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
@@ -224,19 +199,12 @@ function LangToggle({ scrolled }: { scrolled: boolean }) {
 }
 
 /* ─── Reservations CTA button ─── */
-function ReservationsBtn({
-  scrolled,
-  label,
-}: {
-  scrolled: boolean;
-  label: string;
-}) {
+function ReservationsBtn({ scrolled, label }: { scrolled: boolean; label: string }) {
   return (
     <a
       href={RESERVATIONS_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="reservations-btn"
       style={{
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 700,
@@ -280,10 +248,8 @@ export default function Navbar({
   const { lang } = useLanguage();
   const isHe = lang === "he";
 
-  // Fetch navbar text from CMS
   const { data: cmsNavbar } = trpc.cms.getNavbar.useQuery();
 
-  // Merge CMS values with defaults (CMS wins when available)
   const t: Required<NavbarContent> = {
     menuHe: cmsNavbar?.menuHe || DEFAULTS.menuHe,
     menuEn: cmsNavbar?.menuEn || DEFAULTS.menuEn,
@@ -301,9 +267,8 @@ export default function Navbar({
     reservationEn: cmsNavbar?.reservationEn || DEFAULTS.reservationEn,
   };
 
-  const brandName = t.brandNameEn; // Always show English name in navbar center
+  const brandName = t.brandNameEn;
 
-  // Use CMS hrefs if set, otherwise use defaults
   const menuHref = cmsNavbar?.menuHref || "/menu";
   const storyHref = cmsNavbar?.storyHref || "/story";
   const galleryHref = cmsNavbar?.galleryHref || "/gallery";
@@ -333,17 +298,14 @@ export default function Navbar({
         { label: "VIP", href: "/vip", isVip: true },
       ];
 
-  const allLinks = [
-    ...navLinks,
-    {
-      label: isHe ? t.reservationHe : t.reservationEn,
-      href: reservationHref,
-    },
-  ];
-
   useEffect(() => {
     const onScroll = () => setScrolledState(window.scrollY > 60);
-    const onResize = () => setIsMobile(window.innerWidth < 768);
+    const onResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      // Close menu if resizing to desktop
+      if (!mobile) setMenuOpen(false);
+    };
     onScroll();
     onResize();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -354,17 +316,43 @@ export default function Navbar({
     };
   }, []);
 
+  // Lock body scroll when mobile menu is open
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    if (!isMobile) return;
+    if (menuOpen) {
+      // Save current scroll position and lock
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.overflow = "hidden";
+    } else {
+      // Restore scroll position
+      const scrollY = document.body.style.top;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.overflow = "";
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || "0") * -1);
+      }
+    }
     return () => {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
       document.body.style.overflow = "";
     };
-  }, [menuOpen]);
+  }, [menuOpen, isMobile]);
 
   const linkColor = scrolled ? BORDEAUX : "#FFFFFF";
 
   return (
     <>
+      {/* ── NAVBAR BAR ── hidden behind overlay when menu open */}
       <nav
         dir="ltr"
         style={{
@@ -372,13 +360,14 @@ export default function Navbar({
           top: 0,
           left: 0,
           right: 0,
-          zIndex: menuOpen ? 201 : 50,
+          // Overlay is z-index 300; navbar is always below it
+          zIndex: 50,
           padding: isMobile ? "0.9rem 1.4rem" : "0 2.8rem",
           height: isMobile ? "auto" : "70px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          transition: "background 0.4s ease, box-shadow 0.4s ease, opacity 0.2s ease",
+          transition: "background 0.4s ease, box-shadow 0.4s ease",
           background: scrolled ? "rgba(255,255,255,0.96)" : "transparent",
           backdropFilter: scrolled ? "blur(16px)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
@@ -386,15 +375,9 @@ export default function Navbar({
             ? `0 1px 0 rgba(185,161,103,0.25), 0 4px 24px rgba(62,4,9,0.08)`
             : "none",
           animation: "slideDown 0.7s 0.15s ease both",
-          // Hide navbar bar when mobile menu is open so only the overlay shows
-          opacity: isMobile && menuOpen ? 0 : 1,
-          pointerEvents: isMobile && menuOpen ? "none" : "auto",
         }}
       >
         {isMobile ? (
-          /* ── MOBILE LAYOUT ──
-             [RESERVE] | LOGO (center) | [🌐 ☰]
-          */
           <>
             {/* Left: Reserve button */}
             <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
@@ -433,15 +416,10 @@ export default function Navbar({
                 zIndex: 1,
               }}
             >
-              <LogoBadge
-                size={44}
-                scrolled={scrolled}
-                forceScrolled={forceScrolled}
-                brandName={brandName}
-              />
+              <LogoBadge size={44} scrolled={scrolled} forceScrolled={forceScrolled} brandName={brandName} />
             </a>
 
-            {/* Right: Lang toggle + Hamburger */}
+            {/* Right: Lang toggle + Hamburger (3 lines only, no X animation) */}
             <div
               style={{
                 display: "flex",
@@ -453,8 +431,8 @@ export default function Navbar({
             >
               <LangToggle scrolled={scrolled} />
               <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                aria-label="Toggle menu"
+                onClick={() => setMenuOpen(true)}
+                aria-label="Open menu"
                 style={{
                   background: "none",
                   border: "none",
@@ -473,15 +451,6 @@ export default function Navbar({
                       height: "1.5px",
                       background: scrolled ? BORDEAUX : GOLD,
                       borderRadius: "2px",
-                      transition: "transform 0.28s ease, opacity 0.28s ease",
-                      transform: menuOpen
-                        ? i === 1
-                          ? "scaleX(0)"
-                          : i === 0
-                            ? "rotate(45deg) translate(4px, 4px)"
-                            : "rotate(-45deg) translate(4px, -4px)"
-                        : "none",
-                      opacity: menuOpen && i === 1 ? 0 : 1,
                     }}
                   />
                 ))}
@@ -489,11 +458,6 @@ export default function Navbar({
             </div>
           </>
         ) : (
-          /* ── DESKTOP LAYOUT ──
-             EN: [MENU STORY GALLERY CONTACT] | LOGO | [RESERVATIONS 🌐]
-             HE: [תפריט סיפור גלריה צור קשר] | LOGO | [הזמנת מקום 🌐]
-             Always LTR so logo stays centered via absolute positioning.
-          */
           <>
             {/* Left column */}
             <div
@@ -506,16 +470,11 @@ export default function Navbar({
               }}
             >
               {isHe ? (
-                /* HE left: הזמנת מקום + lang */
                 <>
-                  <ReservationsBtn
-                    scrolled={scrolled}
-                    label={t.reservationHe}
-                  />
+                  <ReservationsBtn scrolled={scrolled} label={t.reservationHe} />
                   <LangToggle scrolled={scrolled} />
                 </>
               ) : (
-                /* EN left: MENU STORY GALLERY CONTACT */
                 navLinks.map((link) => (
                   <NavLink
                     key={link.label}
@@ -531,7 +490,7 @@ export default function Navbar({
               )}
             </div>
 
-            {/* Center: Dancing Script gold text before scroll, bull logo after scroll */}
+            {/* Center logo */}
             <a
               href="/"
               style={{
@@ -541,14 +500,9 @@ export default function Navbar({
                 transform: "translate(-50%, -50%)",
                 display: "flex",
                 alignItems: "center",
-                paddingTop: 0,
               }}
             >
-              <LogoBadge
-                size={48}
-                scrolled={scrolled}
-                brandName={brandName}
-              />
+              <LogoBadge size={48} scrolled={scrolled} brandName={brandName} />
             </a>
 
             {/* Right column */}
@@ -562,7 +516,6 @@ export default function Navbar({
               }}
             >
               {isHe ? (
-                /* HE right: צור קשר · גלריה · סיפור · תפריט (RTL visual order) */
                 [...navLinks].reverse().map((link) => (
                   <NavLink
                     key={link.label}
@@ -576,12 +529,8 @@ export default function Navbar({
                   </NavLink>
                 ))
               ) : (
-                /* EN right: RESERVATIONS + lang */
                 <>
-                  <ReservationsBtn
-                    scrolled={scrolled}
-                    label={t.reservationEn}
-                  />
+                  <ReservationsBtn scrolled={scrolled} label={t.reservationEn} />
                   <LangToggle scrolled={scrolled} />
                 </>
               )}
@@ -590,135 +539,133 @@ export default function Navbar({
         )}
       </nav>
 
-      {/* Mobile full-screen menu overlay — only page links + X close, no sticky button */}
-      <div
-        dir={isHe ? "rtl" : "ltr"}
-        aria-hidden={!menuOpen}
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 200,
-          background: "rgb(28,3,6)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "clamp(1.4rem, 4vw, 2rem)",
-          // Slide up from bottom when opening
-          transform: menuOpen ? "translateY(0)" : "translateY(100%)",
-          opacity: menuOpen ? 1 : 0,
-          pointerEvents: menuOpen ? "auto" : "none",
-          transition: "transform 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease",
-          overflow: "hidden",
-          touchAction: "none",
-        }}
-      >
-        {/* X close button — always top-right in LTR visual position */}
-        <button
-          onClick={() => setMenuOpen(false)}
-          aria-label="Close menu"
+      {/* ── MOBILE FULL-SCREEN OVERLAY ──
+          z-index 300 — always above navbar (50) and FlyingBull (60)
+          Slide up from bottom. Only rendered when isMobile to avoid desktop interference.
+      */}
+      {isMobile && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation menu"
           style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 300,
+            background: "rgb(22,2,5)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "clamp(1.2rem, 3.5vw, 1.8rem)",
+            // Slide up from bottom when opening
+            transform: menuOpen ? "translateY(0)" : "translateY(100%)",
+            opacity: menuOpen ? 1 : 0,
+            pointerEvents: menuOpen ? "auto" : "none",
+            transition: "transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease",
+            // Prevent any scroll inside overlay
+            overflow: "hidden",
+            overscrollBehavior: "contain",
+          }}
+          // Prevent touch scroll from leaking to body
+          onTouchMove={(e) => e.stopPropagation()}
+        >
+          {/* ── Top bar: brand name (center) + X close (right) ── */}
+          <div style={{
             position: "absolute",
-            top: "1.5rem",
-            right: "1.5rem",
-            background: "none",
-            border: `1px solid rgba(185,161,103,0.35)`,
-            borderRadius: "50%",
-            cursor: "pointer",
-            color: GOLD,
-            width: "44px",
-            height: "44px",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: "4rem",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "1.3rem",
-            lineHeight: 1,
-            transition: "border-color 0.2s, color 0.2s",
-          }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.borderColor = GOLD;
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(185,161,103,0.35)";
-          }}
-        >
-          ✕
-        </button>
-
-        {/* Brand name at top */}
-        <div style={{
-          position: "absolute",
-          top: "1.6rem",
-          left: "50%",
-          transform: "translateX(-50%)",
-          fontFamily: "'Heebo', sans-serif",
-          fontWeight: 300,
-          fontSize: "0.65rem",
-          letterSpacing: "0.35em",
-          color: `rgba(185,161,103,0.5)`,
-          textTransform: "uppercase",
-          whiteSpace: "nowrap",
-        }}>
-          CASA DO BRASIL
-        </div>
-
-        {/* Gold top line */}
-        <div style={{
-          position: "absolute",
-          top: "4.5rem",
-          left: "2rem",
-          right: "2rem",
-          height: "1px",
-          background: "rgba(185,161,103,0.2)",
-        }} />
-
-        {/* Nav links — only page links, no reservation button */}
-        {navLinks.map((link, i) => (
-          <a
-            key={link.label}
-            href={link.href}
-            target={link.href.startsWith("http") ? "_blank" : undefined}
-            rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-            onClick={(e) => {
-              navigateToHash(link.href, e);
-              setMenuOpen(false);
-            }}
-            style={{
+            borderBottom: "1px solid rgba(185,161,103,0.15)",
+          }}>
+            {/* Brand name */}
+            <span style={{
               fontFamily: "'Heebo', sans-serif",
-              fontWeight: 900,
-              fontSize: "clamp(24px, 6.5vw, 32px)",
-              letterSpacing: isHe ? "0.03em" : "0.18em",
-              color: (link as any).isVip ? GOLD : "#FFFFFF",
-              textDecoration: "none",
+              fontWeight: 300,
+              fontSize: "0.6rem",
+              letterSpacing: "0.4em",
+              color: "rgba(185,161,103,0.45)",
               textTransform: "uppercase",
-              transition: `color 0.2s ease, opacity 0.35s ${0.04 + i * 0.06}s ease, transform 0.35s ${0.04 + i * 0.06}s ease`,
-              opacity: menuOpen ? 1 : 0,
-              transform: menuOpen ? "translateY(0)" : "translateY(14px)",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.color = GOLD;
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.color = (link as any).isVip ? GOLD : "#FFFFFF";
-            }}
-          >
-            {link.label}
-          </a>
-        ))}
+            }}>
+              CASA DO BRASIL
+            </span>
 
-        {/* Gold bottom line */}
-        <div style={{
-          position: "absolute",
-          bottom: "4.5rem",
-          left: "2rem",
-          right: "2rem",
-          height: "1px",
-          background: "rgba(185,161,103,0.2)",
-        }} />
-      </div>
+            {/* X close button — top right */}
+            <button
+              onClick={() => setMenuOpen(false)}
+              aria-label="Close menu"
+              style={{
+                position: "absolute",
+                right: "1.2rem",
+                background: "none",
+                border: "1px solid rgba(185,161,103,0.3)",
+                borderRadius: "50%",
+                cursor: "pointer",
+                color: GOLD,
+                width: "40px",
+                height: "40px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "1.1rem",
+                lineHeight: 1,
+                flexShrink: 0,
+              }}
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* ── Nav links ── */}
+          {navLinks.map((link, i) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target={link.href.startsWith("http") ? "_blank" : undefined}
+              rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              onClick={(e) => {
+                navigateToHash(link.href, e);
+                setMenuOpen(false);
+              }}
+              style={{
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 900,
+                fontSize: "clamp(22px, 6vw, 30px)",
+                letterSpacing: isHe ? "0.03em" : "0.18em",
+                color: (link as any).isVip ? GOLD : "#FFFFFF",
+                textDecoration: "none",
+                textTransform: "uppercase",
+                transition: `color 0.2s ease, opacity 0.35s ${0.05 + i * 0.05}s ease, transform 0.35s ${0.05 + i * 0.05}s ease`,
+                opacity: menuOpen ? 1 : 0,
+                transform: menuOpen ? "translateY(0)" : "translateY(12px)",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLAnchorElement).style.color = GOLD;
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLAnchorElement).style.color = (link as any).isVip ? GOLD : "#FFFFFF";
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
+
+          {/* ── Bottom: lang toggle ── */}
+          <div style={{
+            position: "absolute",
+            bottom: "2rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "1rem",
+          }}>
+            <LangToggle scrolled={false} inOverlay />
+          </div>
+        </div>
+      )}
     </>
   );
 }

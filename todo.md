@@ -269,3 +269,9 @@
 - [x] Mobile breakpoint: switch from 900px to 768px so mobile layout activates sooner
 - [x] Text size consistency: gallery section description same size as story section description
 - [x] Mobile menu: rebuild as clean modern full-screen popup — no sticky reservation button inside menu, only page links + X close button
+
+## Mobile Menu Critical Bugs — Apr 1 2026
+- [x] Background scroll still works when mobile menu is open
+- [x] Navbar bar still visible over the overlay (not hidden)
+- [x] Duplicate X button appears (old hamburger X + new circle X)
+- [x] Navbar appears stuck/frozen on screen when menu is open
