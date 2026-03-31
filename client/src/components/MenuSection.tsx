@@ -168,8 +168,8 @@ export default function MenuSection() {
 
   // Card 2
   const card2Img    = cms?.card2ImageUrl ?? CLASSIC_IMG;
-  const card2Name   = isHe ? (cms?.card2NameHe ?? "עקריות") : (cms?.card2NameEn ?? "ENTRÉES");
-  const card2Type   = isHe ? (cms?.card2TypeHe ?? "בחירות אישיות") : (cms?.card2TypeEn ?? "Individual Selections");
+  const card2Name   = isHe ? (cms?.card2NameHe ?? "עיקריות") : (cms?.card2NameEn ?? "ENTRÉES");
+  const card2Type   = isHe ? (cms?.card2TypeHe ?? "מנות עיקריות לבחירה") : (cms?.card2TypeEn ?? "Individual Selections");
   const card2Btn    = isHe ? (cms?.card2BtnHe ?? "לצפייה בתפריט") : (cms?.card2BtnEn ?? "View Menu");
   const card2Url    = cms?.card2BtnUrl ?? "/menu?tab=classic";
 
