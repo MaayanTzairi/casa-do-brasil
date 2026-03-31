@@ -179,11 +179,12 @@ export default function GallerySection() {
             alignSelf: isHe ? "flex-end" : "flex-start",
           }} />
 
-          {/* Description */}
+          {/* Description — same font size as CasaVibesSection body text */}
           <p style={{
             ...animStyle(inView, 0.38),
             fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-            fontSize: "clamp(13px, 1vw, 15px)", color: "rgba(62,4,9,0.65)",
+            fontSize: mobile ? "clamp(15px, 4vw, 17px)" : "clamp(15px, 1.2vw, 17px)",
+            color: "rgba(62,4,9,0.65)",
             lineHeight: 1.75, marginBottom: mobile ? "1.5rem" : "2.2rem",
             textAlign: isHe ? "right" : "left", direction: isHe ? "rtl" : "ltr",
           }}>

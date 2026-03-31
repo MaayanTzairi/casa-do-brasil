@@ -343,7 +343,7 @@ export default function Navbar({
 
   useEffect(() => {
     const onScroll = () => setScrolledState(window.scrollY > 60);
-    const onResize = () => setIsMobile(window.innerWidth < 900);
+    const onResize = () => setIsMobile(window.innerWidth < 768);
     onScroll();
     onResize();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -590,105 +590,135 @@ export default function Navbar({
         )}
       </nav>
 
-      {/* Mobile overlay menu — full screen, no scroll, no navbar bar */}
-      {isMobile && (
-        <div
-          dir={isHe ? "rtl" : "ltr"}
+      {/* Mobile full-screen menu overlay — only page links + X close, no sticky button */}
+      <div
+        dir={isHe ? "rtl" : "ltr"}
+        aria-hidden={!menuOpen}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 200,
+          background: "rgb(28,3,6)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "clamp(1.4rem, 4vw, 2rem)",
+          // Slide up from bottom when opening
+          transform: menuOpen ? "translateY(0)" : "translateY(100%)",
+          opacity: menuOpen ? 1 : 0,
+          pointerEvents: menuOpen ? "auto" : "none",
+          transition: "transform 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease",
+          overflow: "hidden",
+          touchAction: "none",
+        }}
+      >
+        {/* X close button — always top-right in LTR visual position */}
+        <button
+          onClick={() => setMenuOpen(false)}
+          aria-label="Close menu"
           style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 200,
-            background: "rgba(40,3,6,0.99)",
+            position: "absolute",
+            top: "1.5rem",
+            right: "1.5rem",
+            background: "none",
+            border: `1px solid rgba(185,161,103,0.35)`,
+            borderRadius: "50%",
+            cursor: "pointer",
+            color: GOLD,
+            width: "44px",
+            height: "44px",
             display: "flex",
-            flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            gap: "2rem",
-            opacity: menuOpen ? 1 : 0,
-            pointerEvents: menuOpen ? "auto" : "none",
-            transition: "opacity 0.3s ease",
-            overflow: "hidden",
-            touchAction: menuOpen ? "none" : "auto",
+            fontSize: "1.3rem",
+            lineHeight: 1,
+            transition: "border-color 0.2s, color 0.2s",
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.borderColor = GOLD;
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(185,161,103,0.35)";
           }}
         >
-          {/* X close button — top right */}
-          <button
-            onClick={() => setMenuOpen(false)}
-            aria-label="Close menu"
+          ✕
+        </button>
+
+        {/* Brand name at top */}
+        <div style={{
+          position: "absolute",
+          top: "1.6rem",
+          left: "50%",
+          transform: "translateX(-50%)",
+          fontFamily: "'Heebo', sans-serif",
+          fontWeight: 300,
+          fontSize: "0.65rem",
+          letterSpacing: "0.35em",
+          color: `rgba(185,161,103,0.5)`,
+          textTransform: "uppercase",
+          whiteSpace: "nowrap",
+        }}>
+          CASA DO BRASIL
+        </div>
+
+        {/* Gold top line */}
+        <div style={{
+          position: "absolute",
+          top: "4.5rem",
+          left: "2rem",
+          right: "2rem",
+          height: "1px",
+          background: "rgba(185,161,103,0.2)",
+        }} />
+
+        {/* Nav links — only page links, no reservation button */}
+        {navLinks.map((link, i) => (
+          <a
+            key={link.label}
+            href={link.href}
+            target={link.href.startsWith("http") ? "_blank" : undefined}
+            rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+            onClick={(e) => {
+              navigateToHash(link.href, e);
+              setMenuOpen(false);
+            }}
             style={{
-              position: "absolute",
-              top: "1.4rem",
-              right: isHe ? undefined : "1.4rem",
-              left: isHe ? "1.4rem" : undefined,
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              color: GOLD,
-              fontSize: "2rem",
-              lineHeight: 1,
-              padding: "0.4rem",
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 900,
+              fontSize: "clamp(24px, 6.5vw, 32px)",
+              letterSpacing: isHe ? "0.03em" : "0.18em",
+              color: (link as any).isVip ? GOLD : "#FFFFFF",
+              textDecoration: "none",
+              textTransform: "uppercase",
+              transition: `color 0.2s ease, opacity 0.35s ${0.04 + i * 0.06}s ease, transform 0.35s ${0.04 + i * 0.06}s ease`,
               opacity: menuOpen ? 1 : 0,
-              transition: `opacity 0.3s 0.1s ease`,
+              transform: menuOpen ? "translateY(0)" : "translateY(14px)",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.color = GOLD;
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.color = (link as any).isVip ? GOLD : "#FFFFFF";
             }}
           >
-            ✕
-          </button>
+            {link.label}
+          </a>
+        ))}
 
-          {/* Gold divider line */}
-          <div
-            style={{
-              width: "40px",
-              height: "1px",
-              background: GOLD,
-              marginBottom: "0.5rem",
-              transition: `transform 0.5s 0.15s ease, opacity 0.5s 0.15s ease`,
-              transform: menuOpen ? "scaleX(1)" : "scaleX(0)",
-              transformOrigin: "center",
-              opacity: menuOpen ? 1 : 0,
-            }}
-          />
-
-          {allLinks.map((link, i) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target={link.href.startsWith("http") ? "_blank" : undefined}
-              rel={
-                link.href.startsWith("http")
-                  ? "noopener noreferrer"
-                  : undefined
-              }
-              onClick={(e) => {
-                navigateToHash(link.href, e);
-                setMenuOpen(false);
-              }}
-              style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(22px, 6vw, 30px)",
-                letterSpacing: isHe ? "0.04em" : "0.22em",
-                color: link.isVip ? GOLD : "#FFFFFF",
-                textDecoration: "none",
-                textTransform: "uppercase",
-                transition: `color 0.2s, opacity 0.4s ${0.05 + i * 0.07}s, transform 0.4s ${0.05 + i * 0.07}s`,
-                opacity: menuOpen ? 1 : 0,
-                transform: menuOpen ? "translateY(0)" : "translateY(18px)",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = GOLD;
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = link.isVip ? GOLD : "#FFFFFF";
-              }}
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
-      )}
+        {/* Gold bottom line */}
+        <div style={{
+          position: "absolute",
+          bottom: "4.5rem",
+          left: "2rem",
+          right: "2rem",
+          height: "1px",
+          background: "rgba(185,161,103,0.2)",
+        }} />
+      </div>
     </>
   );
 }

@@ -262,3 +262,10 @@
 
 ## Mobile Menu Fullscreen Fix
 - [x] Mobile menu: lock body scroll when open, hide navbar bar, show only links + X close button
+
+## Bug Fixes — User Report Apr 1 2026
+- [x] Hero HE mobile: CTA buttons must be right-aligned (RTL), currently shifted left
+- [x] Hero EN mobile: subtitle "Authentic Brazilian..." must wrap to 2 lines, not overflow under social icons
+- [x] Mobile breakpoint: switch from 900px to 768px so mobile layout activates sooner
+- [x] Text size consistency: gallery section description same size as story section description
+- [x] Mobile menu: rebuild as clean modern full-screen popup — no sticky reservation button inside menu, only page links + X close button

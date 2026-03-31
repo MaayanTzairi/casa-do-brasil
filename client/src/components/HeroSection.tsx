@@ -79,7 +79,7 @@ export default function HeroSection() {
   const titleWords = (isHe ? t.titleHe : t.titleEn).split(" ");
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 900);
+    const check = () => setIsMobile(window.innerWidth < 768);
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
@@ -209,7 +209,10 @@ export default function HeroSection() {
             marginBottom: isMobile ? "2.2rem" : "3.2rem",
             fontStyle: "italic",
             textAlign: isHe ? "right" : "left",
-            width: "100%",
+            // Limit width so subtitle doesn't run under the social icons column
+            maxWidth: isMobile ? "calc(100% - 3rem)" : "60%",
+            marginLeft: isHe ? "auto" : undefined,
+            marginRight: isHe ? 0 : undefined,
             animation: "fadeUp 0.8s 1.3s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
@@ -221,12 +224,28 @@ export default function HeroSection() {
           style={{
             display: "flex", alignItems: "center",
             gap: isMobile ? "0.7rem" : "1.25rem",
-            flexWrap: "nowrap", justifyContent: isHe ? "flex-end" : "flex-start", width: "100%",
+            flexWrap: "nowrap",
+            // RTL: align to right; LTR: align to left
+            justifyContent: isHe ? "flex-end" : "flex-start",
+            // RTL mobile: push to right edge
+            marginLeft: isHe ? "auto" : undefined,
+            marginRight: isHe ? 0 : undefined,
+            width: "100%",
             animation: "fadeUp 0.8s 1.6s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
-          <ReserveButton isMobile={isMobile} label={isHe ? t.reserveBtnHe : t.reserveBtnEn} href={t.reserveBtnUrl} />
-          <ExploreButton isMobile={isMobile} label={isHe ? t.menuBtnHe : t.menuBtnEn} href={t.menuBtnUrl} />
+          {/* RTL: show menu button first (rightmost), then reserve */}
+          {isHe ? (
+            <>
+              <ExploreButton isMobile={isMobile} label={t.menuBtnHe} href={t.menuBtnUrl} />
+              <ReserveButton isMobile={isMobile} label={t.reserveBtnHe} href={t.reserveBtnUrl} />
+            </>
+          ) : (
+            <>
+              <ReserveButton isMobile={isMobile} label={t.reserveBtnEn} href={t.reserveBtnUrl} />
+              <ExploreButton isMobile={isMobile} label={t.menuBtnEn} href={t.menuBtnUrl} />
+            </>
+          )}
         </div>
       </div>
 
