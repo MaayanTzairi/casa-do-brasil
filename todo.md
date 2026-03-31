@@ -198,3 +198,9 @@
 - [x] Deploy: Dockerfile (multi-stage Node 22 Alpine)
 - [x] Deploy: railway.toml with health check config
 - [x] Deploy: DEPLOY.md guide with step-by-step Railway instructions
+
+## VIP Page & Navbar Updates
+- [x] Navbar: add "בית / Home" link (EN + HE)
+- [x] Navbar: add "VIP" link (same text in both languages)
+- [x] Create VIP page — bilingual, classic modern style, placeholder image
+- [x] Register /vip route in App.tsx

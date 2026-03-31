@@ -21,6 +21,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const PlaylistPage = lazy(() => import("./pages/PlaylistPage"));
 const FAQPage = lazy(() => import("./pages/FAQPage"));
 const Admin = lazy(() => import("./pages/Admin"));
+const VIPPage = lazy(() => import("./pages/VIPPage"));
 // Minimal loading fallback — dark bordeaux bg prevents white flash on page transitions
 function PageLoader() {
   const [location] = useLocation();
@@ -98,6 +99,7 @@ function Router() {
         <Route path={"/playlist"} component={PlaylistPage} />
         <Route path={"/faq"} component={FAQPage} />
         <Route path={"/admin"} component={Admin} />
+        <Route path={"/vip"} component={VIPPage} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>

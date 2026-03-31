@@ -313,18 +313,22 @@ export default function Navbar({
 
   const navLinks = isHe
     ? [
+        { label: "בית", href: "/" },
         { label: t.menuHe, href: menuHref },
         { label: t.storyHe, href: storyHref },
         { label: t.galleryHe, href: galleryHref },
         { label: t.faqHe, href: faqHref },
         { label: t.contactHe, href: contactHref },
+        { label: "VIP", href: "/vip", isVip: true },
       ]
     : [
+        { label: "HOME", href: "/" },
         { label: t.menuEn, href: menuHref },
         { label: t.storyEn, href: storyHref },
         { label: t.galleryEn, href: galleryHref },
         { label: t.faqEn, href: faqHref },
         { label: t.contactEn, href: contactHref },
+        { label: "VIP", href: "/vip", isVip: true },
       ];
 
   const allLinks = [
@@ -514,6 +518,7 @@ export default function Navbar({
                     color={linkColor}
                     scrolled={scrolled}
                     isHe={isHe}
+                    isVip={(link as any).isVip}
                   >
                     {link.label}
                   </NavLink>
@@ -560,6 +565,7 @@ export default function Navbar({
                     color={linkColor}
                     scrolled={scrolled}
                     isHe={isHe}
+                    isVip={(link as any).isVip}
                   >
                     {link.label}
                   </NavLink>
@@ -668,12 +674,14 @@ function NavLink({
   scrolled,
   children,
   isHe,
+  isVip,
 }: {
   href: string;
   color: string;
   scrolled: boolean;
   children: React.ReactNode;
   isHe: boolean;
+  isVip?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
   return (
@@ -684,16 +692,17 @@ function NavLink({
       onMouseLeave={() => setHovered(false)}
       style={{
         fontFamily: "'Heebo', sans-serif",
-        fontWeight: 700,
+        fontWeight: isVip ? 900 : 700,
         fontSize: "0.78rem",
-        letterSpacing: isHe ? "0.05em" : "0.18em",
+        letterSpacing: isVip ? (isHe ? "0.12em" : "0.28em") : (isHe ? "0.05em" : "0.18em"),
         textTransform: "uppercase",
         textDecoration: "none",
-        color: hovered ? GOLD : color,
+        color: isVip ? (hovered ? "#fff" : GOLD) : (hovered ? GOLD : color),
         transition: "color 0.25s ease",
         position: "relative",
-        paddingBottom: "2px",
+        paddingBottom: isVip ? "3px" : "2px",
         whiteSpace: "nowrap",
+        textShadow: isVip && !scrolled ? "0 0 12px rgba(185,161,103,0.6)" : "none",
       }}
     >
       {children}
@@ -704,7 +713,7 @@ function NavLink({
           left: 0,
           width: hovered ? "100%" : "0%",
           height: "1px",
-          background: GOLD,
+          background: isVip ? GOLD : GOLD,
           transition: "width 0.3s ease",
           display: "block",
         }}
