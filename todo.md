@@ -259,3 +259,6 @@
 ## Mobile Fixes — Apr 1 2026
 - [x] Navbar mobile menu: z-index above FlyingBull, full screen, not clipped under navbar
 - [x] Hero mobile: buttons side-by-side in both EN and HE (not stacked in EN)
+
+## Mobile Menu Fullscreen Fix
+- [x] Mobile menu: lock body scroll when open, hide navbar bar, show only links + X close button

@@ -378,7 +378,7 @@ export default function Navbar({
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          transition: "background 0.4s ease, box-shadow 0.4s ease",
+          transition: "background 0.4s ease, box-shadow 0.4s ease, opacity 0.2s ease",
           background: scrolled ? "rgba(255,255,255,0.96)" : "transparent",
           backdropFilter: scrolled ? "blur(16px)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
@@ -386,6 +386,9 @@ export default function Navbar({
             ? `0 1px 0 rgba(185,161,103,0.25), 0 4px 24px rgba(62,4,9,0.08)`
             : "none",
           animation: "slideDown 0.7s 0.15s ease both",
+          // Hide navbar bar when mobile menu is open so only the overlay shows
+          opacity: isMobile && menuOpen ? 0 : 1,
+          pointerEvents: isMobile && menuOpen ? "none" : "auto",
         }}
       >
         {isMobile ? (
@@ -587,7 +590,7 @@ export default function Navbar({
         )}
       </nav>
 
-      {/* Mobile overlay menu */}
+      {/* Mobile overlay menu — full screen, no scroll, no navbar bar */}
       {isMobile && (
         <div
           dir={isHe ? "rtl" : "ltr"}
@@ -598,26 +601,53 @@ export default function Navbar({
             right: 0,
             bottom: 0,
             zIndex: 200,
-            background: "rgba(40,3,6,0.98)",
+            background: "rgba(40,3,6,0.99)",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            gap: "2.2rem",
+            gap: "2rem",
             opacity: menuOpen ? 1 : 0,
             pointerEvents: menuOpen ? "auto" : "none",
             transition: "opacity 0.3s ease",
-            overflowY: "auto",
+            overflow: "hidden",
+            touchAction: menuOpen ? "none" : "auto",
           }}
         >
-          <div
+          {/* X close button — top right */}
+          <button
+            onClick={() => setMenuOpen(false)}
+            aria-label="Close menu"
             style={{
               position: "absolute",
-              top: "80px",
-              left: "2rem",
-              right: "2rem",
+              top: "1.4rem",
+              right: isHe ? undefined : "1.4rem",
+              left: isHe ? "1.4rem" : undefined,
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: GOLD,
+              fontSize: "2rem",
+              lineHeight: 1,
+              padding: "0.4rem",
+              opacity: menuOpen ? 1 : 0,
+              transition: `opacity 0.3s 0.1s ease`,
+            }}
+          >
+            ✕
+          </button>
+
+          {/* Gold divider line */}
+          <div
+            style={{
+              width: "40px",
               height: "1px",
-              background: "rgba(185,161,103,0.3)",
+              background: GOLD,
+              marginBottom: "0.5rem",
+              transition: `transform 0.5s 0.15s ease, opacity 0.5s 0.15s ease`,
+              transform: menuOpen ? "scaleX(1)" : "scaleX(0)",
+              transformOrigin: "center",
+              opacity: menuOpen ? 1 : 0,
             }}
           />
 
@@ -638,9 +668,9 @@ export default function Navbar({
               style={{
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 900,
-                fontSize: "clamp(20px, 5.5vw, 28px)",
+                fontSize: "clamp(22px, 6vw, 30px)",
                 letterSpacing: isHe ? "0.04em" : "0.22em",
-                color: "#FFFFFF",
+                color: link.isVip ? GOLD : "#FFFFFF",
                 textDecoration: "none",
                 textTransform: "uppercase",
                 transition: `color 0.2s, opacity 0.4s ${0.05 + i * 0.07}s, transform 0.4s ${0.05 + i * 0.07}s`,
@@ -651,23 +681,12 @@ export default function Navbar({
                 (e.currentTarget as HTMLAnchorElement).style.color = GOLD;
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = "#FFFFFF";
+                (e.currentTarget as HTMLAnchorElement).style.color = link.isVip ? GOLD : "#FFFFFF";
               }}
             >
               {link.label}
             </a>
           ))}
-
-          <div
-            style={{
-              width: "40px",
-              height: "1px",
-              background: GOLD,
-              transition: `transform 0.6s 0.4s ease, opacity 0.6s 0.4s ease`,
-              transform: menuOpen ? "scaleX(1)" : "scaleX(0)",
-              transformOrigin: "left",
-            }}
-          />
         </div>
       )}
     </>
