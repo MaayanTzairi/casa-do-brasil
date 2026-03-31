@@ -639,7 +639,7 @@ function MenuItemRow({ item, isHe, type, index }: { item: MenuItem; isHe: boolea
           }}>
             {name}
           </span>
-          {tag && <TagBadge text={tag} />}
+          {/* tag badge removed per design decision */}
         </div>
         <p style={{
           fontFamily: "'Heebo', sans-serif",

@@ -283,3 +283,7 @@
 ## Changes — Apr 1 2026 (3)
 - [x] Remove CTA button from Our Story section (CasaVibesSection) on homepage
 - [x] Fix hero HE button order: הזמנת מקום first (rightmost), then תפריט
+
+## Changes — Apr 1 2026 (4)
+- [x] Remove badge labels (חתימה, בחירת השף, Signature, Chef's Choice etc.) from all menu items
+- [x] Raise navbar mobile breakpoint so it switches before nav links overlap the bull logo

@@ -244,7 +244,7 @@ export default function Navbar({
   const [scrolledState, setScrolledState] = useState(false);
   const scrolled = forceScrolled ?? scrolledState;
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 1024);
   const { lang } = useLanguage();
   const isHe = lang === "he";
 
@@ -299,7 +299,7 @@ export default function Navbar({
   useEffect(() => {
     const onScroll = () => setScrolledState(window.scrollY > 60);
     const onResize = () => {
-      const mobile = window.innerWidth < 768;
+      const mobile = window.innerWidth < 1024;
       setIsMobile(mobile);
       // Close menu if resizing to desktop
       if (!mobile) setMenuOpen(false);
