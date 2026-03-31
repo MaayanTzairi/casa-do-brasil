@@ -183,7 +183,7 @@ const MENU_DATA: MenuCategory[] = [
   {
     id: "specials",
     label: "Specials",
-    labelHe: "עיקרייות",
+    labelHe: "עיקריות",
     illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/specials-illustration-fixed_40af80e7.webp",
     subtitle: "Selected & Aged In-House",
     subtitleHe: "בשר נבחר ומיושן בבית",
@@ -1258,7 +1258,7 @@ function MenuHero({ isHe }: { isHe: boolean }) {
       >
         {/* Label */}
         <div
-          style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "0.9rem", flexDirection: isHe ? "row-reverse" : "row" }}
+          style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "0.9rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start" }}
         >
           <div style={{ width: "22px", height: "1px", background: GOLD }} />
           <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.85vw, 13px)", letterSpacing: isHe ? "0.06em" : "0.25em", textTransform: "uppercase", color: GOLD }}>
@@ -1338,16 +1338,17 @@ export default function MenuPage() {
 
   const activeCategory = MENU_DATA.find((c) => c.id === activeId)!;
 
-  // Detect when tab bar should become sticky
+  // Detect when tab bar should become sticky using scroll position
   useEffect(() => {
     const sentinel = tabSentinelRef.current;
     if (!sentinel) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setTabSticky(!entry.isIntersecting),
-      { threshold: 0, rootMargin: "-70px 0px 0px 0px" }
-    );
-    observer.observe(sentinel);
-    return () => observer.disconnect();
+    const checkSticky = () => {
+      const rect = sentinel.getBoundingClientRect();
+      setTabSticky(rect.top <= 70);
+    };
+    checkSticky();
+    window.addEventListener("scroll", checkSticky, { passive: true });
+    return () => window.removeEventListener("scroll", checkSticky);
   }, []);
 
   return (

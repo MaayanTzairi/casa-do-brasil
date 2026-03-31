@@ -296,3 +296,8 @@
 - [x] Sticky category tabs bar (already implemented, verified)
 - [x] Fix scroll behavior so page doesn't get stuck on category tabs
 - [x] Business lunch note font: increase to match reference size
+
+## MenuPage Fixes — Apr 1 2026 (6)
+- [x] Sticky tabs: not working on desktop or mobile — fix IntersectionObserver logic
+- [x] Hero label "קאסה דו ברזיל" must be right-aligned in Hebrew (currently left)
+- [x] Typo fix: עיקרייות → עיקריות
