@@ -87,7 +87,7 @@ const MENU_DATA: MenuCategory[] = [
     label: "Churrascaria",
     labelHe: "צ'וראסקריה",
     subtitle: "All You Can Eat",
-    subtitleHe: "כל כלול",
+    subtitleHe: "אכול כפי יכולתך",
     description: "Served to the center of the table — as much as you want. Choose your track and enjoy an endless parade of the finest Brazilian cuts.",
     descriptionHe: "מוגש למרכז השולחן — כמה שרוצים. בחרו את המסלול שלכם והתפנקו במצעד אינסופי של הנתחים הברזילאיים הטובים ביותר.",
     type: "rodizio",
@@ -183,7 +183,7 @@ const MENU_DATA: MenuCategory[] = [
   {
     id: "specials",
     label: "Specials",
-    labelHe: "מנות מיוחדות",
+    labelHe: "עיקרייות",
     illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/specials-illustration-fixed_40af80e7.webp",
     subtitle: "Selected & Aged In-House",
     subtitleHe: "בשר נבחר ומיושן בבית",
@@ -796,6 +796,9 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               color: "rgb(90,35,35)",
               lineHeight: 1.75,
               margin: 0,
+              direction: isHe ? "rtl" : "ltr",
+              textAlign: isHe ? "right" : "left",
+              unicodeBidi: "embed",
             }}>
               {description}
             </p>
@@ -922,9 +925,9 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
 
             {/* Footer notes */}
             {category.footerNotes && (
-              <div style={{ padding: "0.8rem 0", textAlign: isHe ? "right" : "left" }}>
+              <div dir={isHe ? "rtl" : "ltr"} style={{ padding: "0.8rem 0", textAlign: isHe ? "right" : "left" }}>
                 {(isHe ? category.footerNotesHe! : category.footerNotes).map((note, i) => (
-                  <p key={i} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(13px, 1vw, 15px)", color: "rgba(62,4,9,0.55)", margin: "0.25rem 0", fontStyle: "italic" }}>
+                  <p key={i} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(13px, 1vw, 15px)", color: "rgba(62,4,9,0.55)", margin: "0.25rem 0", fontStyle: "italic", direction: isHe ? "rtl" : "ltr", textAlign: isHe ? "right" : "left", unicodeBidi: "embed" }}>
                     {note}
                   </p>
                 ))}
@@ -1033,7 +1036,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
           {category.lunchFooterNotes && (
             <div dir={isHe ? "rtl" : "ltr"} style={{ padding: "0.8rem 0", borderTop: `1px solid ${GOLD_R}0.15)` }}>
               {(isHe ? category.lunchFooterNotesHe! : category.lunchFooterNotes).map((note, i) => (
-                <p key={i} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: i === 0 ? 600 : 300, fontSize: "clamp(11px, 0.78vw, 13px)", color: i === 0 ? GOLD : "rgba(62,4,9,0.5)", margin: "0.3rem 0", fontStyle: i === 1 ? "italic" : "normal" }}>
+                <p key={i} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: i === 0 ? 600 : 300, fontSize: "clamp(13px, 1vw, 15px)", color: i === 0 ? GOLD : "rgba(62,4,9,0.5)", margin: "0.3rem 0", fontStyle: i === 1 ? "italic" : "normal", direction: isHe ? "rtl" : "ltr", textAlign: isHe ? "right" : "left" }}>
                   {note}
                 </p>
               ))}
@@ -1294,11 +1297,13 @@ function MenuHero({ isHe }: { isHe: boolean }) {
           style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 300,
-            fontSize: "clamp(12px, 1.2vw, 16px)",
+            fontSize: "clamp(15px, 1.4vw, 19px)",
             color: GOLD,
-            letterSpacing: "0.1em",
+            letterSpacing: isHe ? "0.04em" : "0.1em",
             fontStyle: "italic",
             margin: 0,
+            direction: isHe ? "rtl" : "ltr",
+            textAlign: isHe ? "right" : "left",
           }}
         >
           {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקריה" : "Brazilian Grill — Music & Churrascaria"}

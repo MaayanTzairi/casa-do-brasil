@@ -287,3 +287,12 @@
 ## Changes — Apr 1 2026 (4)
 - [x] Remove badge labels (חתימה, בחירת השף, Signature, Chef's Choice etc.) from all menu items
 - [x] Raise navbar mobile breakpoint so it switches before nav links overlap the bull logo
+
+## MenuPage Fixes — Apr 1 2026 (5)
+- [x] Hero subtitle: RTL in Hebrew, same size EN/HE, slightly larger
+- [x] Category descriptions: all must be RTL in Hebrew (direction:rtl, text-align:right)
+- [x] "כל כלול" element → rename to "אכול כפי יכולתך", make slightly larger
+- [x] Category description font sizes: unify to match "כל הנתחים מוכנים לפי הזמנה" reference size
+- [x] Sticky category tabs bar (already implemented, verified)
+- [x] Fix scroll behavior so page doesn't get stuck on category tabs
+- [x] Business lunch note font: increase to match reference size
