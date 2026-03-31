@@ -275,3 +275,7 @@
 - [x] Navbar bar still visible over the overlay (not hidden)
 - [x] Duplicate X button appears (old hamburger X + new circle X)
 - [x] Navbar appears stuck/frozen on screen when menu is open
+
+## Changes — Apr 1 2026 (2)
+- [x] Remove Story page entirely (route, navbar links, CMS references)
+- [x] Fix Hero HE mobile: buttons must be right-aligned (currently stuck to left)

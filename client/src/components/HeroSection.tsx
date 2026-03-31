@@ -210,9 +210,8 @@ export default function HeroSection() {
             fontStyle: "italic",
             textAlign: isHe ? "right" : "left",
             // Limit width so subtitle doesn't run under the social icons column
+            // In RTL context, the element is already right-aligned naturally (direction:rtl on parent)
             maxWidth: isMobile ? "calc(100% - 3rem)" : "60%",
-            marginLeft: isHe ? "auto" : undefined,
-            marginRight: isHe ? 0 : undefined,
             animation: "fadeUp 0.8s 1.3s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
@@ -220,21 +219,20 @@ export default function HeroSection() {
         </p>
 
         {/* CTA Buttons */}
+        {/* NOTE: parent container has direction:rtl in Hebrew.
+            In RTL flex context: flex-start = visual right, flex-end = visual left.
+            So we always use flex-start — this puts buttons on the right in HE and left in EN. */}
         <div
           style={{
             display: "flex", alignItems: "center",
             gap: isMobile ? "0.7rem" : "1.25rem",
             flexWrap: "nowrap",
-            // RTL: align to right; LTR: align to left
-            justifyContent: isHe ? "flex-end" : "flex-start",
-            // RTL mobile: push to right edge
-            marginLeft: isHe ? "auto" : undefined,
-            marginRight: isHe ? 0 : undefined,
+            justifyContent: "flex-start",
             width: "100%",
             animation: "fadeUp 0.8s 1.6s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
-          {/* RTL: show menu button first (rightmost), then reserve */}
+          {/* In RTL the visual order is: תפריט (right) then הזמן שולחן (left of it) */}
           {isHe ? (
             <>
               <ExploreButton isMobile={isMobile} label={t.menuBtnHe} href={t.menuBtnUrl} />

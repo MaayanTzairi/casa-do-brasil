@@ -16,7 +16,6 @@ const StickyReservationBtn = lazy(() => import("./components/StickyReservationBt
 const Home = lazy(() => import("./pages/Home"));
 const Gallery = lazy(() => import("./pages/Gallery"));
 const MenuPage = lazy(() => import("./pages/MenuPage"));
-const StoryPage = lazy(() => import("./pages/StoryPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const PlaylistPage = lazy(() => import("./pages/PlaylistPage"));
 const FAQPage = lazy(() => import("./pages/FAQPage"));
@@ -97,7 +96,7 @@ function Router() {
         <Route path={"/"} component={Home} />
         <Route path={"/gallery"} component={Gallery} />
         <Route path={"/menu"} component={MenuPage} />
-        <Route path={"/story"} component={StoryPage} />
+        <Route path={"/story"}><Redirect to="/" /></Route>
         <Route path={"/playlist"} component={PlaylistPage} />
         <Route path={"/faq"} component={FAQPage} />
         <Route path={"/admin"} component={Admin} />

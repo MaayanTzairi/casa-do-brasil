@@ -280,7 +280,6 @@ export default function Navbar({
     ? [
         { label: "בית", href: "/" },
         { label: t.menuHe, href: menuHref },
-        { label: t.storyHe, href: storyHref },
         { label: t.galleryHe, href: galleryHref },
         { label: t.faqHe, href: faqHref },
         { label: t.contactHe, href: contactHref },
@@ -290,7 +289,6 @@ export default function Navbar({
     : [
         { label: "HOME", href: "/" },
         { label: t.menuEn, href: menuHref },
-        { label: t.storyEn, href: storyHref },
         { label: t.galleryEn, href: galleryHref },
         { label: t.faqEn, href: faqHref },
         { label: t.contactEn, href: contactHref },
