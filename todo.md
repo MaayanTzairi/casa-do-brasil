@@ -207,3 +207,6 @@
 
 ## Menu Text Size Fix
 - [x] Increase menu item name and description font sizes uniformly (not category headings)
+
+## VIP Page Redesign
+- [x] Rewrite VIP page to match site design language (fonts, colors, layout, no emoji icons)

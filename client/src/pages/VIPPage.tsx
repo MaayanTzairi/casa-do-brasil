@@ -1,120 +1,258 @@
 /**
  * CASA DO BRASIL — VIP Page
- * Private dining experience — classic modern luxury style
+ * Design: Cinematic Asymmetric Luxury — identical to site-wide design language
+ * Colors: White · Gold rgb(185,161,103) · Bordeaux rgb(22,1,3) · Deep Red rgb(62,4,9)
+ * Font: Heebo Black/Bold/Regular/Light only — same as all other pages
  * Bilingual: EN (LTR) + HE (RTL)
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useInViewCSS } from "@/hooks/useInViewCSS";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const GOLD = "#B9A167";
-const GOLD_LIGHT = "rgba(185,161,103,0.18)";
-const BORDEAUX = "rgb(62,4,9)";
-const BORDEAUX_DARK = "rgb(22,1,3)";
-const CREAM = "#FAF7F2";
+/* ─── Design tokens (identical to rest of site) ─── */
+const GOLD      = "rgb(185,161,103)";
+const GOLD_A    = (a: number) => `rgba(185,161,103,${a})`;
+const BORDEAUX  = "rgb(22,1,3)";
+const BORDEAUX2 = "rgb(62,4,9)";
+const WHITE     = "#fff";
 
 const RESERVATIONS_URL =
   "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73";
 
+/* ─── Placeholder image (user will replace) ─── */
+const VIP_PLACEHOLDER = null; // will render a styled placeholder
+
 /* ─── Content ─── */
-const CONTENT = {
+const T = {
   en: {
-    badge: "EXCLUSIVE EXPERIENCE",
-    title: "Private VIP\nDining at Casa",
-    subtitle: "An exceptional meat experience in a private venue with dedicated facilities and VIP service",
-    description:
-      "Step into our exclusive private dining space — a world apart from the main floor. Designed for intimate gatherings, special celebrations, and corporate events, the Casa do Brasil VIP Suite offers the full rodizio experience with an elevated level of personal attention. Your own private server, a curated selection of premium cuts, and a setting that speaks of quiet luxury.",
-    features: [
-      { icon: "🥩", title: "Premium Cuts", text: "Full rodizio service with our finest aged selections, presented tableside by your dedicated gaucho." },
-      { icon: "🚪", title: "Private Space", text: "A fully enclosed private dining room with separate entrance, restrooms, and ambient lighting control." },
-      { icon: "🍷", title: "VIP Service", text: "Dedicated server, sommelier on request, and a personalised menu tailored to your group's preferences." },
-      { icon: "🎵", title: "Curated Atmosphere", text: "Live music available on request. Custom décor for birthdays, anniversaries, and corporate events." },
+    badge:       "EXCLUSIVE EXPERIENCE",
+    title:       "Private VIP Dining\nat Casa do Brasil",
+    subtitle:    "An exceptional meat experience in a private venue — dedicated facilities and VIP service for an unforgettable evening.",
+    body:        "Step into our exclusive private dining space — a world apart from the main floor. Designed for intimate gatherings, special celebrations, and corporate events, the Casa do Brasil VIP Suite delivers the full rodizio experience with an elevated level of personal attention. Your own dedicated server, a curated selection of premium cuts, and a setting that speaks of quiet luxury.",
+    pillars: [
+      { num: "01", title: "PRIVATE SPACE",    text: "A fully enclosed private dining room with separate entrance, dedicated restrooms, and ambient lighting control." },
+      { num: "02", title: "PREMIUM CUTS",     text: "Full rodizio service with our finest aged selections, presented tableside by your dedicated gaucho." },
+      { num: "03", title: "VIP SERVICE",      text: "Dedicated server, sommelier on request, and a personalised menu tailored to your group." },
+      { num: "04", title: "LIVE ATMOSPHERE",  text: "Live music available on request. Custom décor for birthdays, anniversaries, and corporate events." },
     ],
-    capacity: "Up to 30 guests",
+    capacity:      "Up to 30 Guests",
     capacityLabel: "CAPACITY",
-    hours: "By reservation only",
-    hoursLabel: "AVAILABILITY",
-    cta: "RESERVE THE VIP SUITE",
-    ctaSub: "For inquiries and reservations, contact us directly",
-    imageAlt: "Casa do Brasil VIP Private Dining Room",
-    imagePlaceholder: "VIP Suite — Photo Coming Soon",
+    hours:         "By Reservation Only",
+    hoursLabel:    "AVAILABILITY",
+    cta:           "RESERVE THE VIP SUITE",
+    ctaSub:        "For inquiries, contact us directly",
+    imgCaption:    "VIP Suite — Photo Coming Soon",
+    bottomTitle:   "Book Your Private VIP Room",
+    bottomBadge:   "READY FOR THE EXPERIENCE?",
   },
   he: {
-    badge: "חוויה בלעדית",
-    title: "חוויית VIP פרטית\nבקאסה דו ברזיל",
-    subtitle: "חוויית בשרים יוצאת דופן במתחם פרטי הכולל שירותים נפרדים ושירות VIP לחוויה בלתי נשכחת",
-    description:
-      "כנסו למרחב הסעודה הפרטי הבלעדי שלנו — עולם שונה לחלוטין מהאולם הראשי. מתוכנן לאירועים אינטימיים, חגיגות מיוחדות ואירועי חברה, חבילת ה-VIP של קאסה דו ברזיל מציעה את חוויית הרודיציו המלאה ברמת שירות אישי גבוהה במיוחד. שרת פרטי משלכם, מבחר נתחים פרמיום מובחרים, ואווירה שמדברת על יוקרה שקטה.",
-    features: [
-      { icon: "🥩", title: "נתחים פרמיום", text: "שירות רודיציו מלא עם הבחירות המיושנות הטובות ביותר שלנו, מוגשות ליד השולחן על ידי גאושו מוקדש." },
-      { icon: "🚪", title: "מרחב פרטי", text: "חדר סעודה פרטי סגור לחלוטין עם כניסה נפרדת, שירותים נפרדים ושליטה בתאורה." },
-      { icon: "🍷", title: "שירות VIP", text: "שרת מוקדש, סומלייה לפי בקשה, ותפריט מותאם אישית לפי העדפות הקבוצה שלכם." },
-      { icon: "🎵", title: "אווירה מיוחדת", text: "מוזיקה חיה לפי בקשה. עיצוב מותאם לימי הולדת, יובלות ואירועי חברה." },
+    badge:       "חוויה בלעדית",
+    title:       "חוויית VIP פרטית\nבקאסה דו ברזיל",
+    subtitle:    "חוויית בשרים יוצאת דופן במתחם פרטי הכולל שירותים נפרדים ושירות VIP לחוויה בלתי נשכחת.",
+    body:        "כנסו למרחב הסעודה הפרטי הבלעדי שלנו — עולם שונה לחלוטין מהאולם הראשי. מתוכנן לאירועים אינטימיים, חגיגות מיוחדות ואירועי חברה, חבילת ה-VIP של קאסה דו ברזיל מציעה את חוויית הרודיציו המלאה ברמת שירות אישי גבוהה במיוחד. שרת פרטי משלכם, מבחר נתחים פרמיום מובחרים, ואווירה שמדברת על יוקרה שקטה.",
+    pillars: [
+      { num: "01", title: "מרחב פרטי",       text: "חדר סעודה פרטי סגור לחלוטין עם כניסה נפרדת, שירותים נפרדים ושליטה בתאורה." },
+      { num: "02", title: "נתחים פרמיום",    text: "שירות רודיציו מלא עם הבחירות המיושנות הטובות ביותר שלנו, מוגשות ליד השולחן על ידי גאושו מוקדש." },
+      { num: "03", title: "שירות VIP",       text: "שרת מוקדש, סומלייה לפי בקשה, ותפריט מותאם אישית לפי העדפות הקבוצה שלכם." },
+      { num: "04", title: "אווירה מיוחדת",   text: "מוזיקה חיה לפי בקשה. עיצוב מותאם לימי הולדת, יובלות ואירועי חברה." },
     ],
-    capacity: "עד 30 אורחים",
+    capacity:      "עד 30 אורחים",
     capacityLabel: "קיבולת",
-    hours: "בהזמנה מראש בלבד",
-    hoursLabel: "זמינות",
-    cta: "הזמינו את חבילת ה-VIP",
-    ctaSub: "לפרטים ולהזמנות, צרו איתנו קשר ישירות",
-    imageAlt: "חדר הסעודה הפרטי VIP של קאסה דו ברזיל",
-    imagePlaceholder: "חדר VIP — תמונה בקרוב",
+    hours:         "בהזמנה מראש בלבד",
+    hoursLabel:    "זמינות",
+    cta:           "הזמינו את חבילת ה-VIP",
+    ctaSub:        "לפרטים ולהזמנות, צרו איתנו קשר ישירות",
+    imgCaption:    "חדר VIP — תמונה בקרוב",
+    bottomTitle:   "הזמינו את חדר ה-VIP שלכם",
+    bottomBadge:   "מוכנים לחוויה?",
   },
 };
 
-/* ─── Divider line ─── */
-function GoldDivider() {
+/* ─── Fade-in animation helper (same as CasaVibesSection) ─── */
+function animStyle(inView: boolean, delay: number): React.CSSProperties {
+  return {
+    opacity:    inView ? 1 : 0,
+    transform:  inView ? "translateY(0)" : "translateY(28px)",
+    transition: `opacity 0.75s ${delay}s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.75s ${delay}s cubic-bezier(0.25,0.46,0.45,0.94)`,
+  };
+}
+
+/* ─── Gold horizontal rule (same motif as homepage) ─── */
+function GoldRule({ width = 48 }: { width?: number }) {
+  return <div style={{ width, height: 1.5, background: GOLD, margin: "1.6rem 0" }} />;
+}
+
+/* ─── Section label (same as OurStory "OUR STORY" label) ─── */
+function SectionLabel({ text, isHe }: { text: string; isHe: boolean }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "1rem", margin: "2.5rem 0" }}>
-      <div style={{ flex: 1, height: "1px", background: `linear-gradient(to right, transparent, ${GOLD})` }} />
-      <svg width="10" height="10" viewBox="0 0 10 10" fill={GOLD}>
-        <polygon points="5,0 10,5 5,10 0,5" />
-      </svg>
-      <div style={{ flex: 1, height: "1px", background: `linear-gradient(to left, transparent, ${GOLD})` }} />
+    <div style={{
+      display:       "flex",
+      alignItems:    "center",
+      gap:           "0.75rem",
+      marginBottom:  "1.4rem",
+      flexDirection: isHe ? "row-reverse" : "row",
+    }}>
+      <div style={{ width: 32, height: 1, background: GOLD_A(0.6) }} />
+      <span style={{
+        fontFamily:    "'Heebo', sans-serif",
+        fontWeight:    700,
+        fontSize:      "0.62rem",
+        letterSpacing: isHe ? "0.08em" : "0.28em",
+        textTransform: "uppercase",
+        color:         GOLD,
+      }}>
+        {text}
+      </span>
     </div>
   );
 }
 
-/* ─── Feature card ─── */
-function FeatureCard({ icon, title, text, isHe }: { icon: string; title: string; text: string; isHe: boolean }) {
-  const [hovered, setHovered] = useState(false);
+/* ─── CTA Button (same style as Hero "RESERVE A TABLE") ─── */
+function CTAButton({ href, label, dark = false }: { href: string; label: string; dark?: boolean }) {
+  const [hov, setHov] = useState(false);
   return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
       style={{
-        padding: "2rem 1.6rem",
-        border: `1px solid ${hovered ? GOLD : "rgba(185,161,103,0.2)"}`,
-        background: hovered ? GOLD_LIGHT : "transparent",
-        transition: "all 0.3s ease",
-        cursor: "default",
-        textAlign: isHe ? "right" : "left",
+        display:        "inline-block",
+        fontFamily:     "'Heebo', sans-serif",
+        fontWeight:     700,
+        fontSize:       "0.72rem",
+        letterSpacing:  "0.22em",
+        textTransform:  "uppercase",
+        textDecoration: "none",
+        padding:        "0.85rem 2.4rem",
+        border:         `1px solid ${dark ? WHITE : BORDEAUX2}`,
+        color:          dark ? (hov ? BORDEAUX2 : WHITE) : (hov ? WHITE : BORDEAUX2),
+        background:     dark ? (hov ? WHITE : "transparent") : (hov ? BORDEAUX2 : "transparent"),
+        transition:     "all 0.3s ease",
+        whiteSpace:     "nowrap",
       }}
     >
-      <div style={{ fontSize: "1.8rem", marginBottom: "0.8rem", lineHeight: 1 }}>{icon}</div>
+      {label}
+    </a>
+  );
+}
+
+/* ─── Image placeholder (styled like the site's dark panels) ─── */
+function ImagePlaceholder({ caption, isHe }: { caption: string; isHe: boolean }) {
+  return (
+    <div style={{
+      width:      "100%",
+      aspectRatio: "4 / 3",
+      background: `linear-gradient(160deg, ${BORDEAUX} 0%, rgb(45,4,8) 100%)`,
+      position:   "relative",
+      overflow:   "hidden",
+      display:    "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}>
+      {/* Subtle gold grid texture */}
       <div style={{
-        fontFamily: "'Heebo', sans-serif",
-        fontWeight: 700,
-        fontSize: "0.82rem",
-        letterSpacing: isHe ? "0.04em" : "0.18em",
+        position:        "absolute",
+        inset:           0,
+        backgroundImage: `
+          linear-gradient(${GOLD_A(0.04)} 1px, transparent 1px),
+          linear-gradient(90deg, ${GOLD_A(0.04)} 1px, transparent 1px)
+        `,
+        backgroundSize: "40px 40px",
+      }} />
+      {/* Corner brackets (same as CasaVibesSection) */}
+      {[
+        { top: 16, left: 16 },
+        { top: 16, right: 16 },
+        { bottom: 16, left: 16 },
+        { bottom: 16, right: 16 },
+      ].map((pos, i) => {
+        const isTop    = "top"    in pos;
+        const isLeft   = "left"   in pos;
+        return (
+          <svg key={i} width="20" height="20" viewBox="0 0 20 20" fill="none"
+            style={{ position: "absolute", ...pos, pointerEvents: "none" }}>
+            <line x1="0" y1="0" x2={isLeft ? 20 : 0}  y2="0"  stroke={GOLD_A(0.5)} strokeWidth="1.2" />
+            <line x1="0" y1="0" x2="0"                y2={isTop ? 20 : 0} stroke={GOLD_A(0.5)} strokeWidth="1.2" />
+          </svg>
+        );
+      })}
+      {/* Caption */}
+      <span style={{
+        fontFamily:    "'Heebo', sans-serif",
+        fontWeight:    300,
+        fontSize:      "0.72rem",
+        letterSpacing: "0.18em",
         textTransform: "uppercase",
-        color: GOLD,
-        marginBottom: "0.6rem",
+        color:         GOLD_A(0.45),
+        textAlign:     "center",
+        padding:       "0 2rem",
+        position:      "relative",
+        zIndex:        1,
       }}>
-        {title}
+        {caption}
+      </span>
+    </div>
+  );
+}
+
+/* ─── Pillar item (replaces emoji cards) ─── */
+function Pillar({ num, title, text, isHe, inView, delay }: {
+  num: string; title: string; text: string; isHe: boolean; inView: boolean; delay: number;
+}) {
+  return (
+    <div
+      dir={isHe ? "rtl" : "ltr"}
+      style={{
+        ...animStyle(inView, delay),
+        padding:      "2rem 0",
+        borderBottom: `1px solid ${GOLD_A(0.15)}`,
+        display:      "grid",
+        gridTemplateColumns: "2.5rem 1fr",
+        gap:          "1.5rem",
+        alignItems:   "start",
+      }}
+    >
+      {/* Number */}
+      <span style={{
+        fontFamily:    "'Heebo', sans-serif",
+        fontWeight:    900,
+        fontSize:      "0.62rem",
+        letterSpacing: "0.12em",
+        color:         GOLD_A(0.5),
+        paddingTop:    "3px",
+        direction:     "ltr",
+        textAlign:     "left",
+      }}>
+        {num}
+      </span>
+      <div>
+        <div style={{
+          fontFamily:    "'Heebo', sans-serif",
+          fontWeight:    800,
+          fontSize:      "0.72rem",
+          letterSpacing: isHe ? "0.06em" : "0.2em",
+          textTransform: "uppercase",
+          color:         BORDEAUX2,
+          marginBottom:  "0.5rem",
+        }}>
+          {title}
+        </div>
+        <p style={{
+          fontFamily: "'Heebo', sans-serif",
+          fontWeight: 300,
+          fontSize:   "0.9rem",
+          lineHeight: 1.75,
+          color:      "rgba(62,4,9,0.65)",
+          margin:     0,
+        }}>
+          {text}
+        </p>
       </div>
-      <p style={{
-        fontFamily: "'Heebo', sans-serif",
-        fontWeight: 300,
-        fontSize: "0.88rem",
-        lineHeight: 1.75,
-        color: "rgba(62,4,9,0.75)",
-        margin: 0,
-      }}>
-        {text}
-      </p>
     </div>
   );
 }
@@ -122,8 +260,13 @@ function FeatureCard({ icon, title, text, isHe }: { icon: string; title: string;
 /* ─── Main Page ─── */
 export default function VIPPage() {
   const { isHe } = useLanguage();
-  const c = isHe ? CONTENT.he : CONTENT.en;
+  const t = isHe ? T.he : T.en;
   const [mobile, setMobile] = useState(false);
+
+  const { ref: heroRef, inView: heroIn }     = useInViewCSS({ threshold: 0.1 });
+  const { ref: bodyRef, inView: bodyIn }     = useInViewCSS({ threshold: 0.1 });
+  const { ref: pillarsRef, inView: pillarsIn } = useInViewCSS({ threshold: 0.05 });
+  const { ref: bottomRef, inView: bottomIn } = useInViewCSS({ threshold: 0.1 });
 
   useEffect(() => {
     const fn = () => setMobile(window.innerWidth < 768);
@@ -133,326 +276,273 @@ export default function VIPPage() {
   }, []);
 
   return (
-    <div style={{ background: CREAM, minHeight: "100vh" }}>
+    <div style={{ background: "#fff", minHeight: "100vh" }}>
       <Navbar forceScrolled />
 
-      {/* ── HERO BANNER ── */}
+      {/* ══════════════════════════════════════
+          HERO BANNER — dark bordeaux, same as
+          the hero of MenuPage / StoryPage
+      ══════════════════════════════════════ */}
       <section
+        ref={heroRef as any}
         dir={isHe ? "rtl" : "ltr"}
         style={{
-          background: BORDEAUX_DARK,
-          paddingTop: mobile ? "100px" : "120px",
-          paddingBottom: mobile ? "3.5rem" : "5rem",
-          paddingLeft: mobile ? "1.5rem" : "8vw",
-          paddingRight: mobile ? "1.5rem" : "8vw",
-          textAlign: "center",
-          position: "relative",
-          overflow: "hidden",
+          background:    BORDEAUX,
+          paddingTop:    mobile ? "110px" : "130px",
+          paddingBottom: mobile ? "4rem"  : "6rem",
+          paddingLeft:   mobile ? "1.5rem" : "8vw",
+          paddingRight:  mobile ? "1.5rem" : "8vw",
+          position:      "relative",
+          overflow:      "hidden",
         }}
       >
-        {/* Subtle gold texture lines */}
+        {/* Subtle vertical gold lines (same texture as StoryPage) */}
         <div style={{
-          position: "absolute", inset: 0, pointerEvents: "none",
-          backgroundImage: `repeating-linear-gradient(90deg, rgba(185,161,103,0.03) 0px, rgba(185,161,103,0.03) 1px, transparent 1px, transparent 80px)`,
+          position:        "absolute",
+          inset:           0,
+          pointerEvents:   "none",
+          backgroundImage: `repeating-linear-gradient(90deg, ${GOLD_A(0.03)} 0px, ${GOLD_A(0.03)} 1px, transparent 1px, transparent 100px)`,
+        }} />
+        {/* Top gold line (same as StoryPage card top) */}
+        <div style={{
+          position:   "absolute",
+          top:        0,
+          left:       "8%",
+          right:      "8%",
+          height:     "1.5px",
+          background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)`,
         }} />
 
-        {/* Badge */}
-        <div style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "0.6rem",
-          border: `1px solid rgba(185,161,103,0.4)`,
-          padding: "0.35rem 1.2rem",
-          marginBottom: "1.8rem",
-        }}>
-          <div style={{ width: "18px", height: "1px", background: GOLD }} />
-          <span style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 700,
-            fontSize: "0.65rem",
-            letterSpacing: "0.3em",
-            color: GOLD,
-            textTransform: "uppercase",
-          }}>
-            {c.badge}
-          </span>
-          <div style={{ width: "18px", height: "1px", background: GOLD }} />
-        </div>
-
-        {/* Title */}
-        <h1 style={{
-          fontFamily: isHe ? "'Frank Ruhl Libre', serif" : "'Heebo', sans-serif",
-          fontWeight: 900,
-          fontSize: mobile ? "clamp(2.2rem, 9vw, 3.2rem)" : "clamp(3rem, 5vw, 4.5rem)",
-          lineHeight: 1.15,
-          color: "#fff",
-          margin: "0 auto 1.4rem",
-          maxWidth: "800px",
-          whiteSpace: "pre-line",
-          letterSpacing: isHe ? "-0.01em" : "-0.02em",
-        }}>
-          {c.title}
-        </h1>
-
-        {/* Subtitle */}
-        <p style={{
-          fontFamily: "'Heebo', sans-serif",
-          fontWeight: 300,
-          fontSize: mobile ? "1rem" : "1.15rem",
-          lineHeight: 1.7,
-          color: "rgba(255,255,255,0.72)",
-          margin: "0 auto",
-          maxWidth: "600px",
-        }}>
-          {c.subtitle}
-        </p>
-
-        {/* Gold bottom line */}
-        <div style={{
-          width: "60px",
-          height: "2px",
-          background: GOLD,
-          margin: "2rem auto 0",
-        }} />
-      </section>
-
-      {/* ── MAIN CONTENT ── */}
-      <section
-        dir={isHe ? "rtl" : "ltr"}
-        style={{
-          maxWidth: "1100px",
-          margin: "0 auto",
-          padding: mobile ? "3rem 1.5rem" : "5rem 2rem",
-        }}
-      >
-        {/* Two-column: image + text */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: mobile ? "1fr" : "1fr 1fr",
-          gap: mobile ? "2.5rem" : "5rem",
-          alignItems: "center",
-          marginBottom: mobile ? "3rem" : "5rem",
-        }}>
-          {/* Image placeholder */}
-          <div
-            style={{
-              order: isHe && !mobile ? 2 : 1,
-              aspectRatio: "4/3",
-              background: `linear-gradient(135deg, ${BORDEAUX_DARK} 0%, rgba(62,4,9,0.85) 100%)`,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "1rem",
-              border: `1px solid rgba(185,161,103,0.25)`,
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            {/* Corner decorations */}
-            {[
-              { top: 12, left: 12, borderTop: `1px solid ${GOLD}`, borderLeft: `1px solid ${GOLD}` },
-              { top: 12, right: 12, borderTop: `1px solid ${GOLD}`, borderRight: `1px solid ${GOLD}` },
-              { bottom: 12, left: 12, borderBottom: `1px solid ${GOLD}`, borderLeft: `1px solid ${GOLD}` },
-              { bottom: 12, right: 12, borderBottom: `1px solid ${GOLD}`, borderRight: `1px solid ${GOLD}` },
-            ].map((s, i) => (
-              <div key={i} style={{ position: "absolute", width: 24, height: 24, ...s }} />
-            ))}
-
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.5 }}>
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-              <circle cx="8.5" cy="8.5" r="1.5" />
-              <polyline points="21 15 16 10 5 21" />
-            </svg>
+        <div style={{ maxWidth: "900px" }}>
+          {/* Badge — same as CasaVibesSection label */}
+          <div style={{ ...animStyle(heroIn, 0), display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.6rem", flexDirection: isHe ? "row-reverse" : "row" }}>
+            <div style={{ width: 32, height: 1, background: GOLD_A(0.6) }} />
             <span style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 400,
-              fontSize: "0.78rem",
-              letterSpacing: "0.12em",
-              color: "rgba(185,161,103,0.6)",
+              fontFamily:    "'Heebo', sans-serif",
+              fontWeight:    700,
+              fontSize:      "0.62rem",
+              letterSpacing: isHe ? "0.08em" : "0.28em",
               textTransform: "uppercase",
-              textAlign: "center",
-              padding: "0 2rem",
+              color:         GOLD,
             }}>
-              {c.imagePlaceholder}
+              {t.badge}
             </span>
           </div>
 
-          {/* Text block */}
-          <div style={{ order: isHe && !mobile ? 1 : 2 }}>
-            {/* Stats row */}
-            <div style={{
-              display: "flex",
-              gap: "2.5rem",
-              marginBottom: "2rem",
-              flexDirection: isHe ? "row-reverse" : "row",
-              justifyContent: isHe ? "flex-end" : "flex-start",
-            }}>
-              {[
-                { label: c.capacityLabel, value: c.capacity },
-                { label: c.hoursLabel, value: c.hours },
-              ].map((stat) => (
-                <div key={stat.label} style={{ textAlign: isHe ? "right" : "left" }}>
-                  <div style={{
-                    fontFamily: "'Heebo', sans-serif",
-                    fontWeight: 700,
-                    fontSize: "0.6rem",
-                    letterSpacing: "0.25em",
-                    textTransform: "uppercase",
-                    color: GOLD,
-                    marginBottom: "0.3rem",
-                  }}>
-                    {stat.label}
-                  </div>
-                  <div style={{
-                    fontFamily: "'Heebo', sans-serif",
-                    fontWeight: 600,
-                    fontSize: "0.9rem",
-                    color: BORDEAUX,
-                  }}>
-                    {stat.value}
-                  </div>
-                </div>
-              ))}
-            </div>
+          {/* Title — same weight/style as StoryPage chapter titles */}
+          <h1 style={{
+            ...animStyle(heroIn, 0.1),
+            fontFamily:    "'Heebo', sans-serif",
+            fontWeight:    900,
+            fontSize:      mobile ? "clamp(2.4rem, 10vw, 3.5rem)" : "clamp(3.2rem, 5.5vw, 5rem)",
+            lineHeight:    1.05,
+            color:         WHITE,
+            margin:        "0 0 1.4rem",
+            letterSpacing: isHe ? "0.01em" : "-0.01em",
+            whiteSpace:    "pre-line",
+          }}>
+            {t.title}
+          </h1>
 
-            <GoldDivider />
+          {/* Subtitle */}
+          <p style={{
+            ...animStyle(heroIn, 0.2),
+            fontFamily: "'Heebo', sans-serif",
+            fontWeight: 300,
+            fontSize:   mobile ? "1rem" : "1.1rem",
+            lineHeight: 1.75,
+            color:      "rgba(255,255,255,0.7)",
+            maxWidth:   "580px",
+            margin:     0,
+          }}>
+            {t.subtitle}
+          </p>
 
-            <p style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 300,
-              fontSize: mobile ? "0.95rem" : "1rem",
-              lineHeight: 1.85,
-              color: "rgba(62,4,9,0.8)",
-              margin: "0 0 2rem",
-              textAlign: isHe ? "right" : "left",
-            }}>
-              {c.description}
-            </p>
-
-            {/* CTA */}
-            <a
-              href={RESERVATIONS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-block",
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 700,
-                fontSize: "0.78rem",
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                textDecoration: "none",
-                color: "#fff",
-                background: BORDEAUX,
-                padding: "0.85rem 2.2rem",
-                border: `1.5px solid ${BORDEAUX}`,
-                transition: "all 0.3s ease",
-              }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget as HTMLAnchorElement;
-                el.style.background = GOLD;
-                el.style.borderColor = GOLD;
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget as HTMLAnchorElement;
-                el.style.background = BORDEAUX;
-                el.style.borderColor = BORDEAUX;
-              }}
-            >
-              {c.cta}
-            </a>
-            <p style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 300,
-              fontSize: "0.72rem",
-              color: "rgba(62,4,9,0.45)",
-              marginTop: "0.8rem",
-              textAlign: isHe ? "right" : "left",
-            }}>
-              {c.ctaSub}
-            </p>
+          {/* Gold rule */}
+          <div style={{ ...animStyle(heroIn, 0.3) }}>
+            <GoldRule width={56} />
           </div>
-        </div>
 
-        {/* ── FEATURES GRID ── */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: mobile ? "1fr" : "repeat(2, 1fr)",
-          gap: "1px",
-          background: "rgba(185,161,103,0.15)",
-          border: "1px solid rgba(185,161,103,0.15)",
-        }}>
-          {c.features.map((f) => (
-            <div key={f.title} style={{ background: CREAM }}>
-              <FeatureCard icon={f.icon} title={f.title} text={f.text} isHe={isHe} />
-            </div>
-          ))}
+          {/* Stats row — same style as ReviewsSection stats */}
+          <div style={{
+            ...animStyle(heroIn, 0.35),
+            display:        "flex",
+            gap:            mobile ? "2rem" : "3.5rem",
+            flexDirection:  isHe ? "row-reverse" : "row",
+            justifyContent: isHe ? "flex-end" : "flex-start",
+          }}>
+            {[
+              { label: t.capacityLabel, value: t.capacity },
+              { label: t.hoursLabel,    value: t.hours },
+            ].map((s) => (
+              <div key={s.label} style={{ textAlign: isHe ? "right" : "left" }}>
+                <div style={{
+                  fontFamily:    "'Heebo', sans-serif",
+                  fontWeight:    700,
+                  fontSize:      "0.58rem",
+                  letterSpacing: isHe ? "0.08em" : "0.25em",
+                  textTransform: "uppercase",
+                  color:         GOLD_A(0.7),
+                  marginBottom:  "0.3rem",
+                }}>
+                  {s.label}
+                </div>
+                <div style={{
+                  fontFamily: "'Heebo', sans-serif",
+                  fontWeight: 600,
+                  fontSize:   "0.95rem",
+                  color:      "rgba(255,255,255,0.85)",
+                }}>
+                  {s.value}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ── BOTTOM CTA BANNER ── */}
+      {/* ══════════════════════════════════════
+          BODY — two-column: image + text
+          Same grid as CasaVibesSection
+      ══════════════════════════════════════ */}
       <section
+        ref={bodyRef as any}
         dir={isHe ? "rtl" : "ltr"}
         style={{
-          background: BORDEAUX_DARK,
-          padding: mobile ? "3rem 1.5rem" : "4rem 8vw",
-          textAlign: "center",
+          maxWidth: "1200px",
+          margin:   "0 auto",
+          padding:  mobile ? "3.5rem 1.5rem" : "6rem 8vw",
+          display:  "grid",
+          gridTemplateColumns: mobile ? "1fr" : "1fr 1fr",
+          gap:      mobile ? "3rem" : "6rem",
+          alignItems: "center",
         }}
       >
-        <div style={{
-          fontFamily: "'Heebo', sans-serif",
-          fontWeight: 700,
-          fontSize: "0.65rem",
-          letterSpacing: "0.3em",
-          textTransform: "uppercase",
-          color: GOLD,
-          marginBottom: "1rem",
-        }}>
-          {isHe ? "מוכנים לחוויה?" : "READY FOR THE EXPERIENCE?"}
+        {/* Image — order flips for HE */}
+        <div style={{ order: isHe && !mobile ? 2 : 1, ...animStyle(bodyIn, 0) }}>
+          <ImagePlaceholder caption={t.imgCaption} isHe={isHe} />
         </div>
-        <h2 style={{
-          fontFamily: isHe ? "'Frank Ruhl Libre', serif" : "'Heebo', sans-serif",
-          fontWeight: 900,
-          fontSize: mobile ? "1.8rem" : "2.4rem",
-          color: "#fff",
-          margin: "0 auto 1.5rem",
-          maxWidth: "600px",
-          lineHeight: 1.2,
-        }}>
-          {isHe ? "הזמינו את חדר ה-VIP שלכם" : "Book Your Private VIP Room"}
-        </h2>
-        <a
-          href={RESERVATIONS_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: "inline-block",
+
+        {/* Text block */}
+        <div style={{ order: isHe && !mobile ? 1 : 2 }}>
+          <div style={{ ...animStyle(bodyIn, 0.1) }}>
+            <SectionLabel text={t.badge} isHe={isHe} />
+          </div>
+
+          <p style={{
+            ...animStyle(bodyIn, 0.2),
             fontFamily: "'Heebo', sans-serif",
-            fontWeight: 700,
-            fontSize: "0.78rem",
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            textDecoration: "none",
-            color: BORDEAUX_DARK,
-            background: GOLD,
-            padding: "0.9rem 2.8rem",
-            border: `1.5px solid ${GOLD}`,
-            transition: "all 0.3s ease",
-          }}
-          onMouseEnter={(e) => {
-            const el = e.currentTarget as HTMLAnchorElement;
-            el.style.background = "transparent";
-            el.style.color = GOLD;
-          }}
-          onMouseLeave={(e) => {
-            const el = e.currentTarget as HTMLAnchorElement;
-            el.style.background = GOLD;
-            el.style.color = BORDEAUX_DARK;
-          }}
-        >
-          {c.cta}
-        </a>
+            fontWeight: 300,
+            fontSize:   mobile ? "0.95rem" : "1rem",
+            lineHeight: 1.85,
+            color:      "rgba(62,4,9,0.75)",
+            margin:     "0 0 2.5rem",
+            textAlign:  isHe ? "right" : "left",
+          }}>
+            {t.body}
+          </p>
+
+          <div style={{ ...animStyle(bodyIn, 0.3) }}>
+            <CTAButton href={RESERVATIONS_URL} label={t.cta} />
+          </div>
+          <p style={{
+            ...animStyle(bodyIn, 0.35),
+            fontFamily: "'Heebo', sans-serif",
+            fontWeight: 300,
+            fontSize:   "0.72rem",
+            color:      "rgba(62,4,9,0.38)",
+            marginTop:  "0.8rem",
+            textAlign:  isHe ? "right" : "left",
+          }}>
+            {t.ctaSub}
+          </p>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════
+          PILLARS — numbered list, no emoji
+          White bg with gold/bordeaux palette
+      ══════════════════════════════════════ */}
+      <section
+        ref={pillarsRef as any}
+        style={{
+          background: "rgb(250,247,242)",
+          padding:    mobile ? "3.5rem 1.5rem" : "5rem 8vw",
+        }}
+      >
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          {/* Section header */}
+          <div style={{ ...animStyle(pillarsIn, 0), textAlign: isHe ? "right" : "left", marginBottom: "0.5rem", direction: isHe ? "rtl" : "ltr" }}>
+            <SectionLabel text={isHe ? "מה כולל ה-VIP" : "WHAT'S INCLUDED"} isHe={isHe} />
+          </div>
+
+          {/* Two-column grid of pillars */}
+          <div style={{
+            display:             "grid",
+            gridTemplateColumns: mobile ? "1fr" : "1fr 1fr",
+            gap:                 mobile ? "0" : "0 5rem",
+          }}>
+            {t.pillars.map((p, i) => (
+              <Pillar
+                key={p.num}
+                num={p.num}
+                title={p.title}
+                text={p.text}
+                isHe={isHe}
+                inView={pillarsIn}
+                delay={0.1 + i * 0.08}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════
+          BOTTOM CTA — dark bordeaux band
+          Same treatment as site-wide CTAs
+      ══════════════════════════════════════ */}
+      <section
+        ref={bottomRef as any}
+        dir={isHe ? "rtl" : "ltr"}
+        style={{
+          background:    BORDEAUX,
+          padding:       mobile ? "4rem 1.5rem" : "5.5rem 8vw",
+          textAlign:     "center",
+          position:      "relative",
+          overflow:      "hidden",
+        }}
+      >
+        {/* Top gold line */}
+        <div style={{
+          position:   "absolute",
+          top:        0,
+          left:       "8%",
+          right:      "8%",
+          height:     "1.5px",
+          background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)`,
+        }} />
+
+        <div style={{ ...animStyle(bottomIn, 0), marginBottom: "1rem" }}>
+          <SectionLabel text={t.bottomBadge} isHe={isHe} />
+        </div>
+
+        <h2 style={{
+          ...animStyle(bottomIn, 0.1),
+          fontFamily:    "'Heebo', sans-serif",
+          fontWeight:    900,
+          fontSize:      mobile ? "clamp(1.8rem, 7vw, 2.8rem)" : "clamp(2.2rem, 4vw, 3.5rem)",
+          color:         WHITE,
+          margin:        "0 auto 2rem",
+          maxWidth:      "600px",
+          lineHeight:    1.1,
+          letterSpacing: isHe ? "0.01em" : "-0.01em",
+        }}>
+          {t.bottomTitle}
+        </h2>
+
+        <div style={{ ...animStyle(bottomIn, 0.2) }}>
+          <CTAButton href={RESERVATIONS_URL} label={t.cta} dark />
+        </div>
       </section>
 
       <Footer />
