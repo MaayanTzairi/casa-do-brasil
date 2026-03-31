@@ -319,6 +319,7 @@ export default function Navbar({
         { label: t.galleryHe, href: galleryHref },
         { label: t.faqHe, href: faqHref },
         { label: t.contactHe, href: contactHref },
+        { label: "בלוג", href: "/blog" },
         { label: "VIP", href: "/vip", isVip: true },
       ]
     : [
@@ -328,6 +329,7 @@ export default function Navbar({
         { label: t.galleryEn, href: galleryHref },
         { label: t.faqEn, href: faqHref },
         { label: t.contactEn, href: contactHref },
+        { label: "BLOG", href: "/blog" },
         { label: "VIP", href: "/vip", isVip: true },
       ];
 

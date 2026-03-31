@@ -229,3 +229,6 @@
 - [x] Dynamic SEO: useSeoMeta hook — fetches CMS settings and injects meta tags into document head
 - [x] Dynamic SEO: wired to Home, Menu, Story, FAQ, VIP, Blog pages
 - [x] Dynamic SEO: BlogPostPage uses post-specific SEO fields (title, desc, keywords, OG image)
+
+## Navbar — Blog Link
+- [x] Add Blog link to Navbar (EN: "BLOG", HE: "בלוג") in both language nav arrays
