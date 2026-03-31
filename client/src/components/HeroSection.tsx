@@ -31,12 +31,12 @@ const DEFAULTS = {
   reserveBtnHe: "הזמן שולחן",
   reserveBtnEn: "RESERVE A TABLE",
   reserveBtnUrl: "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73",
-  menuBtnHe: "לתפריט",
-  menuBtnEn: "EXPLORE MENU",
-  menuBtnUrl: "#menu",
-  instagramUrl: "https://www.instagram.com",
-  facebookUrl: "https://www.facebook.com",
-  tiktokUrl: "https://www.tiktok.com",
+  menuBtnHe: "תפריט",
+  menuBtnEn: "MENU",
+  menuBtnUrl: "/menu",
+  instagramUrl: "https://www.instagram.com/casadobrasill/",
+  facebookUrl: "https://www.facebook.com/casadobrasil",
+  tiktokUrl: "https://www.tiktok.com/@casadobrasileilat",
 };
 
 export default function HeroSection() {
@@ -220,8 +220,8 @@ export default function HeroSection() {
         <div
           style={{
             display: "flex", alignItems: "center",
-            gap: isMobile ? "0.8rem" : "1.25rem",
-            flexWrap: "wrap", justifyContent: "flex-start", width: "100%",
+            gap: isMobile ? "0.7rem" : "1.25rem",
+            flexWrap: "nowrap", justifyContent: isHe ? "flex-end" : "flex-start", width: "100%",
             animation: "fadeUp 0.8s 1.6s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
@@ -305,13 +305,13 @@ function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: st
       rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
-        display: "inline-flex", alignItems: "center", gap: "0.6rem",
-        padding: isMobile ? "0.7rem 1.4rem" : "0.8rem 2.2rem",
-        fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem",
-        letterSpacing: "0.22em", textTransform: "uppercase" as const,
-        textDecoration: "none", border: "1.5px solid #FFFFFF",
+        display: "inline-flex", alignItems: "center", gap: "0.5rem",
+        padding: isMobile ? "0.75rem 1.1rem" : "1rem 2.8rem",
+        fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: isMobile ? "0.68rem" : "0.75rem",
+        letterSpacing: isMobile ? "0.12em" : "0.22em", textTransform: "uppercase" as const,
+        textDecoration: "none", border: "2px solid #FFFFFF",
         color: hovered ? BORDEAUX : "#FFFFFF",
-        background: hovered ? "#FFFFFF" : "transparent",
+        background: hovered ? "#FFFFFF" : "rgba(255,255,255,0.12)",
         // Use only composited properties (color/background) — avoid animating padding/border
         transition: "color 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         willChange: "color, background-color",
@@ -329,13 +329,13 @@ function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: st
     <a href={href}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
-        display: "inline-flex", alignItems: "center", gap: "0.6rem",
-        padding: isMobile ? "0.7rem 1.4rem" : "0.8rem 2.2rem",
-        fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem",
-        letterSpacing: "0.22em", textTransform: "uppercase" as const,
-        textDecoration: "none", border: `1.5px solid ${GOLD}`,
-        color: hovered ? BORDEAUX : GOLD,
-        background: hovered ? GOLD : "transparent",
+        display: "inline-flex", alignItems: "center", gap: "0.5rem",
+        padding: isMobile ? "0.75rem 1.1rem" : "1rem 2.8rem",
+        fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: isMobile ? "0.68rem" : "0.75rem",
+        letterSpacing: isMobile ? "0.12em" : "0.22em", textTransform: "uppercase" as const,
+        textDecoration: "none", border: `2px solid ${GOLD}`,
+        color: hovered ? BORDEAUX : "#1a0a00",
+        background: hovered ? `${GOLD}cc` : GOLD,
         // Use only composited properties — avoid animating padding/border
         transition: "color 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         willChange: "color, background-color",

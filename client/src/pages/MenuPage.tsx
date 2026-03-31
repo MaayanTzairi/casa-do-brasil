@@ -393,45 +393,6 @@ const MENU_DATA: MenuCategory[] = [
     ],
   },
   {
-    id: "fresh-meat",
-    label: "Fresh Meat By Weight",
-    labelHe: "בשר טרי לפי משקל",
-    subtitle: "Priced Per Kilogram",
-    subtitleHe: "מחיר לקילוגרם",
-    description: "All prices are per kilogram. Items marked * are without discount. Special offer: buy fresh meat for ₪600 and receive a set of starters for free!",
-    descriptionHe: "כל המחירים הם לקילוגרם. פריטים המסומנים ב-* הם ללא הנחה. מבצע מיוחד: קנה בשר טרי ב-600 שקל וקבל סט פתיחות במתנה!",
-    type: "weight",
-    illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/%D7%A2%D7%99%D7%A6%D7%95%D7%91%D7%9C%D7%9C%D7%90%D7%A9%D7%9D-2026-03-13T215252.800_6a195421.png",
-    items: [
-      { name: "Picanha", nameHe: "פיקאניה", description: "", descriptionHe: "", price: "₪269 / kg" },
-      { name: "Spring Chicken", nameHe: "פרגית", description: "", descriptionHe: "", price: "₪139 / kg" },
-      { name: "Entrecote", nameHe: "אנטריקוט", description: "", descriptionHe: "", price: "₪349 / kg", tag: "*No Discount", tagHe: "*ללא הנחה" },
-      { name: "Goose Liver", nameHe: "כבד אווז", description: "", descriptionHe: "", price: "₪520 / kg", tag: "*No Discount", tagHe: "*ללא הנחה" },
-      { name: "Moulard Breast", nameHe: "חזה מולאר", description: "", descriptionHe: "", price: "₪289 / kg" },
-      { name: "Chorizo (Spicy Sausage)", nameHe: "צ'וריסו (נקניק חריף)", description: "", descriptionHe: "", price: "₪169 / kg" },
-      { name: "Beef Fillet", nameHe: "פילה בקר", description: "", descriptionHe: "", price: "₪349 / kg", tag: "*No Discount", tagHe: "*ללא הנחה" },
-      { name: "Dry-Aged Sirloin", nameHe: "סירלוין יבש", description: "", descriptionHe: "", price: "₪269 / kg" },
-      { name: "Lamb Chops", nameHe: "צלעות כבש", description: "", descriptionHe: "", price: "₪269 / kg" },
-      { name: "Hamburger", nameHe: "המבורגר", description: "Burger bun +₪5 | Vegetable toppings +₪12", descriptionHe: "לחמניית בורגר +5 שקל | תוספת ירקות +12 שקל", price: "₪149 / kg" },
-      { name: "Bolinho (Brazilian Meatballs)", nameHe: "בוליניו (קציצות ברזילאיות)", description: "", descriptionHe: "", price: "₪149 / kg" },
-      { name: "Chicken Hearts", nameHe: "לבבות עוף", description: "", descriptionHe: "", price: "₪79 / kg" },
-      { name: "Chicken Wings", nameHe: "כנפי עוף", description: "", descriptionHe: "", price: "₪69 / kg" },
-      { name: "Beyond Meat Veggie Burger", nameHe: "בורגר צמחוני Beyond Meat", description: "", descriptionHe: "", price: "₪33", tag: "Vegan", tagHe: "טבעוני" },
-    ],
-    footerNotes: [
-      "Set of starters ₪79 — Chili con carne, white rice, baked potatoes with herbs, home-made salad",
-      "Chimichurri ₪10 | Garlic confit ₪10 | Cherry tomatoes jam ₪10 | Our salad dressing ₪10",
-      "Starter ₪29 per unit: Chili con carne / white rice / baked potatoes with herbs / home-made salad",
-      "★ Special offer: Buy fresh meat for ₪600* and get a set of starters for free! (*not including any other offer)",
-    ],
-    footerNotesHe: [
-      "סט פתיחות 79 שקל — צ'ילי קון קרנה, אורז לבן, תפוחי אדמה צלויים בעשבים, סלט ביתי",
-      "צ'ימיצ'ורי 10 שקל | שום קונפי 10 שקל | ריבה עגבניות שררי 10 שקל | רוטב הסלט שלנו 10 שקל",
-      "פתיחה בודדת 29 שקל: צ'ילי קון קרנה / אורז לבן / תפוחי אדמה צלויים / סלט ביתי",
-      "★ מבצע מיוחד: קנה בשר טרי ב-600 שקל* וקבל סט פתיחות במתנה! (*ללא כולל מבצע אחר)",
-    ],
-  },
-  {
     id: "desserts",
     label: "Desserts",
     labelHe: "קינוחים",
@@ -585,6 +546,45 @@ const MENU_DATA: MenuCategory[] = [
       "מבצעי הצהריים אינם תקפים עם כרטיס אשראי חבר, כרטיס קרנות השוטרים, שוברים וקופונים. לא בשילוב עם מבצע אחר.",
     ],
   },
+  {
+    id: "fresh-meat",
+    label: "Fresh Meat By Weight",
+    labelHe: "בשר טרי לפי משקל",
+    subtitle: "Priced Per Kilogram",
+    subtitleHe: "מחיר לקילוגרם",
+    description: "All prices are per kilogram. Items marked * are without discount. Special offer: buy fresh meat for ₪600 and receive a set of starters for free!",
+    descriptionHe: "כל המחירים הם לקילוגרם. פריטים המסומנים ב-* הם ללא הנחה. מבצע מיוחד: קנה בשר טרי ב-600 שקל וקבל סט פתיחות במתנה!",
+    type: "weight",
+    illustration: "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/%D7%A2%D7%99%D7%A6%D7%95%D7%91%D7%9C%D7%9C%D7%90%D7%A9%D7%9D-2026-03-13T215252.800_6a195421.png",
+    items: [
+      { name: "Picanha", nameHe: "פיקאניה", description: "", descriptionHe: "", price: "₪269 / kg" },
+      { name: "Spring Chicken", nameHe: "פרגית", description: "", descriptionHe: "", price: "₪139 / kg" },
+      { name: "Entrecote", nameHe: "אנטריקוט", description: "", descriptionHe: "", price: "₪349 / kg", tag: "*No Discount", tagHe: "*ללא הנחה" },
+      { name: "Goose Liver", nameHe: "כבד אווז", description: "", descriptionHe: "", price: "₪520 / kg", tag: "*No Discount", tagHe: "*ללא הנחה" },
+      { name: "Moulard Breast", nameHe: "חזה מולאר", description: "", descriptionHe: "", price: "₪289 / kg" },
+      { name: "Chorizo (Spicy Sausage)", nameHe: "צ'וריסו (נקניק חריף)", description: "", descriptionHe: "", price: "₪169 / kg" },
+      { name: "Beef Fillet", nameHe: "פילה בקר", description: "", descriptionHe: "", price: "₪349 / kg", tag: "*No Discount", tagHe: "*ללא הנחה" },
+      { name: "Dry-Aged Sirloin", nameHe: "סירלוין יבש", description: "", descriptionHe: "", price: "₪269 / kg" },
+      { name: "Lamb Chops", nameHe: "צלעות כבש", description: "", descriptionHe: "", price: "₪269 / kg" },
+      { name: "Hamburger", nameHe: "המבורגר", description: "Burger bun +₪5 | Vegetable toppings +₪12", descriptionHe: "לחמניית בורגר +5 שקל | תוספת ירקות +12 שקל", price: "₪149 / kg" },
+      { name: "Bolinho (Brazilian Meatballs)", nameHe: "בוליניו (קציצות ברזילאיות)", description: "", descriptionHe: "", price: "₪149 / kg" },
+      { name: "Chicken Hearts", nameHe: "לבבות עוף", description: "", descriptionHe: "", price: "₪79 / kg" },
+      { name: "Chicken Wings", nameHe: "כנפי עוף", description: "", descriptionHe: "", price: "₪69 / kg" },
+      { name: "Beyond Meat Veggie Burger", nameHe: "בורגר צמחוני Beyond Meat", description: "", descriptionHe: "", price: "₪33", tag: "Vegan", tagHe: "טבעוני" },
+    ],
+    footerNotes: [
+      "Set of starters ₪79 — Chili con carne, white rice, baked potatoes with herbs, home-made salad",
+      "Chimichurri ₪10 | Garlic confit ₪10 | Cherry tomatoes jam ₪10 | Our salad dressing ₪10",
+      "Starter ₪29 per unit: Chili con carne / white rice / baked potatoes with herbs / home-made salad",
+      "★ Special offer: Buy fresh meat for ₪600* and get a set of starters for free! (*not including any other offer)",
+    ],
+    footerNotesHe: [
+      "סט פתיחות 79 שקל — צ'ילי קון קרנה, אורז לבן, תפוחי אדמה צלויים בעשבים, סלט ביתי",
+      "צ'ימיצ'ורי 10 שקל | שום קונפי 10 שקל | ריבה עגבניות שררי 10 שקל | רוטב הסלט שלנו 10 שקל",
+      "פתיחה בודדת 29 שקל: צ'ילי קון קרנה / אורז לבן / תפוחי אדמה צלויים / סלט ביתי",
+      "★ מבצע מיוחד: קנה בשר טרי ב-600 שקל* וקבל סט פתיחות במתנה! (*ללא כולל מבצע אחר)",
+    ],
+  },
 ];
 
 /* ─── TAG BADGE ─── */
@@ -594,7 +594,7 @@ function TagBadge({ text }: { text: string }) {
       display: "inline-block",
       fontFamily: "'Heebo', sans-serif",
       fontWeight: 700,
-      fontSize: "0.42rem",
+              fontSize: "clamp(10px, 0.72vw, 11px)",
       letterSpacing: "0.22em",
       textTransform: "uppercase",
       color: GOLD,
@@ -633,7 +633,7 @@ function MenuItemRow({ item, isHe, type, index }: { item: MenuItem; isHe: boolea
           <span style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 800,
-            fontSize: "clamp(14px, 1.2vw, 17px)",
+            fontSize: "clamp(15px, 1.3vw, 19px)",
             color: BORDEAUX,
             letterSpacing: isHe ? "0.01em" : "0.04em",
           }}>
@@ -644,7 +644,7 @@ function MenuItemRow({ item, isHe, type, index }: { item: MenuItem; isHe: boolea
         <p style={{
           fontFamily: "'Heebo', sans-serif",
           fontWeight: 300,
-          fontSize: "clamp(12px, 0.85vw, 13.5px)",
+          fontSize: "clamp(14px, 1.05vw, 16px)",
           color: "rgb(100,50,50)",
           lineHeight: 1.65,
           margin: 0,
@@ -659,7 +659,7 @@ function MenuItemRow({ item, isHe, type, index }: { item: MenuItem; isHe: boolea
           flexShrink: 0,
           fontFamily: "'Heebo', sans-serif",
           fontWeight: 700,
-          fontSize: "clamp(13px, 1vw, 15px)",
+          fontSize: "clamp(14px, 1.1vw, 16px)",
           color: GOLD,
           letterSpacing: "0.04em",
           paddingTop: "2px",
@@ -768,8 +768,8 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               <span style={{
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 700,
-                fontSize: "0.52rem",
-                letterSpacing: isHe ? "0.06em" : "0.38em",
+                fontSize: "clamp(11px, 0.85vw, 13px)",
+                letterSpacing: isHe ? "0.06em" : "0.28em",
                 textTransform: "uppercase",
                 color: GOLD,
               }}>
@@ -792,7 +792,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
             <p style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 300,
-              fontSize: "clamp(14px, 1.1vw, 16px)",
+              fontSize: "clamp(15px, 1.2vw, 18px)",
               color: "rgb(90,35,35)",
               lineHeight: 1.75,
               margin: 0,
@@ -835,7 +835,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}>
                 <div style={{ width: "16px", height: "1px", background: GOLD }} />
-                <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.46rem", letterSpacing: isHe ? "0.06em" : "0.3em", textTransform: "uppercase", color: GOLD }}>
+                <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.85vw, 13px)", letterSpacing: isHe ? "0.06em" : "0.25em", textTransform: "uppercase", color: GOLD }}>
                   {isHe ? "מנות פתיחה" : "Appetizers"}
                 </span>
               </div>
@@ -847,14 +847,14 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                     gap: "0.6rem",
                   }}>
                     <span style={{ color: GOLD, fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
-                    <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(14px, 1.05vw, 16px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
+                    <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(15px, 1.2vw, 18px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
                       {isHe ? a.nameHe : a.name}
                     </span>
                   </li>
                 ))}
               </ul>
               {category.appetizersNote && (
-                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.8vw, 13px)", color: GOLD, margin: "0.9rem 0 0", fontStyle: "italic", textAlign: isHe ? "right" : "left" }}>
+                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(13px, 1vw, 15px)", color: GOLD, margin: "0.9rem 0 0", fontStyle: "italic", textAlign: isHe ? "right" : "left" }}>
                   {isHe ? category.appetizersNoteHe : category.appetizersNote}
                 </p>
               )}
@@ -924,7 +924,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
             {category.footerNotes && (
               <div style={{ padding: "0.8rem 0", textAlign: isHe ? "right" : "left" }}>
                 {(isHe ? category.footerNotesHe! : category.footerNotes).map((note, i) => (
-                  <p key={i} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(11px, 0.78vw, 13px)", color: "rgba(62,4,9,0.55)", margin: "0.25rem 0", fontStyle: "italic" }}>
+                  <p key={i} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(13px, 1vw, 15px)", color: "rgba(62,4,9,0.55)", margin: "0.25rem 0", fontStyle: "italic" }}>
                     {note}
                   </p>
                 ))}
@@ -946,7 +946,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="1.8">
               <circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/>
             </svg>
-            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.52rem", letterSpacing: "0.15em", color: GOLD, textTransform: "uppercase" }}>
+            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.85vw, 13px)", letterSpacing: "0.15em", color: GOLD, textTransform: "uppercase" }}>
               {isHe ? category.subtitleHe : category.subtitle}
             </span>
           </div>
@@ -965,7 +965,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}>
               <div style={{ width: "16px", height: "1px", background: GOLD }} />
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.46rem", letterSpacing: isHe ? "0.06em" : "0.3em", textTransform: "uppercase", color: GOLD }}>
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.85vw, 13px)", letterSpacing: isHe ? "0.06em" : "0.25em", textTransform: "uppercase", color: GOLD }}>
                 {isHe ? "מנות פתיחה משותפות" : "Shared Starters"}
               </span>
             </div>
@@ -973,14 +973,14 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               {category.lunchStarters.map((s, i) => (
                 <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
                   <span style={{ color: GOLD, fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
-                  <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(14px, 1.05vw, 16px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
+                  <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(15px, 1.2vw, 18px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
                     {isHe ? s.nameHe : s.name}
                   </span>
                 </li>
               ))}
             </ul>
             {category.lunchStartersNote && (
-              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.8vw, 13px)", color: GOLD, margin: "0.9rem 0 0", fontStyle: "italic" }}>
+              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(13px, 1vw, 15px)", color: GOLD, margin: "0.9rem 0 0", fontStyle: "italic" }}>
                 {isHe ? category.lunchStartersNoteHe : category.lunchStartersNote}
               </p>
             )}
@@ -1058,7 +1058,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
           border: `1px solid ${GOLD_R}0.18)`,
           textAlign: isHe ? "right" : "left",
         }}>
-          <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(12px, 0.85vw, 13px)", color: "rgb(90,35,35)", margin: 0, lineHeight: 1.65 }}>
+          <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(15px, 1.2vw, 18px)", color: "rgb(90,35,35)", margin: 0, lineHeight: 1.65 }}>
             {isHe
               ? "כל הנתחים מוכנים לפי הזמנה. המחיר הוא לפי 100 גרם. המשקל הסופי עשוי להשתנות מעט. מינימום הזמנה כמצוין."
               : "All cuts prepared to order. Price is per 100g. Final weight may vary slightly. Minimum order as indicated."}
@@ -1258,7 +1258,7 @@ function MenuHero({ isHe }: { isHe: boolean }) {
           style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "0.9rem", flexDirection: isHe ? "row-reverse" : "row" }}
         >
           <div style={{ width: "22px", height: "1px", background: GOLD }} />
-          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.52rem", letterSpacing: isHe ? "0.06em" : "0.38em", textTransform: "uppercase", color: GOLD }}>
+          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.85vw, 13px)", letterSpacing: isHe ? "0.06em" : "0.25em", textTransform: "uppercase", color: GOLD }}>
             {isHe ? "קאסה דו ברזיל" : "Casa do Brasil"}
           </span>
         </div>

@@ -60,7 +60,7 @@ export default function StickyReservationBtn() {
       href={RESERVATIONS_URL}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={isHe ? "הזמן מקום" : "Make a Reservation"}
+      aria-label={isHe ? "הזמנת מקום" : "Make a Reservation"}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -119,7 +119,7 @@ export default function StickyReservationBtn() {
           lineHeight: 1.25,
         }}
       >
-        {isHe ? "הזמן מקום" : "RESERVATION"}
+        {isHe ? "הזמנת מקום" : "RESERVATION"}
       </span>
     </a>
   );

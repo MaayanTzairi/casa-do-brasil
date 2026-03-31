@@ -232,3 +232,30 @@
 
 ## Navbar — Blog Link
 - [x] Add Blog link to Navbar (EN: "BLOG", HE: "בלוג") in both language nav arrays
+
+## Homepage Design Consistency Sprint
+- [ ] Hero: enlarge CTA buttons, fill with solid colors (bordeaux + gold)
+- [ ] Hero: change "לתפריט" → "תפריט" / "VIEW MENU" → "MENU", link to /menu
+- [ ] Hero: update social media links (Instagram, Facebook, TikTok) with real URLs
+- [ ] Sticky button: change "הזמן מקום" → "הזמנת מקום"
+- [ ] Unify paragraph font sizes across all homepage sections (CasaVibes, Menu, Gallery, Reviews)
+- [ ] Unify button sizes and text sizes across all sections
+- [ ] Unify section heading sizes (excluding Hero)
+
+## MenuPage Typography & Tab Order
+- [ ] Move "בשרי טרי במשקל" / "Fresh Meat by Weight" tab to last position
+- [ ] Uniform font sizes: category label (small text above heading), section title (heading), section description, item name, item description, price
+- [ ] All 6 menu tabs use same typography scale
+
+## Homepage & Menu Fixes — Mar 31 2026
+- [x] Hero: larger filled CTA buttons (Reserve + Menu)
+- [x] Hero: "לתפריט" → "תפריט" / "VIEW MENU" → "MENU" 
+- [x] Hero: Menu button links to /menu page
+- [x] Hero: Real social media URLs (Instagram, Facebook, TikTok)
+- [x] Sticky button: "הזמן מקום" → "הזמנת מקום"
+- [x] MenuPage: uniform typography across all 6 tabs (subtitle labels, descriptions, item names, item descriptions, prices)
+- [x] MenuPage: "בשר טרי לפי משקל" moved to last tab position
+
+## Mobile Fixes — Apr 1 2026
+- [x] Navbar mobile menu: z-index above FlyingBull, full screen, not clipped under navbar
+- [x] Hero mobile: buttons side-by-side in both EN and HE (not stacked in EN)

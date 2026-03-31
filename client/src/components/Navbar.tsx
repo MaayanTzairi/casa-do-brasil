@@ -372,7 +372,7 @@ export default function Navbar({
           top: 0,
           left: 0,
           right: 0,
-          zIndex: 50,
+          zIndex: menuOpen ? 201 : 50,
           padding: isMobile ? "0.9rem 1.4rem" : "0 2.8rem",
           height: isMobile ? "auto" : "70px",
           display: "flex",
@@ -593,9 +593,12 @@ export default function Navbar({
           dir={isHe ? "rtl" : "ltr"}
           style={{
             position: "fixed",
-            inset: 0,
-            zIndex: 49,
-            background: "rgba(40,3,6,0.97)",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 200,
+            background: "rgba(40,3,6,0.98)",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -604,6 +607,7 @@ export default function Navbar({
             opacity: menuOpen ? 1 : 0,
             pointerEvents: menuOpen ? "auto" : "none",
             transition: "opacity 0.3s ease",
+            overflowY: "auto",
           }}
         >
           <div
