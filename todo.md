@@ -204,3 +204,6 @@
 - [x] Navbar: add "VIP" link (same text in both languages)
 - [x] Create VIP page — bilingual, classic modern style, placeholder image
 - [x] Register /vip route in App.tsx
+
+## Menu Text Size Fix
+- [x] Increase menu item name and description font sizes uniformly (not category headings)

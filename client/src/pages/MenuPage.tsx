@@ -632,7 +632,7 @@ function MenuItemRow({ item, isHe, type, index }: { item: MenuItem; isHe: boolea
           <span style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 800,
-            fontSize: "clamp(14px, 1.2vw, 17px)",
+            fontSize: "clamp(16px, 1.35vw, 19px)",
             color: BORDEAUX,
             letterSpacing: isHe ? "0.01em" : "0.04em",
           }}>
@@ -643,7 +643,7 @@ function MenuItemRow({ item, isHe, type, index }: { item: MenuItem; isHe: boolea
         <p style={{
           fontFamily: "'Heebo', sans-serif",
           fontWeight: 300,
-          fontSize: "clamp(12px, 0.85vw, 13.5px)",
+          fontSize: "clamp(14px, 1vw, 15.5px)",
           color: "rgb(100,50,50)",
           lineHeight: 1.65,
           margin: 0,
@@ -658,7 +658,7 @@ function MenuItemRow({ item, isHe, type, index }: { item: MenuItem; isHe: boolea
           flexShrink: 0,
           fontFamily: "'Heebo', sans-serif",
           fontWeight: 700,
-          fontSize: "clamp(13px, 1vw, 15px)",
+          fontSize: "clamp(15px, 1.1vw, 17px)",
           color: GOLD,
           letterSpacing: "0.04em",
           paddingTop: "2px",
@@ -846,7 +846,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                     gap: "0.6rem",
                   }}>
                     <span style={{ color: GOLD, fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
-                    <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(14px, 1.05vw, 16px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
+                    <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(15px, 1.15vw, 17px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
                       {isHe ? a.nameHe : a.name}
                     </span>
                   </li>
@@ -901,7 +901,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                           gap: "0.55rem",
                         }}>
                           <span style={{ color: GOLD, fontSize: "0.5rem", marginTop: "4px", flexShrink: 0 }}>▪</span>
-                          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(14px, 1.05vw, 16px)", color: ti === 1 ? "rgba(255,255,255,0.88)" : "rgb(70,25,25)", lineHeight: 1.5 }}>
+                          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(15px, 1.15vw, 17px)", color: ti === 1 ? "rgba(255,255,255,0.88)" : "rgb(70,25,25)", lineHeight: 1.5 }}>
                             {item}
                           </span>
                         </li>
@@ -1011,7 +1011,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                   {/* Items */}
                   <div style={{ flex: 1 }}>
                     {(isHe ? tier.itemsHe : tier.items).map((item, ii) => (
-                      <p key={ii} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: ii === 0 ? 700 : 300, fontSize: "clamp(12px, 0.95vw, 15px)", color: ii === 0 ? BORDEAUX : "rgb(90,40,40)", lineHeight: 1.55, margin: ii === 0 ? "0 0 0.3rem" : "0" }}>
+                      <p key={ii} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: ii === 0 ? 700 : 300, fontSize: "clamp(14px, 1.05vw, 16.5px)", color: ii === 0 ? BORDEAUX : "rgb(90,40,40)", lineHeight: 1.55, margin: ii === 0 ? "0 0 0.3rem" : "0" }}>
                         {item}
                       </p>
                     ))}
