@@ -10,7 +10,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { trpc } from "@/lib/trpc";
 
 interface NavbarContent {
   menuHe?: string; menuEn?: string;
@@ -248,33 +247,32 @@ export default function Navbar({
   const { lang } = useLanguage();
   const isHe = lang === "he";
 
-  const { data: cmsNavbar } = trpc.cms.getNavbar.useQuery();
 
   const t: Required<NavbarContent> = {
-    menuHe: cmsNavbar?.menuHe || DEFAULTS.menuHe,
-    menuEn: cmsNavbar?.menuEn || DEFAULTS.menuEn,
-    storyHe: cmsNavbar?.storyHe || DEFAULTS.storyHe,
-    storyEn: cmsNavbar?.storyEn || DEFAULTS.storyEn,
-    galleryHe: cmsNavbar?.galleryHe || DEFAULTS.galleryHe,
-    galleryEn: cmsNavbar?.galleryEn || DEFAULTS.galleryEn,
-    faqHe: cmsNavbar?.faqHe || DEFAULTS.faqHe,
-    faqEn: cmsNavbar?.faqEn || DEFAULTS.faqEn,
-    contactHe: cmsNavbar?.contactHe || DEFAULTS.contactHe,
-    contactEn: cmsNavbar?.contactEn || DEFAULTS.contactEn,
-    brandNameHe: cmsNavbar?.brandNameHe || DEFAULTS.brandNameHe,
-    brandNameEn: cmsNavbar?.brandNameEn || DEFAULTS.brandNameEn,
-    reservationHe: cmsNavbar?.reservationHe || DEFAULTS.reservationHe,
-    reservationEn: cmsNavbar?.reservationEn || DEFAULTS.reservationEn,
+    menuHe: DEFAULTS.menuHe,
+    menuEn: DEFAULTS.menuEn,
+    storyHe: DEFAULTS.storyHe,
+    storyEn: DEFAULTS.storyEn,
+    galleryHe: DEFAULTS.galleryHe,
+    galleryEn: DEFAULTS.galleryEn,
+    faqHe: DEFAULTS.faqHe,
+    faqEn: DEFAULTS.faqEn,
+    contactHe: DEFAULTS.contactHe,
+    contactEn: DEFAULTS.contactEn,
+    brandNameHe: DEFAULTS.brandNameHe,
+    brandNameEn: DEFAULTS.brandNameEn,
+    reservationHe: DEFAULTS.reservationHe,
+    reservationEn: DEFAULTS.reservationEn,
   };
 
   const brandName = t.brandNameEn;
 
-  const menuHref = cmsNavbar?.menuHref || "/menu";
-  const storyHref = cmsNavbar?.storyHref || "/story";
-  const galleryHref = cmsNavbar?.galleryHref || "/gallery";
-  const faqHref = cmsNavbar?.faqHref || "/faq";
-  const contactHref = cmsNavbar?.contactHref || "#contact";
-  const reservationHref = cmsNavbar?.reservationUrl || RESERVATIONS_URL;
+  const menuHref = "/menu";
+  const storyHref = "/story";
+  const galleryHref = "/gallery";
+  const faqHref = "/faq";
+  const contactHref = "#contact";
+  const reservationHref = RESERVATIONS_URL;
 
   const navLinks = isHe
     ? [
@@ -283,7 +281,6 @@ export default function Navbar({
         { label: t.galleryHe, href: galleryHref },
         { label: t.faqHe, href: faqHref },
         { label: t.contactHe, href: contactHref },
-        { label: "בלוג", href: "/blog" },
         { label: "VIP", href: "/vip", isVip: true },
       ]
     : [

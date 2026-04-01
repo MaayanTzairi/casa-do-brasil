@@ -7,7 +7,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useInViewCSS } from "@/hooks/useInViewCSS";
-import { trpc } from "@/lib/trpc";
 
 const CHURRASCARIA_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/menu-churrascaria_opt_10fbb0e3.webp";
@@ -142,8 +141,8 @@ export default function MenuSection() {
   const [mobile, setMobile] = useState(false);
   const { isHe } = useLanguage();
 
-  const { data: cmsRaw } = trpc.cms.getOurMenu.useQuery();
-  const cms = cmsRaw as any;
+  // Static content — no CMS backend
+  const cms: any = null;
 
   useEffect(() => {
     const fn = () => setMobile(window.innerWidth < 900);

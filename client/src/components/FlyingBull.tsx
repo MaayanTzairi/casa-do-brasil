@@ -12,7 +12,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { trpc } from "@/lib/trpc";
 
 const LOGO_URL_DEFAULT =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp";
@@ -76,10 +75,9 @@ export default function FlyingBull() {
   // Fetch CMS data for circle image and logo
   // Use default URLs immediately (don't wait for CMS) — this prevents LCP delay
   // CMS URL replaces default once loaded, causing a seamless swap
-  const { data: cmsRaw } = trpc.cms.getHeroSection.useQuery();
-  const cms = cmsRaw as any;
-  const LOGO_URL  = cms?.logoImageUrl  || LOGO_URL_DEFAULT;
-  const PHOTO_URL = cms?.circleImageUrl || PHOTO_URL_DEFAULT;
+  // Static content — no CMS backend
+  const LOGO_URL  = LOGO_URL_DEFAULT;
+  const PHOTO_URL = PHOTO_URL_DEFAULT;
 
   // Desktop positions — initialized synchronously for zero-delay first paint
   const [dHeroPos, setDHeroPos] = useState<{ x: number; y: number } | null>(initial?.dHeroPos ?? null);
@@ -231,7 +229,7 @@ export default function FlyingBull() {
         {/* Bull */}
         {LOGO_URL && (
           <img src={LOGO_URL}
-            srcSet={!cms?.logoImageUrl ? `${LOGO_URL_100} 100w, ${LOGO_URL_300} 300w, ${LOGO_URL_DEFAULT} 360w` : undefined}
+            srcSet={`${LOGO_URL_100} 100w, ${LOGO_URL_300} 300w, ${LOGO_URL_DEFAULT} 360w`}
             sizes="(max-width:899px) 88px, 260px"
             alt="Casa do Brasil" aria-hidden="true"
             loading="eager"
@@ -322,7 +320,7 @@ export default function FlyingBull() {
         {/* Bull — mobile */}
         {LOGO_URL && (
           <img src={LOGO_URL}
-            srcSet={!cms?.logoImageUrl ? `${LOGO_URL_100} 100w, ${LOGO_URL_300} 300w, ${LOGO_URL_DEFAULT} 360w` : undefined}
+            srcSet={`${LOGO_URL_100} 100w, ${LOGO_URL_300} 300w, ${LOGO_URL_DEFAULT} 360w`}
             sizes="(max-width:899px) 88px, 260px"
             alt="Casa do Brasil" aria-hidden="true"
             loading="eager"

@@ -11,7 +11,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { trpc } from "@/lib/trpc";
 
 
 const HERO_IMAGE_DEFAULT =
@@ -45,35 +44,9 @@ export default function HeroSection() {
   const [isMobile, setIsMobile] = useState(false);
   const { isHe } = useLanguage();
 
-  // Fetch from internal CMS
-  const { data: cmsRaw } = trpc.cms.getHeroSection.useQuery();
-  const cms = cmsRaw as any;
-
-  // Merge CMS with fallbacks
-  const t = {
-    titleHe:       cms?.titleHe       || DEFAULTS.titleHe,
-    titleEn:       cms?.titleEn       || DEFAULTS.titleEn,
-    subtitleHe:    cms?.subtitleHe    || DEFAULTS.subtitleHe,
-    subtitleEn:    cms?.subtitleEn    || DEFAULTS.subtitleEn,
-    reserveBtnHe:  cms?.reserveBtnHe  || DEFAULTS.reserveBtnHe,
-    reserveBtnEn:  cms?.reserveBtnEn  || DEFAULTS.reserveBtnEn,
-    reserveBtnUrl: cms?.reserveBtnUrl || DEFAULTS.reserveBtnUrl,
-    menuBtnHe:     cms?.menuBtnHe     || DEFAULTS.menuBtnHe,
-    menuBtnEn:     cms?.menuBtnEn     || DEFAULTS.menuBtnEn,
-    menuBtnUrl:    cms?.menuBtnUrl    || DEFAULTS.menuBtnUrl,
-    instagramUrl:  cms?.instagramUrl  || DEFAULTS.instagramUrl,
-    facebookUrl:   cms?.facebookUrl   || DEFAULTS.facebookUrl,
-    tiktokUrl:     cms?.tiktokUrl     || DEFAULTS.tiktokUrl,
-  };
-
-  // Background image — use DEFAULT immediately for LCP, swap to CMS url only after it loads.
-  // This ensures the preloaded hero image is the LCP element, not blocked by tRPC.
-  const [bgImage, setBgImage] = useState(HERO_IMAGE_DEFAULT);
-  useEffect(() => {
-    if (cms?.backgroundImageUrl && cms.backgroundImageUrl !== HERO_IMAGE_DEFAULT) {
-      setBgImage(cms.backgroundImageUrl);
-    }
-  }, [cms?.backgroundImageUrl]);
+  // Static content — no CMS backend
+  const t = DEFAULTS;
+  const [bgImage] = useState(HERO_IMAGE_DEFAULT);
 
   // Title words — split by space for the stacked animation
   const titleWords = (isHe ? t.titleHe : t.titleEn).split(" ");

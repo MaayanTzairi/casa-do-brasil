@@ -7,7 +7,6 @@ import { useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useInViewCSS } from "@/hooks/useInViewCSS";
-import { trpc } from "@/lib/trpc";
 
 const GOLD = "#B9A167";
 const GOLD_R = "rgba(185,161,103,";
@@ -57,9 +56,8 @@ export default function GallerySection() {
   const [current, setCurrent] = useState(0);
   const [mobile, setMobile] = useState(false);
 
-  // Fetch CMS data
-  const { data: cmsRaw } = trpc.cms.getOurGallery.useQuery();
-  const cms = cmsRaw as any;
+  // Static content — no CMS backend
+  const cms: any = null;
 
   // ── Derived values with fallbacks ──
   const sectionLabel = isHe

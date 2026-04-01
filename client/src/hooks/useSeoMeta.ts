@@ -5,7 +5,6 @@
  */
 
 import { useEffect } from "react";
-import { trpc } from "@/lib/trpc";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface SeoDefaults {
@@ -63,10 +62,8 @@ function injectSchemaScript(json: string, id: string) {
 
 export function useSeoMeta(pageSlug: string, defaults: SeoDefaults = {}) {
   const { isHe } = useLanguage();
-  const { data: seo } = trpc.cms.getSeoSettings.useQuery(
-    { pageSlug },
-    { staleTime: 60_000 }
-  );
+  // Static content — no CMS backend
+  const seo: any = null;
 
   useEffect(() => {
     const titleHe = seo?.titleHe || defaults.titleHe || "Casa do Brasil | קאסה דו ברזיל — מסעדת בשרים ברזילאית אילת";

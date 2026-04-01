@@ -9,7 +9,6 @@
 import { useRef, useEffect, useState } from "react";
 import { useInViewCSS } from "@/hooks/useInViewCSS";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { trpc } from "@/lib/trpc";
 
 const GOLD = "#B9A167";
 const GOLD_R = "rgba(185,161,103,";
@@ -340,7 +339,8 @@ function ReviewCard({ review, isHe }: { review: Review; isHe: boolean }) {
 /* ─── MAIN SECTION ─── */
 export default function ReviewsSection() {
   const { isHe } = useLanguage();
-  const { data: statsData } = trpc.cms.getStatistics.useQuery();
+  // Static content — no CMS backend
+  const statsData: any = null;
 
   // CMS values with hardcoded fallbacks
   const customersValue = statsData?.customersValue ?? "2M";

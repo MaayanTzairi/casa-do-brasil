@@ -6,7 +6,6 @@
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useInViewCSS } from "@/hooks/useInViewCSS";
-import { trpc } from "@/lib/trpc";
 
 const MEAT_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/meat-v2_opt_93cfd53b.webp";
@@ -63,56 +62,54 @@ export default function CasaVibesSection() {
   const [mobile, setMobile] = useState(false);
   const { isHe } = useLanguage();
 
-  // Fetch CMS data
-  const { data: cms } = trpc.cms.getOurStory.useQuery();
 
   // ── Derived values with fallbacks ──
   const label = isHe
-    ? (cms?.labelHe ?? "הסיפור שלנו")
-    : (cms?.labelEn ?? "OUR STORY");
+    ? ("הסיפור שלנו")
+    : ("OUR STORY");
 
   const headlineLines = isHe
     ? [
-        cms?.headlineLine1He ?? "בשר.",
-        cms?.headlineLine2He ?? "מוזיקה.",
-        cms?.headlineLine3He ?? "ברזיל.",
+        "בשר.",
+        "מוזיקה.",
+        "ברזיל.",
       ]
     : [
-        cms?.headlineLine1En ?? "MEAT.",
-        cms?.headlineLine2En ?? "MUSIC.",
-        cms?.headlineLine3En ?? "BRASIL.",
+        "MEAT.",
+        "MUSIC.",
+        "BRASIL.",
       ];
 
   const description = isHe
-    ? (cms?.descriptionHe ?? "קאסה דו ברזיל היא יותר מארוחה — זו חגיגה. פושידו קוהידו אותנטי, שנחתך ליד השולחן על ידי הפאסדורס שלנו, בצירת הקצב, הצבע והנשמה של הקרנבל. כל ביקור הוא חג לכל החושים.")
-    : (cms?.descriptionEn ?? "Casa do Brasil is more than a meal — it is a celebration. Authentic Brazilian churrasco, carved tableside by our passadors, paired with the rhythm, color and soul of carnival. Every visit is a feast for all the senses.");
+    ? ("קאסה דו ברזיל היא יותר מארוחה — זו חגיגה. פושידו קוהידו אותנטי, שנחתך ליד השולחן על ידי הפאסדורס שלנו, בצירת הקצב, הצבע והנשמה של הקרנבל. כל ביקור הוא חג לכל החושים.")
+    : ("Casa do Brasil is more than a meal — it is a celebration. Authentic Brazilian churrasco, carved tableside by our passadors, paired with the rhythm, color and soul of carnival. Every visit is a feast for all the senses.");
 
   const ctaText = isHe
-    ? (cms?.ctaBtnHe ?? "הסיפור של קאזה דו ברזיל")
-    : (cms?.ctaBtnEn ?? "Casa Do Brasil Story");
+    ? ("הסיפור של קאזה דו ברזיל")
+    : ("Casa Do Brasil Story");
 
-  const ctaUrl = cms?.ctaBtnUrl ?? "/story";
+  const ctaUrl = "/story";
 
   // Image 1
   const img1Src = (cms as any)?.image1Url ?? MEAT_URL;
   const img1SrcSm = (cms as any)?.image1Url ?? MEAT_URL_SM;
   const img1Label = isHe
-    ? (cms?.image1LabelHe ?? "CHURRASCO")
-    : (cms?.image1LabelEn ?? "CHURRASCO");
+    ? ("CHURRASCO")
+    : ("CHURRASCO");
   const img1TitleRaw = isHe
-    ? (cms?.image1TitleHe ?? "אמנות\nהאש")
-    : (cms?.image1TitleEn ?? "THE ART\nOF FIRE");
+    ? ("אמנות\nהאש")
+    : ("THE ART\nOF FIRE");
   const img1TitleLines = img1TitleRaw.split("\\n").join("\n").split("\n");
 
   // Image 2
   const img2Src = (cms as any)?.image2Url ?? CARNIVAL_URL;
   const img2SrcSm = (cms as any)?.image2Url ?? CARNIVAL_URL_SM;
   const img2Label = isHe
-    ? (cms?.image2LabelHe ?? "CARNIVAL")
-    : (cms?.image2LabelEn ?? "CARNIVAL");
+    ? ("CARNIVAL")
+    : ("CARNIVAL");
   const img2TitleRaw = isHe
-    ? (cms?.image2TitleHe ?? "הנשמה\nשל ברזיל")
-    : (cms?.image2TitleEn ?? "THE SOUL\nOF BRASIL");
+    ? ("הנשמה\nשל ברזיל")
+    : ("THE SOUL\nOF BRASIL");
   const img2TitleLines = img2TitleRaw.split("\\n").join("\n").split("\n");
 
   useEffect(() => {
