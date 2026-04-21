@@ -15,7 +15,7 @@ const LIGHT = "#9a8a75";       // light brown for tertiary text
 const GOLD = "#b8860b";        // gold for highlights
 
 const LOGO_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-footer-transparent_99ea5143.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-footer_opt_e74702e9.webp";
 
 const phoneIcon = (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
