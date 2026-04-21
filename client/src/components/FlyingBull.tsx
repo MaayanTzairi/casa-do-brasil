@@ -85,11 +85,17 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
           alt=""
           aria-hidden="true"
           style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "contain",
+            // The image is a circular flag on a wood background.
+            // Scale up ~1.15x so the flag circle fills the container
+            // and the wood background is hidden behind the overflow:hidden clip.
+            width: "115%",
+            height: "115%",
+            objectFit: "cover",
             objectPosition: "center",
             display: "block",
+            position: "absolute",
+            top: "-7.5%",
+            left: "-7.5%",
             background: "#0a1a0a",
           }}
         />

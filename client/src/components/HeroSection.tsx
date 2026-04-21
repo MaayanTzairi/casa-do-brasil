@@ -146,64 +146,57 @@ export default function HeroSection() {
         {/* ── Bull Logo (inline, first flex child on both mobile and desktop) ── */}
         <HeroBullInline progress={bullProgress} isMobile={isMobile} />
 
-        {/* Title — premium gold gradient with depth */}
-        <div style={{ width: "100%", textAlign: "center", overflow: "visible", paddingBottom: "0.2em", animation: "fadeUp 0.95s 0.4s cubic-bezier(0.25,0.46,0.45,0.94) both" }}>
+        {/* Title + Subtitle — combined block, subtitle tucked directly under title */}
+        <div
+          style={{
+            width: "100%",
+            textAlign: "center",
+            overflow: "visible",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: isMobile ? "2px" : "4px",
+            animation: "fadeUp 0.95s 0.4s cubic-bezier(0.25,0.46,0.45,0.94) both",
+          }}
+        >
           <h1
             className="block select-none"
             style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 900,
               fontSize: isMobile ? "clamp(28px, 9vw, 52px)" : "clamp(42px, 6.5vw, 90px)",
-              // Rich gold gradient: bright highlight → deep amber
               background: "linear-gradient(180deg, #ffe066 0%, #f5c518 25%, #d4a017 55%, #b8860b 80%, #8b6508 100%)",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
               letterSpacing: "-0.01em",
-              lineHeight: 1.05,
+              lineHeight: 1.0,
               whiteSpace: "nowrap",
               textAlign: "center",
-              // Multi-layer shadow for depth (applied via filter since textShadow doesn’t work with gradient text)
               filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.70)) drop-shadow(0 1px 2px rgba(0,0,0,0.50))",
               margin: 0,
             }}
           >
             {isHe ? t.titleHe : t.titleEn}
           </h1>
-        </div>
-
-        {/* Subtitle — white text with Brazilian-flag colored underline accent */}
-        <div
-          style={{
-            display: "inline-flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "6px",
-            animation: "fadeUp 0.8s 1.1s cubic-bezier(0.25,0.46,0.45,0.94) both",
-          }}
-        >
+          {/* Subtitle — directly under title, no gap */}
           <p
             style={{
               fontFamily: "'Heebo', sans-serif",
-              fontWeight: 600,
-              fontSize: isMobile ? "clamp(13px, 3.8vw, 18px)" : "clamp(18px, 2.2vw, 28px)",
-              color: "rgba(240,220,160,0.92)",
-              letterSpacing: isMobile ? "0.08em" : "0.18em",
+              fontWeight: 500,
+              fontSize: isMobile ? "clamp(11px, 3.2vw, 15px)" : "clamp(14px, 1.5vw, 20px)",
+              color: "rgba(240,220,160,0.85)",
+              letterSpacing: isMobile ? "0.12em" : "0.22em",
               fontStyle: "italic",
               textAlign: "center",
               whiteSpace: "nowrap",
               margin: 0,
-              textShadow: "0 2px 14px rgba(0,0,0,0.90)",
+              textShadow: "0 2px 10px rgba(0,0,0,0.85)",
+              lineHeight: 1.3,
             }}
           >
             {isHe ? t.subtitleHe : t.subtitleEn}
           </p>
-          {/* Brazilian-flag 3-stripe underline: green | yellow | blue */}
-          <div style={{ display: "flex", width: "100%", height: "3px", borderRadius: "2px", overflow: "hidden" }}>
-            <div style={{ flex: 1, background: "#009C3B" }} />
-            <div style={{ flex: 1, background: "#FEDF00" }} />
-            <div style={{ flex: 1, background: "#002776" }} />
-          </div>
         </div>
 
         {/* Mobile social icons — horizontal row, centered, between subtitle and buttons */}
