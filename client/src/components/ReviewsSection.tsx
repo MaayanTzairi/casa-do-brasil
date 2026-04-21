@@ -431,7 +431,7 @@ export default function ReviewsSection() {
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: "#009C3B", lineHeight: 1, letterSpacing: "-0.02em" }}>{customersValue}</span>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: "#FEDF00", lineHeight: 1 }}>{customersSuffix}</span>
             </div>
-            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "0.6rem" : "clamp(11px, 0.82vw, 13px)", color: "rgba(62,4,9,0.45)", letterSpacing: mobile ? "0.08em" : "0.18em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3 }}>
+            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: mobile ? "clamp(13px, 3.5vw, 16px)" : "clamp(14px, 1.1vw, 18px)", color: "rgb(62,4,9)", letterSpacing: mobile ? "0.04em" : "0.06em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3 }}>
               {customersLabel}
             </span>
           </div>
@@ -445,7 +445,7 @@ export default function ReviewsSection() {
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: "#009C3B", lineHeight: 1, letterSpacing: "-0.02em" }}>{yearsValue}</span>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: "#FEDF00", lineHeight: 1 }}>{yearsSuffix}</span>
             </div>
-            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "0.6rem" : "clamp(11px, 0.82vw, 13px)", color: "rgba(62,4,9,0.45)", letterSpacing: mobile ? "0.08em" : "0.18em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3 }}>
+            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: mobile ? "clamp(13px, 3.5vw, 16px)" : "clamp(14px, 1.1vw, 18px)", color: "rgb(62,4,9)", letterSpacing: mobile ? "0.04em" : "0.06em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3 }}>
               {yearsLabel}
             </span>
           </div>
@@ -459,7 +459,7 @@ export default function ReviewsSection() {
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: "#009C3B", lineHeight: 1, letterSpacing: "-0.02em" }}>5,000</span>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: "#FEDF00", lineHeight: 1 }}>+</span>
             </div>
-            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "0.6rem" : "clamp(11px, 0.82vw, 13px)", color: "rgba(62,4,9,0.45)", letterSpacing: mobile ? "0.08em" : "0.18em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3 }}>
+            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: mobile ? "clamp(13px, 3.5vw, 16px)" : "clamp(14px, 1.1vw, 18px)", color: "rgb(62,4,9)", letterSpacing: mobile ? "0.04em" : "0.06em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3 }}>
               {isHe ? "ביקורות גוגל" : "Google Reviews"}
             </span>
             {/* Google badge */}
@@ -470,7 +470,7 @@ export default function ReviewsSection() {
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "0.6rem" : "clamp(11px, 0.82vw, 13px)", color: "rgba(62,4,9,0.45)", letterSpacing: mobile ? "0.06em" : "0.12em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3 }}>
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: mobile ? "clamp(13px, 3.5vw, 16px)" : "clamp(14px, 1.1vw, 18px)", color: "rgb(62,4,9)", letterSpacing: mobile ? "0.04em" : "0.06em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3 }}>
                 Google
               </span>
             </div>

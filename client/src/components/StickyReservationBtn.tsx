@@ -15,8 +15,8 @@ const LOGO_URL =
 const RESERVATIONS_URL =
   "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73";
 
-const BORDEAUX = "#3e0409";
-const GOLD = "#B9A167";
+const BR_GREEN = "#009C3B";
+const BR_YELLOW = "#FEDF00";
 
 export default function StickyReservationBtn() {
   const { lang } = useLanguage();
@@ -73,13 +73,13 @@ export default function StickyReservationBtn() {
         gap: "0.55rem",
         padding: "0.55rem 1.1rem 0.55rem 0.65rem",
         borderRadius: "999px",
-        background: hovered ? GOLD : BORDEAUX,
-        border: `2px solid ${GOLD}`,
+        background: hovered ? "#007a2e" : BR_GREEN,
+        border: `2px solid ${hovered ? BR_YELLOW : "rgba(254,223,0,0.55)"}`,
         textDecoration: "none",
         cursor: "pointer",
         boxShadow: hovered
-          ? `0 8px 32px rgba(185,161,103,0.5), 0 2px 8px rgba(62,4,9,0.3)`
-          : `0 4px 24px rgba(62,4,9,0.45), 0 1px 6px rgba(0,0,0,0.25)`,
+          ? `0 8px 32px rgba(0,156,59,0.55), 0 2px 8px rgba(0,0,0,0.25)`
+          : `0 4px 24px rgba(0,156,59,0.4), 0 1px 6px rgba(0,0,0,0.2)`,
         transform: visible ? transformVisible : transformHidden,
         opacity: visible ? 1 : 0,
         pointerEvents: visible ? "auto" : "none",
