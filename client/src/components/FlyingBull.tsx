@@ -43,7 +43,7 @@ function easeInOut(t: number) {
 // HeroBull — rendered INLINE inside the hero flex column (both mobile + desktop)
 // ─────────────────────────────────────────────────────────────────────────────
 export function HeroBullInline({ progress, isMobile }: { progress: number; isMobile?: boolean }) {
-  const heroSize = isMobile ? BULL_HERO_MOBILE * 1.6 : BULL_HERO_DESKTOP;
+  const heroSize = isMobile ? BULL_HERO_MOBILE * 1.1 : BULL_HERO_DESKTOP;
   const t = easeInOut(progress);
   const bullSz = lerp(heroSize, heroSize * 0.6, t);
   const circleSize = heroSize * 1.50;

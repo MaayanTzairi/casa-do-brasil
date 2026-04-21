@@ -110,14 +110,14 @@ export default function HeroSection() {
       <div className="absolute inset-0">
         <div
           className="absolute inset-0"
-          style={{ background: "linear-gradient(110deg, rgba(10,8,6,0.55) 0%, rgba(20,14,8,0.37) 45%, rgba(10,8,6,0.20) 100%)" }}
+          style={{ background: "linear-gradient(110deg, rgba(10,8,6,0.60) 0%, rgba(20,14,8,0.42) 45%, rgba(10,8,6,0.25) 100%)" }}
         />
       </div>
 
       {/* ── Bottom Gradient Fade ── */}
       <div
         className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ height: "clamp(100px, 18vw, 220px)", background: "linear-gradient(to top, rgba(10,8,6,0.50) 0%, transparent 100%)" }}
+        style={{ height: "clamp(100px, 18vw, 220px)", background: "linear-gradient(to top, rgba(10,8,6,0.55) 0%, transparent 100%)" }}
       />
 
       {/* ── Gold Inset Frame — desktop only ── */}
@@ -187,7 +187,7 @@ export default function HeroSection() {
           <p
             style={{
               fontFamily: "'Heebo', sans-serif",
-              fontWeight: 600,
+              fontWeight: 800,
               fontSize: isMobile ? "clamp(14px, 4.2vw, 20px)" : "clamp(22px, 2.8vw, 36px)",
               color: "#FFFFFF",
               letterSpacing: isMobile ? "0.06em" : "0.10em",
@@ -195,7 +195,7 @@ export default function HeroSection() {
               textAlign: "center",
               whiteSpace: "nowrap",
               margin: 0,
-              textShadow: "0 2px 14px rgba(0,0,0,0.90), 0 1px 4px rgba(0,0,0,0.80)",
+              textShadow: "0 2px 18px rgba(0,0,0,1), 0 1px 5px rgba(0,0,0,0.95), 2px 2px 0 rgba(0,0,0,0.70)",
             }}
           >
             {isHe ? t.subtitleHe : t.subtitleEn}
@@ -245,18 +245,18 @@ export default function HeroSection() {
           animation: "fadeIn 1s 2.4s ease both",
         }}
       >
-        <SocialIcon href={t.instagramUrl} label="Instagram" hoverColor="#E1306C" icon={
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <SocialIcon href={t.instagramUrl} label="Instagram" hoverColor="#E1306C" isMobile={isMobile} icon={
+          <svg width={isMobile ? 16 : 32} height={isMobile ? 16 : 32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
           </svg>
         } />
-        <SocialIcon href={t.facebookUrl} label="Facebook" hoverColor="#1877F2" icon={
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <SocialIcon href={t.facebookUrl} label="Facebook" hoverColor="#1877F2" isMobile={isMobile} icon={
+          <svg width={isMobile ? 16 : 32} height={isMobile ? 16 : 32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
           </svg>
         } />
-        <SocialIcon href={t.tiktokUrl} label="TikTok" hoverColor="#69C9D0" icon={
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+        <SocialIcon href={t.tiktokUrl} label="TikTok" hoverColor="#69C9D0" isMobile={isMobile} icon={
+          <svg width={isMobile ? 15 : 30} height={isMobile ? 15 : 30} viewBox="0 0 24 24" fill="currentColor" stroke="none">
             <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
           </svg>
         } />
@@ -285,7 +285,7 @@ export default function HeroSection() {
 }
 
 /* ── Social Icon ── */
-function SocialIcon({ href, label, icon, hoverColor }: { href: string; label: string; icon: React.ReactNode; hoverColor: string }) {
+function SocialIcon({ href, label, icon, hoverColor, isMobile }: { href: string; label: string; icon: React.ReactNode; hoverColor: string; isMobile?: boolean }) {
   const [hovered, setHovered] = useState(false);
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
@@ -319,11 +319,11 @@ function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: st
         border: "2.5px solid #009C3B",
         color: hovered ? "#FFFFFF" : "#FFFFFF",
         background: hovered
-          ? "linear-gradient(135deg, #007a2e 0%, #009C3B 60%, #00b844 100%)"
-          : "linear-gradient(135deg, #006b27 0%, #009C3B 55%, #00a83e 100%)",
+          ? "#007a2e"
+          : "#009C3B",
         boxShadow: hovered
-          ? "0 6px 28px rgba(0,156,59,0.55), 0 2px 8px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.20)"
-          : "0 4px 18px rgba(0,156,59,0.40), 0 2px 6px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15)",
+          ? "0 4px 14px rgba(0,0,0,0.45)"
+          : "0 2px 8px rgba(0,0,0,0.30)",
         transition: "all 0.30s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         transform: hovered ? "translateY(-2px)" : "translateY(0)",
         willChange: "transform, box-shadow",
@@ -351,11 +351,11 @@ function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: st
         border: "2.5px solid #c8a800",
         color: hovered ? "#1a0a00" : "#1a0a00",
         background: hovered
-          ? "linear-gradient(135deg, #e6c200 0%, #FEDF00 55%, #ffe840 100%)"
-          : "linear-gradient(135deg, #d4aa00 0%, #FEDF00 55%, #ffe533 100%)",
+          ? "#d4aa00"
+          : "#FEDF00",
         boxShadow: hovered
-          ? "0 6px 28px rgba(254,223,0,0.55), 0 2px 8px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.35)"
-          : "0 4px 18px rgba(254,223,0,0.40), 0 2px 6px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.25)",
+          ? "0 4px 14px rgba(0,0,0,0.40)"
+          : "0 2px 8px rgba(0,0,0,0.25)",
         transition: "all 0.30s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         transform: hovered ? "translateY(-2px)" : "translateY(0)",
         willChange: "transform, box-shadow",
