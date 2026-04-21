@@ -514,6 +514,37 @@ export default function ReviewsSection() {
       </div>
 
       {/* Carousel — always LTR so scroll direction is consistent */}
+      <div style={{ position: "relative" }}>
+        {/* Left arrow */}
+        <button
+          onClick={() => { pausedRef.current = true; posRef.current = Math.max(0, posRef.current - 320); setTimeout(() => { pausedRef.current = false; }, 1200); }}
+          aria-label="Scroll left"
+          style={{
+            position: "absolute", left: "8px", top: "50%", transform: "translateY(-50%)",
+            zIndex: 10, background: "#009C3B", border: "2px solid #FEDF00",
+            borderRadius: "50%", width: "40px", height: "40px", cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            boxShadow: "0 2px 12px rgba(0,0,0,0.18)", transition: "background 0.2s",
+            color: "#fff", fontSize: "18px", lineHeight: 1,
+          }}
+          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "#007a2f"; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "#009C3B"; }}
+        >‹</button>
+        {/* Right arrow */}
+        <button
+          onClick={() => { pausedRef.current = true; posRef.current += 320; setTimeout(() => { pausedRef.current = false; }, 1200); }}
+          aria-label="Scroll right"
+          style={{
+            position: "absolute", right: "8px", top: "50%", transform: "translateY(-50%)",
+            zIndex: 10, background: "#009C3B", border: "2px solid #FEDF00",
+            borderRadius: "50%", width: "40px", height: "40px", cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            boxShadow: "0 2px 12px rgba(0,0,0,0.18)", transition: "background 0.2s",
+            color: "#fff", fontSize: "18px", lineHeight: 1,
+          }}
+          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "#007a2f"; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "#009C3B"; }}
+        >›</button>
       <div
         style={{ position: "relative", overflow: "hidden", direction: "ltr" }}
         onMouseEnter={() => { pausedRef.current = true; }}
@@ -560,6 +591,7 @@ export default function ReviewsSection() {
             <ReviewCard key={i} review={review} isHe={isHe} />
           ))}
         </div>
+      </div>
       </div>
     </section>
   );

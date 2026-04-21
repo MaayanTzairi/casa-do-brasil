@@ -116,9 +116,9 @@ export default function Footer() {
           </div>
         ) : (
           /* ── DESKTOP: 3-column grid ── */
-          <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "start", maxWidth: "1000px", margin: "0 auto", gap: "2rem", gridTemplateRows: "auto" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "start", maxWidth: "1000px", margin: "0 auto", gap: "2rem", direction: "ltr" }}>
 
-            <div style={{ textAlign: isHe ? "right" : "left" }}>
+            <div style={{ textAlign: isHe ? "right" : "left", direction: isHe ? "rtl" : "ltr" }}>
               {label(isHe ? "מצאו אותנו" : "FIND US")}
               <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem" }}>
                 {isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}
@@ -157,7 +157,7 @@ export default function Footer() {
               </div>
             </div>
 
-            <div style={{ textAlign: isHe ? "left" : "right" }}>
+            <div style={{ textAlign: isHe ? "right" : "left", direction: isHe ? "rtl" : "ltr" }}>
               {label(isHe ? "שעות פתיחה" : "HOURS")}
               <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem" }}>
                 {isHe ? "ראשון עד שבת" : "Sunday to Saturday"}
