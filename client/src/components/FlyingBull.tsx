@@ -21,7 +21,9 @@ const LOGO_URL_300 =
 const LOGO_URL_100 =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-100w_66f2659e.webp";
 
-const PHOTO_URL_DEFAULT = "/manus-storage/brazil-flag-frame_45870dda.png";
+// Primary: webdev storage (works in production). Fallback CDN for dev preview.
+const PHOTO_URL_DEFAULT = "/manus-storage/brazil-flag-circle-new_9402ea55.png";
+const PHOTO_URL_CDN = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/JSnNqJddJiTOLMze.png";
 
 const SCROLL_THRESHOLD_DESKTOP = 130;
 const SCROLL_THRESHOLD_MOBILE  = 90;
@@ -81,21 +83,15 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
         boxShadow: "0 16px 56px rgba(0,0,0,0.80), 0 4px 16px rgba(0,0,0,0.50), inset 0 2px 4px rgba(255,255,255,0.08)",
       }}>
         <img
-          src={PHOTO_URL_DEFAULT}
+          src={PHOTO_URL_CDN}
           alt=""
           aria-hidden="true"
           style={{
-            // The image is a circular flag on a wood background.
-            // Scale up ~1.15x so the flag circle fills the container
-            // and the wood background is hidden behind the overflow:hidden clip.
-            width: "115%",
-            height: "115%",
+            width: "100%",
+            height: "100%",
             objectFit: "cover",
             objectPosition: "center",
             display: "block",
-            position: "absolute",
-            top: "-7.5%",
-            left: "-7.5%",
             background: "#0a1a0a",
           }}
         />

@@ -138,7 +138,8 @@ export default function HeroSection() {
           paddingLeft:   isMobile ? "1.2rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           paddingRight:  isMobile ? "1.2rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           alignItems: "center",
-          justifyContent: "center",
+          // Desktop: space-between so buttons sit at bottom; Mobile: center
+          justifyContent: isMobile ? "center" : "space-between",
           gap: isMobile ? "clamp(0.6rem, 2vh, 1.4rem)" : "clamp(1.2rem, 3vh, 2.8rem)",
           direction: isHe ? "rtl" : "ltr",
         }}
@@ -179,19 +180,19 @@ export default function HeroSection() {
           >
             {isHe ? t.titleHe : t.titleEn}
           </h1>
-          {/* Subtitle — directly under title, no gap */}
+          {/* Subtitle — directly under title, larger size */}
           <p
             style={{
               fontFamily: "'Heebo', sans-serif",
-              fontWeight: 500,
-              fontSize: isMobile ? "clamp(11px, 3.2vw, 15px)" : "clamp(14px, 1.5vw, 20px)",
-              color: "rgba(240,220,160,0.85)",
-              letterSpacing: isMobile ? "0.12em" : "0.22em",
+              fontWeight: 600,
+              fontSize: isMobile ? "clamp(14px, 4.2vw, 20px)" : "clamp(20px, 2.2vw, 30px)",
+              color: "rgba(240,220,160,0.90)",
+              letterSpacing: isMobile ? "0.08em" : "0.18em",
               fontStyle: "italic",
               textAlign: "center",
               whiteSpace: "nowrap",
               margin: 0,
-              textShadow: "0 2px 10px rgba(0,0,0,0.85)",
+              textShadow: "0 2px 12px rgba(0,0,0,0.90)",
               lineHeight: 1.3,
             }}
           >
@@ -199,12 +200,13 @@ export default function HeroSection() {
           </p>
         </div>
 
-        {/* Mobile social icons — horizontal row, centered, between subtitle and buttons */}
+        {/* Mobile social icons — horizontal row, centered, with more spacing from subtitle */}
         {isMobile && (
           <div
             style={{
               display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center",
               gap: "1.6rem",
+              marginTop: "clamp(1.5rem, 5vh, 3rem)",
               animation: "fadeIn 0.6s 0.8s ease both",
             }}
           >
@@ -226,7 +228,7 @@ export default function HeroSection() {
           </div>
         )}
 
-        {/* CTA Buttons — on mobile pushed to bottom via marginTop auto */}
+        {/* CTA Buttons — mobile: pushed to bottom; desktop: pushed to bottom via marginTop auto */}
         <div
           style={{
             display: "flex", alignItems: "center",
@@ -234,7 +236,7 @@ export default function HeroSection() {
             flexWrap: "nowrap",
             justifyContent: "center",
             width: "100%",
-            marginTop: isMobile ? "auto" : undefined,
+            marginTop: "auto",
             animation: "fadeUp 0.8s 1.6s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
