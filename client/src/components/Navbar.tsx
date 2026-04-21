@@ -179,7 +179,7 @@ function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: bo
         (e.currentTarget as HTMLButtonElement).style.borderColor = borderColor;
       }}
     >
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#009C3B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
         <line x1="2" y1="12" x2="22" y2="12" />
         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
@@ -583,7 +583,7 @@ export default function Navbar({
           // Prevent touch scroll from leaking to body
           onTouchMove={(e) => e.stopPropagation()}
         >
-          {/* ── Top bar: cow logo centered + X close (right) ── */}
+          {/* ── Top bar: lang toggle (left) + cow logo (center) + X close (right) ── */}
           <div style={{
             position: "absolute",
             top: 0,
@@ -594,7 +594,13 @@ export default function Navbar({
             alignItems: "center",
             justifyContent: "center",
             borderBottom: "1px solid rgba(62,4,9,0.10)",
+            padding: "0 1.2rem",
           }}>
+            {/* Lang toggle — top left */}
+            <div style={{ position: "absolute", left: "1.2rem" }}>
+              <LangToggle scrolled={true} inOverlay />
+            </div>
+
             {/* Cow logo centered */}
             <img
               src={LOGO_URL}
@@ -662,7 +668,7 @@ export default function Navbar({
             </a>
           ))}
 
-          {/* ── Bottom: reservation button + lang toggle ── */}
+          {/* ── Bottom: reservation button only ── */}
           <div style={{
             position: "absolute",
             bottom: "2.5rem",
@@ -703,7 +709,6 @@ export default function Navbar({
             >
               {isHe ? "הזמנת שולחן" : "RESERVE A TABLE"} {isHe ? "←" : "→"}
             </a>
-            <LangToggle scrolled={true} inOverlay />
           </div>
           {/* Bottom Brazilian stripe */}
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "4px", display: "flex" }}>

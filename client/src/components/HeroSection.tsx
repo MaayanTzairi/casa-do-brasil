@@ -147,23 +147,22 @@ export default function HeroSection() {
         <HeroBullInline progress={bullProgress} isMobile={isMobile} />
 
         {/* Title — gold elegant */}
-        <div style={{ width: "100%", textAlign: "center", overflow: "visible", paddingBottom: "0.15em" }}>
+        <div style={{ width: "100%", textAlign: "center", overflow: "visible", paddingBottom: "0.15em", animation: "fadeUp 0.95s 0.4s cubic-bezier(0.25,0.46,0.45,0.94) both" }}>
           <h1
             className="block select-none"
             style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 900,
               fontSize: isMobile ? "clamp(28px, 9vw, 52px)" : "clamp(42px, 6.5vw, 90px)",
-              background: "linear-gradient(180deg, #f0d080 0%, #c8a020 40%, #e8c050 70%, #a07010 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
+              color: "#ffffff",
+              WebkitTextStroke: isMobile ? "0.8px #c8a020" : "1.2px #c8a020",
+              textStroke: isMobile ? "0.8px #c8a020" : "1.2px #c8a020",
               letterSpacing: "-0.01em",
               lineHeight: 1,
               whiteSpace: "nowrap",
               textAlign: "center",
-              // Clean gradient text — no filter/shadow to avoid ugly glow block
-              animation: "fadeUp 0.95s 0.4s cubic-bezier(0.25,0.46,0.45,0.94) both",
+              textShadow: "0 2px 32px rgba(200,160,32,0.45), 0 1px 8px rgba(0,0,0,0.80)",
+              margin: 0,
             }}
           >
             {isHe ? t.titleHe : t.titleEn}
