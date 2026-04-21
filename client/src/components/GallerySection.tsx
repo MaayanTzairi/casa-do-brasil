@@ -143,13 +143,22 @@ export default function GallerySection() {
             flexDirection: isHe ? "row-reverse" : "row",
             justifyContent: isHe ? "flex-end" : "flex-start", width: "100%",
           }}>
-            <div style={{ width: "20px", height: "1px", background: GOLD }} />
+            <div style={{ display:"flex", flexDirection:"column", gap:"2px", width:"14px" }}>
+              <div style={{ height:"2px", background:"#009C3B", borderRadius:"1px" }} />
+              <div style={{ height:"2px", background:"#FEDF00", borderRadius:"1px" }} />
+              <div style={{ height:"2px", background:"#002776", borderRadius:"1px" }} />
+            </div>
             <span style={{
-              fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.9rem",
-              letterSpacing: isHe ? "0.08em" : "0.44em", textTransform: "uppercase", color: GOLD,
+              fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1.1rem",
+              letterSpacing: isHe ? "0.08em" : "0.28em", textTransform: "uppercase", color: "#009C3B",
             }}>
               {sectionLabel}
             </span>
+            <div style={{ display:"flex", flexDirection:"column", gap:"2px", width:"14px" }}>
+              <div style={{ height:"2px", background:"#009C3B", borderRadius:"1px" }} />
+              <div style={{ height:"2px", background:"#FEDF00", borderRadius:"1px" }} />
+              <div style={{ height:"2px", background:"#002776", borderRadius:"1px" }} />
+            </div>
           </div>
 
           {/* Headline — 3 lines */}
@@ -169,8 +178,9 @@ export default function GallerySection() {
           {/* Gold rule */}
           <div style={{
             ...animStyle(inView, 0.28),
-            width: "48px", height: "1.5px",
-            background: `linear-gradient(to right, ${GOLD}, ${GOLD_R}0.2))`,
+            width: "48px", height: "3px",
+            background: "linear-gradient(to right, #009C3B 33%, #FEDF00 33% 66%, #002776 66%)",
+            borderRadius: "2px",
             marginBottom: "1.5rem",
             transformOrigin: isHe ? "right" : "left",
             marginLeft: isHe ? "auto" : undefined,
@@ -263,14 +273,14 @@ export default function GallerySection() {
                 onClick={prev}
                 style={{
                   position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)",
-                  background: "rgba(255,255,255,0.92)", border: "none", color: BORDEAUX,
+                  background: "rgba(255,255,255,0.92)", border: "none", color: "#009C3B",
                   width: "40px", height: "40px", borderRadius: "50%", cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   fontSize: "20px", zIndex: 5, boxShadow: "0 2px 12px rgba(0,0,0,0.18)",
                   transition: "background 0.22s, color 0.22s, transform 0.22s",
                 }}
-                onMouseEnter={(e) => { const el = e.currentTarget as HTMLButtonElement; el.style.background = BORDEAUX; el.style.color = "#fff"; el.style.transform = "translateY(-50%) scale(1.08)"; }}
-                onMouseLeave={(e) => { const el = e.currentTarget as HTMLButtonElement; el.style.background = "rgba(255,255,255,0.92)"; el.style.color = BORDEAUX; el.style.transform = "translateY(-50%) scale(1)"; }}
+                onMouseEnter={(e) => { const el = e.currentTarget as HTMLButtonElement; el.style.background = "#009C3B"; el.style.color = "#fff"; el.style.transform = "translateY(-50%) scale(1.08)"; }}
+                onMouseLeave={(e) => { const el = e.currentTarget as HTMLButtonElement; el.style.background = "rgba(255,255,255,0.92)"; el.style.color = "#009C3B"; el.style.transform = "translateY(-50%) scale(1)"; }}
               >‹</button>
 
               {/* Next button */}
@@ -278,14 +288,14 @@ export default function GallerySection() {
                 onClick={next}
                 style={{
                   position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)",
-                  background: "rgba(255,255,255,0.92)", border: "none", color: BORDEAUX,
+                  background: "rgba(255,255,255,0.92)", border: "none", color: "#009C3B",
                   width: "40px", height: "40px", borderRadius: "50%", cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   fontSize: "20px", zIndex: 5, boxShadow: "0 2px 12px rgba(0,0,0,0.18)",
                   transition: "background 0.22s, color 0.22s, transform 0.22s",
                 }}
-                onMouseEnter={(e) => { const el = e.currentTarget as HTMLButtonElement; el.style.background = BORDEAUX; el.style.color = "#fff"; el.style.transform = "translateY(-50%) scale(1.08)"; }}
-                onMouseLeave={(e) => { const el = e.currentTarget as HTMLButtonElement; el.style.background = "rgba(255,255,255,0.92)"; el.style.color = BORDEAUX; el.style.transform = "translateY(-50%) scale(1)"; }}
+                onMouseEnter={(e) => { const el = e.currentTarget as HTMLButtonElement; el.style.background = "#009C3B"; el.style.color = "#fff"; el.style.transform = "translateY(-50%) scale(1.08)"; }}
+                onMouseLeave={(e) => { const el = e.currentTarget as HTMLButtonElement; el.style.background = "rgba(255,255,255,0.92)"; el.style.color = "#009C3B"; el.style.transform = "translateY(-50%) scale(1)"; }}
               >›</button>
 
               {/* Counter */}

@@ -140,7 +140,7 @@ function MenuCard({ img, mobileSrc, name, subtitle, btnText, href, dark=false, d
         <div style={{ fontFamily:"'Heebo', sans-serif", fontWeight:900, fontSize:"clamp(12px, 1.4vw, 20px)", color: dark ? "#fff" : BORDEAUX, lineHeight:1.1, letterSpacing:"0.02em", marginBottom:"0.5rem", whiteSpace:"normal", overflow:"visible", wordBreak:"break-word" }}>
           {name}
         </div>
-        <div style={{ fontFamily:"'Heebo', sans-serif", fontWeight:400, fontStyle:"italic", fontSize:"clamp(13px, 1vw, 15px)", color:"rgba(0,156,59,0.75)", marginBottom:"1.2rem", letterSpacing:"0.02em" }}>{subtitle}</div>
+        <div style={{ fontFamily:"'Heebo', sans-serif", fontWeight:400, fontStyle:"italic", fontSize:"clamp(13px, 1vw, 15px)", color: dark ? "#FEDF00" : "rgba(0,156,59,0.75)", marginBottom:"1.2rem", letterSpacing:"0.02em" }}>{subtitle}</div>
         <a href={href} style={{ display:"inline-flex", alignItems:"center", gap:"0.4rem", fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.65rem", letterSpacing:"0.26em", textTransform:"uppercase", textDecoration:"none", color: dark ? "#FEDF00" : "#009C3B", borderBottom:`1.5px solid ${dark ? "#FEDF00" : "#009C3B"}`, paddingBottom:"2px", alignSelf:"flex-start", marginTop:"auto", opacity: hovered ? 0.7 : 1, transition:"opacity 0.2s" }}>
           {btnText} <span style={{ fontSize:"0.78rem" }}>{isHe ? "←" : "→"}</span>
         </a>
