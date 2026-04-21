@@ -118,22 +118,25 @@ export default function Footer() {
           /* ── DESKTOP: 3-column grid ── */
           <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "start", maxWidth: "1000px", margin: "0 auto", gap: "2rem", direction: "ltr" }}>
 
-            <div style={{ textAlign: isHe ? "right" : "left", direction: isHe ? "rtl" : "ltr" }}>
-              {label(isHe ? "מצאו אותנו" : "FIND US")}
-              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem" }}>
-                {isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}
-              </p>
-              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", margin: "0 0 1.2rem" }}>
-                {isHe ? "(צמוד למלון נובה)" : "(adjacent to the Nova Hotel)"}
-              </p>
-              <a href="tel:08-6323032"
-                style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: "#fff", textDecoration: "none", letterSpacing: "0.04em", transition: "color 0.2s", whiteSpace: "nowrap" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GREEN; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}>
-                {phoneIcon}08-6323032
-              </a>
-
-            </div>
+            {/* In Hebrew: col1=Hours (left), col2=Logo (center), col3=FindUs (right) */}
+            {isHe ? (
+              <div style={{ textAlign: "left", direction: "rtl" }}>
+                {label("שעות פתיחה")}
+                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem" }}>ראשון עד שבת</p>
+                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1.05rem", color: YELLOW, margin: 0, letterSpacing: "0.04em" }}>12:00 – 23:00</p>
+              </div>
+            ) : (
+              <div style={{ textAlign: "left", direction: "ltr" }}>
+                {label("FIND US")}
+                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem" }}>Golani Brigade 3, Eilat</p>
+                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", margin: "0 0 1.2rem" }}>(adjacent to the Nova Hotel)</p>
+                <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: "#fff", textDecoration: "none", letterSpacing: "0.04em", transition: "color 0.2s", whiteSpace: "nowrap" }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GREEN; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}>
+                  {phoneIcon}08-6323032
+                </a>
+              </div>
+            )}
 
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.5rem", paddingTop: "0.5rem" }}>
               <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "150px", height: "auto", objectFit: "contain", opacity: 0.92 }} />
@@ -157,15 +160,24 @@ export default function Footer() {
               </div>
             </div>
 
-            <div style={{ textAlign: isHe ? "right" : "left", direction: isHe ? "rtl" : "ltr" }}>
-              {label(isHe ? "שעות פתיחה" : "HOURS")}
-              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem" }}>
-                {isHe ? "ראשון עד שבת" : "Sunday to Saturday"}
-              </p>
-              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1.05rem", color: YELLOW, margin: 0, letterSpacing: "0.04em" }}>
-                12:00 – 23:00
-              </p>
-            </div>
+            {isHe ? (
+              <div style={{ textAlign: "right", direction: "rtl" }}>
+                {label("מצאו אותנו")}
+                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem" }}>חטיבת גולני 3, אילת</p>
+                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", margin: "0 0 1.2rem" }}>(צמוד למלון נובה)</p>
+                <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: "#fff", textDecoration: "none", letterSpacing: "0.04em", transition: "color 0.2s", whiteSpace: "nowrap" }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GREEN; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}>
+                  {phoneIcon}08-6323032
+                </a>
+              </div>
+            ) : (
+              <div style={{ textAlign: "right", direction: "ltr" }}>
+                {label("HOURS")}
+                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem" }}>Sunday to Saturday</p>
+                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1.05rem", color: YELLOW, margin: 0, letterSpacing: "0.04em" }}>12:00 – 23:00</p>
+              </div>
+            )}
           </div>
         )}
 
