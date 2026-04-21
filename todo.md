@@ -7,3 +7,6 @@
 
 ## Homepage Headlines — Apr 21 2026
 - [x] Enlarge big headline (MEAT/MUSIC/BRASIL, OUR MENU, GALLERY) in all three sections
+
+## Hero Light Theme — Apr 21 2026
+- [x] Redesign Hero to light cream/beige theme: light overlay, dark typography, gold accents, matching reference image

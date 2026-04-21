@@ -20,6 +20,7 @@ const HERO_IMAGE_SM_DEFAULT =
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(40,3,6)";
+const CREAM_BG = "rgb(242,236,224)";
 
 // Hardcoded fallbacks — used when CMS has no data yet
 const DEFAULTS = {
@@ -75,7 +76,7 @@ export default function HeroSection() {
       ref={heroRef}
       id="hero"
       className="relative w-full overflow-hidden"
-      style={{ height: "100svh", minHeight: "600px", background: "rgb(28,2,4)" }}
+      style={{ height: "100svh", minHeight: "600px", background: CREAM_BG }}
     >
       {/* ── Background Image + Parallax ── */}
       <div ref={imgWrapRef} className="absolute inset-0 w-full h-full" style={{ willChange: "transform" }}>
@@ -102,14 +103,14 @@ export default function HeroSection() {
       <div className="absolute inset-0">
         <div
           className="absolute inset-0"
-          style={{ background: "linear-gradient(110deg, rgba(40,3,6,0.88) 0%, rgba(62,4,9,0.72) 45%, rgba(20,4,6,0.50) 100%)" }}
+          style={{ background: "linear-gradient(110deg, rgba(242,236,224,0.72) 0%, rgba(230,220,200,0.55) 45%, rgba(200,185,160,0.20) 100%)" }}
         />
       </div>
 
       {/* ── Bottom Gradient Fade ── */}
       <div
         className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ height: "clamp(100px, 18vw, 220px)", background: "linear-gradient(to top, rgba(40,3,6,0.75) 0%, transparent 100%)" }}
+        style={{ height: "clamp(100px, 18vw, 220px)", background: "linear-gradient(to top, rgba(242,236,224,0.85) 0%, transparent 100%)" }}
       />
 
       {/* ── Gold Inset Frame — desktop only ── */}
@@ -144,7 +145,7 @@ export default function HeroSection() {
                   fontFamily: "'Heebo', sans-serif",
                   fontWeight: 900,
                   fontSize: isMobile ? "clamp(48px, 15vw, 80px)" : "clamp(58px, 9.5vw, 125px)",
-                  color: "#FFFFFF",
+                  color: BORDEAUX,
                   letterSpacing: "-0.02em",
                   lineHeight: 0.88,
                   textAlign: isHe ? "right" : "left",
@@ -177,7 +178,7 @@ export default function HeroSection() {
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 300,
             fontSize: isMobile ? "clamp(12px, 3.5vw, 16px)" : "clamp(15px, 1.8vw, 21px)",
-            color: GOLD,
+            color: "rgba(80,50,20,0.85)",
             letterSpacing: "0.12em",
             marginBottom: isMobile ? "2.2rem" : "3.2rem",
             fontStyle: "italic",
@@ -263,7 +264,7 @@ export default function HeroSection() {
           <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.3em", color: "rgba(185,161,103,0.65)", textTransform: "uppercase", writingMode: "vertical-rl", marginBottom: "8px" }}>
             SCROLL
           </span>
-          <div style={{ width: "1px", height: "44px", background: "rgba(185,161,103,0.45)", animation: "pulseDown 2.2s ease-in-out infinite" }} />
+          <div style={{ width: "1px", height: "44px", background: "rgba(40,3,6,0.35)", animation: "pulseDown 2.2s ease-in-out infinite" }} />
         </div>
       )}
     </section>
@@ -277,7 +278,7 @@ function SocialIcon({ href, label, icon, hoverColor }: { href: string; label: st
     <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
-        color: hovered ? hoverColor : "rgba(255,255,255,0.75)",
+        color: hovered ? hoverColor : "rgba(40,3,6,0.70)",
         transition: "color 0.25s ease, transform 0.25s ease",
         transform: hovered ? "scale(1.18)" : "scale(1)",
         display: "flex", alignItems: "center", justifyContent: "center",
@@ -300,10 +301,9 @@ function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: st
         padding: isMobile ? "0.75rem 1.1rem" : "1rem 2.8rem",
         fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: isMobile ? "0.68rem" : "0.75rem",
         letterSpacing: isMobile ? "0.12em" : "0.22em", textTransform: "uppercase" as const,
-        textDecoration: "none", border: "2px solid #FFFFFF",
-        color: hovered ? BORDEAUX : "#FFFFFF",
-        background: hovered ? "#FFFFFF" : "rgba(255,255,255,0.12)",
-        // Use only composited properties (color/background) — avoid animating padding/border
+        textDecoration: "none",        border: `2px solid ${BORDEAUX}`,
+        color: hovered ? "#f5ede0" : BORDEAUX,
+        background: hovered ? BORDEAUX : "rgba(40,3,6,0.08)",  // Use only composited properties (color/background) — avoid animating padding/border
         transition: "color 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         willChange: "color, background-color",
       }}
