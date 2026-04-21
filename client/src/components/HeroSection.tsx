@@ -135,27 +135,24 @@ export default function HeroSection() {
           direction: isHe ? "rtl" : "ltr",
         }}
       >
-        {/* Title — min-height prevents CLS before font loads */}
-        <div className="mb-4" style={{ width: "100%", textAlign: isHe ? "right" : "left", minHeight: isMobile ? "clamp(144px, 45vw, 240px)" : "clamp(174px, 28.5vw, 375px)" }}>
-          {titleWords.map((word: string, i: number) => (
-            <div key={i} className="overflow-hidden">
-              <h1
-                className="block select-none"
-                style={{
-                  fontFamily: "'Heebo', sans-serif",
-                  fontWeight: 900,
-                  fontSize: isMobile ? "clamp(48px, 15vw, 80px)" : "clamp(58px, 9.5vw, 125px)",
-                  color: "#FFFFFF",
-                  letterSpacing: "-0.02em",
-                  lineHeight: 0.88,
-                  textAlign: isHe ? "right" : "left",
-                  animation: `fadeUp 0.95s ${0.4 + i * 0.15}s cubic-bezier(0.25,0.46,0.45,0.94) both`,
-                }}
-              >
-                {word}
-              </h1>
-            </div>
-          ))}
+        {/* Title — single line */}
+        <div className="mb-4 overflow-hidden" style={{ width: "100%", textAlign: isHe ? "right" : "left" }}>
+          <h1
+            className="block select-none"
+            style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 900,
+              fontSize: isMobile ? "clamp(32px, 10vw, 56px)" : "clamp(42px, 6.5vw, 90px)",
+              color: "#FFFFFF",
+              letterSpacing: "-0.02em",
+              lineHeight: 1,
+              whiteSpace: "nowrap",
+              textAlign: isHe ? "right" : "left",
+              animation: "fadeUp 0.95s 0.4s cubic-bezier(0.25,0.46,0.45,0.94) both",
+            }}
+          >
+            {isHe ? t.titleHe : t.titleEn}
+          </h1>
         </div>
 
         {/* Gold rule */}
