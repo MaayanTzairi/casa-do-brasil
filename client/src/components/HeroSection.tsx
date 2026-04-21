@@ -110,7 +110,7 @@ export default function HeroSection() {
       <div className="absolute inset-0">
         <div
           className="absolute inset-0"
-          style={{ background: "linear-gradient(110deg, rgba(10,8,6,0.82) 0%, rgba(20,14,8,0.65) 45%, rgba(10,8,6,0.38) 100%)" }}
+          style={{ background: "linear-gradient(110deg, rgba(10,8,6,0.77) 0%, rgba(20,14,8,0.60) 45%, rgba(10,8,6,0.33) 100%)" }}
         />
       </div>
 
@@ -168,24 +168,25 @@ export default function HeroSection() {
           </h1>
         </div>
 
-        {/* Subtitle — above the gold rule, larger, Brazilian-colors text shadow */}
+        {/* Subtitle — above the gold rule, larger, clean Brazilian accent */}
         <p
           style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 500,
-            fontSize: isMobile ? "clamp(14px, 4.5vw, 20px)" : "clamp(18px, 2.2vw, 28px)",
-            color: "#FFFFFF",
-            letterSpacing: "0.10em",
+            // Mobile: smaller font + nowrap to keep single line
+            fontSize: isMobile ? "clamp(11px, 3.4vw, 15px)" : "clamp(18px, 2.2vw, 28px)",
+            color: "#f0e8c8",          // warm gold-white, readable
+            letterSpacing: isMobile ? "0.06em" : "0.10em",
             fontStyle: "italic",
             textAlign: "center",
-            maxWidth: "80%",
+            whiteSpace: "nowrap",      // force single line on mobile
+            maxWidth: "100%",
             marginBottom: 0,
-            // Brazilian-colors layered text shadow: green → yellow → blue
+            // Clean Brazilian accent: thin green border-glow + subtle gold shimmer
             textShadow: [
-              "0 0 18px rgba(0,156,59,0.75)",   // Brazil green glow
-              "2px 2px 0px rgba(254,223,0,0.55)",  // yellow offset
-              "-1px 3px 8px rgba(0,39,118,0.60)",  // blue depth
-              "0 4px 24px rgba(0,0,0,0.70)",        // dark base shadow
+              "0 1px 0 rgba(0,156,59,0.55)",   // Brazil green underline-glow
+              "0 -1px 0 rgba(254,223,0,0.30)", // gold top shimmer
+              "0 2px 12px rgba(0,0,0,0.80)",   // dark legibility shadow
             ].join(", "),
             animation: "fadeUp 0.8s 1.1s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
@@ -206,7 +207,7 @@ export default function HeroSection() {
           <div className="h-px" style={{ background: GOLD }} />
         </div>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons — on mobile pushed to bottom via marginTop auto */}
         <div
           style={{
             display: "flex", alignItems: "center",
@@ -214,6 +215,7 @@ export default function HeroSection() {
             flexWrap: "nowrap",
             justifyContent: "center",
             width: "100%",
+            marginTop: isMobile ? "auto" : undefined,
             animation: "fadeUp 0.8s 1.6s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
