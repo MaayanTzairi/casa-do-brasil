@@ -21,7 +21,8 @@ const LOGO_URL_300 =
 const LOGO_URL_100 =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-100w_66f2659e.webp";
 
-const PHOTO_URL_DEFAULT = "/brazil-flag-circle.png";
+const PHOTO_URL_DEFAULT =
+  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/OWImvoNilchFTZWw.png";
 
 const SCROLL_THRESHOLD_DESKTOP = 130;
 const SCROLL_THRESHOLD_MOBILE  = 90;
@@ -86,7 +87,7 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
         }} />
       </div>
 
-      {/* Gold ring SVG */}
+      {/* Brazilian Wood Frame SVG */}
       <svg
         style={{
           position: "absolute", left: 0, top: 0,
@@ -97,32 +98,72 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
         viewBox={`0 0 ${circleSize + 12} ${circleSize + 12}`}
       >
         <defs>
-          <linearGradient id="fg-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+          {/* Wood grain gradient */}
+          <linearGradient id="fg-wood1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stopColor="#6B3A1F" />
+            <stop offset="20%"  stopColor="#8B4513" />
+            <stop offset="40%"  stopColor="#5C2E0A" />
+            <stop offset="60%"  stopColor="#7A3B15" />
+            <stop offset="80%"  stopColor="#4A2008" />
+            <stop offset="100%" stopColor="#6B3A1F" />
+          </linearGradient>
+          <linearGradient id="fg-wood2" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stopColor="#9B5523" />
+            <stop offset="50%"  stopColor="#6B3A1F" />
+            <stop offset="100%" stopColor="#4A2008" />
+          </linearGradient>
+          {/* Green leaf gradient */}
+          <linearGradient id="fg-leaf" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stopColor="#1a7a2e" />
+            <stop offset="100%" stopColor="#0d5c1e" />
+          </linearGradient>
+          {/* Gold accent */}
+          <linearGradient id="fg-gold2" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%"   stopColor="#f7e07a" />
-            <stop offset="35%"  stopColor="#c8a84b" />
-            <stop offset="65%"  stopColor="#e8c96a" />
+            <stop offset="50%"  stopColor="#c8a84b" />
             <stop offset="100%" stopColor="#a07830" />
           </linearGradient>
         </defs>
-        <g style={{ transformOrigin: `${(circleSize+12)/2}px ${(circleSize+12)/2}px`, animation: "fb-spin 28s linear infinite" }}>
-          <circle cx={(circleSize+12)/2} cy={(circleSize+12)/2} r={circleSize/2+4}
-            fill="none" stroke="url(#fg-gold)" strokeWidth="1.5"
-            strokeDasharray="12 8" strokeLinecap="round" strokeOpacity="0.80" />
-        </g>
-        <circle cx={(circleSize+12)/2} cy={(circleSize+12)/2} r={circleSize/2}
-          fill="none" stroke="url(#fg-gold)" strokeWidth="2.5" strokeOpacity="0.90"
+
+        {/* Outer thick wood ring */}
+        <circle cx={(circleSize+12)/2} cy={(circleSize+12)/2} r={circleSize/2+5}
+          fill="none" stroke="url(#fg-wood1)" strokeWidth="10" strokeOpacity="0.95" />
+        {/* Wood grain lines (inner) */}
+        <circle cx={(circleSize+12)/2} cy={(circleSize+12)/2} r={circleSize/2+5}
+          fill="none" stroke="url(#fg-wood2)" strokeWidth="3"
+          strokeDasharray="18 6" strokeLinecap="round" strokeOpacity="0.40" />
+        {/* Inner wood ring */}
+        <circle cx={(circleSize+12)/2} cy={(circleSize+12)/2} r={circleSize/2-2}
+          fill="none" stroke="url(#fg-wood1)" strokeWidth="5" strokeOpacity="0.85" />
+
+        {/* Gold accent ring */}
+        <circle cx={(circleSize+12)/2} cy={(circleSize+12)/2} r={circleSize/2+0.5}
+          fill="none" stroke="url(#fg-gold2)" strokeWidth="1.5" strokeOpacity="0.90"
           style={{ animation: "fb-pulse 3.5s ease-in-out infinite" }} />
-        <circle cx={(circleSize+12)/2} cy={(circleSize+12)/2} r={circleSize/2-5}
-          fill="none" stroke="#e8c96a" strokeWidth="0.8" strokeOpacity="0.50" />
+
+        {/* Tropical leaves at 4 cardinal points */}
         {[0, 90, 180, 270].map(deg => {
           const rad = (deg * Math.PI) / 180;
-          const cx  = (circleSize+12)/2 + Math.cos(rad) * (circleSize/2+4);
-          const cy  = (circleSize+12)/2 + Math.sin(rad) * (circleSize/2+4);
+          const cx  = (circleSize+12)/2 + Math.cos(rad) * (circleSize/2+5);
+          const cy  = (circleSize+12)/2 + Math.sin(rad) * (circleSize/2+5);
           return (
-            <g key={deg} transform={`translate(${cx},${cy}) rotate(45)`}>
-              <rect x="-5" y="-5" width="10" height="10" fill="#c8a84b" opacity="0.95" />
-              <rect x="-2.75" y="-2.75" width="5.5" height="5.5" fill="#f7e07a" opacity="0.75" />
+            <g key={deg} transform={`translate(${cx},${cy}) rotate(${deg + 90})`}>
+              {/* Leaf shape */}
+              <ellipse rx="7" ry="13" fill="url(#fg-leaf)" opacity="0.92" />
+              <ellipse rx="2" ry="11" fill="#2d9e4a" opacity="0.50" />
+              {/* Leaf vein */}
+              <line x1="0" y1="-11" x2="0" y2="11" stroke="#1a7a2e" strokeWidth="0.8" strokeOpacity="0.70" />
             </g>
+          );
+        })}
+
+        {/* Small gold dots between leaves */}
+        {[45, 135, 225, 315].map(deg => {
+          const rad = (deg * Math.PI) / 180;
+          const cx  = (circleSize+12)/2 + Math.cos(rad) * (circleSize/2+5);
+          const cy  = (circleSize+12)/2 + Math.sin(rad) * (circleSize/2+5);
+          return (
+            <circle key={deg} cx={cx} cy={cy} r="3.5" fill="url(#fg-gold2)" opacity="0.90" />
           );
         })}
       </svg>

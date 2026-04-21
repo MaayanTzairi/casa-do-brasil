@@ -111,26 +111,30 @@ export default function Footer() {
     </div>
   );
 
-  /* ── FIND US block — always right-aligned ── */
+  /* ── FIND US block — flex column so items align to the correct edge ── */
   const findUsBlock = (align: "left" | "right") => (
-    <div style={{ textAlign: align, direction: isHe ? "rtl" : "ltr" }}>
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: align === "right" ? "flex-end" : "flex-start",
+      width: "100%",
+      direction: "ltr",
+    }}>
       <div style={labelStyle(align)}>
         {stripeIcon}
         {isHe ? "מצאו אותנו" : "FIND US"}
       </div>
-      <p style={bodyText({ textAlign: align })}>
+      <p style={bodyText({ textAlign: align, margin: "0 0 0.3rem" })}>
         {isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}
       </p>
-      <p style={subText({ textAlign: align })}>
+      <p style={subText({ textAlign: align, margin: "0 0 1.2rem" })}>
         {isHe ? "(צמוד למלון נובה)" : "(adjacent to the Nova Hotel)"}
       </p>
-      <div style={{ display: "flex", justifyContent: align === "right" ? "flex-end" : "flex-start" }}>
-        <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: "#fff", textDecoration: "none", letterSpacing: "0.04em", transition: "color 0.2s", whiteSpace: "nowrap" }}
-          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GREEN; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}>
-          {phoneIcon}08-6323032
-        </a>
-      </div>
+      <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: "#fff", textDecoration: "none", letterSpacing: "0.04em", transition: "color 0.2s", whiteSpace: "nowrap" }}
+        onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GREEN; }}
+        onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}>
+        {phoneIcon}08-6323032
+      </a>
     </div>
   );
 
@@ -192,8 +196,7 @@ export default function Footer() {
             display: "grid",
             gridTemplateColumns: "1fr auto 1fr",
             alignItems: "start",
-            maxWidth: "1000px",
-            margin: "0 auto",
+            width: "100%",
             gap: "2rem",
             direction: "ltr",
           }}>
