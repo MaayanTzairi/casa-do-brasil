@@ -302,9 +302,10 @@ function SocialIcon({ href, label, icon, hoverColor, isMobile }: { href: string;
     <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
-        color: hovered ? hoverColor : "rgba(255,255,255,0.80)",
-        transition: "color 0.25s ease, transform 0.25s ease",
-        transform: hovered ? "scale(1.18)" : "scale(1)",
+        color: hovered ? hoverColor : `${hoverColor}cc`,
+        transition: "color 0.25s ease, transform 0.25s ease, filter 0.25s ease",
+        transform: hovered ? "scale(1.20)" : "scale(1)",
+        filter: hovered ? "brightness(1.25) drop-shadow(0 0 6px currentColor)" : "brightness(1)",
         display: "flex", alignItems: "center", justifyContent: "center",
       }}
     >{icon}</a>
