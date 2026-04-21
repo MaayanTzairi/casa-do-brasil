@@ -127,12 +127,13 @@ export default function HeroSection() {
       <div
         className="absolute inset-0 z-10 flex flex-col"
         style={{
-          paddingTop:    isMobile ? "70px" : "90px",
+          // Desktop: paddingTop pushes content below bull (navbar 70px + bull 220px + 20px gap + 20px margin)
+          paddingTop:    isMobile ? "70px" : "330px",
           paddingBottom: isMobile ? "clamp(3rem, 10vw, 5rem)" : "clamp(3rem, 6vw, 6rem)",
           paddingLeft:   isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           paddingRight:  isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           alignItems: isMobile ? "stretch" : "center",
-          justifyContent: isMobile ? "flex-end" : "center",
+          justifyContent: isMobile ? "flex-end" : "space-evenly",
           direction: isHe ? "rtl" : "ltr",
         }}
       >

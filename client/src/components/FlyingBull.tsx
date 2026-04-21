@@ -44,9 +44,9 @@ function computeInitialPositions(isHe: boolean) {
   const vh = window.innerHeight;
   const mobile = vw < 900;
     if (!mobile) {
-      // Desktop: centered horizontally, positioned in upper half of hero (above title)
+      // Desktop: centered horizontally, starts just below navbar (70px) + 20px padding
       const heroX = vw / 2 - BULL_HERO_DESKTOP / 2;
-      const heroY = vh * 0.22 - BULL_HERO_DESKTOP / 2;
+      const heroY = 70 + 20; // below navbar
     const navX = vw / 2 - BULL_NAV_SIZE / 2;
     const navY = 70 / 2 - BULL_NAV_SIZE / 2;
     return { mobile, dHeroPos: { x: heroX, y: heroY }, dNavPos: { x: navX, y: navY }, mHeroPos: null, mNavPos: null };
@@ -97,10 +97,9 @@ export default function FlyingBull() {
     setIsMobile(mobile);
 
     if (!mobile) {
-      // Desktop hero: left or right depending on language
-      // Desktop: centered horizontally, positioned in upper half of hero (above title)
+      // Desktop: centered horizontally, starts just below navbar (70px) + 20px padding
       const heroX = vw / 2 - BULL_HERO_DESKTOP / 2;
-      const heroY = vh * 0.22 - BULL_HERO_DESKTOP / 2;
+      const heroY = 70 + 20; // below navbar
       // Desktop nav: center of navbar
       const navX = vw / 2 - BULL_NAV_SIZE / 2;
       const navY = 70 / 2 - BULL_NAV_SIZE / 2;
