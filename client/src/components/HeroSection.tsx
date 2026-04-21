@@ -139,7 +139,7 @@ export default function HeroSection() {
           paddingRight:  isMobile ? "1.2rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           alignItems: "center",
           justifyContent: "center",
-          gap: "clamp(0.8rem, 2.5vh, 2rem)",
+          gap: isMobile ? "clamp(0.6rem, 2vh, 1.4rem)" : "clamp(1.2rem, 3vh, 2.8rem)",
           direction: isHe ? "rtl" : "ltr",
         }}
       >
@@ -162,7 +162,7 @@ export default function HeroSection() {
               lineHeight: 1,
               whiteSpace: "nowrap",
               textAlign: "center",
-              filter: "drop-shadow(0 2px 12px rgba(0,0,0,0.80))",
+              // Clean gradient text — no filter/shadow to avoid ugly glow block
               animation: "fadeUp 0.95s 0.4s cubic-bezier(0.25,0.46,0.45,0.94) both",
             }}
           >
@@ -210,7 +210,7 @@ export default function HeroSection() {
             style={{
               display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center",
               gap: "1.6rem",
-              animation: "fadeIn 1s 1.8s ease both",
+              animation: "fadeIn 0.6s 0.8s ease both",
             }}
           >
             <SocialIcon href={t.instagramUrl} label="Instagram" hoverColor="#E1306C" isMobile={true} icon={
@@ -266,7 +266,7 @@ export default function HeroSection() {
             bottom: "9rem",
             right: isHe ? undefined : "2.5rem",
             left:  isHe ? "2.5rem" : undefined,
-            animation: "fadeIn 1s 2.4s ease both",
+            animation: "fadeIn 0.6s 0.8s ease both",
           }}
         >
           <SocialIcon href={t.instagramUrl} label="Instagram" hoverColor="#E1306C" isMobile={false} icon={
@@ -299,23 +299,24 @@ function SocialIcon({ href, label, icon, hoverColor, isMobile }: { href: string;
     <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
-        color: hovered ? hoverColor : "rgba(255,255,255,0.90)",
+        // Always show brand color (not just on hover) — glass effect with brand tint
+        color: hovered ? "#fff" : hoverColor,
         transition: "all 0.28s cubic-bezier(0.25,0.46,0.45,0.94)",
         transform: hovered ? "scale(1.12) translateY(-3px)" : "scale(1) translateY(0)",
         display: "flex", alignItems: "center", justifyContent: "center",
         width: sz, height: sz,
         background: hovered
-          ? `rgba(255,255,255,0.18)`
-          : "rgba(255,255,255,0.10)",
+          ? `${hoverColor}CC`
+          : `${hoverColor}22`,
         backdropFilter: "blur(14px)",
         WebkitBackdropFilter: "blur(14px)",
         border: hovered
-          ? `1.5px solid ${hoverColor}99`
-          : "1.5px solid rgba(255,255,255,0.25)",
+          ? `1.5px solid ${hoverColor}`
+          : `1.5px solid ${hoverColor}66`,
         borderRadius: "12px",
         boxShadow: hovered
           ? `0 8px 24px rgba(0,0,0,0.35), 0 0 0 1px ${hoverColor}44, inset 0 1px 0 rgba(255,255,255,0.20)`
-          : "0 4px 12px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.12)",
+          : `0 4px 12px rgba(0,0,0,0.25), 0 0 8px ${hoverColor}33, inset 0 1px 0 rgba(255,255,255,0.12)`,
       }}
     >{icon}</a>
   );
@@ -371,11 +372,11 @@ function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: st
         fontSize: isMobile ? "0.92rem" : "1.15rem",
         letterSpacing: isMobile ? "0.10em" : "0.18em", textTransform: "uppercase" as const,
         textDecoration: "none",
-        border: "2px solid rgba(200,168,0,0.90)",
+        border: "2px solid rgba(230,200,0,0.95)",
         color: "#1a0800",
         background: hovered
-          ? "rgba(220,185,0,0.98)"
-          : "rgba(200,160,0,0.88)",
+          ? "rgba(240,210,0,1.0)"
+          : "rgba(220,185,0,0.95)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
         boxShadow: hovered

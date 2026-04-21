@@ -21,7 +21,7 @@ const LOGO_URL_300 =
 const LOGO_URL_100 =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-100w_66f2659e.webp";
 
-const PHOTO_URL_DEFAULT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/DLDgiXRBzsYPFWGO.png";
+const PHOTO_URL_DEFAULT = "/manus-storage/brazil-flag-frame_43a46f3a.png";
 
 const SCROLL_THRESHOLD_DESKTOP = 130;
 const SCROLL_THRESHOLD_MOBILE  = 90;
