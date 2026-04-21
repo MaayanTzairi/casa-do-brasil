@@ -190,14 +190,32 @@ export default function MenuSection() {
 
           <div style={{ ...animStyle(inView, 0.05), display:"flex", alignItems:"center", gap:"0.7rem", marginBottom:"1.4rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start", width:"100%" }}>
             <div style={{ width:"20px", height:"1px", background:GOLD }} />
-            <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.78rem", letterSpacing: isHe ? "0.08em" : "0.44em", textTransform:"uppercase", color:GOLD }}>{label}</span>
+            <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.9rem", letterSpacing: isHe ? "0.08em" : "0.44em", textTransform:"uppercase", color:GOLD }}>{label}</span>
           </div>
 
           <h2 style={{ ...animStyle(inView, 0.15), fontFamily:"'Heebo', sans-serif", fontWeight:900, fontSize: mobile ? "clamp(36px, 10vw, 52px)" : "clamp(36px, 3.8vw, 58px)", color:BORDEAUX, margin:0, lineHeight:0.9, letterSpacing:"0.01em", textAlign: isHe ? "right" : "left", width:"100%" }}>
             {line1}<br />{line2}<br />{line3}
           </h2>
 
-          <div style={{ ...animStyle(inView, 0.32), width:"48px", height:"1.5px", background:`linear-gradient(to right, ${GOLD}, ${GOLD_R}0.2))`, margin:"1.8rem 0 2rem", transformOrigin: isHe ? "right" : "left", marginLeft: isHe ? "auto" : undefined, marginRight: isHe ? 0 : undefined, alignSelf:"flex-start" }} />
+          {/* Description paragraph */}
+          <p style={{
+            ...animStyle(inView, 0.28),
+            fontFamily: "'Heebo', sans-serif", fontWeight: 300,
+            fontSize: mobile ? "clamp(16px, 4.2vw, 19px)" : "clamp(16px, 1.35vw, 19px)",
+            color: "rgb(90,35,35)", lineHeight: 1.85,
+            maxWidth: "420px", margin: "1.4rem 0 1.8rem",
+            textAlign: isHe ? "right" : "left",
+            direction: isHe ? "rtl" : "ltr",
+            marginLeft: isHe ? "auto" : undefined,
+            marginRight: isHe ? 0 : undefined,
+          }}>
+            {isHe
+              ? "קאזה דו ברזיל, מסעדת בשרים אילת – מציעה תפריט בשיטת \"אשפטו קוהידו\" – \"השיפוד הרץ\" – נתחי בשר עסיסיים הנפרסים על ידי ה\"פסאדורים\" היישר מהשיפוד אל הצלחת כמה שרק תרצו… בנוסף תוכלו ליהנות מתפריט עשיר הכולל בשרים, סלטים, מנות צמחוניות ומנות ילדים. הפסאדורים וצוות הגרילמנים מזמינים אתכם ליהנות מאווירה ברזילאית מלהיבה ומקרנבל בשרים עשיר וטעים…"
+              : "Casa do Brasil, Eilat's Brazilian steakhouse, offers the \"Espeto Corrido\" experience — succulent cuts carved tableside by our Passadors, straight from the skewer to your plate, as much as you desire. Enjoy a rich menu of meats, salads, vegetarian dishes and a children's menu. Our Passadors and grill team invite you to savour a thrilling Brazilian atmosphere and a rich, delicious carnival of meats…"
+            }
+          </p>
+
+          <div style={{ ...animStyle(inView, 0.32), width:"48px", height:"1.5px", background:`linear-gradient(to right, ${GOLD}, ${GOLD_R}0.2))`, margin:"0 0 2rem", transformOrigin: isHe ? "right" : "left", marginLeft: isHe ? "auto" : undefined, marginRight: isHe ? 0 : undefined, alignSelf:"flex-start" }} />
 
           <div style={{ ...animStyle(inView, 0.42), display:"flex", justifyContent: mobile ? "center" : "flex-start", width:"100%" }}>
             <a href={ctaBtnUrl} style={{ display:"inline-flex", alignItems:"center", gap:"0.7rem", fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.65rem", letterSpacing:"0.28em", textTransform:"uppercase", textDecoration:"none", color:BORDEAUX, padding:"0.85rem 2rem", border:`1.5px solid ${GOLD}`, transition:"background 0.28s, color 0.28s" }}

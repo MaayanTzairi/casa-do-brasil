@@ -81,7 +81,7 @@ export default function HeroSection() {
       <div ref={imgWrapRef} className="absolute inset-0 w-full h-full" style={{ willChange: "transform" }}>
         <img
           src={bgImage}
-          srcSet={cms?.backgroundImageUrl ? undefined : `${HERO_IMAGE_SM_DEFAULT} 900w, ${HERO_IMAGE_DEFAULT} 1920w`}
+          srcSet={`${HERO_IMAGE_SM_DEFAULT} 900w, ${HERO_IMAGE_DEFAULT} 1920w`}
           sizes="100vw"
           alt="Casa do Brasil — Brazilian Grill and Churrascaria in Eilat"
           fetchPriority="high"

@@ -91,8 +91,8 @@ export default function CasaVibesSection() {
   const ctaUrl = "/story";
 
   // Image 1
-  const img1Src = (cms as any)?.image1Url ?? MEAT_URL;
-  const img1SrcSm = (cms as any)?.image1Url ?? MEAT_URL_SM;
+  const img1Src = MEAT_URL;
+  const img1SrcSm = MEAT_URL_SM;
   const img1Label = isHe
     ? ("CHURRASCO")
     : ("CHURRASCO");
@@ -102,8 +102,8 @@ export default function CasaVibesSection() {
   const img1TitleLines = img1TitleRaw.split("\\n").join("\n").split("\n");
 
   // Image 2
-  const img2Src = (cms as any)?.image2Url ?? CARNIVAL_URL;
-  const img2SrcSm = (cms as any)?.image2Url ?? CARNIVAL_URL_SM;
+  const img2Src = CARNIVAL_URL;
+  const img2SrcSm = CARNIVAL_URL_SM;
   const img2Label = isHe
     ? ("CARNIVAL")
     : ("CARNIVAL");
@@ -146,7 +146,7 @@ export default function CasaVibesSection() {
           {/* Label */}
           <div style={{ ...animStyle(inView, 0), display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.4rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start", width: "100%" }}>
             <div style={{ width: "28px", height: "1px", background: GOLD }} />
-            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.78rem", letterSpacing: isHe ? "0.08em" : "0.38em", textTransform: "uppercase", color: GOLD }}>
+            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.9rem", letterSpacing: isHe ? "0.08em" : "0.38em", textTransform: "uppercase", color: GOLD }}>
               {label}
             </span>
           </div>
@@ -178,8 +178,8 @@ export default function CasaVibesSection() {
           <p style={{
             ...animStyle(inView, 0.52),
             fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-            fontSize: mobile ? "clamp(15px, 4vw, 17px)" : "clamp(15px, 1.2vw, 17px)",
-            color: "rgb(90,35,35)", lineHeight: 1.85, maxWidth: "380px", marginBottom: "2rem",
+            fontSize: mobile ? "clamp(16px, 4.2vw, 19px)" : "clamp(16px, 1.35vw, 19px)",
+            color: "rgb(90,35,35)", lineHeight: 1.85, maxWidth: "420px", marginBottom: "2rem",
             marginRight: isHe ? 0 : undefined, marginLeft: isHe ? "auto" : undefined,
           }}>
             {description}
@@ -197,7 +197,7 @@ export default function CasaVibesSection() {
               <div style={{ position: "relative", overflow: "hidden", borderRadius: "2px" }}>
                 <img
                   src={img1Src}
-                  srcSet={(cms as any)?.image1Url ? undefined : `${MEAT_URL_350} 350w, ${MEAT_URL_400} 400w, ${img1SrcSm} 450w, ${img1Src} 800w`}
+                  srcSet={`${MEAT_URL_350} 350w, ${MEAT_URL_400} 400w, ${img1SrcSm} 450w, ${img1Src} 800w`}
                   sizes="(max-width:768px) 60vw, (max-width:1200px) 35vw, 400px"
                   alt={img1Label}
                   loading="lazy" decoding="async"
@@ -215,7 +215,7 @@ export default function CasaVibesSection() {
               <div style={{ position: "relative", overflow: "hidden", borderRadius: "2px" }}>
                 <img
                   src={img2Src}
-                  srcSet={(cms as any)?.image2Url ? undefined : `${CARNIVAL_URL_350} 350w, ${CARNIVAL_URL_400} 400w, ${img2SrcSm} 450w, ${img2Src} 800w`}
+                  srcSet={`${CARNIVAL_URL_350} 350w, ${CARNIVAL_URL_400} 400w, ${img2SrcSm} 450w, ${img2Src} 800w`}
                   sizes="(max-width:768px) 56vw, (max-width:1200px) 33vw, 400px"
                   alt={img2Label}
                   loading="lazy" decoding="async"
@@ -239,7 +239,7 @@ export default function CasaVibesSection() {
             <div style={{ position: "relative", overflow: "hidden", height: "260px", borderRadius: "2px" }}>
               <img
                 src={img1Src}
-                srcSet={cms?.image1Url ? undefined : `${MEAT_URL_350} 350w, ${MEAT_URL_400} 400w, ${img1SrcSm} 450w, ${img1Src} 800w`}
+                srcSet={`${MEAT_URL_350} 350w, ${MEAT_URL_400} 400w, ${img1SrcSm} 450w, ${img1Src} 800w`}
                 sizes="50vw"
                 alt={img1Label}
                 loading="lazy" decoding="async"
@@ -254,7 +254,7 @@ export default function CasaVibesSection() {
             <div style={{ position: "relative", overflow: "hidden", height: "260px", borderRadius: "2px" }}>
               <img
                 src={img2Src}
-                srcSet={cms?.image2Url ? undefined : `${img2SrcSm} 450w, ${img2Src} 800w`}
+                srcSet={`${img2SrcSm} 450w, ${img2Src} 800w`}
                 sizes="50vw"
                 alt={img2Label}
                 loading="lazy" decoding="async"

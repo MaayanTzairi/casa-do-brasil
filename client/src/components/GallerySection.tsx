@@ -144,7 +144,7 @@ export default function GallerySection() {
           }}>
             <div style={{ width: "20px", height: "1px", background: GOLD }} />
             <span style={{
-              fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.78rem",
+              fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.9rem",
               letterSpacing: isHe ? "0.08em" : "0.44em", textTransform: "uppercase", color: GOLD,
             }}>
               {sectionLabel}
@@ -181,7 +181,7 @@ export default function GallerySection() {
           <p style={{
             ...animStyle(inView, 0.38),
             fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-            fontSize: mobile ? "clamp(15px, 4vw, 17px)" : "clamp(15px, 1.2vw, 17px)",
+            fontSize: mobile ? "clamp(16px, 4.2vw, 19px)" : "clamp(16px, 1.35vw, 19px)",
             color: "rgba(62,4,9,0.65)",
             lineHeight: 1.75, marginBottom: mobile ? "1.5rem" : "2.2rem",
             textAlign: isHe ? "right" : "left", direction: isHe ? "rtl" : "ltr",
