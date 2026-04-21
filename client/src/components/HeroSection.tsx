@@ -172,6 +172,31 @@ export default function HeroSection() {
           </h1>
         </div>
 
+        {/* Subtitle — above the gold rule, larger, Brazilian-colors text shadow */}
+        <p
+          style={{
+            fontFamily: "'Heebo', sans-serif",
+            fontWeight: 500,
+            fontSize: isMobile ? "clamp(14px, 4.5vw, 20px)" : "clamp(18px, 2.2vw, 28px)",
+            color: "#FFFFFF",
+            letterSpacing: "0.10em",
+            fontStyle: "italic",
+            textAlign: isMobile ? (isHe ? "right" : "left") : "center",
+            maxWidth: isMobile ? "calc(100% - 3rem)" : "80%",
+            marginBottom: isMobile ? "0.8rem" : 0,
+            // Brazilian-colors layered text shadow: green → yellow → blue
+            textShadow: [
+              "0 0 18px rgba(0,156,59,0.75)",   // Brazil green glow
+              "2px 2px 0px rgba(254,223,0,0.55)",  // yellow offset
+              "-1px 3px 8px rgba(0,39,118,0.60)",  // blue depth
+              "0 4px 24px rgba(0,0,0,0.70)",        // dark base shadow
+            ].join(", "),
+            animation: "fadeUp 0.8s 1.1s cubic-bezier(0.25,0.46,0.45,0.94) both",
+          }}
+        >
+          {isHe ? t.subtitleHe : t.subtitleEn}
+        </p>
+
         {/* Gold rule */}
         <div
           style={{
@@ -184,24 +209,6 @@ export default function HeroSection() {
         >
           <div className="h-px" style={{ background: GOLD }} />
         </div>
-
-        {/* Subtitle */}
-        <p
-          style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 300,
-            fontSize: isMobile ? "clamp(12px, 3.5vw, 16px)" : "clamp(15px, 1.8vw, 21px)",
-            color: "rgba(255,255,255,0.88)",
-            letterSpacing: "0.12em",
-            fontStyle: "italic",
-            textAlign: isMobile ? (isHe ? "right" : "left") : "center",
-            maxWidth: isMobile ? "calc(100% - 3rem)" : "70%",
-            marginBottom: isMobile ? "2.2rem" : 0,
-            animation: "fadeUp 0.8s 1.3s cubic-bezier(0.25,0.46,0.45,0.94) both",
-          }}
-        >
-          {isHe ? t.subtitleHe : t.subtitleEn}
-        </p>
 
         {/* CTA Buttons */}
         <div
