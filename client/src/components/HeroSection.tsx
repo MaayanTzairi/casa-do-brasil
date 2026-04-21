@@ -106,11 +106,17 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* ── Cinematic Overlay ── */}
+      {/* ── Warm Cinematic Overlay ── */}
       <div className="absolute inset-0">
+        {/* Warm amber/brown tint — like the reference image */}
         <div
           className="absolute inset-0"
-          style={{ background: "linear-gradient(110deg, rgba(10,8,6,0.60) 0%, rgba(20,14,8,0.42) 45%, rgba(10,8,6,0.25) 100%)" }}
+          style={{ background: "linear-gradient(160deg, rgba(30,14,4,0.72) 0%, rgba(50,22,6,0.50) 40%, rgba(20,10,2,0.65) 100%)" }}
+        />
+        {/* Extra warm vignette around edges */}
+        <div
+          className="absolute inset-0"
+          style={{ background: "radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(10,4,0,0.55) 100%)" }}
         />
       </div>
 
@@ -140,7 +146,7 @@ export default function HeroSection() {
         {/* ── Bull Logo (inline, first flex child on both mobile and desktop) ── */}
         <HeroBullInline progress={bullProgress} isMobile={isMobile} />
 
-        {/* Title — single line */}
+        {/* Title — gold elegant */}
         <div className="overflow-hidden" style={{ width: "100%", textAlign: "center" }}>
           <h1
             className="block select-none"
@@ -148,17 +154,15 @@ export default function HeroSection() {
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 900,
               fontSize: isMobile ? "clamp(28px, 9vw, 52px)" : "clamp(42px, 6.5vw, 90px)",
-              color: "#FFFFFF",
-              letterSpacing: "-0.02em",
+              background: "linear-gradient(180deg, #f0d080 0%, #c8a020 40%, #e8c050 70%, #a07010 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              letterSpacing: "-0.01em",
               lineHeight: 1,
               whiteSpace: "nowrap",
               textAlign: "center",
-              // Same crisp shadow treatment as subtitle — strong dark base for legibility
-              textShadow: [
-                "0 2px 20px rgba(0,0,0,0.95)",
-                "0 1px 6px rgba(0,0,0,0.90)",
-                "2px 2px 0px rgba(0,0,0,0.60)",
-              ].join(", "),
+              filter: "drop-shadow(0 2px 12px rgba(0,0,0,0.80))",
               animation: "fadeUp 0.95s 0.4s cubic-bezier(0.25,0.46,0.45,0.94) both",
             }}
           >
@@ -179,15 +183,15 @@ export default function HeroSection() {
           <p
             style={{
               fontFamily: "'Heebo', sans-serif",
-              fontWeight: 800,
-              fontSize: isMobile ? "clamp(14px, 4.2vw, 20px)" : "clamp(22px, 2.8vw, 36px)",
-              color: "#FFFFFF",
-              letterSpacing: isMobile ? "0.06em" : "0.10em",
+              fontWeight: 600,
+              fontSize: isMobile ? "clamp(13px, 3.8vw, 18px)" : "clamp(18px, 2.2vw, 28px)",
+              color: "rgba(240,220,160,0.92)",
+              letterSpacing: isMobile ? "0.08em" : "0.18em",
               fontStyle: "italic",
               textAlign: "center",
               whiteSpace: "nowrap",
               margin: 0,
-              textShadow: "0 2px 18px rgba(0,0,0,1), 0 1px 5px rgba(0,0,0,0.95), 2px 2px 0 rgba(0,0,0,0.70)",
+              textShadow: "0 2px 14px rgba(0,0,0,0.90)",
             }}
           >
             {isHe ? t.subtitleHe : t.subtitleEn}
@@ -321,26 +325,28 @@ function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: st
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
         display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.6rem",
-        padding: isMobile ? "0.85rem 1.6rem" : "1.1rem 3.2rem",
-        fontFamily: "'Heebo', sans-serif", fontWeight: 800,
-        fontSize: isMobile ? "0.82rem" : "1.15rem",
-        letterSpacing: isMobile ? "0.10em" : "0.22em", textTransform: "uppercase" as const,
+        padding: isMobile ? "0.75rem 1.8rem" : "1.0rem 3.0rem",
+        fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+        fontSize: isMobile ? "0.80rem" : "1.0rem",
+        letterSpacing: isMobile ? "0.12em" : "0.22em", textTransform: "uppercase" as const,
         textDecoration: "none",
-        border: "2.5px solid #009C3B",
-        color: hovered ? "#FFFFFF" : "#FFFFFF",
+        border: "2px solid rgba(0,156,59,0.85)",
+        color: "#FFFFFF",
         background: hovered
-          ? "#007a2e"
-          : "#009C3B",
+          ? "rgba(0,100,38,0.92)"
+          : "rgba(0,130,48,0.75)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
         boxShadow: hovered
-          ? "0 4px 14px rgba(0,0,0,0.45)"
-          : "0 2px 8px rgba(0,0,0,0.30)",
-        transition: "all 0.30s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-        transform: hovered ? "translateY(-2px)" : "translateY(0)",
+          ? "0 6px 24px rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.12)"
+          : "0 3px 12px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08)",
+        transition: "all 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        transform: hovered ? "translateY(-2px) scale(1.02)" : "translateY(0) scale(1)",
         willChange: "transform, box-shadow",
-        borderRadius: "3px",
+        borderRadius: "50px",
       }}
     >
-      {label} <span style={{ fontSize: "1.1rem", lineHeight: 1 }}>{isHe ? "←" : "→"}</span>
+      {label} <span style={{ fontSize: "1.0rem", lineHeight: 1 }}>{isHe ? "←" : "→"}</span>
     </a>
   );
 }
@@ -353,23 +359,25 @@ function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: st
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
         display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.6rem",
-        padding: isMobile ? "0.85rem 1.6rem" : "1.1rem 3.2rem",
-        fontFamily: "'Heebo', sans-serif", fontWeight: 800,
-        fontSize: isMobile ? "0.82rem" : "1.15rem",
-        letterSpacing: isMobile ? "0.10em" : "0.22em", textTransform: "uppercase" as const,
+        padding: isMobile ? "0.75rem 1.8rem" : "1.0rem 3.0rem",
+        fontFamily: "'Heebo', sans-serif", fontWeight: 700,
+        fontSize: isMobile ? "0.80rem" : "1.0rem",
+        letterSpacing: isMobile ? "0.12em" : "0.22em", textTransform: "uppercase" as const,
         textDecoration: "none",
-        border: "2.5px solid #c8a800",
-        color: hovered ? "#1a0a00" : "#1a0a00",
+        border: "2px solid rgba(200,168,0,0.85)",
+        color: hovered ? "#1a0a00" : "#1a0800",
         background: hovered
-          ? "#d4aa00"
-          : "#FEDF00",
+          ? "rgba(212,176,0,0.95)"
+          : "rgba(200,160,0,0.80)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
         boxShadow: hovered
-          ? "0 4px 14px rgba(0,0,0,0.40)"
-          : "0 2px 8px rgba(0,0,0,0.25)",
-        transition: "all 0.30s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-        transform: hovered ? "translateY(-2px)" : "translateY(0)",
+          ? "0 6px 24px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.20)"
+          : "0 3px 12px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.12)",
+        transition: "all 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        transform: hovered ? "translateY(-2px) scale(1.02)" : "translateY(0) scale(1)",
         willChange: "transform, box-shadow",
-        borderRadius: "3px",
+        borderRadius: "50px",
       }}
     >
       {label}

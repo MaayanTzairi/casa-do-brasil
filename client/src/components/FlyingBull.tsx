@@ -21,7 +21,7 @@ const LOGO_URL_300 =
 const LOGO_URL_100 =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-100w_66f2659e.webp";
 
-const PHOTO_URL_DEFAULT = "/manus-storage/brazil-flag-frame_ad2f7bb9.png";
+const PHOTO_URL_DEFAULT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/DLDgiXRBzsYPFWGO.png";
 
 const SCROLL_THRESHOLD_DESKTOP = 130;
 const SCROLL_THRESHOLD_MOBILE  = 90;
@@ -68,18 +68,73 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
         @keyframes fb-pulse { 0%,100%{opacity:.75} 50%{opacity:1} }
       `}</style>
 
-      {/* Flag + frame image — the image itself IS the frame, so no clipping needed */}
+      {/* Dark green circle background */}
       <div style={{
         position: "absolute",
-        left: 0, top: 0,
-        width: circleSize + 12, height: circleSize + 12,
+        left: 6, top: 6,
+        width: circleSize, height: circleSize,
+        borderRadius: "50%",
         opacity: circleAlpha,
         pointerEvents: "none",
-      }}>
-        <img src={PHOTO_URL_DEFAULT} alt="" aria-hidden="true"
-          style={{ width: "100%", height: "100%", objectFit: "contain", display: "block",
-            filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.60))" }} />
-      </div>
+        background: "radial-gradient(circle at 38% 35%, #1a5c2e 0%, #0d3a1c 55%, #071e0e 100%)",
+        boxShadow: "0 12px 48px rgba(0,0,0,0.70), 0 0 0 3px rgba(185,161,103,0.25)",
+      }} />
+
+      {/* Gold double-ring SVG frame */}
+      <svg
+        style={{
+          position: "absolute", left: 0, top: 0,
+          width: circleSize + 12, height: circleSize + 12,
+          overflow: "visible",
+          opacity: circleAlpha,
+          pointerEvents: "none",
+        }}
+        viewBox={`0 0 ${circleSize + 12} ${circleSize + 12}`}
+      >
+        <defs>
+          <linearGradient id="gold-ring-1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stopColor="#f5e090" />
+            <stop offset="25%"  stopColor="#c8a020" />
+            <stop offset="50%"  stopColor="#f0d060" />
+            <stop offset="75%"  stopColor="#a07010" />
+            <stop offset="100%" stopColor="#e8c040" />
+          </linearGradient>
+          <linearGradient id="gold-ring-2" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stopColor="#e8c040" />
+            <stop offset="50%"  stopColor="#b89020" />
+            <stop offset="100%" stopColor="#f5e090" />
+          </linearGradient>
+        </defs>
+        {/* Outer gold ring — thicker */}
+        <circle
+          cx={(circleSize + 12) / 2} cy={(circleSize + 12) / 2}
+          r={circleSize / 2 + 4}
+          fill="none"
+          stroke="url(#gold-ring-1)"
+          strokeWidth="5"
+        />
+        {/* Inner gold ring — thinner, slightly inside */}
+        <circle
+          cx={(circleSize + 12) / 2} cy={(circleSize + 12) / 2}
+          r={circleSize / 2 - 3}
+          fill="none"
+          stroke="url(#gold-ring-2)"
+          strokeWidth="1.5"
+          strokeOpacity="0.7"
+        />
+        {/* Subtle rotating dashed ring */}
+        <g style={{ transformOrigin: `${(circleSize + 12) / 2}px ${(circleSize + 12) / 2}px`, animation: "fb-spin 30s linear infinite" }}>
+          <circle
+            cx={(circleSize + 12) / 2} cy={(circleSize + 12) / 2}
+            r={circleSize / 2 + 8}
+            fill="none"
+            stroke="rgba(200,160,32,0.40)"
+            strokeWidth="1"
+            strokeDasharray="4 12"
+            strokeLinecap="round"
+          />
+        </g>
+      </svg>
 
 
 
