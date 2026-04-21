@@ -208,6 +208,33 @@ export default function HeroSection() {
           </div>
         </div>
 
+        {/* Mobile social icons — horizontal row, centered, between subtitle and buttons */}
+        {isMobile && (
+          <div
+            style={{
+              display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center",
+              gap: "1.6rem",
+              animation: "fadeIn 1s 1.8s ease both",
+            }}
+          >
+            <SocialIcon href={t.instagramUrl} label="Instagram" hoverColor="#E1306C" isMobile={true} icon={
+              <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+              </svg>
+            } />
+            <SocialIcon href={t.facebookUrl} label="Facebook" hoverColor="#1877F2" isMobile={true} icon={
+              <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            } />
+            <SocialIcon href={t.tiktokUrl} label="TikTok" hoverColor="#69C9D0" isMobile={true} icon={
+              <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
+              </svg>
+            } />
+          </div>
+        )}
+
         {/* CTA Buttons — on mobile pushed to bottom via marginTop auto */}
         <div
           style={{
@@ -235,49 +262,33 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* ── Social Icons ── */}
-      <div
-        className="absolute z-20 flex flex-col items-center gap-4"
-        style={{
-          bottom: isMobile ? "5.5rem" : "9rem",
-          right: isHe ? undefined : (isMobile ? "0.9rem" : "2.5rem"),
-          left:  isHe ? (isMobile ? "0.9rem" : "2.5rem") : undefined,
-          animation: "fadeIn 1s 2.4s ease both",
-        }}
-      >
-        <SocialIcon href={t.instagramUrl} label="Instagram" hoverColor="#E1306C" isMobile={isMobile} icon={
-          <svg width={isMobile ? 16 : 32} height={isMobile ? 16 : 32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
-          </svg>
-        } />
-        <SocialIcon href={t.facebookUrl} label="Facebook" hoverColor="#1877F2" isMobile={isMobile} icon={
-          <svg width={isMobile ? 16 : 32} height={isMobile ? 16 : 32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-          </svg>
-        } />
-        <SocialIcon href={t.tiktokUrl} label="TikTok" hoverColor="#69C9D0" isMobile={isMobile} icon={
-          <svg width={isMobile ? 15 : 30} height={isMobile ? 15 : 30} viewBox="0 0 24 24" fill="currentColor" stroke="none">
-            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
-          </svg>
-        } />
-        <div style={{ width: "1px", height: "36px", background: "rgba(185,161,103,0.35)" }} />
-      </div>
-
-      {/* ── Scroll Indicator — desktop only ── */}
+      {/* ── Social Icons — desktop only, vertical on side ── */}
       {!isMobile && (
         <div
-          className="absolute z-20 flex flex-col items-center gap-2"
+          className="absolute z-20 flex flex-col items-center gap-4"
           style={{
-            bottom: "2rem",
+            bottom: "9rem",
             right: isHe ? undefined : "2.5rem",
             left:  isHe ? "2.5rem" : undefined,
-            animation: "fadeIn 1s 2.2s ease both",
+            animation: "fadeIn 1s 2.4s ease both",
           }}
         >
-          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.3em", color: "rgba(185,161,103,0.65)", textTransform: "uppercase", writingMode: "vertical-rl", marginBottom: "8px" }}>
-            SCROLL
-          </span>
-          <div style={{ width: "1px", height: "44px", background: "rgba(185,161,103,0.45)", animation: "pulseDown 2.2s ease-in-out infinite" }} />
+          <SocialIcon href={t.instagramUrl} label="Instagram" hoverColor="#E1306C" isMobile={false} icon={
+            <svg width={32} height={32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+            </svg>
+          } />
+          <SocialIcon href={t.facebookUrl} label="Facebook" hoverColor="#1877F2" isMobile={false} icon={
+            <svg width={32} height={32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+          } />
+          <SocialIcon href={t.tiktokUrl} label="TikTok" hoverColor="#69C9D0" isMobile={false} icon={
+            <svg width={30} height={30} viewBox="0 0 24 24" fill="currentColor" stroke="none">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
+            </svg>
+          } />
+          <div style={{ width: "1px", height: "36px", background: "rgba(185,161,103,0.35)" }} />
         </div>
       )}
     </section>
