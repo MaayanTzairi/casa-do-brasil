@@ -298,15 +298,21 @@ export default function HeroSection() {
 /* ── Social Icon ── */
 function SocialIcon({ href, label, icon, hoverColor, isMobile }: { href: string; label: string; icon: React.ReactNode; hoverColor: string; isMobile?: boolean }) {
   const [hovered, setHovered] = useState(false);
+  const sz = isMobile ? 44 : 52;
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
-        color: hovered ? hoverColor : `${hoverColor}cc`,
-        transition: "color 0.25s ease, transform 0.25s ease, filter 0.25s ease",
-        transform: hovered ? "scale(1.20)" : "scale(1)",
-        filter: hovered ? "brightness(1.25) drop-shadow(0 0 6px currentColor)" : "brightness(1)",
+        color: hovered ? hoverColor : hoverColor,
+        transition: "all 0.25s ease",
+        transform: hovered ? "scale(1.12) translateY(-2px)" : "scale(1) translateY(0)",
         display: "flex", alignItems: "center", justifyContent: "center",
+        width: sz, height: sz,
+        background: hovered ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.92)",
+        borderRadius: "10px",
+        boxShadow: hovered
+          ? `0 6px 20px rgba(0,0,0,0.30), 0 0 0 2px ${hoverColor}88`
+          : "0 3px 10px rgba(0,0,0,0.20)",
       }}
     >{icon}</a>
   );
