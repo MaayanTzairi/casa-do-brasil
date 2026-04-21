@@ -125,18 +125,19 @@ export default function HeroSection() {
 
       {/* ── Hero Content ── */}
       <div
-        className="absolute inset-0 z-10 flex flex-col justify-end"
+        className="absolute inset-0 z-10 flex flex-col"
         style={{
           paddingTop:    isMobile ? "70px" : "90px",
           paddingBottom: isMobile ? "clamp(3rem, 10vw, 5rem)" : "clamp(3rem, 6vw, 6rem)",
           paddingLeft:   isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           paddingRight:  isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
-          alignItems: "stretch",
+          alignItems: isMobile ? "stretch" : "center",
+          justifyContent: isMobile ? "flex-end" : "center",
           direction: isHe ? "rtl" : "ltr",
         }}
       >
         {/* Title — single line */}
-        <div className="mb-4 overflow-hidden" style={{ width: "100%", textAlign: isHe ? "right" : "left" }}>
+        <div className="mb-4 overflow-hidden" style={{ width: "100%", textAlign: isMobile ? (isHe ? "right" : "left") : "center" }}>
           <h1
             className="block select-none"
             style={{
@@ -147,7 +148,7 @@ export default function HeroSection() {
               letterSpacing: "-0.02em",
               lineHeight: 1,
               whiteSpace: "nowrap",
-              textAlign: isHe ? "right" : "left",
+              textAlign: isMobile ? (isHe ? "right" : "left") : "center",
               animation: "fadeUp 0.95s 0.4s cubic-bezier(0.25,0.46,0.45,0.94) both",
             }}
           >
@@ -159,10 +160,10 @@ export default function HeroSection() {
         <div
           className="mb-4"
           style={{
-            width: isMobile ? "clamp(120px, 40vw, 220px)" : "clamp(180px, 28vw, 460px)",
-            transformOrigin: isHe ? "right" : "left",
-            marginLeft: isHe ? "auto" : undefined,
-            marginRight: isHe ? 0 : undefined,
+            width: isMobile ? "clamp(120px, 40vw, 220px)" : "clamp(180px, 28vw, 360px)",
+            transformOrigin: isMobile ? (isHe ? "right" : "left") : "center",
+            marginLeft: isMobile ? (isHe ? "auto" : undefined) : "auto",
+            marginRight: isMobile ? (isHe ? 0 : undefined) : "auto",
             animation: "drawLine 1.2s 0.9s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
@@ -179,10 +180,8 @@ export default function HeroSection() {
             letterSpacing: "0.12em",
             marginBottom: isMobile ? "2.2rem" : "3.2rem",
             fontStyle: "italic",
-            textAlign: isHe ? "right" : "left",
-            // Limit width so subtitle doesn't run under the social icons column
-            // In RTL context, the element is already right-aligned naturally (direction:rtl on parent)
-            maxWidth: isMobile ? "calc(100% - 3rem)" : "60%",
+            textAlign: isMobile ? (isHe ? "right" : "left") : "center",
+            maxWidth: isMobile ? "calc(100% - 3rem)" : "70%",
             animation: "fadeUp 0.8s 1.3s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
@@ -190,15 +189,12 @@ export default function HeroSection() {
         </p>
 
         {/* CTA Buttons */}
-        {/* NOTE: parent container has direction:rtl in Hebrew.
-            In RTL flex context: flex-start = visual right, flex-end = visual left.
-            So we always use flex-start — this puts buttons on the right in HE and left in EN. */}
         <div
           style={{
             display: "flex", alignItems: "center",
             gap: isMobile ? "0.7rem" : "1.25rem",
             flexWrap: "nowrap",
-            justifyContent: "flex-start",
+            justifyContent: isMobile ? "flex-start" : "center",
             width: "100%",
             animation: "fadeUp 0.8s 1.6s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}

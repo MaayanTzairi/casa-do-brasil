@@ -26,7 +26,7 @@ const PHOTO_URL_DEFAULT =
 const SCROLL_THRESHOLD_DESKTOP = 130;
 const SCROLL_THRESHOLD_MOBILE  = 90;
 
-const BULL_HERO_DESKTOP = 260;
+const BULL_HERO_DESKTOP = 220;
 const BULL_HERO_MOBILE  = 88;
 const BULL_NAV_SIZE     = 44;
 
@@ -43,9 +43,10 @@ function computeInitialPositions(isHe: boolean) {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   const mobile = vw < 900;
-  if (!mobile) {
-    const heroX = isHe ? vw * 0.28 - BULL_HERO_DESKTOP / 2 : vw * 0.72 - BULL_HERO_DESKTOP / 2;
-    const heroY = vh / 2 - BULL_HERO_DESKTOP / 2 - 20;
+    if (!mobile) {
+      // Desktop: centered horizontally, positioned in upper half of hero (above title)
+      const heroX = vw / 2 - BULL_HERO_DESKTOP / 2;
+      const heroY = vh * 0.22 - BULL_HERO_DESKTOP / 2;
     const navX = vw / 2 - BULL_NAV_SIZE / 2;
     const navY = 70 / 2 - BULL_NAV_SIZE / 2;
     return { mobile, dHeroPos: { x: heroX, y: heroY }, dNavPos: { x: navX, y: navY }, mHeroPos: null, mNavPos: null };
@@ -97,10 +98,9 @@ export default function FlyingBull() {
 
     if (!mobile) {
       // Desktop hero: left or right depending on language
-      const heroX = isHe
-        ? vw * 0.28 - BULL_HERO_DESKTOP / 2
-        : vw * 0.72 - BULL_HERO_DESKTOP / 2;
-      const heroY = vh / 2 - BULL_HERO_DESKTOP / 2 - 20;
+      // Desktop: centered horizontally, positioned in upper half of hero (above title)
+      const heroX = vw / 2 - BULL_HERO_DESKTOP / 2;
+      const heroY = vh * 0.22 - BULL_HERO_DESKTOP / 2;
       // Desktop nav: center of navbar
       const navX = vw / 2 - BULL_NAV_SIZE / 2;
       const navY = 70 / 2 - BULL_NAV_SIZE / 2;
