@@ -68,17 +68,36 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
         @keyframes fb-pulse { 0%,100%{opacity:.75} 50%{opacity:1} }
       `}</style>
 
-      {/* Dark green circle background */}
+      {/* Brazilian flag image clipped to circle */}
       <div style={{
         position: "absolute",
         left: 6, top: 6,
         width: circleSize, height: circleSize,
         borderRadius: "50%",
+        overflow: "hidden",
         opacity: circleAlpha,
         pointerEvents: "none",
-        background: "radial-gradient(circle at 38% 35%, #1a5c2e 0%, #0d3a1c 55%, #071e0e 100%)",
-        boxShadow: "0 12px 48px rgba(0,0,0,0.70), 0 0 0 3px rgba(185,161,103,0.25)",
-      }} />
+        boxShadow: "0 12px 48px rgba(0,0,0,0.70)",
+      }}>
+        <img
+          src={PHOTO_URL_DEFAULT}
+          alt=""
+          aria-hidden="true"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+            display: "block",
+          }}
+        />
+        {/* Slight dark vignette so bull stands out */}
+        <div style={{
+          position: "absolute", inset: 0,
+          background: "radial-gradient(circle at 50% 50%, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.35) 100%)",
+          borderRadius: "50%",
+        }} />
+      </div>
 
       {/* Gold double-ring SVG frame */}
       <svg
@@ -138,7 +157,7 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
 
 
 
-      {/* Bull image — centered over the circle */}
+      {/* Bull image — pixel-perfect center via transform */}
       <img
         src={LOGO_URL_DEFAULT}
         srcSet={`${LOGO_URL_100} 100w, ${LOGO_URL_300} 300w, ${LOGO_URL_DEFAULT} 360w`}
@@ -150,13 +169,15 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
         decoding="sync"
         style={{
           position: "absolute",
-          left: (circleSize + 12) / 2 - bullSz / 2,
-          top:  (circleSize + 12) / 2 - bullSz / 2,
-          width: bullSz, height: "auto",
+          left: "50%",
+          top: "50%",
+          transform: `translate(-50%, -50%) scale(${lerp(1, 0.6, easeInOut(progress))})`,
+          width: heroSize,
+          height: "auto",
           objectFit: "contain",
           zIndex: 2,
-          filter: `drop-shadow(0 4px 20px rgba(0,0,0,0.5))`,
-          willChange: "width, left, top",
+          filter: `drop-shadow(0 4px 20px rgba(0,0,0,0.55))`,
+          willChange: "transform",
         }}
       />
     </div>
