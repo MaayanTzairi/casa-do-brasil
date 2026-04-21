@@ -133,7 +133,7 @@ export default function HeroSection() {
         className="absolute inset-0 z-10 flex flex-col"
         style={{
           // Both mobile and desktop: flex-start from paddingTop, gap between items
-          paddingTop:    isMobile ? "80px" : "90px",
+          paddingTop:    isMobile ? "110px" : "90px",
           paddingBottom: isMobile ? "clamp(3rem, 8vw, 5rem)" : "clamp(3rem, 6vw, 6rem)",
           paddingLeft:   isMobile ? "1.2rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           paddingRight:  isMobile ? "1.2rem" : "clamp(2rem, 5.5vw, 5.5rem)",
@@ -147,7 +147,7 @@ export default function HeroSection() {
         <HeroBullInline progress={bullProgress} isMobile={isMobile} />
 
         {/* Title — gold elegant */}
-        <div className="overflow-hidden" style={{ width: "100%", textAlign: "center" }}>
+        <div style={{ width: "100%", textAlign: "center", overflow: "visible", paddingBottom: "0.15em" }}>
           <h1
             className="block select-none"
             style={{

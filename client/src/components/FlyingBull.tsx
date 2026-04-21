@@ -86,9 +86,10 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
           style={{
             width: "100%",
             height: "100%",
-            objectFit: "cover",
+            objectFit: "contain",
             objectPosition: "center",
             display: "block",
+            background: "#0a1a0a",
           }}
         />
         {/* Slight dark vignette so bull stands out */}

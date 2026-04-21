@@ -147,9 +147,12 @@ function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: bo
   const { lang, setLang } = useLanguage();
   const isHe = lang === "he";
   const color = inOverlay ? "#fff" : (scrolled ? BORDEAUX : "#fff");
+  const bgColor = inOverlay
+    ? "rgba(0,156,59,0.85)"
+    : scrolled ? "transparent" : "rgba(0,156,59,0.75)";
   const borderColor = inOverlay
-    ? "rgba(185,161,103,0.4)"
-    : scrolled ? "rgba(62,4,9,0.3)" : "rgba(255,255,255,0.4)";
+    ? "rgba(0,200,80,0.60)"
+    : scrolled ? "rgba(62,4,9,0.3)" : "rgba(0,200,80,0.70)";
 
   return (
     <button
@@ -159,7 +162,9 @@ function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: bo
         display: "flex",
         alignItems: "center",
         gap: 5,
-        background: "none",
+        background: bgColor,
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
         border: `1px solid ${borderColor}`,
         borderRadius: "20px",
         padding: "4px 10px",
@@ -657,14 +662,47 @@ export default function Navbar({
             </a>
           ))}
 
-          {/* ── Bottom: lang toggle + thin Brazilian stripe ── */}
+          {/* ── Bottom: reservation button + lang toggle ── */}
           <div style={{
             position: "absolute",
-            bottom: "2rem",
+            bottom: "2.5rem",
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
             gap: "1rem",
+            width: "100%",
+            padding: "0 2rem",
           }}>
+            {/* Reservation CTA button */}
+            <a
+              href={RESERVATIONS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.5rem",
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 800,
+                fontSize: "1.0rem",
+                letterSpacing: isHe ? "0.04em" : "0.14em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                color: "#fff",
+                background: "rgba(0,130,48,0.90)",
+                backdropFilter: "blur(10px)",
+                WebkitBackdropFilter: "blur(10px)",
+                border: "2px solid rgba(0,156,59,0.85)",
+                borderRadius: "50px",
+                padding: "0.85rem 2.5rem",
+                width: "100%",
+                maxWidth: "320px",
+                boxShadow: "0 4px 16px rgba(0,0,0,0.20)",
+              }}
+            >
+              {isHe ? "הזמנת שולחן" : "RESERVE A TABLE"} {isHe ? "←" : "→"}
+            </a>
             <LangToggle scrolled={true} inOverlay />
           </div>
           {/* Bottom Brazilian stripe */}
