@@ -101,7 +101,12 @@ function MenuCard({ img, mobileSrc, name, subtitle, btnText, href, dark=false, d
       }}
     >
       {dark ? <LatticeBg /> : <BotanicalBg />}
-      <GoldCorners opacity={hovered ? 0.85 : 0.5} />
+      {/* Brazilian stripe top accent */}
+      <div style={{ position:"absolute", top:0, left:0, right:0, height:"3px", zIndex:6, display:"flex" }}>
+        <div style={{ flex:1, background:"#009C3B" }} />
+        <div style={{ flex:1, background:"#FEDF00" }} />
+        <div style={{ flex:1, background:"#002776" }} />
+      </div>
 
       <div style={{ position:"relative", paddingBottom:"62%", overflow:"hidden", flexShrink:0 }}>
         <img src={img} alt={name} width={600} height={372} loading="lazy" decoding="async"
@@ -118,17 +123,25 @@ function MenuCard({ img, mobileSrc, name, subtitle, btnText, href, dark=false, d
           : "linear-gradient(160deg, rgba(250,250,248,0) 0%, rgba(250,250,248,0.08) 50%, rgba(250,250,248,0.5) 100%)"
         }} />
         <div style={{ position:"absolute", top:"1.1rem", left:"1.3rem", zIndex:3 }}>
-          <div style={{ width:"20px", height:"1px", background:GOLD, opacity:0.85 }} />
+          <div style={{ display:"flex", flexDirection:"column", gap:"2px", width:"10px" }}>
+            <div style={{ height:"2px", background:"#009C3B", borderRadius:"1px" }} />
+            <div style={{ height:"2px", background:"#FEDF00", borderRadius:"1px" }} />
+            <div style={{ height:"2px", background:"#002776", borderRadius:"1px" }} />
+          </div>
         </div>
       </div>
 
       <div style={{ padding:"1.3rem 1.5rem 1.7rem", display:"flex", flexDirection:"column", flex:1, position:"relative", zIndex:2 }}>
-        <div style={{ width:"22px", height:"1px", background:`linear-gradient(to right, ${GOLD}, ${GOLD_R}0.15))`, marginBottom:"0.85rem" }} />
+        <div style={{ display:"flex", gap:"2px", marginBottom:"0.85rem" }}>
+          <div style={{ width:"8px", height:"2px", background:"#009C3B", borderRadius:"1px" }} />
+          <div style={{ width:"8px", height:"2px", background:"#FEDF00", borderRadius:"1px" }} />
+          <div style={{ width:"8px", height:"2px", background:"#002776", borderRadius:"1px" }} />
+        </div>
         <div style={{ fontFamily:"'Heebo', sans-serif", fontWeight:900, fontSize:"clamp(12px, 1.4vw, 20px)", color: dark ? "#fff" : BORDEAUX, lineHeight:1.1, letterSpacing:"0.02em", marginBottom:"0.5rem", whiteSpace:"normal", overflow:"visible", wordBreak:"break-word" }}>
           {name}
         </div>
-        <div style={{ fontFamily:"'Heebo', sans-serif", fontWeight:300, fontStyle:"italic", fontSize:"clamp(13px, 1vw, 15px)", color:GOLD, marginBottom:"1.2rem", letterSpacing:"0.02em" }}>{subtitle}</div>
-        <a href={href} style={{ display:"inline-flex", alignItems:"center", gap:"0.4rem", fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.65rem", letterSpacing:"0.26em", textTransform:"uppercase", textDecoration:"none", color: dark ? GOLD : BORDEAUX, borderBottom:`1px solid ${GOLD_R}0.5)`, paddingBottom:"2px", alignSelf:"flex-start", marginTop:"auto", opacity: hovered ? 0.6 : 1, transition:"opacity 0.2s" }}>
+        <div style={{ fontFamily:"'Heebo', sans-serif", fontWeight:400, fontStyle:"italic", fontSize:"clamp(13px, 1vw, 15px)", color:"rgba(0,156,59,0.75)", marginBottom:"1.2rem", letterSpacing:"0.02em" }}>{subtitle}</div>
+        <a href={href} style={{ display:"inline-flex", alignItems:"center", gap:"0.4rem", fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.65rem", letterSpacing:"0.26em", textTransform:"uppercase", textDecoration:"none", color: dark ? "#FEDF00" : "#009C3B", borderBottom:`1.5px solid ${dark ? "#FEDF00" : "#009C3B"}`, paddingBottom:"2px", alignSelf:"flex-start", marginTop:"auto", opacity: hovered ? 0.7 : 1, transition:"opacity 0.2s" }}>
           {btnText} <span style={{ fontSize:"0.78rem" }}>{isHe ? "←" : "→"}</span>
         </a>
       </div>
