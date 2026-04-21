@@ -416,17 +416,19 @@ export default function ReviewsSection() {
          {/* Three stats row */}
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr auto 1fr auto 1fr",
+            display: "flex",
+            flexDirection: "row",
             alignItems: "center",
-            maxWidth: mobile ? "100%" : "860px",
+            justifyContent: "center",
+            maxWidth: mobile ? "100vw" : "860px",
+            width: "100%",
             margin: "0 auto",
-            padding: mobile ? "0 1rem" : "0",
+            padding: mobile ? "0" : "0",
             gap: "0",
           }}
         >
           {/* Stat 1 — Guests */}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: mobile ? "0.3rem" : "0.5rem", padding: mobile ? "0 0.5rem" : "0 1.5rem" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: mobile ? "0.3rem" : "0.5rem", flex: 1, minWidth: 0, padding: mobile ? "0 0.25rem" : "0 1.5rem" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: "#009C3B", lineHeight: 1, letterSpacing: "-0.02em" }}>{customersValue}</span>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: "#FEDF00", lineHeight: 1 }}>{customersSuffix}</span>
@@ -440,7 +442,7 @@ export default function ReviewsSection() {
           <div style={{ width: "1px", height: mobile ? "48px" : "60px", background: "rgba(0,156,59,0.3)" }} />
 
           {/* Stat 2 — Years */}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: mobile ? "0.3rem" : "0.5rem", padding: mobile ? "0 0.5rem" : "0 1.5rem" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: mobile ? "0.3rem" : "0.5rem", flex: 1, minWidth: 0, padding: mobile ? "0 0.25rem" : "0 1.5rem" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: "#009C3B", lineHeight: 1, letterSpacing: "-0.02em" }}>{yearsValue}</span>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: "#FEDF00", lineHeight: 1 }}>{yearsSuffix}</span>
@@ -454,7 +456,7 @@ export default function ReviewsSection() {
           <div style={{ width: "1px", height: mobile ? "48px" : "60px", background: "rgba(0,156,59,0.3)" }} />
 
           {/* Stat 3 — 5000+ Reviews */}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: mobile ? "0.3rem" : "0.5rem", padding: mobile ? "0 0.5rem" : "0 1.5rem" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: mobile ? "0.3rem" : "0.5rem", flex: 1, minWidth: 0, padding: mobile ? "0 0.25rem" : "0 1.5rem" }}>
             <div style={{ display: "flex", alignItems: "flex-start", gap: "2px" }}>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: "#009C3B", lineHeight: 1, letterSpacing: "-0.02em" }}>5,000</span>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: "#FEDF00", lineHeight: 1 }}>+</span>
