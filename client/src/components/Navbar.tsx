@@ -212,8 +212,8 @@ function ReservationsBtn({ scrolled, label }: { scrolled: boolean; label: string
         textTransform: "uppercase",
         textDecoration: "none",
         color: scrolled ? "#fff" : BORDEAUX,
-        background: scrolled ? BORDEAUX : "#fff",
-        border: `1.5px solid ${scrolled ? BORDEAUX : "#fff"}`,
+        background: scrolled ? "#009C3B" : "#fff",
+        border: `1.5px solid ${scrolled ? "#009C3B" : "#fff"}`,
         padding: "0.5rem 1.2rem",
         transition: "all 0.3s ease",
         whiteSpace: "nowrap",
@@ -227,8 +227,8 @@ function ReservationsBtn({ scrolled, label }: { scrolled: boolean; label: string
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLAnchorElement;
-        el.style.background = scrolled ? BORDEAUX : "#fff";
-        el.style.borderColor = scrolled ? BORDEAUX : "#fff";
+        el.style.background = scrolled ? "#009C3B" : "#fff";
+        el.style.borderColor = scrolled ? "#009C3B" : "#fff";
         el.style.color = scrolled ? "#fff" : BORDEAUX;
       }}
     >
@@ -388,8 +388,8 @@ export default function Navbar({
                   textTransform: "uppercase",
                   textDecoration: "none",
                   color: scrolled ? "#fff" : BORDEAUX,
-                  background: scrolled ? BORDEAUX : "#fff",
-                  border: `1.5px solid ${scrolled ? BORDEAUX : "#fff"}`,
+                  background: scrolled ? "#009C3B" : "#fff",
+                  border: `1.5px solid ${scrolled ? "#009C3B" : "#fff"}`,
                   padding: "0.26rem 0.45rem",
                   whiteSpace: "nowrap",
                   transition: "all 0.3s ease",
