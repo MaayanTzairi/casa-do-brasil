@@ -168,31 +168,39 @@ export default function HeroSection() {
           </h1>
         </div>
 
-        {/* Subtitle — above the gold rule, larger, clean Brazilian accent */}
-        <p
+        {/* Subtitle — white text with Brazilian-flag colored underline accent */}
+        <div
           style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 500,
-            // Mobile: smaller font + nowrap to keep single line
-            fontSize: isMobile ? "clamp(11px, 3.4vw, 15px)" : "clamp(18px, 2.2vw, 28px)",
-            color: "#f0e8c8",          // warm gold-white, readable
-            letterSpacing: isMobile ? "0.06em" : "0.10em",
-            fontStyle: "italic",
-            textAlign: "center",
-            whiteSpace: "nowrap",      // force single line on mobile
-            maxWidth: "100%",
-            marginBottom: 0,
-            // Clean Brazilian accent: thin green border-glow + subtle gold shimmer
-            textShadow: [
-              "0 1px 0 rgba(0,156,59,0.55)",   // Brazil green underline-glow
-              "0 -1px 0 rgba(254,223,0,0.30)", // gold top shimmer
-              "0 2px 12px rgba(0,0,0,0.80)",   // dark legibility shadow
-            ].join(", "),
+            display: "inline-flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "6px",
             animation: "fadeUp 0.8s 1.1s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
-          {isHe ? t.subtitleHe : t.subtitleEn}
-        </p>
+          <p
+            style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 600,
+              fontSize: isMobile ? "clamp(12px, 3.6vw, 16px)" : "clamp(18px, 2.2vw, 28px)",
+              color: "#FFFFFF",
+              letterSpacing: isMobile ? "0.08em" : "0.12em",
+              fontStyle: "italic",
+              textAlign: "center",
+              whiteSpace: "nowrap",
+              margin: 0,
+              textShadow: "0 2px 14px rgba(0,0,0,0.90), 0 1px 4px rgba(0,0,0,0.80)",
+            }}
+          >
+            {isHe ? t.subtitleHe : t.subtitleEn}
+          </p>
+          {/* Brazilian-flag 3-stripe underline: green | yellow | blue */}
+          <div style={{ display: "flex", width: "100%", height: "3px", borderRadius: "2px", overflow: "hidden" }}>
+            <div style={{ flex: 1, background: "#009C3B" }} />
+            <div style={{ flex: 1, background: "#FEDF00" }} />
+            <div style={{ flex: 1, background: "#002776" }} />
+          </div>
+        </div>
 
         {/* Gold rule */}
         <div
