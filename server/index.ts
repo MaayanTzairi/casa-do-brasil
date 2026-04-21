@@ -11,7 +11,7 @@ const distPath = path.resolve(__dirname, "../dist");
 app.use(express.static(distPath));
 
 // SPA fallback — serve index.html for all non-asset routes
-app.get("*", (_req, res) => {
+app.get("/{*splat}", (_req, res) => {
   res.sendFile(path.join(distPath, "index.html"));
 });
 
