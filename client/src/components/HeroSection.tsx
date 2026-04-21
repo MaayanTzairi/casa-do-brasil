@@ -120,15 +120,7 @@ export default function HeroSection() {
         style={{ height: "clamp(100px, 18vw, 220px)", background: "linear-gradient(to top, rgba(10,8,6,0.55) 0%, transparent 100%)" }}
       />
 
-      {/* ── Gold Inset Frame — desktop only ── */}
-      {!isMobile && (
-        <div className="absolute pointer-events-none" style={{ zIndex: 2, top: 0, left: "20px", right: "20px", bottom: "20px" }}>
-          <div className="absolute left-0 right-0 h-px" style={{ top: "82px", background: "rgba(185,161,103,0.55)", transformOrigin: "left", animation: "drawLine 1.2s 0.7s cubic-bezier(0.25,0.46,0.45,0.94) both" }} />
-          <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: "rgba(185,161,103,0.55)", transformOrigin: "left", animation: "drawLine 1.2s 1.1s cubic-bezier(0.25,0.46,0.45,0.94) both" }} />
-          <div className="absolute left-0 w-px" style={{ top: "82px", bottom: 0, background: "rgba(185,161,103,0.55)", transformOrigin: "top", animation: "drawLineY 1.2s 0.9s cubic-bezier(0.25,0.46,0.45,0.94) both" }} />
-          <div className="absolute right-0 w-px" style={{ top: "82px", bottom: 0, background: "rgba(185,161,103,0.55)", transformOrigin: "top", animation: "drawLineY 1.2s 1.05s cubic-bezier(0.25,0.46,0.45,0.94) both" }} />
-        </div>
-      )}
+
 
       {/* ── Hero Content ── */}
       <div
