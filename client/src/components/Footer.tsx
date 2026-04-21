@@ -106,8 +106,7 @@ export default function Footer() {
             {/* Logo */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
               <img src={LOGO_URL} alt="Casa do Brasil"
-                style={{ width: "120px", height: "auto", objectFit: "contain",
-                  filter: "brightness(0) saturate(100%) invert(8%) sepia(30%) saturate(800%) hue-rotate(10deg) brightness(95%)" }} />
+                style={{ width: "120px", height: "auto", objectFit: "contain" }} />
               <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.82rem", color: MID, margin: 0, letterSpacing: "0.12em", fontStyle: "italic" }}>
                 {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקוריה" : "Brazilian Grill · Music & Churrascaria"}
               </p>
@@ -170,8 +169,7 @@ export default function Footer() {
             {/* Col 2 — center */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.2rem", minWidth: "180px" }}>
               <img src={LOGO_URL} alt="Casa do Brasil"
-                style={{ width: "140px", height: "auto", objectFit: "contain",
-                  filter: "brightness(0) saturate(100%) invert(8%) sepia(30%) saturate(800%) hue-rotate(10deg) brightness(95%)" }} />
+                style={{ width: "140px", height: "auto", objectFit: "contain" }} />
               <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.78rem", color: MID, margin: 0, letterSpacing: "0.14em", fontStyle: "italic", textAlign: "center" }}>
                 {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקוריה" : "Brazilian Grill · Music & Churrascaria"}
               </p>

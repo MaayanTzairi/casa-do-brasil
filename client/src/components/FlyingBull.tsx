@@ -68,33 +68,47 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
       <style>{`
         @keyframes fb-spin { to { transform: rotate(360deg); } }
         @keyframes fb-pulse { 0%,100%{opacity:.75} 50%{opacity:1} }
-        @keyframes bowtie-sparkle {
-          0%   { opacity: 0; transform: scale(0.4) rotate(-20deg); }
-          15%  { opacity: 1; transform: scale(1.3) rotate(5deg); }
-          30%  { opacity: 0.8; transform: scale(1.0) rotate(0deg); }
-          55%  { opacity: 0; transform: scale(0.6) rotate(10deg); }
-          70%  { opacity: 0.9; transform: scale(1.2) rotate(-5deg); }
-          85%  { opacity: 0.7; transform: scale(1.0) rotate(0deg); }
-          100% { opacity: 0; transform: scale(0.4) rotate(20deg); }
-        }
-        @keyframes bowtie-glow {
-          0%,100% { filter: drop-shadow(0 0 3px #ffe066) drop-shadow(0 0 8px #f5c518); }
-          50%     { filter: drop-shadow(0 0 8px #fff5a0) drop-shadow(0 0 20px #f5c518) drop-shadow(0 0 35px #d4a017); }
+        @keyframes bowtie-glow-pulse {
+          0%,100% { filter: drop-shadow(0 0 4px #ffe066) drop-shadow(0 0 10px #f5c518) drop-shadow(0 0 18px #d4a017); }
+          50%     { filter: drop-shadow(0 0 8px #fff5a0) drop-shadow(0 0 22px #f5c518) drop-shadow(0 0 38px #d4a017); }
         }
       `}</style>
 
-      {/* Circle background — clean dark green */}
-      <div style={{
-        position: "absolute",
-        left: 6, top: 6,
-        width: circleSize, height: circleSize,
-        borderRadius: "50%",
-        overflow: "hidden",
-        opacity: circleAlpha,
-        pointerEvents: "none",
-        background: "radial-gradient(circle at 40% 35%, #1a3d1a 0%, #0d2010 60%, #060e06 100%)",
-        boxShadow: "0 16px 56px rgba(0,0,0,0.80), 0 4px 16px rgba(0,0,0,0.50), inset 0 2px 4px rgba(255,255,255,0.08)",
-      }} />
+      {/* Brazilian flag circle background */}
+      <svg
+        style={{
+          position: "absolute",
+          left: 6, top: 6,
+          width: circleSize, height: circleSize,
+          opacity: circleAlpha,
+          pointerEvents: "none",
+          borderRadius: "50%",
+          overflow: "hidden",
+          boxShadow: "0 16px 56px rgba(0,0,0,0.80), 0 4px 16px rgba(0,0,0,0.50)",
+        }}
+        viewBox="0 0 200 200"
+      >
+        {/* Green background */}
+        <circle cx="100" cy="100" r="100" fill="#009C3B" />
+        {/* Yellow diamond */}
+        <polygon points="100,18 182,100 100,182 18,100" fill="#FEDF00" />
+        {/* Blue circle */}
+        <circle cx="100" cy="100" r="42" fill="#002776" />
+        {/* White band */}
+        <path d="M 58 100 Q 100 88 142 100" fill="none" stroke="white" strokeWidth="5" />
+        {/* Stars — simplified 5 white dots */}
+        <circle cx="82" cy="97" r="3" fill="white" />
+        <circle cx="100" cy="92" r="3" fill="white" />
+        <circle cx="118" cy="97" r="3" fill="white" />
+        <circle cx="90" cy="107" r="2.5" fill="white" />
+        <circle cx="110" cy="107" r="2.5" fill="white" />
+        {/* Dark vignette overlay */}
+        <radialGradient id="flag-vignette" cx="50%" cy="50%" r="50%">
+          <stop offset="40%" stopColor="rgba(0,0,0,0)" />
+          <stop offset="100%" stopColor="rgba(0,0,0,0.45)" />
+        </radialGradient>
+        <circle cx="100" cy="100" r="100" fill="url(#flag-vignette)" />
+      </svg>
 
       {/* Premium gold multi-ring SVG frame */}
       <svg
@@ -210,29 +224,20 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
         }}
       />
 
-      {/* Bow-tie sparkle overlay — gold glitter dots that pulse around the bow-tie area */}
-      {[...Array(6)].map((_, i) => {
-        const angle = (i / 6) * Math.PI * 2;
-        const r = heroSize * 0.28;
-        const cx = (circleSize + 12) / 2 + Math.cos(angle) * r;
-        const cy = (circleSize + 12) / 2 + heroSize * 0.18 + Math.sin(angle) * r * 0.5;
-        const delay = i * 0.38;
-        const sz = 3 + (i % 3) * 2;
-        return (
-          <div key={i} style={{
-            position: "absolute",
-            left: cx - sz / 2,
-            top: cy - sz / 2,
-            width: sz, height: sz,
-            borderRadius: "50%",
-            background: i % 2 === 0 ? "#ffe066" : "#ffffff",
-            zIndex: 3,
-            animation: `bowtie-sparkle 2.4s ${delay}s ease-in-out infinite, bowtie-glow 2.4s ${delay}s ease-in-out infinite`,
-            opacity: 0,
-            pointerEvents: "none",
-          }} />
-        );
-      })}
+      {/* Bow-tie permanent glow — always visible gold shine at the bow-tie position */}
+      <div style={{
+        position: "absolute",
+        left: "50%",
+        top: "50%",
+        transform: `translate(-50%, calc(-50% + ${heroSize * 0.28}px))`,
+        width: heroSize * 0.22,
+        height: heroSize * 0.10,
+        borderRadius: "50%",
+        background: "radial-gradient(ellipse, rgba(255,224,80,0.75) 0%, rgba(245,197,24,0.45) 50%, transparent 100%)",
+        animation: "bowtie-glow-pulse 2.2s ease-in-out infinite",
+        zIndex: 3,
+        pointerEvents: "none",
+      }} />
     </div>
   );
 }

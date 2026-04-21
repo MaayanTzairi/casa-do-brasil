@@ -326,12 +326,13 @@ function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: st
       rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
-        display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.6rem",
-        padding: isMobile ? "0.85rem 2.0rem" : "1.1rem 3.2rem",
+        display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.4rem",
+        padding: isMobile ? "0.75rem 1.4rem" : "1.1rem 3.2rem",
         fontFamily: "'Heebo', sans-serif", fontWeight: 800,
-        fontSize: isMobile ? "0.92rem" : "1.15rem",
-        letterSpacing: isMobile ? "0.10em" : "0.18em", textTransform: "uppercase" as const,
+        fontSize: isMobile ? "0.80rem" : "1.15rem",
+        letterSpacing: isMobile ? "0.04em" : "0.18em", textTransform: "uppercase" as const,
         textDecoration: "none",
+        whiteSpace: "nowrap" as const,
         // Premium 3D gradient: light top → dark bottom
         background: hovered
           ? "linear-gradient(180deg, #1e9444 0%, #0d6030 55%, #094a24 100%)"
@@ -364,12 +365,13 @@ function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: st
     <a href={href}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
-        display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.6rem",
-        padding: isMobile ? "0.85rem 2.0rem" : "1.1rem 3.2rem",
+        display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.4rem",
+        padding: isMobile ? "0.75rem 1.4rem" : "1.1rem 3.2rem",
         fontFamily: "'Heebo', sans-serif", fontWeight: 800,
-        fontSize: isMobile ? "0.92rem" : "1.15rem",
-        letterSpacing: isMobile ? "0.10em" : "0.18em", textTransform: "uppercase" as const,
+        fontSize: isMobile ? "0.80rem" : "1.15rem",
+        letterSpacing: isMobile ? "0.04em" : "0.18em", textTransform: "uppercase" as const,
         textDecoration: "none",
+        whiteSpace: "nowrap" as const,
         // White button
         background: hovered
           ? "rgba(255,255,255,0.22)"
