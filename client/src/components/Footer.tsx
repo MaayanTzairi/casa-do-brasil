@@ -116,7 +116,7 @@ export default function Footer() {
           </div>
         ) : (
           /* ── DESKTOP: 3-column grid ── */
-          <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "start", maxWidth: "1000px", margin: "0 auto", gap: "2rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "start", maxWidth: "1000px", margin: "0 auto", gap: "2rem", gridTemplateRows: "auto" }}>
 
             <div style={{ textAlign: isHe ? "right" : "left" }}>
               {label(isHe ? "מצאו אותנו" : "FIND US")}
@@ -132,7 +132,13 @@ export default function Footer() {
                 onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}>
                 {phoneIcon}08-6323032
               </a>
-              <div style={{ display: "flex", gap: "0.6rem", marginTop: "1.8rem", justifyContent: isHe ? "flex-end" : "flex-start" }}>
+
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.5rem", paddingTop: "0.5rem" }}>
+              <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "150px", height: "auto", objectFit: "contain", opacity: 0.92 }} />
+              {/* Social icons centered under logo */}
+              <div style={{ display: "flex", gap: "0.6rem", justifyContent: "center" }}>
                 <SocialLink href="https://www.instagram.com/casadobrasil.eilat" label="Instagram" color="#E1306C">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
@@ -149,10 +155,6 @@ export default function Footer() {
                   </svg>
                 </SocialLink>
               </div>
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "0.5rem" }}>
-              <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "150px", height: "auto", objectFit: "contain", opacity: 0.92 }} />
             </div>
 
             <div style={{ textAlign: isHe ? "left" : "right" }}>
