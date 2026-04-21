@@ -345,7 +345,7 @@ export default function ReviewsSection() {
   // CMS values with hardcoded fallbacks
   const customersValue = statsData?.customersValue ?? "2M";
   const customersSuffix = isHe ? (statsData?.customersSuffixHe ?? "+") : (statsData?.customersSuffixEn ?? "+");
-  const customersLabel = isHe ? (statsData?.customersLabelHe ?? "מרוצים") : (statsData?.customersLabelEn ?? "Happy Guests");
+  const customersLabel = isHe ? (statsData?.customersLabelHe ?? "לקוחות מרוצים") : (statsData?.customersLabelEn ?? "Happy Guests");
   const yearsValue = statsData?.yearsValue ?? "25";
   const yearsSuffix = isHe ? (statsData?.yearsSuffixHe ?? "+") : (statsData?.yearsSuffixEn ?? "+");
   const yearsLabel = isHe ? (statsData?.yearsLabelHe ?? "שנות מסורת") : (statsData?.yearsLabelEn ?? "Years of Brazilian Tradition");

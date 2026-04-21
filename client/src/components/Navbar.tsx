@@ -554,7 +554,7 @@ export default function Navbar({
             position: "fixed",
             inset: 0,
             zIndex: 300,
-            background: "rgb(22,2,5)",
+            background: "#f5f0e8",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -572,36 +572,24 @@ export default function Navbar({
           // Prevent touch scroll from leaking to body
           onTouchMove={(e) => e.stopPropagation()}
         >
-          {/* ── Top bar: brand name (center) + X close (right) ── */}
+          {/* ── Top bar: cow logo centered + X close (right) ── */}
           <div style={{
             position: "absolute",
             top: 0,
             left: 0,
             right: 0,
-            height: "4rem",
+            height: "5rem",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            borderBottom: "1px solid rgba(185,161,103,0.15)",
+            borderBottom: "1px solid rgba(62,4,9,0.10)",
           }}>
-            {/* Cow logo + brand name */}
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <img
-                src={LOGO_URL}
-                alt="Casa do Brasil"
-                style={{ width: "36px", height: "36px", objectFit: "contain", filter: "drop-shadow(0 1px 4px rgba(0,0,0,0.4))" }}
-              />
-              <span style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 300,
-                fontSize: "0.6rem",
-                letterSpacing: "0.4em",
-                color: "rgba(185,161,103,0.65)",
-                textTransform: "uppercase",
-              }}>
-                CASA DO BRASIL
-              </span>
-            </div>
+            {/* Cow logo centered */}
+            <img
+              src={LOGO_URL}
+              alt="Casa do Brasil"
+              style={{ width: "52px", height: "52px", objectFit: "contain", filter: "drop-shadow(0 2px 6px rgba(62,4,9,0.20))" }}
+            />
 
             {/* X close button — top right */}
             <button
@@ -611,10 +599,10 @@ export default function Navbar({
                 position: "absolute",
                 right: "1.2rem",
                 background: "none",
-                border: "1px solid rgba(185,161,103,0.3)",
+                border: "1px solid rgba(62,4,9,0.25)",
                 borderRadius: "50%",
                 cursor: "pointer",
-                color: GOLD,
+                color: BORDEAUX,
                 width: "40px",
                 height: "40px",
                 display: "flex",
@@ -645,7 +633,7 @@ export default function Navbar({
                 fontWeight: 900,
                 fontSize: "clamp(22px, 6vw, 30px)",
                 letterSpacing: isHe ? "0.03em" : "0.18em",
-                color: (link as any).isVip ? "#FEDF00" : "#FFFFFF",
+                color: (link as any).isVip ? "#009C3B" : BORDEAUX,
                 textDecoration: "none",
                 textTransform: "uppercase",
                 transition: `color 0.2s ease, opacity 0.35s ${0.05 + i * 0.05}s ease, transform 0.35s ${0.05 + i * 0.05}s ease`,
@@ -656,14 +644,14 @@ export default function Navbar({
                 (e.currentTarget as HTMLAnchorElement).style.color = "#009C3B";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = (link as any).isVip ? "#FEDF00" : "#FFFFFF";
+                (e.currentTarget as HTMLAnchorElement).style.color = (link as any).isVip ? "#009C3B" : BORDEAUX;
               }}
             >
               {link.label}
             </a>
           ))}
 
-          {/* ── Bottom: lang toggle ── */}
+          {/* ── Bottom: lang toggle + thin Brazilian stripe ── */}
           <div style={{
             position: "absolute",
             bottom: "2rem",
@@ -671,7 +659,13 @@ export default function Navbar({
             alignItems: "center",
             gap: "1rem",
           }}>
-            <LangToggle scrolled={false} inOverlay />
+            <LangToggle scrolled={true} inOverlay />
+          </div>
+          {/* Bottom Brazilian stripe */}
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "4px", display: "flex" }}>
+            <div style={{ flex: 1, background: "#009C3B" }} />
+            <div style={{ flex: 1, background: "#FEDF00" }} />
+            <div style={{ flex: 1, background: "#002776" }} />
           </div>
         </div>
       )}
