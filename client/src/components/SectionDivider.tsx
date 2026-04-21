@@ -13,22 +13,20 @@ const SKEWER_IMG_380 =
 const SKEWER_IMG_SM =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/divider1-sm_fixed_b9bb4035.webp";
 
-const GOLD = "rgba(185,161,103,";
 
-function GoldLine({ side }: { side: "left" | "right" }) {
+function BrazilStripe({ side }: { side: "left" | "right" }) {
   const isLeft = side === "left";
   return (
-    <div
-      style={{
-        flex: 1,
-        minWidth: 0,
-        height: "1px",
-        background: isLeft
-          ? `linear-gradient(to right, transparent 0%, ${GOLD}0.2) 15%, ${GOLD}0.7) 70%, ${GOLD}0.4) 100%)`
-          : `linear-gradient(to left, transparent 0%, ${GOLD}0.2) 15%, ${GOLD}0.7) 70%, ${GOLD}0.4) 100%)`,
-        alignSelf: "center",
-      }}
-    />
+    <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "3px", alignSelf: "center" }}>
+      {[["#009C3B", 0.7], ["#FEDF00", 0.6], ["#002776", 0.5]].map(([color, opacity], i) => (
+        <div key={i} style={{
+          height: "1.5px",
+          background: isLeft
+            ? `linear-gradient(to right, transparent 0%, ${color}${Math.round(Number(opacity)*255).toString(16).padStart(2,"0")} 20%, ${color} 70%, ${color}88 100%)`
+            : `linear-gradient(to left, transparent 0%, ${color}${Math.round(Number(opacity)*255).toString(16).padStart(2,"0")} 20%, ${color} 70%, ${color}88 100%)`,
+        }} />
+      ))}
+    </div>
   );
 }
 
@@ -48,8 +46,8 @@ export default function SectionDivider() {
         overflow: "visible",
       }}
     >
-      {/* Left gold line */}
-      <GoldLine side="left" />
+      {/* Left Brazilian stripe */}
+      <BrazilStripe side="left" />
 
       {/* Skewer illustration — transparent, no filter, no shadow */}
       <div
@@ -77,8 +75,8 @@ export default function SectionDivider() {
         />
       </div>
 
-      {/* Right gold line */}
-      <GoldLine side="right" />
+      {/* Right Brazilian stripe */}
+      <BrazilStripe side="right" />
     </div>
   );
 }

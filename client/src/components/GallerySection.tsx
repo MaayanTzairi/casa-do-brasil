@@ -36,13 +36,14 @@ function CTAButton({ label, url }: { label: string; url: string }) {
       <span
         style={{
           display: "inline-flex", alignItems: "center", gap: "0.7rem",
-          fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.65rem",
-          letterSpacing: "0.28em", textTransform: "uppercase", textDecoration: "none",
-          color: BORDEAUX, padding: "0.85rem 2rem", border: `1.5px solid ${GOLD}`,
-          cursor: "pointer", transition: "background 0.28s, color 0.28s", background: "transparent",
+          fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "1rem",
+          letterSpacing: "0.18em", textTransform: "uppercase", textDecoration: "none",
+          color: "#fff", padding: "0.9rem 2.2rem", border: "2px solid #009C3B",
+          cursor: "pointer", transition: "background 0.28s, border-color 0.28s", background: "#009C3B",
+          borderRadius: "2px",
         }}
-        onMouseEnter={(e) => { const el = e.currentTarget as HTMLSpanElement; el.style.background = BORDEAUX; el.style.color = "#fff"; }}
-        onMouseLeave={(e) => { const el = e.currentTarget as HTMLSpanElement; el.style.background = "transparent"; el.style.color = BORDEAUX; }}
+        onMouseEnter={(e) => { const el = e.currentTarget as HTMLSpanElement; el.style.background = "#007a2e"; el.style.borderColor = "#007a2e"; }}
+        onMouseLeave={(e) => { const el = e.currentTarget as HTMLSpanElement; el.style.background = "#009C3B"; el.style.borderColor = "#009C3B"; }}
       >
         {label} <span style={{ fontSize: "0.9rem" }}>{isHe ? "←" : "→"}</span>
       </span>
@@ -204,7 +205,7 @@ export default function GallerySection() {
                 style={{
                   width: i === current ? "22px" : "6px", height: "6px",
                   borderRadius: "3px",
-                  background: i === current ? GOLD : `${GOLD_R}0.3)`,
+                  background: i === current ? "#009C3B" : "rgba(0,156,59,0.25)",
                   border: "none", cursor: "pointer", padding: 0,
                   transition: "all 0.35s ease",
                 }}
@@ -224,10 +225,10 @@ export default function GallerySection() {
           <div style={{ position: "relative" }}>
             {/* Corner brackets */}
             {[
-              { top: 0, left: 0, borderTop: `1.5px solid ${GOLD}`, borderLeft: `1.5px solid ${GOLD}` },
-              { top: 0, right: 0, borderTop: `1.5px solid ${GOLD}`, borderRight: `1.5px solid ${GOLD}` },
-              { bottom: 0, left: 0, borderBottom: `1.5px solid ${GOLD}`, borderLeft: `1.5px solid ${GOLD}` },
-              { bottom: 0, right: 0, borderBottom: `1.5px solid ${GOLD}`, borderRight: `1.5px solid ${GOLD}` },
+              { top: 0, left: 0, borderTop: "1.5px solid rgba(0,156,59,0.45)", borderLeft: "1.5px solid rgba(0,156,59,0.45)" },
+              { top: 0, right: 0, borderTop: "1.5px solid rgba(0,156,59,0.45)", borderRight: "1.5px solid rgba(0,156,59,0.45)" },
+              { bottom: 0, left: 0, borderBottom: "1.5px solid rgba(0,156,59,0.45)", borderLeft: "1.5px solid rgba(0,156,59,0.45)" },
+              { bottom: 0, right: 0, borderBottom: "1.5px solid rgba(0,156,59,0.45)", borderRight: "1.5px solid rgba(0,156,59,0.45)" },
             ].map((s, i) => (
               <div key={i} style={{ position: "absolute", width: "18px", height: "18px", opacity: 0.7, zIndex: 4, pointerEvents: "none", ...s }} />
             ))}
@@ -291,7 +292,7 @@ export default function GallerySection() {
               <div style={{
                 position: "absolute", bottom: "12px", right: "12px",
                 fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.65rem",
-                letterSpacing: "0.2em", color: `${GOLD_R}0.9)`, zIndex: 4,
+                letterSpacing: "0.2em", color: "rgba(0,156,59,0.9)", zIndex: 4,
                 textShadow: "0 1px 4px rgba(0,0,0,0.5)",
               }}>
                 {String(current + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}

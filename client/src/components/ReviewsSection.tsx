@@ -237,7 +237,7 @@ function ReviewCard({ review, isHe }: { review: Review; isHe: boolean }) {
         width: "clamp(260px, 28vw, 340px)",
         padding: "2rem 1.8rem",
         background: "#fff",
-        borderTop: `2px solid ${GOLD}`,
+        borderTop: "2px solid #009C3B",
         borderBottom: "1px solid rgba(185,161,103,0.12)",
         borderLeft: "1px solid rgba(185,161,103,0.12)",
         borderRight: "1px solid rgba(185,161,103,0.12)",
@@ -429,7 +429,7 @@ export default function ReviewsSection() {
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: mobile ? "0.3rem" : "0.5rem", padding: mobile ? "0 0.5rem" : "0 1.5rem" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: BORDEAUX, lineHeight: 1, letterSpacing: "-0.02em" }}>{customersValue}</span>
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: GOLD, lineHeight: 1 }}>{customersSuffix}</span>
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: "#FEDF00", lineHeight: 1 }}>{customersSuffix}</span>
             </div>
             <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "0.6rem" : "clamp(11px, 0.82vw, 13px)", color: "rgba(62,4,9,0.45)", letterSpacing: mobile ? "0.08em" : "0.18em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3 }}>
               {customersLabel}
@@ -437,13 +437,13 @@ export default function ReviewsSection() {
           </div>
 
           {/* Divider */}
-          <div style={{ width: "1px", height: mobile ? "48px" : "60px", background: GOLD_R + "0.2)" }} />
+          <div style={{ width: "1px", height: mobile ? "48px" : "60px", background: "rgba(0,156,59,0.3)" }} />
 
           {/* Stat 2 — Years */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: mobile ? "0.3rem" : "0.5rem", padding: mobile ? "0 0.5rem" : "0 1.5rem" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: BORDEAUX, lineHeight: 1, letterSpacing: "-0.02em" }}>{yearsValue}</span>
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: GOLD, lineHeight: 1 }}>{yearsSuffix}</span>
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: "#FEDF00", lineHeight: 1 }}>{yearsSuffix}</span>
             </div>
             <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "0.6rem" : "clamp(11px, 0.82vw, 13px)", color: "rgba(62,4,9,0.45)", letterSpacing: mobile ? "0.08em" : "0.18em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3 }}>
               {yearsLabel}
@@ -451,7 +451,7 @@ export default function ReviewsSection() {
           </div>
 
           {/* Divider */}
-          <div style={{ width: "1px", height: mobile ? "48px" : "60px", background: GOLD_R + "0.2)" }} />
+          <div style={{ width: "1px", height: mobile ? "48px" : "60px", background: "rgba(0,156,59,0.3)" }} />
 
           {/* Stat 3 — 5000+ Reviews */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: mobile ? "0.3rem" : "0.5rem", padding: mobile ? "0 0.5rem" : "0 1.5rem" }}>

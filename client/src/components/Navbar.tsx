@@ -168,13 +168,13 @@ function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: bo
         flexShrink: 0,
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.borderColor = GOLD;
+        (e.currentTarget as HTMLButtonElement).style.borderColor = "#009C3B";
       }}
       onMouseLeave={(e) => {
         (e.currentTarget as HTMLButtonElement).style.borderColor = borderColor;
       }}
     >
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#009C3B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
         <line x1="2" y1="12" x2="22" y2="12" />
         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
@@ -221,8 +221,8 @@ function ReservationsBtn({ scrolled, label }: { scrolled: boolean; label: string
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLAnchorElement;
-        el.style.background = GOLD;
-        el.style.borderColor = GOLD;
+        el.style.background = "#007a2e";
+        el.style.borderColor = "#007a2e";
         el.style.color = "#fff";
       }}
       onMouseLeave={(e) => {
@@ -444,7 +444,7 @@ export default function Navbar({
                     style={{
                       width: "24px",
                       height: "1.5px",
-                      background: scrolled ? BORDEAUX : GOLD,
+                      background: scrolled ? BORDEAUX : "#009C3B",
                       borderRadius: "2px",
                     }}
                   />
@@ -631,7 +631,7 @@ export default function Navbar({
                 fontWeight: 900,
                 fontSize: "clamp(22px, 6vw, 30px)",
                 letterSpacing: isHe ? "0.03em" : "0.18em",
-                color: (link as any).isVip ? GOLD : "#FFFFFF",
+                color: (link as any).isVip ? "#FEDF00" : "#FFFFFF",
                 textDecoration: "none",
                 textTransform: "uppercase",
                 transition: `color 0.2s ease, opacity 0.35s ${0.05 + i * 0.05}s ease, transform 0.35s ${0.05 + i * 0.05}s ease`,
@@ -639,10 +639,10 @@ export default function Navbar({
                 transform: menuOpen ? "translateY(0)" : "translateY(12px)",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = GOLD;
+                (e.currentTarget as HTMLAnchorElement).style.color = "#009C3B";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = (link as any).isVip ? GOLD : "#FFFFFF";
+                (e.currentTarget as HTMLAnchorElement).style.color = (link as any).isVip ? "#FEDF00" : "#FFFFFF";
               }}
             >
               {link.label}
@@ -694,7 +694,7 @@ function NavLink({
         letterSpacing: isHe ? "0.05em" : "0.18em",
         textTransform: "uppercase",
         textDecoration: "none",
-        color: isVip ? GOLD : (hovered ? GOLD : color),
+        color: isVip ? "#FEDF00" : (hovered ? "#009C3B" : color),
         transition: "color 0.25s ease",
         position: "relative",
         paddingBottom: "2px",
@@ -709,7 +709,7 @@ function NavLink({
           left: 0,
           width: hovered ? "100%" : "0%",
           height: "1px",
-          background: GOLD,
+          background: "#009C3B",
           transition: "width 0.3s ease",
           display: "block",
         }}

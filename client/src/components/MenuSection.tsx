@@ -189,8 +189,12 @@ export default function MenuSection() {
         <div style={{ flex: mobile ? "none" : "1", width: mobile ? "100%" : undefined, display:"flex", flexDirection:"column", justifyContent:"center", order: mobile ? 1 : (isHe ? 1 : 2), textAlign: isHe ? "right" : "left", alignItems: isHe ? "flex-end" : "flex-start", direction: isHe ? "rtl" : "ltr" }}>
 
           <div style={{ ...animStyle(inView, 0.05), display:"flex", alignItems:"center", gap:"0.7rem", marginBottom:"1.4rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start", width:"100%" }}>
-            <div style={{ width:"20px", height:"1px", background:GOLD }} />
-            <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.9rem", letterSpacing: isHe ? "0.08em" : "0.44em", textTransform:"uppercase", color:GOLD }}>{label}</span>
+            <div style={{ display:"flex", flexDirection:"column", gap:"2px", width:"14px" }}>
+              <div style={{ height:"2px", background:"#009C3B", borderRadius:"1px" }} />
+              <div style={{ height:"2px", background:"#FEDF00", borderRadius:"1px" }} />
+              <div style={{ height:"2px", background:"#002776", borderRadius:"1px" }} />
+            </div>
+            <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"1.1rem", letterSpacing: isHe ? "0.06em" : "0.28em", textTransform:"uppercase", color:"#009C3B" }}>{label}</span>
           </div>
 
           <h2 style={{ ...animStyle(inView, 0.15), fontFamily:"'Heebo', sans-serif", fontWeight:900, fontSize: mobile ? "clamp(48px, 13vw, 72px)" : "clamp(48px, 5vw, 72px)", color:BORDEAUX, margin:0, lineHeight:0.9, letterSpacing:"0.01em", textAlign: isHe ? "right" : "left", width:"100%" }}>
@@ -215,12 +219,16 @@ export default function MenuSection() {
             }
           </p>
 
-          <div style={{ ...animStyle(inView, 0.32), width:"48px", height:"1.5px", background:`linear-gradient(to right, ${GOLD}, ${GOLD_R}0.2))`, margin:"0 0 2rem", transformOrigin: isHe ? "right" : "left", marginLeft: isHe ? "auto" : undefined, marginRight: isHe ? 0 : undefined, alignSelf:"flex-start" }} />
+          <div style={{ ...animStyle(inView, 0.32), display:"flex", gap:"3px", margin:"0 0 2rem", marginLeft: isHe ? "auto" : undefined, marginRight: isHe ? 0 : undefined, alignSelf: isHe ? "flex-end" : "flex-start" }}>
+            <div style={{ width:"40px", height:"2px", background:"#009C3B", borderRadius:"1px" }} />
+            <div style={{ width:"40px", height:"2px", background:"#FEDF00", borderRadius:"1px" }} />
+            <div style={{ width:"40px", height:"2px", background:"#002776", borderRadius:"1px" }} />
+          </div>
 
           <div style={{ ...animStyle(inView, 0.42), display:"flex", justifyContent: mobile ? "center" : "flex-start", width:"100%" }}>
-            <a href={ctaBtnUrl} style={{ display:"inline-flex", alignItems:"center", gap:"0.7rem", fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.65rem", letterSpacing:"0.28em", textTransform:"uppercase", textDecoration:"none", color:BORDEAUX, padding:"0.85rem 2rem", border:`1.5px solid ${GOLD}`, transition:"background 0.28s, color 0.28s" }}
-              onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background=BORDEAUX; el.style.color="#fff"; }}
-              onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background="transparent"; el.style.color=BORDEAUX; }}
+            <a href={ctaBtnUrl} style={{ display:"inline-flex", alignItems:"center", gap:"0.7rem", fontFamily:"'Heebo', sans-serif", fontWeight:800, fontSize:"1rem", letterSpacing:"0.18em", textTransform:"uppercase", textDecoration:"none", color:"#fff", padding:"0.9rem 2.2rem", background:"#009C3B", border:"2px solid #009C3B", borderRadius:"2px", transition:"background 0.28s, border-color 0.28s" }}
+              onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background="#007a2e"; el.style.borderColor="#007a2e"; }}
+              onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background="#009C3B"; el.style.borderColor="#009C3B"; }}
             >
               {ctaBtnText} <span style={{ fontSize:"0.9rem" }}>{isHe ? "←" : "→"}</span>
             </a>
