@@ -429,9 +429,9 @@ export default function ReviewsSection() {
         >
           {/* Stat 1 — Guests */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: mobile ? "0.3rem" : "0.5rem", flex: 1, minWidth: 0, padding: mobile ? "0 0.25rem" : "0 1.5rem" }}>
-            <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: "0" }}>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: "#009C3B", lineHeight: 1, letterSpacing: "-0.02em" }}>{customersValue}</span>
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: "#FEDF00", lineHeight: 1 }}>{customersSuffix}</span>
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(22px, 6vw, 34px)" : "clamp(28px, 4vw, 54px)", color: "#009C3B", lineHeight: 1 }}>{customersSuffix}</span>
             </div>
             <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: mobile ? "clamp(13px, 3.5vw, 16px)" : "clamp(14px, 1.1vw, 18px)", color: "rgb(62,4,9)", letterSpacing: mobile ? "0.04em" : "0.06em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3, whiteSpace: "nowrap" }}>
               {customersLabel}
@@ -443,9 +443,9 @@ export default function ReviewsSection() {
 
           {/* Stat 2 — Years */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: mobile ? "0.3rem" : "0.5rem", flex: 1, minWidth: 0, padding: mobile ? "0 0.25rem" : "0 1.5rem" }}>
-            <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: "0" }}>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: "#009C3B", lineHeight: 1, letterSpacing: "-0.02em" }}>{yearsValue}</span>
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: "#FEDF00", lineHeight: 1 }}>{yearsSuffix}</span>
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(22px, 6vw, 34px)" : "clamp(28px, 4vw, 54px)", color: "#009C3B", lineHeight: 1 }}>{yearsSuffix}</span>
             </div>
             <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: mobile ? "clamp(13px, 3.5vw, 16px)" : "clamp(14px, 1.1vw, 18px)", color: "rgb(62,4,9)", letterSpacing: mobile ? "0.04em" : "0.06em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3, whiteSpace: "nowrap" }}>
               {yearsLabel}
@@ -457,9 +457,9 @@ export default function ReviewsSection() {
 
           {/* Stat 3 — 5000+ Reviews */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: mobile ? "0.3rem" : "0.5rem", flex: 1, minWidth: 0, padding: mobile ? "0 0.25rem" : "0 1.5rem" }}>
-            <div style={{ display: "flex", alignItems: "flex-start", gap: "2px" }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: "0" }}>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: "#009C3B", lineHeight: 1, letterSpacing: "-0.02em" }}>5,000</span>
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: mobile ? "clamp(16px, 5vw, 24px)" : "clamp(20px, 2.8vw, 36px)", color: "#FEDF00", lineHeight: 1 }}>+</span>
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(22px, 6vw, 34px)" : "clamp(28px, 4vw, 54px)", color: "#009C3B", lineHeight: 1 }}>+</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", justifyContent: "center", whiteSpace: "nowrap" }}>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: mobile ? "clamp(13px, 3.5vw, 16px)" : "clamp(14px, 1.1vw, 18px)", color: "rgb(62,4,9)", letterSpacing: mobile ? "0.04em" : "0.06em", textTransform: "uppercase", lineHeight: 1.3 }}>

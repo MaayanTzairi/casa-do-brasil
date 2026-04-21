@@ -3,9 +3,9 @@
  * Design: Brazilian minimalist — dark background, green/yellow accents, 3-stripe top
  * Bilingual EN/HE with RTL support
  *
- * Desktop layout (always LTR grid):
- *   Hebrew:  [שעות פתיחה (left)]  [Logo+Social (center)]  [מצאו אותנו (right)]
- *   English: [FIND US (left)]     [Logo+Social (center)]  [HOURS (right)]
+ * Desktop layout (always LTR grid — content alignment handled per-column):
+ *   Hebrew:  col1=שעות פתיחה (left-align)  | col2=Logo+Social (center) | col3=מצאו אותנו (right-align)
+ *   English: col1=FIND US (left-align)      | col2=Logo+Social (center) | col3=HOURS (right-align)
  */
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -16,6 +16,53 @@ const YELLOW = "#FEDF00";
 const BLUE = "#002776";
 const LOGO_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-footer-transparent_99ea5143.webp";
+
+const stripeIcon = (
+  <span style={{ display: "inline-flex", gap: "2px", flexShrink: 0 }}>
+    <span style={{ width: "10px", height: "2px", background: GREEN, display: "inline-block" }} />
+    <span style={{ width: "10px", height: "2px", background: YELLOW, display: "inline-block" }} />
+    <span style={{ width: "10px", height: "2px", background: BLUE, display: "inline-block" }} />
+  </span>
+);
+
+const phoneIcon = (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={GREEN} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.06 6.06l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z" />
+  </svg>
+);
+
+const labelStyle = (align: "left" | "right" | "center"): React.CSSProperties => ({
+  fontFamily: "'Heebo', sans-serif",
+  fontWeight: 700,
+  fontSize: "0.65rem",
+  letterSpacing: "0.28em",
+  textTransform: "uppercase",
+  color: GREEN,
+  marginBottom: "1.1rem",
+  display: "flex",
+  alignItems: "center",
+  gap: "0.5rem",
+  justifyContent: align === "right" ? "flex-end" : align === "center" ? "center" : "flex-start",
+});
+
+const bodyText = (style?: React.CSSProperties): React.CSSProperties => ({
+  fontFamily: "'Heebo', sans-serif",
+  fontWeight: 300,
+  fontSize: "0.92rem",
+  lineHeight: 1.8,
+  color: "rgba(255,255,255,0.78)",
+  margin: "0 0 0.3rem",
+  ...style,
+});
+
+const subText = (style?: React.CSSProperties): React.CSSProperties => ({
+  fontFamily: "'Heebo', sans-serif",
+  fontWeight: 300,
+  fontSize: "0.82rem",
+  color: "rgba(255,255,255,0.45)",
+  margin: "0 0 1.2rem",
+  ...style,
+});
 
 export default function Footer() {
   const { isHe } = useLanguage();
@@ -28,86 +75,62 @@ export default function Footer() {
     return () => window.removeEventListener("resize", fn);
   }, []);
 
-  /** Section label — stripe icon + uppercase text */
-  const label = (text: string, align: "left" | "right" | "center" = "left") => (
-    <div style={{
-      fontFamily: "'Heebo', sans-serif",
-      fontWeight: 700,
-      fontSize: "0.65rem",
-      letterSpacing: "0.28em",
-      textTransform: "uppercase",
-      color: GREEN,
-      marginBottom: "1.1rem",
-      display: "flex",
-      alignItems: "center",
-      gap: "0.5rem",
-      justifyContent: mobile ? "center" : align === "right" ? "flex-end" : "flex-start",
-    }}>
-      <span style={{ display: "inline-flex", gap: "2px", flexShrink: 0 }}>
-        <span style={{ width: "10px", height: "2px", background: GREEN, display: "inline-block" }} />
-        <span style={{ width: "10px", height: "2px", background: YELLOW, display: "inline-block" }} />
-        <span style={{ width: "10px", height: "2px", background: BLUE, display: "inline-block" }} />
-      </span>
-      {text}
-    </div>
-  );
-
-  const phoneIcon = (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={GREEN} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.06 6.06l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z" />
-    </svg>
-  );
-
-  const socialIcons = (
+  const socialIcons = (size: number = 16) => (
     <div style={{ display: "flex", gap: "0.6rem", justifyContent: "center" }}>
       <SocialLink href="https://www.instagram.com/casadobrasil.eilat" label="Instagram" color="#E1306C">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
         </svg>
       </SocialLink>
       <SocialLink href="https://www.facebook.com/casadobrasil.eilat" label="Facebook" color="#1877F2">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
           <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
         </svg>
       </SocialLink>
       <SocialLink href="https://www.tiktok.com/@casadobrasil.eilat" label="TikTok" color="#69C9D0">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
           <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
         </svg>
       </SocialLink>
     </div>
   );
 
-  /* ── Column content blocks ── */
-
-  /** שעות פתיחה / HOURS — text aligned left */
-  const hoursBlock = (
-    <div style={{ direction: "ltr", textAlign: "left" }}>
-      {label(isHe ? "שעות פתיחה" : "HOURS")}
-      <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem", direction: isHe ? "rtl" : "ltr" }}>
+  /* ── HOURS block — always left-aligned ── */
+  const hoursBlock = (align: "left" | "right") => (
+    <div style={{ textAlign: align, direction: "ltr" }}>
+      <div style={labelStyle(align)}>
+        {stripeIcon}
+        {isHe ? "שעות פתיחה" : "HOURS"}
+      </div>
+      <p style={bodyText({ textAlign: align, direction: isHe ? "rtl" : "ltr" })}>
         {isHe ? "ראשון עד שבת" : "Sunday to Saturday"}
       </p>
-      <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1.05rem", color: YELLOW, margin: 0, letterSpacing: "0.04em" }}>
+      <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1.05rem", color: YELLOW, margin: 0, letterSpacing: "0.04em", textAlign: align }}>
         12:00 – 23:00
       </p>
     </div>
   );
 
-  /** מצאו אותנו / FIND US — text aligned right */
-  const findUsBlock = (
-    <div style={{ direction: isHe ? "rtl" : "ltr", textAlign: "right" }}>
-      {label(isHe ? "מצאו אותנו" : "FIND US", "right")}
-      <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem" }}>
+  /* ── FIND US block — always right-aligned ── */
+  const findUsBlock = (align: "left" | "right") => (
+    <div style={{ textAlign: align, direction: isHe ? "rtl" : "ltr" }}>
+      <div style={labelStyle(align)}>
+        {stripeIcon}
+        {isHe ? "מצאו אותנו" : "FIND US"}
+      </div>
+      <p style={bodyText({ textAlign: align })}>
         {isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}
       </p>
-      <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", margin: "0 0 1.2rem" }}>
+      <p style={subText({ textAlign: align })}>
         {isHe ? "(צמוד למלון נובה)" : "(adjacent to the Nova Hotel)"}
       </p>
-      <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: "#fff", textDecoration: "none", letterSpacing: "0.04em", transition: "color 0.2s", whiteSpace: "nowrap" }}
-        onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GREEN; }}
-        onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}>
-        {phoneIcon}08-6323032
-      </a>
+      <div style={{ display: "flex", justifyContent: align === "right" ? "flex-end" : "flex-start" }}>
+        <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: "#fff", textDecoration: "none", letterSpacing: "0.04em", transition: "color 0.2s", whiteSpace: "nowrap" }}
+          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GREEN; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}>
+          {phoneIcon}08-6323032
+        </a>
+      </div>
     </div>
   );
 
@@ -131,8 +154,8 @@ export default function Footer() {
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2.5rem", textAlign: "center" }}>
             <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "130px", height: "auto", objectFit: "contain", opacity: 0.92 }} />
 
-            <div>
-              {label(isHe ? "מצאו אותנו" : "FIND US", "center")}
+            <div style={{ textAlign: "center" }}>
+              <div style={labelStyle("center")}>{stripeIcon}{isHe ? "מצאו אותנו" : "FIND US"}</div>
               <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.9rem", lineHeight: 1.7, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem", whiteSpace: "nowrap" }}>
                 {isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}
               </p>
@@ -144,8 +167,8 @@ export default function Footer() {
               </a>
             </div>
 
-            <div>
-              {label(isHe ? "שעות פתיחה" : "HOURS", "center")}
+            <div style={{ textAlign: "center" }}>
+              <div style={labelStyle("center")}>{stripeIcon}{isHe ? "שעות פתיחה" : "HOURS"}</div>
               <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.9rem", lineHeight: 1.7, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem", whiteSpace: "nowrap" }}>
                 {isHe ? "ראשון עד שבת" : "Sunday to Saturday"}
               </p>
@@ -155,28 +178,15 @@ export default function Footer() {
             </div>
 
             <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center" }}>
-              <SocialLink href="https://www.instagram.com/casadobrasil.eilat" label="Instagram" color="#E1306C">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-                </svg>
-              </SocialLink>
-              <SocialLink href="https://www.facebook.com/casadobrasil.eilat" label="Facebook" color="#1877F2">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                </svg>
-              </SocialLink>
-              <SocialLink href="https://www.tiktok.com/@casadobrasil.eilat" label="TikTok" color="#69C9D0">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
-                </svg>
-              </SocialLink>
+              {socialIcons(18)}
             </div>
           </div>
         ) : (
-          /* ── DESKTOP: 3-column grid — always LTR so visual order is predictable ── */
           /*
-           * Hebrew:  col1 = שעות פתיחה (left-aligned)  | col2 = Logo+Social | col3 = מצאו אותנו (right-aligned)
-           * English: col1 = FIND US (left-aligned)      | col2 = Logo+Social | col3 = HOURS (right-aligned)
+           * ── DESKTOP: 3-column grid ──
+           * Grid direction is always LTR so visual columns are predictable.
+           * Hebrew:  col1 = Hours (left-align)   | col2 = Logo+Social | col3 = FindUs (right-align)
+           * English: col1 = FindUs (left-align)  | col2 = Logo+Social | col3 = Hours (right-align)
            */
           <div style={{
             display: "grid",
@@ -185,20 +195,20 @@ export default function Footer() {
             maxWidth: "1000px",
             margin: "0 auto",
             gap: "2rem",
-            direction: "ltr",   /* grid always LTR — content inside each cell handles its own direction */
+            direction: "ltr",
           }}>
 
-            {/* Column 1 (left) */}
-            {isHe ? hoursBlock : findUsBlock}
+            {/* Column 1 — left side */}
+            {isHe ? hoursBlock("left") : findUsBlock("left")}
 
-            {/* Column 2 (center) — Logo + Social icons */}
+            {/* Column 2 — center: Logo + Social */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.5rem", paddingTop: "0.5rem" }}>
               <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "150px", height: "auto", objectFit: "contain", opacity: 0.92 }} />
-              {socialIcons}
+              {socialIcons(16)}
             </div>
 
-            {/* Column 3 (right) */}
-            {isHe ? findUsBlock : hoursBlock}
+            {/* Column 3 — right side */}
+            {isHe ? findUsBlock("right") : hoursBlock("right")}
 
           </div>
         )}
