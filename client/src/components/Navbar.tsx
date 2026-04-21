@@ -429,23 +429,30 @@ export default function Navbar({
                 onClick={() => setMenuOpen(true)}
                 aria-label="Open menu"
                 style={{
-                  background: "none",
-                  border: "none",
+                  background: scrolled ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.15)",
+                  border: `1.5px solid ${scrolled ? "rgba(185,161,103,0.45)" : "rgba(255,255,255,0.55)"}`,
+                  borderRadius: "10px",
                   cursor: "pointer",
-                  padding: "6px",
+                  padding: "7px 9px",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "5px",
+                  gap: "4.5px",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  transition: "all 0.3s ease",
+                  boxShadow: scrolled ? "0 1px 6px rgba(62,4,9,0.10)" : "0 1px 8px rgba(0,0,0,0.18)",
                 }}
               >
                 {[0, 1, 2].map((i) => (
                   <div
                     key={i}
                     style={{
-                      width: "24px",
-                      height: "1.5px",
-                      background: scrolled ? BORDEAUX : "#009C3B",
+                      width: i === 1 ? "18px" : "22px",
+                      height: "2px",
+                      background: scrolled ? BORDEAUX : "#fff",
                       borderRadius: "2px",
+                      transition: "width 0.3s ease",
+                      alignSelf: i === 1 ? "flex-end" : "flex-start",
                     }}
                   />
                 ))}
@@ -577,17 +584,24 @@ export default function Navbar({
             justifyContent: "center",
             borderBottom: "1px solid rgba(185,161,103,0.15)",
           }}>
-            {/* Brand name */}
-            <span style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 300,
-              fontSize: "0.6rem",
-              letterSpacing: "0.4em",
-              color: "rgba(185,161,103,0.45)",
-              textTransform: "uppercase",
-            }}>
-              CASA DO BRASIL
-            </span>
+            {/* Cow logo + brand name */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <img
+                src={LOGO_URL}
+                alt="Casa do Brasil"
+                style={{ width: "36px", height: "36px", objectFit: "contain", filter: "drop-shadow(0 1px 4px rgba(0,0,0,0.4))" }}
+              />
+              <span style={{
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 300,
+                fontSize: "0.6rem",
+                letterSpacing: "0.4em",
+                color: "rgba(185,161,103,0.65)",
+                textTransform: "uppercase",
+              }}>
+                CASA DO BRASIL
+              </span>
+            </div>
 
             {/* X close button — top right */}
             <button

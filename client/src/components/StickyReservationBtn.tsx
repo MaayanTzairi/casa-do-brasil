@@ -73,13 +73,13 @@ export default function StickyReservationBtn() {
         gap: "0.55rem",
         padding: "0.55rem 1.1rem 0.55rem 0.65rem",
         borderRadius: "999px",
-        background: hovered ? "#007a2e" : BR_GREEN,
-        border: `2px solid ${hovered ? BR_YELLOW : "rgba(254,223,0,0.55)"}`,
+        background: hovered ? BR_GREEN : BR_YELLOW,
+        border: `2.5px solid ${hovered ? BR_YELLOW : BR_GREEN}`,
         textDecoration: "none",
         cursor: "pointer",
         boxShadow: hovered
           ? `0 8px 32px rgba(0,156,59,0.55), 0 2px 8px rgba(0,0,0,0.25)`
-          : `0 4px 24px rgba(0,156,59,0.4), 0 1px 6px rgba(0,0,0,0.2)`,
+          : `0 4px 24px rgba(254,223,0,0.45), 0 1px 6px rgba(0,0,0,0.2)`,
         transform: visible ? transformVisible : transformHidden,
         opacity: visible ? 1 : 0,
         pointerEvents: visible ? "auto" : "none",
@@ -115,7 +115,7 @@ export default function StickyReservationBtn() {
           fontSize: isHe ? "0.72rem" : "0.65rem",
           letterSpacing: isHe ? "0.05em" : "0.13em",
           textTransform: "uppercase",
-          color: "#fff",
+          color: hovered ? "#fff" : "#1a1a1a",
           lineHeight: 1.25,
         }}
       >
