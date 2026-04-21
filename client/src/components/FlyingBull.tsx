@@ -68,9 +68,22 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
       <style>{`
         @keyframes fb-spin { to { transform: rotate(360deg); } }
         @keyframes fb-pulse { 0%,100%{opacity:.75} 50%{opacity:1} }
+        @keyframes bowtie-sparkle {
+          0%   { opacity: 0; transform: scale(0.4) rotate(-20deg); }
+          15%  { opacity: 1; transform: scale(1.3) rotate(5deg); }
+          30%  { opacity: 0.8; transform: scale(1.0) rotate(0deg); }
+          55%  { opacity: 0; transform: scale(0.6) rotate(10deg); }
+          70%  { opacity: 0.9; transform: scale(1.2) rotate(-5deg); }
+          85%  { opacity: 0.7; transform: scale(1.0) rotate(0deg); }
+          100% { opacity: 0; transform: scale(0.4) rotate(20deg); }
+        }
+        @keyframes bowtie-glow {
+          0%,100% { filter: drop-shadow(0 0 3px #ffe066) drop-shadow(0 0 8px #f5c518); }
+          50%     { filter: drop-shadow(0 0 8px #fff5a0) drop-shadow(0 0 20px #f5c518) drop-shadow(0 0 35px #d4a017); }
+        }
       `}</style>
 
-      {/* Brazilian flag image clipped to circle */}
+      {/* Circle background — clean dark green */}
       <div style={{
         position: "absolute",
         left: 6, top: 6,
@@ -79,29 +92,9 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
         overflow: "hidden",
         opacity: circleAlpha,
         pointerEvents: "none",
-        // Premium deep shadow
+        background: "radial-gradient(circle at 40% 35%, #1a3d1a 0%, #0d2010 60%, #060e06 100%)",
         boxShadow: "0 16px 56px rgba(0,0,0,0.80), 0 4px 16px rgba(0,0,0,0.50), inset 0 2px 4px rgba(255,255,255,0.08)",
-      }}>
-        <img
-          src={PHOTO_URL_CDN}
-          alt=""
-          aria-hidden="true"
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center",
-            display: "block",
-            background: "#0a1a0a",
-          }}
-        />
-        {/* Radial vignette — darker edges so bull pops */}
-        <div style={{
-          position: "absolute", inset: 0,
-          background: "radial-gradient(circle at 50% 45%, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.45) 100%)",
-          borderRadius: "50%",
-        }} />
-      </div>
+      }} />
 
       {/* Premium gold multi-ring SVG frame */}
       <svg
@@ -208,7 +201,7 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
           left: "50%",
           top: "50%",
           transform: `translate(-50%, -50%) scale(${lerp(1, 0.6, easeInOut(progress))})`,
-          width: heroSize * 0.78, // 78% of circle size so bull fits inside the flag circle
+          width: heroSize * 0.82,
           height: "auto",
           objectFit: "contain",
           zIndex: 2,
@@ -216,6 +209,30 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
           willChange: "transform",
         }}
       />
+
+      {/* Bow-tie sparkle overlay — gold glitter dots that pulse around the bow-tie area */}
+      {[...Array(6)].map((_, i) => {
+        const angle = (i / 6) * Math.PI * 2;
+        const r = heroSize * 0.28;
+        const cx = (circleSize + 12) / 2 + Math.cos(angle) * r;
+        const cy = (circleSize + 12) / 2 + heroSize * 0.18 + Math.sin(angle) * r * 0.5;
+        const delay = i * 0.38;
+        const sz = 3 + (i % 3) * 2;
+        return (
+          <div key={i} style={{
+            position: "absolute",
+            left: cx - sz / 2,
+            top: cy - sz / 2,
+            width: sz, height: sz,
+            borderRadius: "50%",
+            background: i % 2 === 0 ? "#ffe066" : "#ffffff",
+            zIndex: 3,
+            animation: `bowtie-sparkle 2.4s ${delay}s ease-in-out infinite, bowtie-glow 2.4s ${delay}s ease-in-out infinite`,
+            opacity: 0,
+            pointerEvents: "none",
+          }} />
+        );
+      })}
     </div>
   );
 }

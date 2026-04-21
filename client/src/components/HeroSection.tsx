@@ -16,9 +16,9 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { HeroBullInline } from "@/components/FlyingBull";
 
 const HERO_IMAGE_DEFAULT =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main_opt_ea3703c2.webp";
+  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/fUAfQQLFqCanDksS.jpg";
 const HERO_IMAGE_SM_DEFAULT =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-sm_opt_4d593302.webp";
+  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/fUAfQQLFqCanDksS.jpg";
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(40,3,6)";
@@ -166,15 +166,12 @@ export default function HeroSection() {
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 900,
               fontSize: isMobile ? "clamp(28px, 9vw, 52px)" : "clamp(42px, 6.5vw, 90px)",
-              background: "linear-gradient(180deg, #ffe066 0%, #f5c518 25%, #d4a017 55%, #b8860b 80%, #8b6508 100%)",
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              color: "#ffffff",
               letterSpacing: "-0.01em",
               lineHeight: 1.0,
               whiteSpace: "nowrap",
               textAlign: "center",
-              filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.70)) drop-shadow(0 1px 2px rgba(0,0,0,0.50))",
+              textShadow: "0 3px 12px rgba(0,0,0,0.80), 0 1px 4px rgba(0,0,0,0.60)",
               margin: 0,
             }}
           >
@@ -373,16 +370,15 @@ function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: st
         fontSize: isMobile ? "0.92rem" : "1.15rem",
         letterSpacing: isMobile ? "0.10em" : "0.18em", textTransform: "uppercase" as const,
         textDecoration: "none",
-        // Premium 3D gradient: bright gold top → deep amber bottom
+        // White button
         background: hovered
-          ? "linear-gradient(180deg, #f0d020 0%, #c8a010 55%, #9a7808 100%)"
-          : "linear-gradient(180deg, #e8c818 0%, #c09808 55%, #8e6e06 100%)",
+          ? "rgba(255,255,255,0.22)"
+          : "rgba(255,255,255,0.12)",
         backdropFilter: "blur(14px)",
         WebkitBackdropFilter: "blur(14px)",
-        // Bright gold border
-        border: `2px solid ${hovered ? "rgba(255,230,80,0.95)" : "rgba(230,195,40,0.80)"}`,
-        color: "#1a0a00",
-        textShadow: "0 1px 2px rgba(255,255,255,0.20)",
+        border: `2px solid ${hovered ? "rgba(255,255,255,0.90)" : "rgba(255,255,255,0.55)"}`,
+        color: "#ffffff",
+        textShadow: "0 1px 4px rgba(0,0,0,0.50)",
         // Deep 3D shadow + inset highlight on top edge
         boxShadow: hovered
           ? "0 10px 32px rgba(0,0,0,0.50), 0 3px 10px rgba(180,140,0,0.30), inset 0 1.5px 0 rgba(255,255,200,0.40), inset 0 -2px 0 rgba(0,0,0,0.20)"

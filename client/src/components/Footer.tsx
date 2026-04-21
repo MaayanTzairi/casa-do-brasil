@@ -1,68 +1,39 @@
 /**
  * CASA DO BRASIL — Global Footer
- * Design: Brazilian minimalist — dark background, green/yellow accents, 3-stripe top
+ * Design: Warm cream/parchment background — elegant, light, inviting
  * Bilingual EN/HE with RTL support
- *
- * Desktop layout (always LTR grid — content alignment handled per-column):
- *   Hebrew:  col1=שעות פתיחה (left-align)  | col2=Logo+Social (center) | col3=מצאו אותנו (right-align)
- *   English: col1=FIND US (left-align)      | col2=Logo+Social (center) | col3=HOURS (right-align)
  */
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const BG = "#0d0a06";
-const GREEN = "#009C3B";
-const YELLOW = "#FEDF00";
-const BLUE = "#002776";
+const BG = "#f7f3ee";          // warm cream
+const BG_BOTTOM = "#ede8e2";   // slightly darker cream for bottom strip
+const ACCENT = "#009C3B";      // Brazilian green for accents
+const DARK = "#1a1208";        // near-black for text
+const MID = "#5a4a35";         // warm brown for secondary text
+const LIGHT = "#9a8a75";       // light brown for tertiary text
+const GOLD = "#b8860b";        // gold for highlights
+
 const LOGO_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-footer-transparent_99ea5143.webp";
 
-const stripeIcon = (
-  <span style={{ display: "inline-flex", gap: "2px", flexShrink: 0 }}>
-    <span style={{ width: "10px", height: "2px", background: GREEN, display: "inline-block" }} />
-    <span style={{ width: "10px", height: "2px", background: YELLOW, display: "inline-block" }} />
-    <span style={{ width: "10px", height: "2px", background: BLUE, display: "inline-block" }} />
-  </span>
-);
-
 const phoneIcon = (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={GREEN} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.06 6.06l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z" />
   </svg>
 );
 
-const labelStyle = (align: "left" | "right" | "center"): React.CSSProperties => ({
-  fontFamily: "'Heebo', sans-serif",
-  fontWeight: 700,
-  fontSize: "0.65rem",
-  letterSpacing: "0.28em",
-  textTransform: "uppercase",
-  color: GREEN,
-  marginBottom: "1.1rem",
-  display: "flex",
-  alignItems: "center",
-  gap: "0.5rem",
-  justifyContent: align === "right" ? "flex-end" : align === "center" ? "center" : "flex-start",
-});
+const mapPinIcon = (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+  </svg>
+);
 
-const bodyText = (style?: React.CSSProperties): React.CSSProperties => ({
-  fontFamily: "'Heebo', sans-serif",
-  fontWeight: 300,
-  fontSize: "0.92rem",
-  lineHeight: 1.8,
-  color: "rgba(255,255,255,0.78)",
-  margin: "0 0 0.3rem",
-  ...style,
-});
-
-const subText = (style?: React.CSSProperties): React.CSSProperties => ({
-  fontFamily: "'Heebo', sans-serif",
-  fontWeight: 300,
-  fontSize: "0.82rem",
-  color: "rgba(255,255,255,0.45)",
-  margin: "0 0 1.2rem",
-  ...style,
-});
+const clockIcon = (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+  </svg>
+);
 
 export default function Footer() {
   const { isHe } = useLanguage();
@@ -75,66 +46,45 @@ export default function Footer() {
     return () => window.removeEventListener("resize", fn);
   }, []);
 
-  const socialIcons = (size: number = 16) => (
-    <div style={{ display: "flex", gap: "0.6rem", justifyContent: "center" }}>
-      <SocialLink href="https://www.instagram.com/casadobrasil.eilat" label="Instagram" color="#E1306C">
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+  const sectionLabel = (text: string) => (
+    <div style={{
+      fontFamily: "'Heebo', sans-serif",
+      fontWeight: 800,
+      fontSize: "0.62rem",
+      letterSpacing: "0.30em",
+      textTransform: "uppercase" as const,
+      color: ACCENT,
+      marginBottom: "1.2rem",
+    }}>{text}</div>
+  );
+
+  const socialIcons = () => (
+    <div style={{ display: "flex", gap: "0.55rem", justifyContent: "center" }}>
+      <SocialLink href="https://www.instagram.com/casadobrasil.eilat" label="Instagram" hoverColor="#E1306C">
+        <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
         </svg>
       </SocialLink>
-      <SocialLink href="https://www.facebook.com/casadobrasil.eilat" label="Facebook" color="#1877F2">
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <SocialLink href="https://www.facebook.com/casadobrasil.eilat" label="Facebook" hoverColor="#1877F2">
+        <svg width={16} height={16} viewBox="0 0 24 24" fill="currentColor">
           <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
         </svg>
       </SocialLink>
-      <SocialLink href="https://www.tiktok.com/@casadobrasil.eilat" label="TikTok" color="#69C9D0">
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <SocialLink href="https://www.tiktok.com/@casadobrasil.eilat" label="TikTok" hoverColor="#69C9D0">
+        <svg width={16} height={16} viewBox="0 0 24 24" fill="currentColor">
           <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
         </svg>
       </SocialLink>
     </div>
   );
 
-  /* ── HOURS block — always left-aligned ── */
-  const hoursBlock = (align: "left" | "right") => (
-    <div style={{ textAlign: align, direction: "ltr" }}>
-      <div style={labelStyle(align)}>
-        {stripeIcon}
-        {isHe ? "שעות פתיחה" : "HOURS"}
+  const infoRow = (icon: React.ReactNode, text: string, sub?: string) => (
+    <div style={{ display: "flex", alignItems: "flex-start", gap: "0.55rem", marginBottom: "0.75rem" }}>
+      <span style={{ marginTop: "2px", flexShrink: 0 }}>{icon}</span>
+      <div>
+        <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 500, fontSize: "0.9rem", color: DARK, margin: 0, lineHeight: 1.5 }}>{text}</p>
+        {sub && <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 400, fontSize: "0.78rem", color: LIGHT, margin: "1px 0 0" }}>{sub}</p>}
       </div>
-      <p style={bodyText({ textAlign: align, direction: isHe ? "rtl" : "ltr" })}>
-        {isHe ? "ראשון עד שבת" : "Sunday to Saturday"}
-      </p>
-      <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1.05rem", color: YELLOW, margin: 0, letterSpacing: "0.04em", textAlign: align }}>
-        12:00 – 23:00
-      </p>
-    </div>
-  );
-
-  /* ── FIND US block — flex column so items align to the correct edge ── */
-  const findUsBlock = (align: "left" | "right") => (
-    <div style={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: align === "right" ? "flex-end" : "flex-start",
-      width: "100%",
-      direction: "ltr",
-    }}>
-      <div style={labelStyle(align)}>
-        {stripeIcon}
-        {isHe ? "מצאו אותנו" : "FIND US"}
-      </div>
-      <p style={bodyText({ textAlign: align, margin: "0 0 0.3rem" })}>
-        {isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}
-      </p>
-      <p style={subText({ textAlign: align, margin: "0 0 1.2rem" })}>
-        {isHe ? "(צמוד למלון נובה)" : "(adjacent to the Nova Hotel)"}
-      </p>
-      <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: "#fff", textDecoration: "none", letterSpacing: "0.04em", transition: "color 0.2s", whiteSpace: "nowrap" }}
-        onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GREEN; }}
-        onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}>
-        {phoneIcon}08-6323032
-      </a>
     </div>
   );
 
@@ -142,97 +92,132 @@ export default function Footer() {
     <footer
       id="contact"
       dir={isHe ? "rtl" : "ltr"}
-      style={{ background: BG, color: "#fff", padding: 0 }}
+      style={{ background: BG, color: DARK }}
     >
-      {/* Brazilian 3-stripe top accent */}
-      <div style={{ display: "flex", height: "4px" }}>
-        <div style={{ flex: 1, background: GREEN }} />
-        <div style={{ flex: 1, background: YELLOW }} />
-        <div style={{ flex: 1, background: BLUE }} />
-      </div>
+      {/* Thin gold top accent line */}
+      <div style={{ height: "3px", background: `linear-gradient(90deg, ${ACCENT} 0%, #FEDF00 50%, #002776 100%)` }} />
 
-      <div style={{ padding: mobile ? "3rem 1.5rem 1.5rem" : "3.5rem 6vw 1.5rem" }}>
+      <div style={{ padding: mobile ? "3rem 1.5rem 0" : "4rem 6vw 0" }}>
 
         {mobile ? (
           /* ── MOBILE: stacked centered ── */
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2.5rem", textAlign: "center" }}>
-            <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "130px", height: "auto", objectFit: "contain", opacity: 0.92 }} />
 
+            {/* Logo */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
+              <img src={LOGO_URL} alt="Casa do Brasil"
+                style={{ width: "120px", height: "auto", objectFit: "contain",
+                  filter: "brightness(0) saturate(100%) invert(8%) sepia(30%) saturate(800%) hue-rotate(10deg) brightness(95%)" }} />
+              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.82rem", color: MID, margin: 0, letterSpacing: "0.12em", fontStyle: "italic" }}>
+                {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקוריה" : "Brazilian Grill · Music & Churrascaria"}
+              </p>
+              {socialIcons()}
+            </div>
+
+            {/* Find Us */}
             <div style={{ textAlign: "center" }}>
-              <div style={labelStyle("center")}>{stripeIcon}{isHe ? "מצאו אותנו" : "FIND US"}</div>
-              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.9rem", lineHeight: 1.7, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem", whiteSpace: "nowrap" }}>
-                {isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}
-              </p>
-              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.8rem", color: "rgba(255,255,255,0.45)", margin: "0 0 1.1rem", whiteSpace: "nowrap" }}>
-                {isHe ? "(צמוד למלון נובה)" : "(adjacent to the Nova Hotel)"}
-              </p>
-              <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1.05rem", color: "#fff", textDecoration: "none", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>
+              {sectionLabel(isHe ? "מצאו אותנו" : "FIND US")}
+              {infoRow(mapPinIcon,
+                isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat",
+                isHe ? "צמוד למלון נובה" : "Adjacent to the Nova Hotel")}
+              <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1.05rem", color: DARK, textDecoration: "none", letterSpacing: "0.04em", transition: "color 0.2s" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = ACCENT; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = DARK; }}>
                 {phoneIcon}08-6323032
               </a>
             </div>
 
+            {/* Hours */}
             <div style={{ textAlign: "center" }}>
-              <div style={labelStyle("center")}>{stripeIcon}{isHe ? "שעות פתיחה" : "HOURS"}</div>
-              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.9rem", lineHeight: 1.7, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem", whiteSpace: "nowrap" }}>
-                {isHe ? "ראשון עד שבת" : "Sunday to Saturday"}
-              </p>
-              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1.05rem", color: YELLOW, margin: 0, letterSpacing: "0.04em", whiteSpace: "nowrap" }}>
+              {sectionLabel(isHe ? "שעות פתיחה" : "HOURS")}
+              {infoRow(clockIcon,
+                isHe ? "ראשון עד שבת" : "Sunday to Saturday")}
+              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "1.15rem", color: GOLD, margin: 0, letterSpacing: "0.06em" }}>
                 12:00 – 23:00
               </p>
             </div>
 
-            <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center" }}>
-              {socialIcons(18)}
-            </div>
           </div>
         ) : (
-          /*
-           * ── DESKTOP: 3-column grid ──
-           * Grid direction is always LTR so visual columns are predictable.
-           * Hebrew:  col1 = Hours (left-align)   | col2 = Logo+Social | col3 = FindUs (right-align)
-           * English: col1 = FindUs (left-align)  | col2 = Logo+Social | col3 = Hours (right-align)
-           */
+          /* ── DESKTOP: 3-column grid ── */
           <div style={{
             display: "grid",
             gridTemplateColumns: "1fr auto 1fr",
             alignItems: "start",
-            width: "100%",
-            gap: "2rem",
+            gap: "3rem",
             direction: "ltr",
           }}>
 
-            {/* Column 1 — left side */}
-            {isHe ? hoursBlock("left") : findUsBlock("left")}
-
-            {/* Column 2 — center: Logo + Social */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.5rem", paddingTop: "0.5rem" }}>
-              <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "150px", height: "auto", objectFit: "contain", opacity: 0.92 }} />
-              {socialIcons(16)}
+            {/* Col 1 */}
+            <div style={{ textAlign: isHe ? "right" : "left", direction: isHe ? "rtl" : "ltr" }}>
+              {sectionLabel(isHe ? "שעות פתיחה" : "FIND US")}
+              {isHe
+                ? <>
+                    {infoRow(clockIcon, "ראשון עד שבת")}
+                    <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "1.2rem", color: GOLD, margin: "0.5rem 0 0", letterSpacing: "0.06em" }}>12:00 – 23:00</p>
+                  </>
+                : <>
+                    {infoRow(mapPinIcon, "Golani Brigade 3, Eilat", "Adjacent to the Nova Hotel")}
+                    <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: DARK, textDecoration: "none", transition: "color 0.2s", marginTop: "0.3rem" }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = ACCENT; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = DARK; }}>
+                      {phoneIcon}08-6323032
+                    </a>
+                  </>
+              }
             </div>
 
-            {/* Column 3 — right side */}
-            {isHe ? findUsBlock("right") : hoursBlock("right")}
+            {/* Col 2 — center */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.2rem", minWidth: "180px" }}>
+              <img src={LOGO_URL} alt="Casa do Brasil"
+                style={{ width: "140px", height: "auto", objectFit: "contain",
+                  filter: "brightness(0) saturate(100%) invert(8%) sepia(30%) saturate(800%) hue-rotate(10deg) brightness(95%)" }} />
+              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.78rem", color: MID, margin: 0, letterSpacing: "0.14em", fontStyle: "italic", textAlign: "center" }}>
+                {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקוריה" : "Brazilian Grill · Music & Churrascaria"}
+              </p>
+              {socialIcons()}
+            </div>
+
+            {/* Col 3 */}
+            <div style={{ textAlign: isHe ? "left" : "right", direction: isHe ? "ltr" : "rtl" }}>
+              {sectionLabel(isHe ? "מצאו אותנו" : "HOURS")}
+              {isHe
+                ? <div style={{ direction: "ltr", textAlign: "left" }}>
+                    {infoRow(mapPinIcon, "חטיבת גולני 3, אילת", "צמוד למלון נובה")}
+                    <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: DARK, textDecoration: "none", transition: "color 0.2s", marginTop: "0.3rem" }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = ACCENT; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = DARK; }}>
+                      {phoneIcon}08-6323032
+                    </a>
+                  </div>
+                : <>
+                    {infoRow(clockIcon, "Sunday to Saturday")}
+                    <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "1.2rem", color: GOLD, margin: "0.5rem 0 0", letterSpacing: "0.06em", textAlign: "right", direction: "ltr" }}>12:00 – 23:00</p>
+                  </>
+              }
+            </div>
 
           </div>
         )}
 
-        {/* Bottom divider */}
-        <div style={{ height: "1px", background: "rgba(255,255,255,0.08)", margin: "2.5rem auto 1.5rem", maxWidth: "1000px" }} />
+        {/* Divider */}
+        <div style={{ height: "1px", background: "rgba(90,74,53,0.15)", margin: "3rem auto 1.5rem", maxWidth: "1100px" }} />
 
-        {/* Copyright row */}
+        {/* Copyright */}
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "center",
           gap: mobile ? "0.7rem" : "1.4rem", flexWrap: "wrap",
-          fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-          fontSize: mobile ? "0.68rem" : "0.72rem", letterSpacing: "0.1em",
-          color: "rgba(255,255,255,0.4)", direction: isHe ? "rtl" : "ltr", textAlign: "center",
+          fontFamily: "'Heebo', sans-serif", fontWeight: 400,
+          fontSize: mobile ? "0.68rem" : "0.72rem", letterSpacing: "0.08em",
+          color: LIGHT, direction: isHe ? "rtl" : "ltr", textAlign: "center",
+          paddingBottom: "1.5rem",
         }}>
           <span>© {new Date().getFullYear()} Casa do Brasil. {isHe ? "כל הזכויות שמורות." : "All rights reserved."}</span>
-          {!mobile && <span style={{ width: "1px", height: "10px", background: "rgba(255,255,255,0.15)", display: "inline-block" }} />}
+          {!mobile && <span style={{ width: "1px", height: "10px", background: "rgba(90,74,53,0.25)", display: "inline-block" }} />}
           <FooterLink href="#">{isHe ? "מדיניות פרטיות" : "Privacy Policy"}</FooterLink>
-          {!mobile && <span style={{ width: "1px", height: "10px", background: "rgba(255,255,255,0.15)", display: "inline-block" }} />}
+          {!mobile && <span style={{ width: "1px", height: "10px", background: "rgba(90,74,53,0.25)", display: "inline-block" }} />}
           <FooterLink href="#">{isHe ? "הצהרת נגישות" : "Accessibility Statement"}</FooterLink>
-          {!mobile && <span style={{ width: "1px", height: "10px", background: "rgba(255,255,255,0.15)", display: "inline-block" }} />}
+          {!mobile && <span style={{ width: "1px", height: "10px", background: "rgba(90,74,53,0.25)", display: "inline-block" }} />}
           <FooterLink href="https://www.mt-mc.com" target="_blank">{isHe ? "עוצב ופותח על ידי MTMC" : "Powered & Designed by MTMC"}</FooterLink>
         </div>
       </div>
@@ -240,12 +225,12 @@ export default function Footer() {
   );
 }
 
-function SocialLink({ href, label, color, children }: { href: string; label: string; color: string; children: React.ReactNode }) {
+function SocialLink({ href, label, hoverColor, children }: { href: string; label: string; hoverColor: string; children: React.ReactNode }) {
   return (
     <a href={href} aria-label={label} target="_blank" rel="noopener noreferrer"
-      style={{ width: "36px", height: "36px", borderRadius: "8px", background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(255,255,255,0.6)", transition: "all 0.2s", flexShrink: 0 }}
-      onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.color = color; el.style.borderColor = color; el.style.background = `${color}18`; }}
-      onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.color = "rgba(255,255,255,0.6)"; el.style.borderColor = "rgba(255,255,255,0.1)"; el.style.background = "rgba(255,255,255,0.07)"; }}
+      style={{ width: "36px", height: "36px", borderRadius: "9px", background: "rgba(26,18,8,0.07)", border: "1px solid rgba(90,74,53,0.18)", display: "flex", alignItems: "center", justifyContent: "center", color: MID, transition: "all 0.2s", flexShrink: 0 }}
+      onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.color = hoverColor; el.style.borderColor = hoverColor; el.style.background = `${hoverColor}18`; }}
+      onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.color = MID; el.style.borderColor = "rgba(90,74,53,0.18)"; el.style.background = "rgba(26,18,8,0.07)"; }}
     >{children}</a>
   );
 }
@@ -253,9 +238,9 @@ function SocialLink({ href, label, color, children }: { href: string; label: str
 function FooterLink({ href, target, children }: { href: string; target?: string; children: React.ReactNode }) {
   return (
     <a href={href} target={target} rel={target === "_blank" ? "noopener noreferrer" : undefined}
-      style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none", transition: "color 0.2s" }}
-      onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#009C3B"; }}
-      onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.4)"; }}
+      style={{ color: LIGHT, textDecoration: "none", transition: "color 0.2s" }}
+      onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = ACCENT; }}
+      onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = LIGHT; }}
     >{children}</a>
   );
 }
