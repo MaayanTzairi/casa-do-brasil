@@ -110,14 +110,14 @@ export default function HeroSection() {
       <div className="absolute inset-0">
         <div
           className="absolute inset-0"
-          style={{ background: "linear-gradient(110deg, rgba(10,8,6,0.50) 0%, rgba(20,14,8,0.32) 45%, rgba(10,8,6,0.15) 100%)" }}
+          style={{ background: "linear-gradient(110deg, rgba(10,8,6,0.55) 0%, rgba(20,14,8,0.37) 45%, rgba(10,8,6,0.20) 100%)" }}
         />
       </div>
 
       {/* ── Bottom Gradient Fade ── */}
       <div
         className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ height: "clamp(100px, 18vw, 220px)", background: "linear-gradient(to top, rgba(10,8,6,0.45) 0%, transparent 100%)" }}
+        style={{ height: "clamp(100px, 18vw, 220px)", background: "linear-gradient(to top, rgba(10,8,6,0.50) 0%, transparent 100%)" }}
       />
 
       {/* ── Gold Inset Frame — desktop only ── */}
@@ -188,9 +188,9 @@ export default function HeroSection() {
             style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 600,
-              fontSize: isMobile ? "clamp(12px, 3.6vw, 16px)" : "clamp(18px, 2.2vw, 28px)",
+              fontSize: isMobile ? "clamp(14px, 4.2vw, 20px)" : "clamp(22px, 2.8vw, 36px)",
               color: "#FFFFFF",
-              letterSpacing: isMobile ? "0.08em" : "0.12em",
+              letterSpacing: isMobile ? "0.06em" : "0.10em",
               fontStyle: "italic",
               textAlign: "center",
               whiteSpace: "nowrap",
@@ -310,18 +310,27 @@ function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: st
       rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
-        display: "inline-flex", alignItems: "center", gap: "0.5rem",
-        padding: isMobile ? "0.75rem 1.1rem" : "1rem 2.8rem",
-        fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: isMobile ? "0.68rem" : "0.75rem",
-        letterSpacing: isMobile ? "0.12em" : "0.22em", textTransform: "uppercase" as const,
-        textDecoration: "none", border: "2px solid #FFFFFF",
-        color: hovered ? "#1a0a00" : "#FFFFFF",
-        background: hovered ? "#FFFFFF" : "rgba(255,255,255,0.10)",
-        transition: "color 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-        willChange: "color, background-color",
+        display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.6rem",
+        padding: isMobile ? "0.85rem 1.6rem" : "1.1rem 3.2rem",
+        fontFamily: "'Heebo', sans-serif", fontWeight: 800,
+        fontSize: isMobile ? "0.82rem" : "0.92rem",
+        letterSpacing: isMobile ? "0.10em" : "0.20em", textTransform: "uppercase" as const,
+        textDecoration: "none",
+        border: "2.5px solid #009C3B",
+        color: hovered ? "#FFFFFF" : "#FFFFFF",
+        background: hovered
+          ? "linear-gradient(135deg, #007a2e 0%, #009C3B 60%, #00b844 100%)"
+          : "linear-gradient(135deg, #006b27 0%, #009C3B 55%, #00a83e 100%)",
+        boxShadow: hovered
+          ? "0 6px 28px rgba(0,156,59,0.55), 0 2px 8px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.20)"
+          : "0 4px 18px rgba(0,156,59,0.40), 0 2px 6px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15)",
+        transition: "all 0.30s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        transform: hovered ? "translateY(-2px)" : "translateY(0)",
+        willChange: "transform, box-shadow",
+        borderRadius: "3px",
       }}
     >
-      {label} <span style={{ fontSize: "1rem", lineHeight: 1 }}>{isHe ? "←" : "→"}</span>
+      {label} <span style={{ fontSize: "1.1rem", lineHeight: 1 }}>{isHe ? "←" : "→"}</span>
     </a>
   );
 }
@@ -333,15 +342,24 @@ function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: st
     <a href={href}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
-        display: "inline-flex", alignItems: "center", gap: "0.5rem",
-        padding: isMobile ? "0.75rem 1.1rem" : "1rem 2.8rem",
-        fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: isMobile ? "0.68rem" : "0.75rem",
-        letterSpacing: isMobile ? "0.12em" : "0.22em", textTransform: "uppercase" as const,
-        textDecoration: "none", border: `2px solid ${GOLD}`,
-        color: hovered ? BORDEAUX : "#1a0a00",
-        background: hovered ? `${GOLD}cc` : GOLD,
-        transition: "color 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-        willChange: "color, background-color",
+        display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.6rem",
+        padding: isMobile ? "0.85rem 1.6rem" : "1.1rem 3.2rem",
+        fontFamily: "'Heebo', sans-serif", fontWeight: 800,
+        fontSize: isMobile ? "0.82rem" : "0.92rem",
+        letterSpacing: isMobile ? "0.10em" : "0.20em", textTransform: "uppercase" as const,
+        textDecoration: "none",
+        border: "2.5px solid #c8a800",
+        color: hovered ? "#1a0a00" : "#1a0a00",
+        background: hovered
+          ? "linear-gradient(135deg, #e6c200 0%, #FEDF00 55%, #ffe840 100%)"
+          : "linear-gradient(135deg, #d4aa00 0%, #FEDF00 55%, #ffe533 100%)",
+        boxShadow: hovered
+          ? "0 6px 28px rgba(254,223,0,0.55), 0 2px 8px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.35)"
+          : "0 4px 18px rgba(254,223,0,0.40), 0 2px 6px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.25)",
+        transition: "all 0.30s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        transform: hovered ? "translateY(-2px)" : "translateY(0)",
+        willChange: "transform, box-shadow",
+        borderRadius: "3px",
       }}
     >
       {label}
