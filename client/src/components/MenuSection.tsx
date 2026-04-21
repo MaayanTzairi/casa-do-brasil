@@ -193,7 +193,7 @@ export default function MenuSection() {
             <span style={{ fontFamily:"'Heebo', sans-serif", fontWeight:700, fontSize:"0.9rem", letterSpacing: isHe ? "0.08em" : "0.44em", textTransform:"uppercase", color:GOLD }}>{label}</span>
           </div>
 
-          <h2 style={{ ...animStyle(inView, 0.15), fontFamily:"'Heebo', sans-serif", fontWeight:900, fontSize: mobile ? "clamp(36px, 10vw, 52px)" : "clamp(36px, 3.8vw, 58px)", color:BORDEAUX, margin:0, lineHeight:0.9, letterSpacing:"0.01em", textAlign: isHe ? "right" : "left", width:"100%" }}>
+          <h2 style={{ ...animStyle(inView, 0.15), fontFamily:"'Heebo', sans-serif", fontWeight:900, fontSize: mobile ? "clamp(48px, 13vw, 72px)" : "clamp(48px, 5vw, 72px)", color:BORDEAUX, margin:0, lineHeight:0.9, letterSpacing:"0.01em", textAlign: isHe ? "right" : "left", width:"100%" }}>
             {line1}<br />{line2}<br />{line3}
           </h2>
 

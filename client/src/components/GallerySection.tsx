@@ -155,7 +155,7 @@ export default function GallerySection() {
           <h2 style={{
             ...animStyle(inView, 0.12),
             fontFamily: "'Heebo', sans-serif", fontWeight: 900,
-            fontSize: mobile ? "clamp(36px, 10vw, 52px)" : "clamp(36px, 3.8vw, 58px)",
+            fontSize: mobile ? "clamp(48px, 13vw, 72px)" : "clamp(48px, 5vw, 72px)",
             color: BORDEAUX, margin: "0 0 1.5rem", lineHeight: 1.0,
             letterSpacing: "0.01em", textAlign: isHe ? "right" : "left",
             direction: isHe ? "rtl" : "ltr",
