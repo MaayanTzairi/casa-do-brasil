@@ -134,37 +134,33 @@ export default function HeroSection() {
       <div
         className="absolute inset-0 z-10 flex flex-col"
         style={{
-          // Desktop: paddingTop = navbar (70px) + 20px gap so bull starts below navbar
-          // Use flex-start + gap so elements flow naturally without space-evenly pushing bull up
-          // Mobile: paddingTop = navbar height; content is bottom-aligned
-          paddingTop:    isMobile ? "70px" : "90px",
-          paddingBottom: isMobile ? "clamp(3rem, 10vw, 5rem)" : "clamp(3rem, 6vw, 6rem)",
-          paddingLeft:   isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
-          paddingRight:  isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
-          alignItems: isMobile ? "stretch" : "center",
-          justifyContent: isMobile ? "flex-end" : "flex-start",
-          gap: isMobile ? undefined : "clamp(1.2rem, 3vh, 3rem)",
+          // Both mobile and desktop: flex-start from paddingTop, gap between items
+          paddingTop:    isMobile ? "80px" : "90px",
+          paddingBottom: isMobile ? "clamp(3rem, 8vw, 5rem)" : "clamp(3rem, 6vw, 6rem)",
+          paddingLeft:   isMobile ? "1.2rem" : "clamp(2rem, 5.5vw, 5.5rem)",
+          paddingRight:  isMobile ? "1.2rem" : "clamp(2rem, 5.5vw, 5.5rem)",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "clamp(0.8rem, 2.5vh, 2rem)",
           direction: isHe ? "rtl" : "ltr",
         }}
       >
-        {/* ── Bull Logo (desktop inline, first flex child) ── */}
-        {!isMobile && (
-          <HeroBullInline progress={bullProgress} />
-        )}
+        {/* ── Bull Logo (inline, first flex child on both mobile and desktop) ── */}
+        <HeroBullInline progress={bullProgress} isMobile={isMobile} />
 
         {/* Title — single line */}
-        <div className="overflow-hidden" style={{ width: "100%", textAlign: isMobile ? (isHe ? "right" : "left") : "center" }}>
+        <div className="overflow-hidden" style={{ width: "100%", textAlign: "center" }}>
           <h1
             className="block select-none"
             style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 900,
-              fontSize: isMobile ? "clamp(32px, 10vw, 56px)" : "clamp(42px, 6.5vw, 90px)",
+              fontSize: isMobile ? "clamp(28px, 9vw, 52px)" : "clamp(42px, 6.5vw, 90px)",
               color: "#FFFFFF",
               letterSpacing: "-0.02em",
               lineHeight: 1,
               whiteSpace: "nowrap",
-              textAlign: isMobile ? (isHe ? "right" : "left") : "center",
+              textAlign: "center",
               animation: "fadeUp 0.95s 0.4s cubic-bezier(0.25,0.46,0.45,0.94) both",
             }}
           >
@@ -181,9 +177,9 @@ export default function HeroSection() {
             color: "#FFFFFF",
             letterSpacing: "0.10em",
             fontStyle: "italic",
-            textAlign: isMobile ? (isHe ? "right" : "left") : "center",
-            maxWidth: isMobile ? "calc(100% - 3rem)" : "80%",
-            marginBottom: isMobile ? "0.8rem" : 0,
+            textAlign: "center",
+            maxWidth: "80%",
+            marginBottom: 0,
             // Brazilian-colors layered text shadow: green → yellow → blue
             textShadow: [
               "0 0 18px rgba(0,156,59,0.75)",   // Brazil green glow
@@ -201,9 +197,9 @@ export default function HeroSection() {
         <div
           style={{
             width: isMobile ? "clamp(120px, 40vw, 220px)" : "clamp(180px, 28vw, 360px)",
-            transformOrigin: isMobile ? (isHe ? "right" : "left") : "center",
-            marginLeft: isMobile ? (isHe ? "auto" : undefined) : "auto",
-            marginRight: isMobile ? (isHe ? 0 : undefined) : "auto",
+            transformOrigin: "center",
+            marginLeft: "auto",
+            marginRight: "auto",
             animation: "drawLine 1.2s 0.9s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
@@ -216,7 +212,7 @@ export default function HeroSection() {
             display: "flex", alignItems: "center",
             gap: isMobile ? "0.7rem" : "1.25rem",
             flexWrap: "nowrap",
-            justifyContent: isMobile ? "flex-start" : "center",
+            justifyContent: "center",
             width: "100%",
             animation: "fadeUp 0.8s 1.6s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}

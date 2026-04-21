@@ -40,12 +40,13 @@ function easeInOut(t: number) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// HeroBull — rendered INLINE inside the hero flex column (desktop only)
+// HeroBull — rendered INLINE inside the hero flex column (both mobile + desktop)
 // ─────────────────────────────────────────────────────────────────────────────
-export function HeroBullInline({ progress }: { progress: number }) {
+export function HeroBullInline({ progress, isMobile }: { progress: number; isMobile?: boolean }) {
+  const heroSize = isMobile ? BULL_HERO_MOBILE * 1.6 : BULL_HERO_DESKTOP;
   const t = easeInOut(progress);
-  const bullSz = lerp(BULL_HERO_DESKTOP, BULL_HERO_DESKTOP * 0.6, t);
-  const circleSize = BULL_HERO_DESKTOP * 1.50;
+  const bullSz = lerp(heroSize, heroSize * 0.6, t);
+  const circleSize = heroSize * 1.50;
   const circleAlpha = Math.max(0, 1 - t * 2.5);
   const bullAlpha   = Math.max(0, 1 - t * 1.8);
 
@@ -267,94 +268,30 @@ export default function FlyingBull() {
     );
   }
 
-  /* ── MOBILE ── */
-  if (isMobile && mHeroPos && mNavPos) {
-    const bullX  = lerp(mHeroPos.x, mNavPos.x, t);
-    const bullY  = lerp(mHeroPos.y, mNavPos.y, t);
-    const bullSz = lerp(BULL_HERO_MOBILE, BULL_NAV_SIZE, t);
+  /* ── MOBILE: only the small flying bull that goes to navbar on scroll ── */
+  if (isMobile && mNavPos) {
+    const bullX  = lerp(mNavPos.x, mNavPos.x, t); // stays at nav center
+    const bullY  = lerp(mNavPos.y, mNavPos.y, t);
+    const bullSz = BULL_NAV_SIZE;
+    const bullAlpha = Math.min(1, t * 3); // fades IN as user scrolls
 
-    const circleSize  = BULL_HERO_MOBILE * 1.50;
-    const circleX     = mHeroPos.x + BULL_HERO_MOBILE / 2 - circleSize / 2;
-    const circleY     = mHeroPos.y + BULL_HERO_MOBILE / 2 - circleSize / 2;
-    const circleAlpha = Math.max(0, 1 - t * 2.2);
+    if (bullAlpha < 0.01) return null;
 
     return (
-      <>
-        <style>{`
-          @keyframes fb-spin { to { transform: rotate(360deg); } }
-          @keyframes fb-pulse { 0%,100%{opacity:.75} 50%{opacity:1} }
-        `}</style>
-
-        {/* Circular photo — mobile */}
-        <div style={{
-          position: "fixed", left: circleX, top: circleY,
-          width: circleSize, height: circleSize,
-          borderRadius: "50%", overflow: "hidden",
-          opacity: PHOTO_URL ? circleAlpha : 0, pointerEvents: "none", zIndex: 57,
-          boxShadow: "0 6px 32px rgba(0,0,0,0.50)",
-        }}>
-          {PHOTO_URL && <img src={PHOTO_URL} alt="" aria-hidden="true"
-            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />}
-          <div style={{
-            position: "absolute", inset: 0,
-            background: "radial-gradient(circle at 50% 60%, rgba(10,5,0,0.08) 0%, rgba(10,5,0,0.40) 100%)",
-            borderRadius: "50%",
-          }} />
-        </div>
-
-        {/* Gold ring SVG — mobile */}
-        <svg style={{
-          position: "fixed", left: circleX - 5, top: circleY - 5,
-          width: circleSize + 10, height: circleSize + 10,
-          overflow: "visible", pointerEvents: "none", zIndex: 58,
-          opacity: circleAlpha,
-        }} viewBox={`0 0 ${circleSize + 10} ${circleSize + 10}`}>
-          <defs>
-            <linearGradient id="fg-gold-m" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%"   stopColor="#f7e07a" />
-              <stop offset="35%"  stopColor="#c8a84b" />
-              <stop offset="65%"  stopColor="#e8c96a" />
-              <stop offset="100%" stopColor="#a07830" />
-            </linearGradient>
-          </defs>
-          <g style={{ transformOrigin: `${(circleSize+10)/2}px ${(circleSize+10)/2}px`, animation: "fb-spin 28s linear infinite" }}>
-            <circle cx={(circleSize+10)/2} cy={(circleSize+10)/2} r={circleSize/2+3}
-              fill="none" stroke="url(#fg-gold-m)" strokeWidth="1.2"
-              strokeDasharray="9 6" strokeLinecap="round" strokeOpacity="0.80" />
-          </g>
-          <circle cx={(circleSize+10)/2} cy={(circleSize+10)/2} r={circleSize/2}
-            fill="none" stroke="url(#fg-gold-m)" strokeWidth="2" strokeOpacity="0.90"
-            style={{ animation: "fb-pulse 3.5s ease-in-out infinite" }} />
-          {[0, 90, 180, 270].map(deg => {
-            const rad = (deg * Math.PI) / 180;
-            const cx  = (circleSize+10)/2 + Math.cos(rad) * (circleSize/2+3);
-            const cy  = (circleSize+10)/2 + Math.sin(rad) * (circleSize/2+3);
-            return (
-              <g key={deg} transform={`translate(${cx},${cy}) rotate(45)`}>
-                <rect x="-3.5" y="-3.5" width="7" height="7" fill="#c8a84b" opacity="0.95" />
-              </g>
-            );
-          })}
-        </svg>
-
-        {/* Bull — mobile */}
-        {LOGO_URL && (
-          <img src={LOGO_URL}
-            srcSet={`${LOGO_URL_100} 100w, ${LOGO_URL_300} 300w, ${LOGO_URL_DEFAULT} 360w`}
-            sizes="(max-width:899px) 88px, 260px"
-            alt="Casa do Brasil" aria-hidden="true"
-            loading="eager"
-            fetchPriority="high"
-            decoding="sync"
-            style={{
-            position: "fixed", left: bullX, top: bullY,
-            width: bullSz, height: "auto", objectFit: "contain",
-            zIndex: 60, pointerEvents: "none",
-            filter: `drop-shadow(0 3px 14px rgba(0,0,0,${lerp(0.5, 0, t)}))`,
-            willChange: "left, top, width",
-          }} />
-        )}
-      </>
+      <img src={LOGO_URL}
+        srcSet={`${LOGO_URL_100} 100w, ${LOGO_URL_300} 300w, ${LOGO_URL_DEFAULT} 360w`}
+        sizes="44px"
+        alt="Casa do Brasil" aria-hidden="true"
+        loading="eager" fetchPriority="high" decoding="sync"
+        style={{
+          position: "fixed", left: bullX, top: bullY,
+          width: bullSz, height: "auto", objectFit: "contain",
+          zIndex: 60, pointerEvents: "none",
+          opacity: bullAlpha,
+          filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.4))",
+          willChange: "opacity",
+        }}
+      />
     );
   }
 
