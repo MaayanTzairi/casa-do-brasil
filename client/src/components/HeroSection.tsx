@@ -83,7 +83,7 @@ export default function HeroSection() {
       ref={heroRef}
       id="hero"
       className="relative w-full overflow-hidden"
-      style={{ height: "100svh", minHeight: "600px", background: "rgb(10,8,6)" }}
+      style={{ height: "100svh", minHeight: "600px", background: "rgb(10,8,6)" }} /* base bg only shows if image fails */
     >
       {/* ── Background Image + Parallax ── */}
       <div ref={imgWrapRef} className="absolute inset-0 w-full h-full" style={{ willChange: "transform" }}>
@@ -110,14 +110,14 @@ export default function HeroSection() {
       <div className="absolute inset-0">
         <div
           className="absolute inset-0"
-          style={{ background: "linear-gradient(110deg, rgba(10,8,6,0.62) 0%, rgba(20,14,8,0.45) 45%, rgba(10,8,6,0.18) 100%)" }}
+          style={{ background: "linear-gradient(110deg, rgba(10,8,6,0.40) 0%, rgba(20,14,8,0.22) 45%, rgba(10,8,6,0.05) 100%)" }}
         />
       </div>
 
       {/* ── Bottom Gradient Fade ── */}
       <div
         className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ height: "clamp(100px, 18vw, 220px)", background: "linear-gradient(to top, rgba(10,8,6,0.55) 0%, transparent 100%)" }}
+        style={{ height: "clamp(100px, 18vw, 220px)", background: "linear-gradient(to top, rgba(10,8,6,0.35) 0%, transparent 100%)" }}
       />
 
       {/* ── Gold Inset Frame — desktop only ── */}
