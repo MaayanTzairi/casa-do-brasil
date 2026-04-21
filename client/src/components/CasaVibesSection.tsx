@@ -32,7 +32,7 @@ const CARNIVAL_URL_350 =
 const BR_GREEN  = "#009C3B";
 const BR_YELLOW = "#FEDF00";
 const BR_BLUE   = "#002776";
-const BG_DARK   = "#0d0a06";
+const BG_DARK   = "#ffffff";
 
 function animStyle(inView: boolean, delay: number): React.CSSProperties {
   return {
@@ -122,7 +122,7 @@ export default function CasaVibesSection() {
       id="experience"
       ref={ref as React.RefObject<HTMLElement>}
       style={{
-        background: BG_DARK,
+        background: "#ffffff",
         padding: mobile ? "3.5rem 1.5rem 4rem" : "5rem 5vw 5rem 6vw",
         overflow: mobile ? "visible" : "hidden",
       }}
@@ -177,10 +177,10 @@ export default function CasaVibesSection() {
                 ...animStyle(inView, 0.08 + i * 0.11),
                 fontFamily: "'Heebo', sans-serif", fontWeight: 900,
                 fontSize: mobile ? "clamp(52px, 16vw, 88px)" : "clamp(64px, 8vw, 112px)",
-                color: "#FFFFFF",
+                color: "#1a0a00",
                 lineHeight: 0.88, letterSpacing: "0.03em",
                 margin: 0,
-                textShadow: "0 2px 20px rgba(0,0,0,0.80), 2px 3px 0 rgba(0,0,0,0.50)",
+                textShadow: "2px 3px 0 rgba(185,161,103,0.16), 0 6px 18px rgba(62,4,9,0.10)",
                 textAlign: isHe ? "right" : "left",
                 width: "100%", display: "block",
               }}>{word}</h2>
@@ -197,7 +197,7 @@ export default function CasaVibesSection() {
             ...animStyle(inView, 0.52),
             fontFamily: "'Heebo', sans-serif", fontWeight: 300,
             fontSize: mobile ? "clamp(15px, 4vw, 18px)" : "clamp(15px, 1.3vw, 18px)",
-            color: "rgba(255,255,255,0.80)", lineHeight: 1.85,
+            color: "rgb(90,35,35)", lineHeight: 1.85,
             maxWidth: "420px", marginBottom: "2rem",
             marginRight: isHe ? 0 : undefined,
             marginLeft: isHe ? "auto" : undefined,
