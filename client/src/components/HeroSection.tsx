@@ -208,19 +208,6 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Gold rule */}
-        <div
-          style={{
-            width: isMobile ? "clamp(120px, 40vw, 220px)" : "clamp(180px, 28vw, 360px)",
-            transformOrigin: "center",
-            marginLeft: "auto",
-            marginRight: "auto",
-            animation: "drawLine 1.2s 0.9s cubic-bezier(0.25,0.46,0.45,0.94) both",
-          }}
-        >
-          <div className="h-px" style={{ background: GOLD }} />
-        </div>
-
         {/* CTA Buttons — on mobile pushed to bottom via marginTop auto */}
         <div
           style={{
