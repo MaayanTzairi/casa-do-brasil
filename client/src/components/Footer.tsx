@@ -2,6 +2,10 @@
  * CASA DO BRASIL — Global Footer
  * Design: Brazilian minimalist — dark background, green/yellow accents, 3-stripe top
  * Bilingual EN/HE with RTL support
+ *
+ * Desktop layout (always LTR grid):
+ *   Hebrew:  [שעות פתיחה (left)]  [Logo+Social (center)]  [מצאו אותנו (right)]
+ *   English: [FIND US (left)]     [Logo+Social (center)]  [HOURS (right)]
  */
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -24,7 +28,8 @@ export default function Footer() {
     return () => window.removeEventListener("resize", fn);
   }, []);
 
-  const label = (text: string) => (
+  /** Section label — stripe icon + uppercase text */
+  const label = (text: string, align: "left" | "right" | "center" = "left") => (
     <div style={{
       fontFamily: "'Heebo', sans-serif",
       fontWeight: 700,
@@ -36,7 +41,7 @@ export default function Footer() {
       display: "flex",
       alignItems: "center",
       gap: "0.5rem",
-      justifyContent: mobile ? "center" : "inherit",
+      justifyContent: mobile ? "center" : align === "right" ? "flex-end" : "flex-start",
     }}>
       <span style={{ display: "inline-flex", gap: "2px", flexShrink: 0 }}>
         <span style={{ width: "10px", height: "2px", background: GREEN, display: "inline-block" }} />
@@ -51,6 +56,59 @@ export default function Footer() {
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={GREEN} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.06 6.06l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z" />
     </svg>
+  );
+
+  const socialIcons = (
+    <div style={{ display: "flex", gap: "0.6rem", justifyContent: "center" }}>
+      <SocialLink href="https://www.instagram.com/casadobrasil.eilat" label="Instagram" color="#E1306C">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+      </SocialLink>
+      <SocialLink href="https://www.facebook.com/casadobrasil.eilat" label="Facebook" color="#1877F2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+        </svg>
+      </SocialLink>
+      <SocialLink href="https://www.tiktok.com/@casadobrasil.eilat" label="TikTok" color="#69C9D0">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
+        </svg>
+      </SocialLink>
+    </div>
+  );
+
+  /* ── Column content blocks ── */
+
+  /** שעות פתיחה / HOURS — text aligned left */
+  const hoursBlock = (
+    <div style={{ direction: "ltr", textAlign: "left" }}>
+      {label(isHe ? "שעות פתיחה" : "HOURS")}
+      <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem", direction: isHe ? "rtl" : "ltr" }}>
+        {isHe ? "ראשון עד שבת" : "Sunday to Saturday"}
+      </p>
+      <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1.05rem", color: YELLOW, margin: 0, letterSpacing: "0.04em" }}>
+        12:00 – 23:00
+      </p>
+    </div>
+  );
+
+  /** מצאו אותנו / FIND US — text aligned right */
+  const findUsBlock = (
+    <div style={{ direction: isHe ? "rtl" : "ltr", textAlign: "right" }}>
+      {label(isHe ? "מצאו אותנו" : "FIND US", "right")}
+      <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem" }}>
+        {isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}
+      </p>
+      <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", margin: "0 0 1.2rem" }}>
+        {isHe ? "(צמוד למלון נובה)" : "(adjacent to the Nova Hotel)"}
+      </p>
+      <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: "#fff", textDecoration: "none", letterSpacing: "0.04em", transition: "color 0.2s", whiteSpace: "nowrap" }}
+        onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GREEN; }}
+        onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}>
+        {phoneIcon}08-6323032
+      </a>
+    </div>
   );
 
   return (
@@ -74,7 +132,7 @@ export default function Footer() {
             <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "130px", height: "auto", objectFit: "contain", opacity: 0.92 }} />
 
             <div>
-              {label(isHe ? "מצאו אותנו" : "FIND US")}
+              {label(isHe ? "מצאו אותנו" : "FIND US", "center")}
               <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.9rem", lineHeight: 1.7, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem", whiteSpace: "nowrap" }}>
                 {isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}
               </p>
@@ -87,7 +145,7 @@ export default function Footer() {
             </div>
 
             <div>
-              {label(isHe ? "שעות פתיחה" : "HOURS")}
+              {label(isHe ? "שעות פתיחה" : "HOURS", "center")}
               <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.9rem", lineHeight: 1.7, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem", whiteSpace: "nowrap" }}>
                 {isHe ? "ראשון עד שבת" : "Sunday to Saturday"}
               </p>
@@ -115,69 +173,33 @@ export default function Footer() {
             </div>
           </div>
         ) : (
-          /* ── DESKTOP: 3-column grid ── */
-          <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "start", maxWidth: "1000px", margin: "0 auto", gap: "2rem", direction: "ltr" }}>
+          /* ── DESKTOP: 3-column grid — always LTR so visual order is predictable ── */
+          /*
+           * Hebrew:  col1 = שעות פתיחה (left-aligned)  | col2 = Logo+Social | col3 = מצאו אותנו (right-aligned)
+           * English: col1 = FIND US (left-aligned)      | col2 = Logo+Social | col3 = HOURS (right-aligned)
+           */
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "1fr auto 1fr",
+            alignItems: "start",
+            maxWidth: "1000px",
+            margin: "0 auto",
+            gap: "2rem",
+            direction: "ltr",   /* grid always LTR — content inside each cell handles its own direction */
+          }}>
 
-            {/* In Hebrew: col1=Hours (left), col2=Logo (center), col3=FindUs (right) */}
-            {isHe ? (
-              <div style={{ textAlign: "left", direction: "rtl" }}>
-                {label("שעות פתיחה")}
-                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem" }}>ראשון עד שבת</p>
-                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1.05rem", color: YELLOW, margin: 0, letterSpacing: "0.04em" }}>12:00 – 23:00</p>
-              </div>
-            ) : (
-              <div style={{ textAlign: "left", direction: "ltr" }}>
-                {label("FIND US")}
-                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem" }}>Golani Brigade 3, Eilat</p>
-                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", margin: "0 0 1.2rem" }}>(adjacent to the Nova Hotel)</p>
-                <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: "#fff", textDecoration: "none", letterSpacing: "0.04em", transition: "color 0.2s", whiteSpace: "nowrap" }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GREEN; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}>
-                  {phoneIcon}08-6323032
-                </a>
-              </div>
-            )}
+            {/* Column 1 (left) */}
+            {isHe ? hoursBlock : findUsBlock}
 
+            {/* Column 2 (center) — Logo + Social icons */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.5rem", paddingTop: "0.5rem" }}>
               <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: "150px", height: "auto", objectFit: "contain", opacity: 0.92 }} />
-              {/* Social icons centered under logo */}
-              <div style={{ display: "flex", gap: "0.6rem", justifyContent: "center" }}>
-                <SocialLink href="https://www.instagram.com/casadobrasil.eilat" label="Instagram" color="#E1306C">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-                  </svg>
-                </SocialLink>
-                <SocialLink href="https://www.facebook.com/casadobrasil.eilat" label="Facebook" color="#1877F2">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                  </svg>
-                </SocialLink>
-                <SocialLink href="https://www.tiktok.com/@casadobrasil.eilat" label="TikTok" color="#69C9D0">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
-                  </svg>
-                </SocialLink>
-              </div>
+              {socialIcons}
             </div>
 
-            {isHe ? (
-              <div style={{ textAlign: "right", direction: "rtl" }}>
-                {label("מצאו אותנו")}
-                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem" }}>חטיבת גולני 3, אילת</p>
-                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", margin: "0 0 1.2rem" }}>(צמוד למלון נובה)</p>
-                <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: "#fff", textDecoration: "none", letterSpacing: "0.04em", transition: "color 0.2s", whiteSpace: "nowrap" }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = GREEN; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}>
-                  {phoneIcon}08-6323032
-                </a>
-              </div>
-            ) : (
-              <div style={{ textAlign: "right", direction: "ltr" }}>
-                {label("HOURS")}
-                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.92rem", lineHeight: 1.8, color: "rgba(255,255,255,0.78)", margin: "0 0 0.3rem" }}>Sunday to Saturday</p>
-                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1.05rem", color: YELLOW, margin: 0, letterSpacing: "0.04em" }}>12:00 – 23:00</p>
-              </div>
-            )}
+            {/* Column 3 (right) */}
+            {isHe ? findUsBlock : hoursBlock}
+
           </div>
         )}
 
