@@ -163,7 +163,7 @@ export default function CasaVibesSection() {
             </div>
             <span style={{
               fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-              fontSize: "0.85rem", letterSpacing: isHe ? "0.08em" : "0.38em",
+              fontSize: "1.15rem", letterSpacing: isHe ? "0.06em" : "0.28em",
               textTransform: "uppercase", color: BR_GREEN,
             }}>
               {label}
