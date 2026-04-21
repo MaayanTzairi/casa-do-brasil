@@ -46,7 +46,7 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
   const heroSize = isMobile ? BULL_HERO_MOBILE * 1.1 : BULL_HERO_DESKTOP;
   const t = easeInOut(progress);
   const bullSz = lerp(heroSize, heroSize * 0.6, t);
-  const circleSize = heroSize * 1.50;
+  const circleSize = heroSize * 1.60; // slightly larger circle so bull fits inside
   const circleAlpha = Math.max(0, 1 - t * 2.5);
   const bullAlpha   = Math.max(0, 1 - t * 1.8);
 
@@ -124,32 +124,41 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
             <stop offset="100%" stopColor="#f5e090" />
           </linearGradient>
         </defs>
-        {/* Outer gold ring — thicker */}
+        {/* Outer Brazilian YELLOW ring */}
         <circle
           cx={(circleSize + 12) / 2} cy={(circleSize + 12) / 2}
-          r={circleSize / 2 + 4}
+          r={circleSize / 2 + 5}
           fill="none"
           stroke="url(#gold-ring-1)"
-          strokeWidth="5"
+          strokeWidth="6"
         />
-        {/* Inner gold ring — thinner, slightly inside */}
+        {/* Middle Brazilian BLUE ring */}
+        <circle
+          cx={(circleSize + 12) / 2} cy={(circleSize + 12) / 2}
+          r={circleSize / 2 + 1}
+          fill="none"
+          stroke="#1a3a8a"
+          strokeWidth="3"
+          strokeOpacity="0.85"
+        />
+        {/* Inner Brazilian GREEN ring */}
         <circle
           cx={(circleSize + 12) / 2} cy={(circleSize + 12) / 2}
           r={circleSize / 2 - 3}
           fill="none"
-          stroke="url(#gold-ring-2)"
-          strokeWidth="1.5"
-          strokeOpacity="0.7"
+          stroke="#009c3b"
+          strokeWidth="2"
+          strokeOpacity="0.80"
         />
-        {/* Subtle rotating dashed ring */}
-        <g style={{ transformOrigin: `${(circleSize + 12) / 2}px ${(circleSize + 12) / 2}px`, animation: "fb-spin 30s linear infinite" }}>
+        {/* Rotating dashed gold ring outside */}
+        <g style={{ transformOrigin: `${(circleSize + 12) / 2}px ${(circleSize + 12) / 2}px`, animation: "fb-spin 40s linear infinite" }}>
           <circle
             cx={(circleSize + 12) / 2} cy={(circleSize + 12) / 2}
-            r={circleSize / 2 + 8}
+            r={circleSize / 2 + 10}
             fill="none"
-            stroke="rgba(200,160,32,0.40)"
+            stroke="rgba(200,160,32,0.35)"
             strokeWidth="1"
-            strokeDasharray="4 12"
+            strokeDasharray="3 10"
             strokeLinecap="round"
           />
         </g>
@@ -172,7 +181,7 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
           left: "50%",
           top: "50%",
           transform: `translate(-50%, -50%) scale(${lerp(1, 0.6, easeInOut(progress))})`,
-          width: heroSize,
+          width: heroSize * 0.78, // 78% of circle size so bull fits inside the flag circle
           height: "auto",
           objectFit: "contain",
           zIndex: 2,

@@ -199,37 +199,39 @@ function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: bo
 
 /* ─── Reservations CTA button ─── */
 function ReservationsBtn({ scrolled, label }: { scrolled: boolean; label: string }) {
+  const [hovered, setHovered] = useState(false);
   return (
     <a
       href={RESERVATIONS_URL}
       target="_blank"
       rel="noopener noreferrer"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       style={{
         fontFamily: "'Heebo', sans-serif",
-        fontWeight: 700,
+        fontWeight: 800,
         fontSize: "0.78rem",
         letterSpacing: "0.14em",
         textTransform: "uppercase",
         textDecoration: "none",
-        color: scrolled ? "#fff" : BORDEAUX,
-        background: scrolled ? "#009C3B" : "#fff",
-        border: `1.5px solid ${scrolled ? "#009C3B" : "#fff"}`,
-        padding: "0.5rem 1.2rem",
-        transition: "all 0.3s ease",
+        color: scrolled
+          ? (hovered ? "#fff" : "#fff")
+          : (hovered ? "#fff" : "#fff"),
+        background: scrolled
+          ? (hovered ? "rgba(0,100,38,0.95)" : "rgba(0,130,48,0.90)")
+          : (hovered ? "rgba(0,100,38,0.85)" : "rgba(0,130,48,0.70)"),
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
+        border: `1.5px solid ${scrolled ? "rgba(0,156,59,0.85)" : "rgba(0,200,80,0.60)"}`,
+        borderRadius: "50px",
+        padding: "0.45rem 1.3rem",
+        transition: "all 0.28s cubic-bezier(0.25,0.46,0.45,0.94)",
+        transform: hovered ? "translateY(-1px) scale(1.02)" : "translateY(0) scale(1)",
+        boxShadow: hovered
+          ? "0 6px 20px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.12)"
+          : "0 3px 10px rgba(0,0,0,0.20), inset 0 1px 0 rgba(255,255,255,0.08)",
         whiteSpace: "nowrap",
         flexShrink: 0,
-      }}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget as HTMLAnchorElement;
-        el.style.background = "#007a2e";
-        el.style.borderColor = "#007a2e";
-        el.style.color = "#fff";
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget as HTMLAnchorElement;
-        el.style.background = scrolled ? "#009C3B" : "#fff";
-        el.style.borderColor = scrolled ? "#009C3B" : "#fff";
-        el.style.color = scrolled ? "#fff" : BORDEAUX;
       }}
     >
       {label}
@@ -382,17 +384,21 @@ export default function Navbar({
                 rel="noopener noreferrer"
                 style={{
                   fontFamily: "'Heebo', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "0.55rem",
-                  letterSpacing: isHe ? "0.02em" : "0.1em",
+                  fontWeight: 800,
+                  fontSize: "0.60rem",
+                  letterSpacing: isHe ? "0.02em" : "0.10em",
                   textTransform: "uppercase",
                   textDecoration: "none",
                   color: "#fff",
-                  background: "#009C3B",
-                  border: "1.5px solid #009C3B",
-                  padding: "0.26rem 0.45rem",
+                  background: "rgba(0,130,48,0.80)",
+                  backdropFilter: "blur(10px)",
+                  WebkitBackdropFilter: "blur(10px)",
+                  border: "1.5px solid rgba(0,156,59,0.75)",
+                  borderRadius: "50px",
+                  padding: "0.35rem 0.75rem",
                   whiteSpace: "nowrap",
                   transition: "all 0.3s ease",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.20)",
                 }}
               >
                 {isHe ? t.reservationHe : t.reservationEn}

@@ -29,7 +29,7 @@ const DEFAULTS = {
   titleEn: "CASA DO BRASIL",
   subtitleHe: "גריל ברזילאי — מוזיקה וצ'וראסקוריה",
   subtitleEn: "Brazilian Grill - Music & Churrascaria",
-  reserveBtnHe: "הזמן שולחן",
+  reserveBtnHe: "הזמנת שולחן",
   reserveBtnEn: "RESERVE A TABLE",
   reserveBtnUrl: "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73",
   menuBtnHe: "תפריט",
@@ -291,7 +291,7 @@ export default function HeroSection() {
   );
 }
 
-/* ── Social Icon ── */
+/* ── Social Icon — glass effect ── */
 function SocialIcon({ href, label, icon, hoverColor, isMobile }: { href: string; label: string; icon: React.ReactNode; hoverColor: string; isMobile?: boolean }) {
   const [hovered, setHovered] = useState(false);
   const sz = isMobile ? 44 : 52;
@@ -299,16 +299,23 @@ function SocialIcon({ href, label, icon, hoverColor, isMobile }: { href: string;
     <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
-        color: hovered ? hoverColor : hoverColor,
-        transition: "all 0.25s ease",
-        transform: hovered ? "scale(1.12) translateY(-2px)" : "scale(1) translateY(0)",
+        color: hovered ? hoverColor : "rgba(255,255,255,0.90)",
+        transition: "all 0.28s cubic-bezier(0.25,0.46,0.45,0.94)",
+        transform: hovered ? "scale(1.12) translateY(-3px)" : "scale(1) translateY(0)",
         display: "flex", alignItems: "center", justifyContent: "center",
         width: sz, height: sz,
-        background: hovered ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.92)",
-        borderRadius: "10px",
+        background: hovered
+          ? `rgba(255,255,255,0.18)`
+          : "rgba(255,255,255,0.10)",
+        backdropFilter: "blur(14px)",
+        WebkitBackdropFilter: "blur(14px)",
+        border: hovered
+          ? `1.5px solid ${hoverColor}99`
+          : "1.5px solid rgba(255,255,255,0.25)",
+        borderRadius: "12px",
         boxShadow: hovered
-          ? `0 6px 20px rgba(0,0,0,0.30), 0 0 0 2px ${hoverColor}88`
-          : "0 3px 10px rgba(0,0,0,0.20)",
+          ? `0 8px 24px rgba(0,0,0,0.35), 0 0 0 1px ${hoverColor}44, inset 0 1px 0 rgba(255,255,255,0.20)`
+          : "0 4px 12px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.12)",
       }}
     >{icon}</a>
   );
@@ -325,10 +332,10 @@ function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: st
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
         display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.6rem",
-        padding: isMobile ? "0.75rem 1.8rem" : "1.0rem 3.0rem",
-        fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-        fontSize: isMobile ? "0.80rem" : "1.0rem",
-        letterSpacing: isMobile ? "0.12em" : "0.22em", textTransform: "uppercase" as const,
+        padding: isMobile ? "0.85rem 2.0rem" : "1.1rem 3.2rem",
+        fontFamily: "'Heebo', sans-serif", fontWeight: 800,
+        fontSize: isMobile ? "0.92rem" : "1.15rem",
+        letterSpacing: isMobile ? "0.10em" : "0.18em", textTransform: "uppercase" as const,
         textDecoration: "none",
         border: "2px solid rgba(0,156,59,0.85)",
         color: "#FFFFFF",
@@ -359,21 +366,21 @@ function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: st
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
         display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.6rem",
-        padding: isMobile ? "0.75rem 1.8rem" : "1.0rem 3.0rem",
-        fontFamily: "'Heebo', sans-serif", fontWeight: 700,
-        fontSize: isMobile ? "0.80rem" : "1.0rem",
-        letterSpacing: isMobile ? "0.12em" : "0.22em", textTransform: "uppercase" as const,
+        padding: isMobile ? "0.85rem 2.0rem" : "1.1rem 3.2rem",
+        fontFamily: "'Heebo', sans-serif", fontWeight: 800,
+        fontSize: isMobile ? "0.92rem" : "1.15rem",
+        letterSpacing: isMobile ? "0.10em" : "0.18em", textTransform: "uppercase" as const,
         textDecoration: "none",
-        border: "2px solid rgba(200,168,0,0.85)",
-        color: hovered ? "#1a0a00" : "#1a0800",
+        border: "2px solid rgba(200,168,0,0.90)",
+        color: "#1a0800",
         background: hovered
-          ? "rgba(212,176,0,0.95)"
-          : "rgba(200,160,0,0.80)",
+          ? "rgba(220,185,0,0.98)"
+          : "rgba(200,160,0,0.88)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
         boxShadow: hovered
-          ? "0 6px 24px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.20)"
-          : "0 3px 12px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.12)",
+          ? "0 6px 24px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.25)"
+          : "0 3px 12px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.15)",
         transition: "all 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         transform: hovered ? "translateY(-2px) scale(1.02)" : "translateY(0) scale(1)",
         willChange: "transform, box-shadow",
