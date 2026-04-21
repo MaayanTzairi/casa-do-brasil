@@ -15,7 +15,7 @@ const LIGHT = "#9a8a75";       // light brown for tertiary text
 const GOLD = "#b8860b";        // gold for highlights
 
 const LOGO_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-footer-transparent_99ea5143.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp";
 
 const phoneIcon = (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -106,7 +106,7 @@ export default function Footer() {
             {/* Logo */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
               <img src={LOGO_URL} alt="Casa do Brasil"
-                style={{ width: "140px", height: "auto", objectFit: "contain", background: "white", borderRadius: "12px", padding: "6px" }} />
+                style={{ width: "120px", height: "auto", objectFit: "contain" }} />
               <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.82rem", color: MID, margin: 0, letterSpacing: "0.12em", fontStyle: "italic" }}>
                 {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקוריה" : "Brazilian Grill · Music & Churrascaria"}
               </p>
@@ -169,7 +169,7 @@ export default function Footer() {
             {/* Col 2 — center */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.2rem", minWidth: "180px" }}>
               <img src={LOGO_URL} alt="Casa do Brasil"
-                style={{ width: "160px", height: "auto", objectFit: "contain", background: "white", borderRadius: "12px", padding: "8px" }} />
+                style={{ width: "140px", height: "auto", objectFit: "contain" }} />
               <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.78rem", color: MID, margin: 0, letterSpacing: "0.14em", fontStyle: "italic", textAlign: "center" }}>
                 {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקוריה" : "Brazilian Grill · Music & Churrascaria"}
               </p>
