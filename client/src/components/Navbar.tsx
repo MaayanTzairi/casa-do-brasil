@@ -146,40 +146,40 @@ function LogoBadge({
 function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: boolean }) {
   const { lang, setLang } = useLanguage();
   const isHe = lang === "he";
-  const color = inOverlay ? "#fff" : (scrolled ? BORDEAUX : "#fff");
-  const bgColor = inOverlay
-    ? "rgba(0,156,59,0.85)"
-    : scrolled ? "transparent" : "rgba(0,156,59,0.75)";
-  const borderColor = inOverlay
-    ? "rgba(0,200,80,0.60)"
-    : scrolled ? "rgba(62,4,9,0.3)" : "rgba(0,200,80,0.70)";
+  const [hov, setHov] = useState(false);
+
+  // Always gold/yellow style — premium look
+  const bg = inOverlay
+    ? (hov ? "rgba(200,160,32,0.95)" : "rgba(180,140,20,0.85)")
+    : (hov ? "rgba(220,175,40,0.95)" : "rgba(200,155,25,0.80)");
+  const border = hov ? "rgba(255,220,80,0.90)" : "rgba(200,160,32,0.70)";
 
   return (
     <button
       onClick={() => setLang(isHe ? "en" : "he")}
       title={isHe ? "Switch to English" : "עבור לעברית"}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
       style={{
         display: "flex",
         alignItems: "center",
         gap: 5,
-        background: bgColor,
-        backdropFilter: "blur(8px)",
-        WebkitBackdropFilter: "blur(8px)",
-        border: `1px solid ${borderColor}`,
+        background: bg,
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        border: `1px solid ${border}`,
         borderRadius: "20px",
-        padding: "4px 10px",
+        padding: "5px 11px",
         cursor: "pointer",
-        transition: "all 0.3s ease",
+        transition: "all 0.25s ease",
         flexShrink: 0,
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.borderColor = "#009C3B";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.borderColor = borderColor;
+        boxShadow: hov
+          ? "0 4px 14px rgba(180,140,0,0.40), inset 0 1px 0 rgba(255,240,120,0.25)"
+          : "0 2px 8px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,240,120,0.15)",
+        transform: hov ? "translateY(-1px)" : "translateY(0)",
       }}
     >
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,250,220,0.95)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
         <line x1="2" y1="12" x2="22" y2="12" />
         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
@@ -187,13 +187,13 @@ function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: bo
       <span
         style={{
           fontFamily: "'Heebo', sans-serif",
-          fontWeight: 700,
-          fontSize: "0.65rem",
-          letterSpacing: "0.2em",
-          color,
+          fontWeight: 800,
+          fontSize: "0.62rem",
+          letterSpacing: "0.18em",
+          color: "rgba(255,250,200,0.97)",
           textTransform: "uppercase",
-          transition: "color 0.3s",
           lineHeight: 1,
+          textShadow: "0 1px 3px rgba(0,0,0,0.40)",
         }}
       >
         {isHe ? "EN" : "עב"}
@@ -219,24 +219,23 @@ function ReservationsBtn({ scrolled, label }: { scrolled: boolean; label: string
         letterSpacing: "0.14em",
         textTransform: "uppercase",
         textDecoration: "none",
-        color: scrolled
-          ? (hovered ? "#fff" : "#fff")
-          : (hovered ? "#fff" : "#fff"),
-        background: scrolled
-          ? (hovered ? "rgba(0,100,38,0.95)" : "rgba(0,130,48,0.90)")
-          : (hovered ? "rgba(0,100,38,0.85)" : "rgba(0,130,48,0.70)"),
-        backdropFilter: "blur(10px)",
-        WebkitBackdropFilter: "blur(10px)",
-        border: `1.5px solid ${scrolled ? "rgba(0,156,59,0.85)" : "rgba(0,200,80,0.60)"}`,
+        color: "#e8f5e0",
+        background: hovered
+          ? "linear-gradient(180deg, #1a7a38 0%, #0d5525 60%, #0a4020 100%)"
+          : "linear-gradient(180deg, #1e8a40 0%, #0f6030 60%, #0a4820 100%)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        border: `1.5px solid ${hovered ? "rgba(200,160,32,0.90)" : "rgba(180,140,20,0.70)"}`,
         borderRadius: "50px",
-        padding: "0.45rem 1.3rem",
-        transition: "all 0.28s cubic-bezier(0.25,0.46,0.45,0.94)",
-        transform: hovered ? "translateY(-1px) scale(1.02)" : "translateY(0) scale(1)",
+        padding: "0.48rem 1.4rem",
+        transition: "all 0.25s cubic-bezier(0.25,0.46,0.45,0.94)",
+        transform: hovered ? "translateY(-2px) scale(1.03)" : "translateY(0) scale(1)",
         boxShadow: hovered
-          ? "0 6px 20px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.12)"
-          : "0 3px 10px rgba(0,0,0,0.20), inset 0 1px 0 rgba(255,255,255,0.08)",
+          ? "0 8px 24px rgba(0,0,0,0.45), 0 2px 8px rgba(180,140,0,0.30), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(0,0,0,0.20)"
+          : "0 4px 14px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.20), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.15)",
         whiteSpace: "nowrap",
         flexShrink: 0,
+        textShadow: "0 1px 3px rgba(0,0,0,0.40)",
       }}
     >
       {label}

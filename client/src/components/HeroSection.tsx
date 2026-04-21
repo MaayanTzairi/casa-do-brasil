@@ -146,22 +146,25 @@ export default function HeroSection() {
         {/* ── Bull Logo (inline, first flex child on both mobile and desktop) ── */}
         <HeroBullInline progress={bullProgress} isMobile={isMobile} />
 
-        {/* Title — gold elegant */}
-        <div style={{ width: "100%", textAlign: "center", overflow: "visible", paddingBottom: "0.15em", animation: "fadeUp 0.95s 0.4s cubic-bezier(0.25,0.46,0.45,0.94) both" }}>
+        {/* Title — premium gold gradient with depth */}
+        <div style={{ width: "100%", textAlign: "center", overflow: "visible", paddingBottom: "0.2em", animation: "fadeUp 0.95s 0.4s cubic-bezier(0.25,0.46,0.45,0.94) both" }}>
           <h1
             className="block select-none"
             style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 900,
               fontSize: isMobile ? "clamp(28px, 9vw, 52px)" : "clamp(42px, 6.5vw, 90px)",
-              color: "#ffffff",
-              WebkitTextStroke: isMobile ? "0.8px #c8a020" : "1.2px #c8a020",
-              textStroke: isMobile ? "0.8px #c8a020" : "1.2px #c8a020",
+              // Rich gold gradient: bright highlight → deep amber
+              background: "linear-gradient(180deg, #ffe066 0%, #f5c518 25%, #d4a017 55%, #b8860b 80%, #8b6508 100%)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
               letterSpacing: "-0.01em",
-              lineHeight: 1,
+              lineHeight: 1.05,
               whiteSpace: "nowrap",
               textAlign: "center",
-              textShadow: "0 2px 32px rgba(200,160,32,0.45), 0 1px 8px rgba(0,0,0,0.80)",
+              // Multi-layer shadow for depth (applied via filter since textShadow doesn’t work with gradient text)
+              filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.70)) drop-shadow(0 1px 2px rgba(0,0,0,0.50))",
               margin: 0,
             }}
           >
@@ -337,18 +340,22 @@ function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: st
         fontSize: isMobile ? "0.92rem" : "1.15rem",
         letterSpacing: isMobile ? "0.10em" : "0.18em", textTransform: "uppercase" as const,
         textDecoration: "none",
-        border: "2px solid rgba(0,156,59,0.85)",
-        color: "#FFFFFF",
+        // Premium 3D gradient: light top → dark bottom
         background: hovered
-          ? "rgba(0,100,38,0.92)"
-          : "rgba(0,130,48,0.75)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
+          ? "linear-gradient(180deg, #1e9444 0%, #0d6030 55%, #094a24 100%)"
+          : "linear-gradient(180deg, #1a8a3e 0%, #0b5528 55%, #083d1c 100%)",
+        backdropFilter: "blur(14px)",
+        WebkitBackdropFilter: "blur(14px)",
+        // Gold border for premium look
+        border: `2px solid ${hovered ? "rgba(210,170,30,0.90)" : "rgba(185,145,20,0.75)"}`,
+        color: "#e8f5e0",
+        textShadow: "0 1px 4px rgba(0,0,0,0.50)",
+        // Deep 3D shadow + inset highlight on top edge
         boxShadow: hovered
-          ? "0 6px 24px rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.12)"
-          : "0 3px 12px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08)",
-        transition: "all 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-        transform: hovered ? "translateY(-2px) scale(1.02)" : "translateY(0) scale(1)",
+          ? "0 10px 32px rgba(0,0,0,0.55), 0 3px 10px rgba(0,0,0,0.30), inset 0 1.5px 0 rgba(255,255,255,0.18), inset 0 -2px 0 rgba(0,0,0,0.25)"
+          : "0 5px 18px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.25), inset 0 1.5px 0 rgba(255,255,255,0.14), inset 0 -2px 0 rgba(0,0,0,0.20)",
+        transition: "all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        transform: hovered ? "translateY(-3px) scale(1.03)" : "translateY(0) scale(1)",
         willChange: "transform, box-shadow",
         borderRadius: "50px",
       }}
@@ -371,18 +378,22 @@ function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: st
         fontSize: isMobile ? "0.92rem" : "1.15rem",
         letterSpacing: isMobile ? "0.10em" : "0.18em", textTransform: "uppercase" as const,
         textDecoration: "none",
-        border: "2px solid rgba(230,200,0,0.95)",
-        color: "#1a0800",
+        // Premium 3D gradient: bright gold top → deep amber bottom
         background: hovered
-          ? "rgba(240,210,0,1.0)"
-          : "rgba(220,185,0,0.95)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
+          ? "linear-gradient(180deg, #f0d020 0%, #c8a010 55%, #9a7808 100%)"
+          : "linear-gradient(180deg, #e8c818 0%, #c09808 55%, #8e6e06 100%)",
+        backdropFilter: "blur(14px)",
+        WebkitBackdropFilter: "blur(14px)",
+        // Bright gold border
+        border: `2px solid ${hovered ? "rgba(255,230,80,0.95)" : "rgba(230,195,40,0.80)"}`,
+        color: "#1a0a00",
+        textShadow: "0 1px 2px rgba(255,255,255,0.20)",
+        // Deep 3D shadow + inset highlight on top edge
         boxShadow: hovered
-          ? "0 6px 24px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.25)"
-          : "0 3px 12px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.15)",
-        transition: "all 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-        transform: hovered ? "translateY(-2px) scale(1.02)" : "translateY(0) scale(1)",
+          ? "0 10px 32px rgba(0,0,0,0.50), 0 3px 10px rgba(180,140,0,0.30), inset 0 1.5px 0 rgba(255,255,200,0.40), inset 0 -2px 0 rgba(0,0,0,0.20)"
+          : "0 5px 18px rgba(0,0,0,0.40), 0 2px 6px rgba(180,140,0,0.20), inset 0 1.5px 0 rgba(255,255,200,0.30), inset 0 -2px 0 rgba(0,0,0,0.15)",
+        transition: "all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        transform: hovered ? "translateY(-3px) scale(1.03)" : "translateY(0) scale(1)",
         willChange: "transform, box-shadow",
         borderRadius: "50px",
       }}

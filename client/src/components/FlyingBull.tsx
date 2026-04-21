@@ -21,7 +21,7 @@ const LOGO_URL_300 =
 const LOGO_URL_100 =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-100w_66f2659e.webp";
 
-const PHOTO_URL_DEFAULT = "/manus-storage/brazil-flag-frame_43a46f3a.png";
+const PHOTO_URL_DEFAULT = "/manus-storage/brazil-flag-frame_45870dda.png";
 
 const SCROLL_THRESHOLD_DESKTOP = 130;
 const SCROLL_THRESHOLD_MOBILE  = 90;
@@ -77,7 +77,8 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
         overflow: "hidden",
         opacity: circleAlpha,
         pointerEvents: "none",
-        boxShadow: "0 12px 48px rgba(0,0,0,0.70)",
+        // Premium deep shadow
+        boxShadow: "0 16px 56px rgba(0,0,0,0.80), 0 4px 16px rgba(0,0,0,0.50), inset 0 2px 4px rgba(255,255,255,0.08)",
       }}>
         <img
           src={PHOTO_URL_DEFAULT}
@@ -92,15 +93,15 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
             background: "#0a1a0a",
           }}
         />
-        {/* Slight dark vignette so bull stands out */}
+        {/* Radial vignette — darker edges so bull pops */}
         <div style={{
           position: "absolute", inset: 0,
-          background: "radial-gradient(circle at 50% 50%, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.35) 100%)",
+          background: "radial-gradient(circle at 50% 45%, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.45) 100%)",
           borderRadius: "50%",
         }} />
       </div>
 
-      {/* Gold double-ring SVG frame */}
+      {/* Premium gold multi-ring SVG frame */}
       <svg
         style={{
           position: "absolute", left: 0, top: 0,
@@ -112,57 +113,80 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
         viewBox={`0 0 ${circleSize + 12} ${circleSize + 12}`}
       >
         <defs>
-          <linearGradient id="gold-ring-1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%"   stopColor="#f5e090" />
-            <stop offset="25%"  stopColor="#c8a020" />
-            <stop offset="50%"  stopColor="#f0d060" />
-            <stop offset="75%"  stopColor="#a07010" />
+          {/* Multi-stop gold gradient for main ring */}
+          <linearGradient id="gold-ring-premium" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stopColor="#fff5b0" />
+            <stop offset="15%"  stopColor="#e8c830" />
+            <stop offset="35%"  stopColor="#f5dc50" />
+            <stop offset="50%"  stopColor="#c8a018" />
+            <stop offset="65%"  stopColor="#f0d040" />
+            <stop offset="85%"  stopColor="#a07010" />
+            <stop offset="100%" stopColor="#e8c030" />
+          </linearGradient>
+          {/* Inner subtle gold ring */}
+          <linearGradient id="gold-ring-inner" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stopColor="#f0d060" />
+            <stop offset="50%"  stopColor="#b08010" />
             <stop offset="100%" stopColor="#e8c040" />
           </linearGradient>
-          <linearGradient id="gold-ring-2" x1="100%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%"   stopColor="#e8c040" />
-            <stop offset="50%"  stopColor="#b89020" />
-            <stop offset="100%" stopColor="#f5e090" />
-          </linearGradient>
+          {/* Glow filter */}
+          <filter id="gold-glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
         </defs>
-        {/* Outer Brazilian YELLOW ring */}
+
+        {/* Outermost thin dashed gold ring — slow rotation */}
+        <g style={{ transformOrigin: `${(circleSize + 12) / 2}px ${(circleSize + 12) / 2}px`, animation: "fb-spin 60s linear infinite" }}>
+          <circle
+            cx={(circleSize + 12) / 2} cy={(circleSize + 12) / 2}
+            r={circleSize / 2 + 12}
+            fill="none"
+            stroke="rgba(220,180,40,0.30)"
+            strokeWidth="1"
+            strokeDasharray="4 12"
+            strokeLinecap="round"
+          />
+        </g>
+
+        {/* Main premium gold ring — thick with glow */}
         <circle
           cx={(circleSize + 12) / 2} cy={(circleSize + 12) / 2}
           r={circleSize / 2 + 5}
           fill="none"
-          stroke="url(#gold-ring-1)"
-          strokeWidth="6"
+          stroke="url(#gold-ring-premium)"
+          strokeWidth="7"
+          filter="url(#gold-glow)"
         />
-        {/* Middle Brazilian BLUE ring */}
+
+        {/* Dark separator ring */}
         <circle
           cx={(circleSize + 12) / 2} cy={(circleSize + 12) / 2}
           r={circleSize / 2 + 1}
           fill="none"
-          stroke="#1a3a8a"
-          strokeWidth="3"
-          strokeOpacity="0.85"
+          stroke="rgba(0,0,0,0.55)"
+          strokeWidth="2"
         />
-        {/* Inner Brazilian GREEN ring */}
+
+        {/* Inner thin gold ring */}
         <circle
           cx={(circleSize + 12) / 2} cy={(circleSize + 12) / 2}
-          r={circleSize / 2 - 3}
+          r={circleSize / 2 - 2}
           fill="none"
-          stroke="#009c3b"
+          stroke="url(#gold-ring-inner)"
           strokeWidth="2"
-          strokeOpacity="0.80"
+          strokeOpacity="0.75"
         />
-        {/* Rotating dashed gold ring outside */}
-        <g style={{ transformOrigin: `${(circleSize + 12) / 2}px ${(circleSize + 12) / 2}px`, animation: "fb-spin 40s linear infinite" }}>
-          <circle
-            cx={(circleSize + 12) / 2} cy={(circleSize + 12) / 2}
-            r={circleSize / 2 + 10}
-            fill="none"
-            stroke="rgba(200,160,32,0.35)"
-            strokeWidth="1"
-            strokeDasharray="3 10"
-            strokeLinecap="round"
-          />
-        </g>
+
+        {/* Inset highlight arc — top-left bright spot for 3D feel */}
+        <path
+          d={`M ${(circleSize + 12) / 2 - circleSize * 0.35} ${(circleSize + 12) / 2 - circleSize * 0.42}
+              A ${circleSize / 2 + 5} ${circleSize / 2 + 5} 0 0 1 ${(circleSize + 12) / 2 + circleSize * 0.35} ${(circleSize + 12) / 2 - circleSize * 0.42}`}
+          fill="none"
+          stroke="rgba(255,255,220,0.55)"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
       </svg>
 
 
