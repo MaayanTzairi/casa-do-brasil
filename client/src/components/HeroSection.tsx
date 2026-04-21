@@ -4,14 +4,16 @@
  * Colors: White · Gold (185,161,103) · Deep Red (98,7,14) · Bordeaux (62,4,9)
  * Font: Heebo Black/Bold/Regular/Light only
  *
- * The large bull logo is rendered by <FlyingBull /> (fixed-position, desktop only).
- * This component only handles the background, text, buttons and social icons.
- * Text and links are fetched from Sanity CMS with hardcoded fallbacks.
+ * Desktop layout (flex-col, centered):
+ *   [paddingTop = navbar height] → HeroBullInline → title → gold rule → subtitle → CTA buttons
+ *
+ * Mobile layout (flex-col, bottom-aligned):
+ *   FlyingBull handles the fixed badge separately.
  */
 
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-
+import { HeroBullInline } from "@/components/FlyingBull";
 
 const HERO_IMAGE_DEFAULT =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/hero-main_opt_ea3703c2.webp";
@@ -20,9 +22,8 @@ const HERO_IMAGE_SM_DEFAULT =
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(40,3,6)";
-const CREAM_BG = "rgb(242,236,224)";
 
-// Hardcoded fallbacks — used when CMS has no data yet
+// Hardcoded fallbacks
 const DEFAULTS = {
   titleHe: "CASA DO BRASIL",
   titleEn: "CASA DO BRASIL",
@@ -43,14 +44,11 @@ export default function HeroSection() {
   const heroRef    = useRef<HTMLDivElement>(null);
   const imgWrapRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [bullProgress, setBullProgress] = useState(0);
   const { isHe } = useLanguage();
 
-  // Static content — no CMS backend
   const t = DEFAULTS;
   const [bgImage] = useState(HERO_IMAGE_DEFAULT);
-
-  // Title words — split by space for the stacked animation
-  const titleWords = (isHe ? t.titleHe : t.titleEn).split(" ");
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -59,7 +57,16 @@ export default function HeroSection() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Lightweight CSS parallax — image only, not content
+  // Listen to bull scroll progress so the inline bull can fade/shrink in sync
+  useEffect(() => {
+    const onBullProgress = (e: Event) => {
+      setBullProgress((e as CustomEvent<number>).detail);
+    };
+    window.addEventListener("bullProgress", onBullProgress);
+    return () => window.removeEventListener("bullProgress", onBullProgress);
+  }, []);
+
+  // Lightweight CSS parallax — image only
   useEffect(() => {
     const onScroll = () => {
       const scrollY = window.scrollY;
@@ -127,18 +134,26 @@ export default function HeroSection() {
       <div
         className="absolute inset-0 z-10 flex flex-col"
         style={{
-          // Desktop: paddingTop pushes content below bull (navbar 70px + bull 220px + 20px gap + 20px margin)
-          paddingTop:    isMobile ? "70px" : "330px",
+          // Desktop: paddingTop = navbar (70px) + 20px gap so bull starts below navbar
+          // Use flex-start + gap so elements flow naturally without space-evenly pushing bull up
+          // Mobile: paddingTop = navbar height; content is bottom-aligned
+          paddingTop:    isMobile ? "70px" : "90px",
           paddingBottom: isMobile ? "clamp(3rem, 10vw, 5rem)" : "clamp(3rem, 6vw, 6rem)",
           paddingLeft:   isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           paddingRight:  isMobile ? "1.4rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           alignItems: isMobile ? "stretch" : "center",
-          justifyContent: isMobile ? "flex-end" : "space-evenly",
+          justifyContent: isMobile ? "flex-end" : "flex-start",
+          gap: isMobile ? undefined : "clamp(1.2rem, 3vh, 3rem)",
           direction: isHe ? "rtl" : "ltr",
         }}
       >
+        {/* ── Bull Logo (desktop inline, first flex child) ── */}
+        {!isMobile && (
+          <HeroBullInline progress={bullProgress} />
+        )}
+
         {/* Title — single line */}
-        <div className="mb-4 overflow-hidden" style={{ width: "100%", textAlign: isMobile ? (isHe ? "right" : "left") : "center" }}>
+        <div className="overflow-hidden" style={{ width: "100%", textAlign: isMobile ? (isHe ? "right" : "left") : "center" }}>
           <h1
             className="block select-none"
             style={{
@@ -159,7 +174,6 @@ export default function HeroSection() {
 
         {/* Gold rule */}
         <div
-          className="mb-4"
           style={{
             width: isMobile ? "clamp(120px, 40vw, 220px)" : "clamp(180px, 28vw, 360px)",
             transformOrigin: isMobile ? (isHe ? "right" : "left") : "center",
@@ -179,10 +193,10 @@ export default function HeroSection() {
             fontSize: isMobile ? "clamp(12px, 3.5vw, 16px)" : "clamp(15px, 1.8vw, 21px)",
             color: "rgba(255,255,255,0.88)",
             letterSpacing: "0.12em",
-            marginBottom: isMobile ? "2.2rem" : "3.2rem",
             fontStyle: "italic",
             textAlign: isMobile ? (isHe ? "right" : "left") : "center",
             maxWidth: isMobile ? "calc(100% - 3rem)" : "70%",
+            marginBottom: isMobile ? "2.2rem" : 0,
             animation: "fadeUp 0.8s 1.3s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
@@ -200,8 +214,7 @@ export default function HeroSection() {
             animation: "fadeUp 0.8s 1.6s cubic-bezier(0.25,0.46,0.45,0.94) both",
           }}
         >
-          {/* In RTL flex-start = visual right.
-              HE order: ReserveButton first in DOM = rightmost visually, then ExploreButton to its left. */}
+          {/* HE order: ReserveButton first in DOM = rightmost visually in RTL */}
           {isHe ? (
             <>
               <ReserveButton isMobile={isMobile} label={t.reserveBtnHe} href={t.reserveBtnUrl} />
@@ -295,9 +308,9 @@ function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: st
         padding: isMobile ? "0.75rem 1.1rem" : "1rem 2.8rem",
         fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: isMobile ? "0.68rem" : "0.75rem",
         letterSpacing: isMobile ? "0.12em" : "0.22em", textTransform: "uppercase" as const,
-        textDecoration: "none",        border: "2px solid #FFFFFF",
+        textDecoration: "none", border: "2px solid #FFFFFF",
         color: hovered ? "#1a0a00" : "#FFFFFF",
-        background: hovered ? "#FFFFFF" : "rgba(255,255,255,0.10)",  // Use only composited properties (color/background) — avoid animating padding/border
+        background: hovered ? "#FFFFFF" : "rgba(255,255,255,0.10)",
         transition: "color 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         willChange: "color, background-color",
       }}
@@ -321,7 +334,6 @@ function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: st
         textDecoration: "none", border: `2px solid ${GOLD}`,
         color: hovered ? BORDEAUX : "#1a0a00",
         background: hovered ? `${GOLD}cc` : GOLD,
-        // Use only composited properties — avoid animating padding/border
         transition: "color 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         willChange: "color, background-color",
       }}
