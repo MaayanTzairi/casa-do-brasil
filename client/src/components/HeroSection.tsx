@@ -103,14 +103,14 @@ export default function HeroSection() {
       <div className="absolute inset-0">
         <div
           className="absolute inset-0"
-          style={{ background: "linear-gradient(110deg, rgba(242,236,224,0.72) 0%, rgba(230,220,200,0.55) 45%, rgba(200,185,160,0.20) 100%)" }}
+          style={{ background: "linear-gradient(110deg, rgba(242,236,224,0.88) 0%, rgba(235,225,208,0.78) 50%, rgba(215,200,175,0.45) 100%)" }}
         />
       </div>
 
       {/* ── Bottom Gradient Fade ── */}
       <div
         className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ height: "clamp(100px, 18vw, 220px)", background: "linear-gradient(to top, rgba(242,236,224,0.85) 0%, transparent 100%)" }}
+        style={{ height: "clamp(100px, 18vw, 220px)", background: "linear-gradient(to top, rgba(242,236,224,0.95) 0%, transparent 100%)" }}
       />
 
       {/* ── Gold Inset Frame — desktop only ── */}
