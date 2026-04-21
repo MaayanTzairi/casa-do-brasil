@@ -517,7 +517,15 @@ export default function ReviewsSection() {
       <div style={{ position: "relative" }}>
         {/* Left arrow */}
         <button
-          onClick={() => { pausedRef.current = true; posRef.current = Math.max(0, posRef.current - 320); setTimeout(() => { pausedRef.current = false; }, 1200); }}
+          onClick={() => {
+            const track = trackRef.current;
+            if (!track) return;
+            pausedRef.current = true;
+            const halfWidth = track.scrollWidth / 2;
+            posRef.current = Math.max(0, posRef.current - 320);
+            track.style.transform = `translateX(-${posRef.current}px)`;
+            setTimeout(() => { pausedRef.current = false; }, 1200);
+          }}
           aria-label="Scroll left"
           style={{
             position: "absolute", left: "8px", top: "50%", transform: "translateY(-50%)",
@@ -532,7 +540,15 @@ export default function ReviewsSection() {
         >‹</button>
         {/* Right arrow */}
         <button
-          onClick={() => { pausedRef.current = true; posRef.current += 320; setTimeout(() => { pausedRef.current = false; }, 1200); }}
+          onClick={() => {
+            const track = trackRef.current;
+            if (!track) return;
+            pausedRef.current = true;
+            const halfWidth = track.scrollWidth / 2;
+            posRef.current = (posRef.current + 320) % halfWidth;
+            track.style.transform = `translateX(-${posRef.current}px)`;
+            setTimeout(() => { pausedRef.current = false; }, 1200);
+          }}
           aria-label="Scroll right"
           style={{
             position: "absolute", right: "8px", top: "50%", transform: "translateY(-50%)",
