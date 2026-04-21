@@ -177,7 +177,7 @@ export default function CasaVibesSection() {
                 ...animStyle(inView, 0.08 + i * 0.11),
                 fontFamily: "'Heebo', sans-serif", fontWeight: 900,
                 fontSize: mobile ? "clamp(52px, 16vw, 88px)" : "clamp(64px, 8vw, 112px)",
-                color: "#1a0a00",
+                color: "rgb(62,4,9)",
                 lineHeight: 0.88, letterSpacing: "0.03em",
                 margin: 0,
                 textShadow: "2px 3px 0 rgba(185,161,103,0.16), 0 6px 18px rgba(62,4,9,0.10)",
