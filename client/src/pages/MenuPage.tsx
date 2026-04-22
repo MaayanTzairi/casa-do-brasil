@@ -1043,16 +1043,16 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
             border: `1px solid ${GOLD_R}0.18)`,
             marginBottom: "2rem",
           }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}>
-              <div style={{ width: "16px", height: "1px", background: GOLD }} />
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.85vw, 13px)", letterSpacing: isHe ? "0.06em" : "0.25em", textTransform: "uppercase", color: GOLD }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1rem" }}>
+              <div style={{ width: "20px", height: "2px", background: "#009C3B", flexShrink: 0 }} />
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(18px, 1.5vw, 22px)", letterSpacing: isHe ? "0.04em" : "0.12em", textTransform: "uppercase", color: "#009C3B" }}>
                 {isHe ? "מנות פתיחה משותפות" : "Shared Starters"}
               </span>
             </div>
             <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.4rem" }}>
               {category.lunchStarters.map((s, i) => (
                 <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
-                  <span style={{ color: GOLD, fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
+                  <span style={{ color: "#009C3B", fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
                   <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(17px, 1.4vw, 21px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
                     {isHe ? s.nameHe : s.name}
                   </span>
@@ -1060,7 +1060,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               ))}
             </ul>
             {category.lunchStartersNote && (
-              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(13px, 1vw, 15px)", color: GOLD, margin: "0.9rem 0 0", fontStyle: "italic" }}>
+              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(17px, 1.4vw, 21px)", color: "#009C3B", margin: "0.9rem 0 0", fontStyle: "italic" }}>
                 {isHe ? category.lunchStartersNoteHe : category.lunchStartersNote}
               </p>
             )}
@@ -1092,14 +1092,14 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                   {/* Items */}
                   <div style={{ flex: 1 }}>
                     {(isHe ? tier.itemsHe : tier.items).map((item, ii) => (
-                      <p key={ii} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: ii === 0 ? 700 : 300, fontSize: "clamp(12px, 0.95vw, 15px)", color: ii === 0 ? BORDEAUX : "rgb(90,40,40)", lineHeight: 1.55, margin: ii === 0 ? "0 0 0.3rem" : "0" }}>
+                      <p key={ii} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: ii === 0 ? 800 : 300, fontSize: ii === 0 ? "clamp(18px, 1.5vw, 22px)" : "clamp(17px, 1.4vw, 21px)", color: ii === 0 ? BORDEAUX : "rgb(90,40,40)", lineHeight: 1.55, margin: ii === 0 ? "0 0 0.3rem" : "0" }}>
                         {item}
                       </p>
                     ))}
                     {tier.addons && (
                       <div style={{ marginTop: "0.5rem", display: "flex", flexDirection: "column", gap: "0.15rem" }}>
                         {(isHe ? tier.addonsHe! : tier.addons).map((a, ai) => (
-                          <span key={ai} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(11px, 0.78vw, 12px)", color: GOLD, fontStyle: "italic" }}>{a}</span>
+                          <span key={ai} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(15px, 1.1vw, 17px)", color: "#009C3B", fontStyle: "italic" }}>{a}</span>
                         ))}
                       </div>
                     )}
@@ -1113,7 +1113,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
           {category.lunchFooterNotes && (
             <div dir={isHe ? "rtl" : "ltr"} style={{ padding: "0.8rem 0", borderTop: `1px solid ${GOLD_R}0.15)` }}>
               {(isHe ? category.lunchFooterNotesHe! : category.lunchFooterNotes).map((note, i) => (
-                <p key={i} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: i === 0 ? 600 : 300, fontSize: "clamp(13px, 1vw, 15px)", color: i === 0 ? GOLD : "rgba(62,4,9,0.5)", margin: "0.3rem 0", fontStyle: i === 1 ? "italic" : "normal", direction: isHe ? "rtl" : "ltr", textAlign: isHe ? "right" : "left" }}>
+                <p key={i} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: i === 0 ? 700 : 300, fontSize: "clamp(15px, 1.2vw, 18px)", color: i === 0 ? "#009C3B" : "rgba(62,4,9,0.5)", margin: "0.3rem 0", fontStyle: i === 1 ? "italic" : "normal", direction: isHe ? "rtl" : "ltr", textAlign: isHe ? "right" : "left" }}>
                   {note}
                 </p>
               ))}
