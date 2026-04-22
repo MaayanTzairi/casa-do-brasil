@@ -15,11 +15,12 @@ const BORDEAUX = "rgb(62,4,9)";
 
 // Fallback images (CDN)
 const FALLBACK_IMAGES = [
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-interior_opt_801e8f3d.webp",
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-picanha_opt_665637ed.webp",
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-carnival_opt_0130d981.webp",
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-dining_opt_7d37c45c.webp",
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/gallery-food-ambiance_opt_2f58e06c.webp",
+  "/manus-storage/gallery-passador_3632ab2e.webp",
+  "/manus-storage/gallery-steak_9249c666.webp",
+  "/manus-storage/gallery-picanha_0fe0f9d4.webp",
+  "/manus-storage/gallery-plate-wine_6e1e0cce.png",
+  "/manus-storage/gallery-grill_da49511f.png",
+  "/manus-storage/gallery-fish_9c1f93cd.png",
 ];
 
 function animStyle(inView: boolean, delay: number): React.CSSProperties {
@@ -100,6 +101,7 @@ export default function GallerySection() {
     cms?.image3Url ?? FALLBACK_IMAGES[2],
     cms?.image4Url ?? FALLBACK_IMAGES[3],
     cms?.image5Url ?? FALLBACK_IMAGES[4],
+    cms?.image6Url ?? FALLBACK_IMAGES[5],
   ];
 
   useEffect(() => {

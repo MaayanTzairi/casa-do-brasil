@@ -580,7 +580,7 @@ export default function Navbar({
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            gap: "clamp(1.2rem, 3.5vw, 1.8rem)",
+            gap: "clamp(0.5rem, 1.8vw, 0.9rem)",
             // Slide up from bottom when opening
             transform: menuOpen ? "translateY(0)" : "translateY(100%)",
             opacity: menuOpen ? 1 : 0,
@@ -658,7 +658,7 @@ export default function Navbar({
               style={{
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 900,
-                fontSize: "clamp(26px, 7vw, 36px)",
+                fontSize: "clamp(18px, 4.5vw, 24px)",
                 letterSpacing: isHe ? "0.03em" : "0.18em",
                 color: BORDEAUX,
                 textDecoration: "none",
