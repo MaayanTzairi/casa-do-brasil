@@ -240,8 +240,8 @@ export default function FAQPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#ffffff" }}>
-      {/* Standard Navbar — same as MenuPage and Gallery */}
-      <Navbar />
+      {/* forceScrolled: page has white background, no hero — show scrolled navbar from the start */}
+      <Navbar forceScrolled={true} />
 
       <main
         dir={isHe ? "rtl" : "ltr"}
