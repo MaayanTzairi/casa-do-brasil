@@ -884,19 +884,37 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                     padding: "1.6rem 1.8rem",
                     position: "relative",
                   }}>
-                    {/* Wooden sign track name */}
+                    {/* Brazilian-style track name badge */}
                     {(track.name || track.nameHe) && (
                       <div style={{
-                        marginBottom: "1.2rem",
-                        background: ti === 1 ? "rgba(255,255,255,0.08)" : "rgba(101,60,20,0.10)",
-                        border: `1px solid ${ti === 1 ? "rgba(255,255,255,0.18)" : "rgba(101,60,20,0.28)"}`,
-                        borderRadius: "4px",
-                        padding: "0.55rem 1rem",
-                        display: "inline-block",
-                        maxWidth: "100%",
+                        marginBottom: "1.4rem",
+                        position: "relative",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.6rem",
                       }}>
-                        <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "clamp(12px, 1vw, 15px)", letterSpacing: isHe ? "0.05em" : "0.18em", color: ti === 1 ? "rgba(255,255,255,0.88)" : "rgba(101,60,20,0.85)", textTransform: "uppercase", lineHeight: 1.3 }}>
-                          {isHe ? track.nameHe : track.name}
+                        {/* Left accent line */}
+                        <div style={{ width: "3px", height: "100%", minHeight: "32px", background: ti === 1 ? "#FEDF00" : "#009C3B", flexShrink: 0, borderRadius: "2px" }} />
+                        <div style={{
+                          background: ti === 1
+                            ? "linear-gradient(135deg, rgba(254,223,0,0.12) 0%, rgba(254,223,0,0.04) 100%)"
+                            : "linear-gradient(135deg, rgba(0,156,59,0.10) 0%, rgba(0,156,59,0.03) 100%)",
+                          border: `1px solid ${ti === 1 ? "rgba(254,223,0,0.35)" : "rgba(0,156,59,0.30)"}`,
+                          borderRadius: "3px",
+                          padding: "0.45rem 0.9rem",
+                          flex: 1,
+                        }}>
+                          <div style={{
+                            fontFamily: "'Heebo', sans-serif",
+                            fontWeight: 800,
+                            fontSize: "clamp(11px, 0.95vw, 14px)",
+                            letterSpacing: isHe ? "0.04em" : "0.20em",
+                            color: ti === 1 ? "#FEDF00" : "#009C3B",
+                            textTransform: "uppercase",
+                            lineHeight: 1.35,
+                          }}>
+                            {isHe ? track.nameHe : track.name}
+                          </div>
                         </div>
                       </div>
                     )}
