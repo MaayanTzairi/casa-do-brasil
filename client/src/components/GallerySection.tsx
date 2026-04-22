@@ -198,9 +198,9 @@ export default function GallerySection() {
           <p style={{
             ...animStyle(inView, 0.38),
             fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-            fontSize: mobile ? "clamp(16px, 4.2vw, 19px)" : "clamp(16px, 1.35vw, 19px)",
+            fontSize: mobile ? "clamp(14px, 3.8vw, 17px)" : "clamp(14px, 1.2vw, 17px)",
             color: "rgba(62,4,9,0.65)",
-            lineHeight: 1.75, marginBottom: mobile ? "1.5rem" : "2.2rem",
+            lineHeight: 1.85, marginBottom: mobile ? "1.5rem" : "2.2rem",
             textAlign: isHe ? "right" : "left", direction: isHe ? "rtl" : "ltr",
           }}>
             {description}

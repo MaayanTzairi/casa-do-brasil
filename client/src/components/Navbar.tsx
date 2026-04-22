@@ -149,13 +149,11 @@ function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: bo
   const [hov, setHov] = useState(false);
 
   // On hero (not scrolled): white glass + yellow text
-  // On white navbar (scrolled): yellow-gold background + dark text
-  const isScrolledState = !inOverlay && scrolled;
-  const bg = inOverlay
-    ? (hov ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.85)")
-    : isScrolledState
-      ? (hov ? "#e8cc00" : "#FEDF00")
-      : (hov ? "rgba(255,255,255,0.38)" : "rgba(255,255,255,0.22)");
+  // On white navbar (scrolled) OR in overlay: yellow-gold background + dark text
+  const isScrolledState = (!inOverlay && scrolled) || inOverlay;
+  const bg = isScrolledState
+    ? (hov ? "#e8cc00" : "#FEDF00")
+    : (hov ? "rgba(255,255,255,0.38)" : "rgba(255,255,255,0.22)");
   const border = isScrolledState
     ? (hov ? "#c8b000" : "#d4bc00")
     : (hov ? "rgba(255,255,255,0.90)" : "rgba(255,255,255,0.55)");
@@ -754,7 +752,7 @@ function NavLink({
       style={{
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 700,
-        fontSize: "0.78rem",
+        fontSize: "0.85rem",
         letterSpacing: isHe ? "0.05em" : "0.18em",
         textTransform: "uppercase",
         textDecoration: "none",
