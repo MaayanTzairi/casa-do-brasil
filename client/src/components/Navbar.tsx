@@ -649,7 +649,7 @@ export default function Navbar({
                 fontWeight: 900,
                 fontSize: "clamp(22px, 6vw, 30px)",
                 letterSpacing: isHe ? "0.03em" : "0.18em",
-                color: (link as any).isVip ? "#009C3B" : BORDEAUX,
+                color: (link as any).isVip ? "#FEDF00" : BORDEAUX,
                 textDecoration: "none",
                 textTransform: "uppercase",
                 transition: `color 0.2s ease, opacity 0.35s ${0.05 + i * 0.05}s ease, transform 0.35s ${0.05 + i * 0.05}s ease`,
@@ -660,7 +660,7 @@ export default function Navbar({
                 (e.currentTarget as HTMLAnchorElement).style.color = "#009C3B";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = (link as any).isVip ? "#009C3B" : BORDEAUX;
+                (e.currentTarget as HTMLAnchorElement).style.color = (link as any).isVip ? "#FEDF00" : BORDEAUX;
               }}
             >
               {link.label}
