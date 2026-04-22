@@ -580,7 +580,7 @@ export default function Navbar({
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            gap: "clamp(0.5rem, 1.8vw, 0.9rem)",
+            gap: "clamp(0.85rem, 2.5vw, 1.3rem)",
             // Slide up from bottom when opening
             transform: menuOpen ? "translateY(0)" : "translateY(100%)",
             opacity: menuOpen ? 1 : 0,
