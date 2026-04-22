@@ -448,7 +448,7 @@ export default function Navbar({
                 aria-label="Open menu"
                 style={{
                   background: scrolled ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.15)",
-                  border: `1.5px solid ${scrolled ? "rgba(185,161,103,0.45)" : "rgba(255,255,255,0.55)"}`,
+                  border: `1.5px solid ${scrolled ? "rgba(107,39,55,0.45)" : "rgba(255,255,255,0.55)"}`,
                   borderRadius: "10px",
                   cursor: "pointer",
                   padding: "7px 9px",
@@ -758,7 +758,7 @@ function NavLink({
         letterSpacing: isHe ? "0.05em" : "0.18em",
         textTransform: "uppercase",
         textDecoration: "none",
-        color: isVip ? "#FEDF00" : (hovered ? "#009C3B" : color),
+        color: isVip ? "#fff" : (hovered ? "#009C3B" : color),
         transition: "color 0.25s ease",
         position: "relative",
         paddingBottom: "2px",
