@@ -106,7 +106,7 @@ export default function Footer() {
   const vDiv = <div style={{ width: 1, alignSelf: "stretch", background: DIVIDER, flexShrink: 0 }} />;
 
   const contactCol = (rtl: boolean) => (
-    <div style={{ flex: 1, direction: rtl ? "rtl" : "ltr" }}>
+    <div style={{ flex: 1, direction: rtl ? "rtl" : "ltr", paddingInlineEnd: GAP }}>
       <div style={rowStyle}>
         <IcoPhone />
         <a href="tel:08-6323032"
@@ -161,10 +161,12 @@ export default function Footer() {
     { label: "Contact",     href: "#contact" },
   ];
 
+  const GAP = "2.5rem"; // equal gap on both sides of each divider
+
   const sitemapCol = (rtl: boolean) => {
     const links = rtl ? sitemapLinks_HE : sitemapLinks_EN;
     return (
-      <div style={{ flex: 1, direction: rtl ? "rtl" : "ltr", textAlign: rtl ? "right" : "left" }}>
+      <div style={{ flex: 1, direction: rtl ? "rtl" : "ltr", textAlign: rtl ? "right" : "left", paddingInlineStart: GAP }}>
         <p style={{
           fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.6rem",
           letterSpacing: "0.22em", textTransform: "uppercase" as const,
@@ -183,7 +185,7 @@ export default function Footer() {
   };
 
   const logoCol = (tagline: string) => (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.85rem", padding: "0 3rem", flexShrink: 0 }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.85rem", padding: `0 ${GAP}`, flexShrink: 0 }}>
       <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: 100, height: "auto", objectFit: "contain" }} />
       <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.7rem", color: BORDEAUX, opacity: 0.7, margin: 0, letterSpacing: "0.13em", fontStyle: "italic", textAlign: "center", whiteSpace: "nowrap" }}>
         {tagline}
