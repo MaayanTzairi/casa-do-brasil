@@ -152,12 +152,14 @@ export default function HeroSection() {
               fontWeight: 900,
               fontSize: isMobile ? "clamp(28px, 9vw, 52px)" : "clamp(42px, 6.5vw, 90px)",
               color: "#ffffff",
-              letterSpacing: "-0.01em",
+              letterSpacing: "0.02em",
               lineHeight: 1.0,
               whiteSpace: "nowrap",
               textAlign: "center",
-              textShadow: "0 3px 12px rgba(0,0,0,0.80), 0 1px 4px rgba(0,0,0,0.60)",
+              WebkitTextStroke: isMobile ? "1.5px rgba(62,4,9,0.85)" : "2.5px rgba(62,4,9,0.85)",
+              textShadow: "0 3px 14px rgba(0,0,0,0.70), 0 1px 4px rgba(0,0,0,0.50)",
               margin: 0,
+              paintOrder: "stroke fill",
             }}
           >
             {isHe ? t.titleHe : t.titleEn}
