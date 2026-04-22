@@ -85,7 +85,7 @@ const MENU_DATA: MenuCategory[] = [
   {
     id: "churrascaria",
     label: "Churrascaria",
-    labelHe: "צ'וראסקריה",
+    labelHe: "צ'ורוסקריה",
     subtitle: "All You Can Eat",
     subtitleHe: "אכול כפי יכולתך",
     description: "Served to the center of the table — as much as you want. Choose your track and enjoy an endless parade of the finest Brazilian cuts.",
@@ -353,7 +353,7 @@ const MENU_DATA: MenuCategory[] = [
     items: [
       {
         name: "Churrascaria for Children",
-        nameHe: "צ'וראסקריה לילדים",
+        nameHe: "צ'ורוסקריה לילדים",
         description: "11 kinds of meat — Veal asado, Lamb shank, Picanha, Capa de file, Maminha, Pullet in soy/honey/white wine, Chuck steak, Chicken wings in chili sauce, Boliniho, Chorizo sausages, Chicken hearts — AS MUCH AS YOU WANT!",
         descriptionHe: "11 סוגי בשר — אסאדו עגל, שוק כבש, פיקאניה, קאפה דה פילה, מאמיניה, פרגית במרינדה, צ'אק סטיק, כנפי עוף, בוליניו, צ'וריסו, לבבות עוף — כמה שרוצים!",
         price: "₪169",
@@ -1296,7 +1296,7 @@ function MenuHero({ isHe }: { isHe: boolean }) {
             color: "rgba(240,220,160,0.90)",
           }}
         >
-          {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקריה" : "Brazilian Grill — Music & Churrascaria"}
+          {isHe ? "גריל ברזילאי — מוזיקה וצ'ורוסקריה" : "Brazilian Grill — Music & Churrascaria"}
         </p>
       </div>
     </section>

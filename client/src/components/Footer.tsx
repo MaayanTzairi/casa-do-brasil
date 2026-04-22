@@ -208,7 +208,7 @@ export default function Footer() {
     <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", justifyContent: "center" }}>
       <div style={{ flex: 1, paddingLeft: GAP }}>{contactCol(true)}</div>
       {vDiv}
-      <div style={{ paddingLeft: GAP, paddingRight: GAP, flexShrink: 0 }}>{logoCol("גריל ברזילאי — מוזיקה וצ'וראסקוריה")}</div>
+      <div style={{ paddingLeft: GAP, paddingRight: GAP, flexShrink: 0 }}>{logoCol("גריל ברזילאי — מוזיקה וצ'ורוסקריה")}</div>
       {vDiv}
       <div style={{ flex: 1, paddingRight: GAP }}>{sitemapCol(true)}</div>
     </div>
@@ -235,7 +235,7 @@ export default function Footer() {
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.8rem" }}>
         <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: 90, height: "auto", objectFit: "contain" }} />
         <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.7rem", color: BORDEAUX, opacity: 0.7, margin: 0, letterSpacing: "0.13em", fontStyle: "italic" }}>
-          {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקוריה" : "Brazilian Grill · Music & Churrascaria"}
+          {isHe ? "גריל ברזילאי — מוזיקה וצ'ורוסקריה" : "Brazilian Grill · Music & Churrascaria"}
         </p>
         {socials}
       </div>

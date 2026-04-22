@@ -174,7 +174,7 @@ export default function MenuSection() {
 
   // Card 1
   const card1Img    = cms?.card1ImageUrl ?? CHURRASCARIA_IMG;
-  const card1Name   = isHe ? (cms?.card1NameHe ?? "צ'וראסקריה") : (cms?.card1NameEn ?? "CHURRASCARIA");
+  const card1Name   = isHe ? (cms?.card1NameHe ?? "צ'ורוסקריה") : (cms?.card1NameEn ?? "CHURRASCARIA");
   const card1Type   = isHe ? (cms?.card1TypeHe ?? "הכול כלול") : (cms?.card1TypeEn ?? "All Inclusive");
   const card1Btn    = isHe ? (cms?.card1BtnHe ?? "לצפייה בתפריט") : (cms?.card1BtnEn ?? "View Menu");
   const card1Url    = cms?.card1BtnUrl ?? "/menu?tab=churrascaria";

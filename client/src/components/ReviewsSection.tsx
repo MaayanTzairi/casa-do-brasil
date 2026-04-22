@@ -149,7 +149,7 @@ const REVIEWS: Review[] = [
     author: "Dina W.",
     authorHe: "דינה ו.",
     text: "As someone who travels to Brazil regularly, I can say Casa do Brasil captures the authentic churrascaria spirit better than most places I've been to.",
-    textHe: "כמי שנוסעת לברזיל באופן קבוע, אני יכולה לומר שקאסה דו ברזיל לוכדת את רוח הצ'וראסקריה האותנטית טוב מרוב המקומות שביקרתי בהם.",
+    textHe: "כמי שנוסעת לברזיל באופן קבוע, אני יכולה לומר שקאסה דו ברזיל לוכדת את רוח הצ'ורוסקריה האותנטית טוב מרוב המקומות שביקרתי בהם.",
     rating: 5,
     date: "January 2025",
     dateHe: "ינואר 2025",
