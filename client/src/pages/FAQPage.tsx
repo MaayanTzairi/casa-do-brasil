@@ -1,8 +1,11 @@
 /**
  * CASA DO BRASIL — FAQ Page
- * Design: Clean white page, no hero image
- * Hebrew: full RTL — number on right, question text right-aligned, answer right-aligned
- * Navbar: always white (forceScrolled) since page has white background
+ * Design: Matches MenuPage category panel style
+ * - Navbar: standard (transparent, scrolls to white)
+ * - Title: same size as MenuPage category h2 (clamp 32-62px, weight 900, bordeaux)
+ * - Subtitle: same size as MenuPage description (clamp 18-22px, weight 300)
+ * - Question: same as item name (clamp 18-22px, weight 800, bordeaux)
+ * - Answer: same as item description (clamp 17-21px, weight 300)
  */
 
 import { useState } from "react";
@@ -12,9 +15,9 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useSeoMeta } from "@/hooks/useSeoMeta";
 
 const BORDEAUX = "rgb(62,4,9)";
-const GOLD = "#B9A167";
-const GOLD_MID = "rgba(185,161,103,0.4)";
-const GOLD_LIGHT = "rgba(185,161,103,0.15)";
+const GOLD = "#FEDF00";
+const GOLD_R = "rgba(254,223,0,";
+const GREEN = "#009C3B";
 
 interface FAQItem {
   q: string;
@@ -109,7 +112,6 @@ const FAQ_HE: FAQItem[] = [
 
 function AccordionItem({
   item,
-  index,
   isOpen,
   onToggle,
   isHe,
@@ -121,14 +123,11 @@ function AccordionItem({
   isHe: boolean;
 }) {
   return (
-    <div style={{ borderBottom: `1px solid ${GOLD_MID}` }}>
-      {/*
-        Hebrew layout (RTL):
-          [שאלה טקסט .... 01] [chevron]
-        English layout (LTR):
-          [chevron] [01 question text ....]
-        We use dir="rtl"/"ltr" on the button so the browser handles flow naturally.
-      */}
+    <div
+      style={{
+        borderBottom: "1px solid rgba(180,180,180,0.35)",
+      }}
+    >
       <button
         onClick={onToggle}
         aria-expanded={isOpen}
@@ -139,49 +138,39 @@ function AccordionItem({
           alignItems: "center",
           justifyContent: "space-between",
           gap: "1.2rem",
-          padding: "1.5rem 0",
+          padding: "1.4rem 0",
           background: "none",
           border: "none",
           cursor: "pointer",
+          textAlign: isHe ? "right" : "left",
         }}
       >
-        {/* In RTL the browser places first child on the right automatically */}
-        {/* Number */}
-        <span style={{
-          fontFamily: "'Frank Ruhl Libre', serif",
-          fontWeight: 300,
-          fontSize: "0.75rem",
-          color: GOLD,
-          letterSpacing: "0.1em",
-          lineHeight: 1.8,
-          flexShrink: 0,
-          minWidth: "1.8rem",
-          textAlign: "center",
-        }}>
-          {String(index + 1).padStart(2, "0")}
-        </span>
-
-        {/* Question text — fills remaining space */}
-        <span style={{
-          fontFamily: isHe ? "'Heebo', sans-serif" : "'Frank Ruhl Libre', serif",
-          fontWeight: isHe ? 600 : 500,
-          fontSize: isHe ? "1.05rem" : "1.1rem",
-          color: isOpen ? BORDEAUX : "rgb(30,10,12)",
-          lineHeight: 1.5,
-          transition: "color 0.25s ease",
-          flex: 1,
-          textAlign: isHe ? "right" : "left",
-        }}>
+        {/* Question text — same size as item name in MenuPage */}
+        <span
+          style={{
+            fontFamily: "'Heebo', sans-serif",
+            fontWeight: 800,
+            fontSize: "clamp(18px, 1.5vw, 22px)",
+            color: isOpen ? BORDEAUX : "rgb(30,10,12)",
+            lineHeight: 1.4,
+            transition: "color 0.25s ease",
+            flex: 1,
+            textAlign: isHe ? "right" : "left",
+          }}
+        >
           {item.q}
         </span>
 
-        {/* Chevron — in RTL this ends up on the left side (end of row) */}
+        {/* Chevron */}
         <svg
-          width="18" height="18" viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
           fill="none"
-          stroke={isOpen ? GOLD : "rgba(62,4,9,0.35)"}
-          strokeWidth="1.8"
-          strokeLinecap="round" strokeLinejoin="round"
+          stroke={isOpen ? BORDEAUX : "rgba(62,4,9,0.35)"}
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           style={{
             flexShrink: 0,
             transition: "transform 0.35s ease, stroke 0.25s ease",
@@ -193,36 +182,41 @@ function AccordionItem({
       </button>
 
       {/* Answer */}
-      <div style={{
-        maxHeight: isOpen ? "500px" : "0",
-        overflow: "hidden",
-        transition: "max-height 0.4s cubic-bezier(0.4,0,0.2,1)",
-      }}>
+      <div
+        style={{
+          maxHeight: isOpen ? "600px" : "0",
+          overflow: "hidden",
+          transition: "max-height 0.4s cubic-bezier(0.4,0,0.2,1)",
+        }}
+      >
         <div
           dir={isHe ? "rtl" : "ltr"}
           style={{
             paddingBottom: "1.6rem",
-            // Indent to align under the question text (past the number)
-            paddingRight: isHe ? "2.8rem" : "0",
-            paddingLeft: isHe ? "0" : "2.8rem",
+            paddingRight: isHe ? "0" : "0",
+            paddingLeft: isHe ? "0" : "0",
           }}
         >
-          {/* Gold accent bar */}
-          <div style={{
-            width: "28px",
-            height: "2px",
-            background: GOLD,
-            marginBottom: "0.85rem",
-          }} />
-          <p style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 300,
-            fontSize: "0.95rem",
-            lineHeight: 1.85,
-            color: "rgba(40,10,12,0.75)",
-            margin: 0,
-            textAlign: isHe ? "right" : "left",
-          }}>
+          {/* Green accent bar — matches MenuPage item separator style */}
+          <div
+            style={{
+              width: "20px",
+              height: "2px",
+              background: GREEN,
+              marginBottom: "0.85rem",
+            }}
+          />
+          <p
+            style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 300,
+              fontSize: "clamp(17px, 1.4vw, 21px)",
+              lineHeight: 1.7,
+              color: "rgb(90,40,40)",
+              margin: 0,
+              textAlign: isHe ? "right" : "left",
+            }}
+          >
             {item.a}
           </p>
         </div>
@@ -240,91 +234,109 @@ export default function FAQPage() {
     descriptionEn: "Frequently asked questions about Casa do Brasil restaurant in Eilat.",
   });
   const faqs = isHe ? FAQ_HE : FAQ_EN;
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
 
   return (
-    <>
-      {/* forceScrolled: always show white navbar — page has white background */}
-      <Navbar forceScrolled={true} />
+    <div style={{ minHeight: "100vh", background: "#ffffff" }}>
+      {/* Standard Navbar — same as MenuPage and Gallery */}
+      <Navbar />
 
       <main
         dir={isHe ? "rtl" : "ltr"}
         style={{
-          minHeight: "100vh",
-          background: "#FAFAF8",
           paddingTop: "calc(70px + 4rem)",
           paddingBottom: "6rem",
         }}
       >
-        <div style={{
-          maxWidth: "780px",
-          margin: "0 auto",
-          padding: "0 clamp(1.2rem, 5vw, 3rem)",
-        }}>
-
-          {/* ── Page Header ── */}
+        <div
+          style={{
+            maxWidth: "860px",
+            margin: "0 auto",
+            padding: "0 clamp(1.2rem, 6vw, 3rem)",
+          }}
+        >
+          {/* ── Page Header — matches CategoryPanel header style ── */}
           <header
             dir={isHe ? "rtl" : "ltr"}
-            style={{ marginBottom: "3.5rem" }}
+            style={{
+              padding: "0 0 2.5rem",
+              borderBottom: `1px solid ${GOLD_R}0.2)`,
+              marginBottom: "0.5rem",
+              textAlign: isHe ? "right" : "left",
+            }}
           >
-            {/* Gold rule — aligns to start (right in RTL, left in LTR) */}
-            <div style={{
-              width: "40px",
-              height: "2px",
-              background: GOLD,
-              marginBottom: "1.4rem",
-            }} />
+            {/* Green label row — same as CategoryPanel subtitle row */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.7rem",
+                marginBottom: "1rem",
+                flexDirection: isHe ? "row-reverse" : "row",
+              }}
+            >
+              <div
+                style={{
+                  width: "28px",
+                  height: "2px",
+                  background: GREEN,
+                  flexShrink: 0,
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "'Heebo', sans-serif",
+                  fontWeight: 800,
+                  fontSize: "clamp(13px, 1.05vw, 16px)",
+                  letterSpacing: isHe ? "0.04em" : "0.12em",
+                  textTransform: "uppercase",
+                  color: GREEN,
+                  lineHeight: 1.4,
+                }}
+              >
+                {isHe ? "כל מה שרצית לדעת" : "Everything you need to know"}
+              </span>
+            </div>
 
-            {/* Eyebrow */}
-            <p style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 700,
-              fontSize: "0.7rem",
-              letterSpacing: "0.28em",
-              textTransform: "uppercase",
-              color: GOLD,
-              margin: "0 0 0.8rem",
-            }}>
-              {isHe ? "כל מה שרצית לדעת" : "Everything you need to know"}
-            </p>
-
-            {/* Main title */}
-            <h1 style={{
-              fontFamily: isHe ? "'Heebo', sans-serif" : "'Frank Ruhl Libre', serif",
-              fontWeight: isHe ? 800 : 700,
-              fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
-              color: BORDEAUX,
-              margin: "0 0 1rem",
-              lineHeight: 1.15,
-            }}>
+            {/* Main title — identical to CategoryPanel h2 */}
+            <h1
+              style={{
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 900,
+                fontSize: "clamp(32px, 4.5vw, 62px)",
+                color: BORDEAUX,
+                lineHeight: 0.9,
+                letterSpacing: isHe ? "0.01em" : "0.02em",
+                margin: "0 0 1.2rem",
+              }}
+            >
               {isHe ? "שאלות ותשובות" : "FAQ"}
             </h1>
 
-            {/* Subtitle */}
-            <p style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 300,
-              fontSize: "1rem",
-              color: "rgba(62,4,9,0.6)",
-              margin: 0,
-              lineHeight: 1.7,
-              maxWidth: "520px",
-            }}>
+            {/* Subtitle — identical to CategoryPanel description */}
+            <p
+              style={{
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 300,
+                fontSize: "clamp(18px, 1.5vw, 22px)",
+                color: "rgb(90,35,35)",
+                lineHeight: 1.7,
+                margin: 0,
+                direction: isHe ? "rtl" : "ltr",
+                textAlign: isHe ? "right" : "left",
+                unicodeBidi: "embed",
+              }}
+            >
               {isHe
                 ? "מצאו תשובות לשאלות הנפוצות ביותר על קאסה דו ברזיל — שעות, הזמנות, תפריט ועוד."
                 : "Find answers to the most common questions about Casa do Brasil — hours, reservations, menu, and more."}
             </p>
           </header>
 
-          {/* ── Accordion card ── */}
-          <section style={{
-            background: "#fff",
-            boxShadow: "0 2px 32px rgba(62,4,9,0.06)",
-            padding: "0 clamp(1.2rem, 4vw, 2.5rem)",
-            borderTop: `3px solid ${BORDEAUX}`,
-          }}>
+          {/* ── Accordion list ── */}
+          <section style={{ marginTop: "0.5rem" }}>
             {faqs.map((item, i) => (
               <AccordionItem
                 key={i}
@@ -342,27 +354,32 @@ export default function FAQPage() {
             dir={isHe ? "rtl" : "ltr"}
             style={{
               marginTop: "3rem",
-              padding: "2rem clamp(1.2rem, 4vw, 2.5rem)",
-              background: GOLD_LIGHT,
-              borderInlineStart: `3px solid ${GOLD}`,
+              padding: "1.8rem 2rem",
+              background: "rgba(62,4,9,0.04)",
+              borderInlineStart: `3px solid ${BORDEAUX}`,
             }}
           >
-            <p style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 600,
-              fontSize: "0.95rem",
-              color: BORDEAUX,
-              margin: "0 0 0.4rem",
-            }}>
+            <p
+              style={{
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 700,
+                fontSize: "clamp(18px, 1.5vw, 22px)",
+                color: BORDEAUX,
+                margin: "0 0 0.5rem",
+              }}
+            >
               {isHe ? "לא מצאתם תשובה?" : "Didn't find your answer?"}
             </p>
-            <p style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 300,
-              fontSize: "0.88rem",
-              color: "rgba(62,4,9,0.7)",
-              margin: "0 0 1rem",
-            }}>
+            <p
+              style={{
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 300,
+                fontSize: "clamp(17px, 1.4vw, 21px)",
+                color: "rgb(90,40,40)",
+                margin: "0 0 1.2rem",
+                lineHeight: 1.6,
+              }}
+            >
               {isHe
                 ? "צרו קשר ישירות בטלפון 08-6323032 ונשמח לעזור."
                 : "Call us directly at 08-6323032 and we'll be happy to help."}
@@ -373,26 +390,29 @@ export default function FAQPage() {
                 display: "inline-block",
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 700,
-                fontSize: "0.72rem",
-                letterSpacing: "0.18em",
+                fontSize: "clamp(13px, 1.05vw, 16px)",
+                letterSpacing: "0.12em",
                 textTransform: "uppercase",
                 textDecoration: "none",
                 color: "#fff",
                 background: BORDEAUX,
-                padding: "0.55rem 1.4rem",
+                padding: "0.65rem 1.8rem",
                 transition: "background 0.25s ease",
               }}
-              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = GOLD; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = BORDEAUX; }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLAnchorElement).style.background = "#009C3B";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLAnchorElement).style.background = BORDEAUX;
+              }}
             >
               {isHe ? "התקשרו אלינו" : "Call Us"}
             </a>
           </div>
-
         </div>
       </main>
 
       <Footer />
-    </>
+    </div>
   );
 }
