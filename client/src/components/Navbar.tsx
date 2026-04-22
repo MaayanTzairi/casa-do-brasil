@@ -148,11 +148,11 @@ function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: bo
   const isHe = lang === "he";
   const [hov, setHov] = useState(false);
 
-  // Always gold/yellow style — premium look
+  // White glass background with Brazilian yellow text
   const bg = inOverlay
-    ? (hov ? "rgba(200,160,32,0.95)" : "rgba(180,140,20,0.85)")
-    : (hov ? "rgba(220,175,40,0.95)" : "rgba(200,155,25,0.80)");
-  const border = hov ? "rgba(255,220,80,0.90)" : "rgba(200,160,32,0.70)";
+    ? (hov ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.85)")
+    : (hov ? "rgba(255,255,255,0.38)" : "rgba(255,255,255,0.22)");
+  const border = hov ? "rgba(255,255,255,0.90)" : "rgba(255,255,255,0.55)";
 
   return (
     <button
@@ -174,12 +174,12 @@ function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: bo
         transition: "all 0.25s ease",
         flexShrink: 0,
         boxShadow: hov
-          ? "0 4px 14px rgba(180,140,0,0.40), inset 0 1px 0 rgba(255,240,120,0.25)"
-          : "0 2px 8px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,240,120,0.15)",
+          ? "0 4px 14px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.30)"
+          : "0 2px 8px rgba(0,0,0,0.20), inset 0 1px 0 rgba(255,255,255,0.15)",
         transform: hov ? "translateY(-1px)" : "translateY(0)",
       }}
     >
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,250,220,0.95)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FEDF00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
         <line x1="2" y1="12" x2="22" y2="12" />
         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
@@ -190,7 +190,7 @@ function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: bo
           fontWeight: 800,
           fontSize: "0.62rem",
           letterSpacing: "0.18em",
-          color: "rgba(255,250,200,0.97)",
+          color: "#FEDF00",
           textTransform: "uppercase",
           lineHeight: 1,
           textShadow: "0 1px 3px rgba(0,0,0,0.40)",
