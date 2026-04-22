@@ -27,7 +27,7 @@ const BORDEAUX = "rgb(40,3,6)";
 const DEFAULTS = {
   titleHe: "CASA DO BRASIL",
   titleEn: "CASA DO BRASIL",
-  subtitleHe: "גריל ברזילאי — מוזיקה וצ'וראסקוריה",
+  subtitleHe: "אח ברזיל, ברזיל… הצבעוניות, החופים, החוטינים, הכדורגל, הריו דה ז'ינרו, הקופה – קבנה, הקפה, הקפרינייה והאוכל…אח, האוכל!..\nבברזיל יש כלל ברזל – מאוכל נהנים כמו ב\"קאזה דו ברזיל!\"\nכשהשיפוד מתחיל לרוץ, כשאוכלים כמה שרוצים, כשריחות הבשר פולשים, כשקצב \"הסמבה דו ברזיל\" באוויר, מובטחת חוויה ענקית – לנפש ולגוף...",
   subtitleEn: "Brazilian Grill - Music & Churrascaria",
   reserveBtnHe: "הזמנת שולחן",
   reserveBtnEn: "BOOK A TABLE",
@@ -107,7 +107,7 @@ export default function HeroSection() {
       </div>
 
       {/* ── Light 25% black overlay ── */}
-      <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.45)", pointerEvents: "none" }} />
+      <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.55)", pointerEvents: "none" }} />
 
 
 
@@ -172,16 +172,17 @@ export default function HeroSection() {
           <p
             style={{
               fontFamily: "'Heebo', sans-serif",
-              fontWeight: 600,
-              fontSize: isMobile ? "clamp(14px, 4.2vw, 20px)" : "clamp(20px, 2.2vw, 30px)",
+              fontWeight: 400,
+              fontSize: isMobile ? "clamp(12px, 3.2vw, 15px)" : "clamp(13px, 1.1vw, 16px)",
               color: "rgba(240,220,160,0.90)",
-              letterSpacing: isMobile ? "0.08em" : "0.18em",
+              letterSpacing: isMobile ? "0.02em" : "0.04em",
               fontStyle: "italic",
               textAlign: "center",
-              whiteSpace: "nowrap",
+              whiteSpace: "pre-line",
               margin: 0,
               textShadow: "0 2px 12px rgba(0,0,0,0.90)",
-              lineHeight: 1.3,
+              lineHeight: 1.7,
+              maxWidth: isMobile ? "90vw" : "680px",
             }}
           >
             {isHe ? t.subtitleHe : t.subtitleEn}

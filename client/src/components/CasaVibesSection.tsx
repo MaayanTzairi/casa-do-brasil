@@ -105,7 +105,9 @@ export default function CasaVibesSection() {
     ? ["בשר.", "מוזיקה.", "ברזיל."]
     : ["MEAT.", "MUSIC.", "BRASIL."];
   const description = isHe
-    ? "קאסה דו ברזיל היא יותר מארוחה — זו חגיגה. פושידו קוהידו אותנטי, שנחתך ליד השולחן על ידי הפאסדורס שלנו, בצירת הקצב, הצבע והנשמה של הקרנבל. כל ביקור הוא חג לכל החושים."
+    ? `אח ברזיל, ברזיל… הצבעוניות, החופים, החוטינים, הכדורגל, הריו דה ז'ינרו, הקופה – קבנה, הקפה, הקפרינייה והאוכל…אח, האוכל!..
+בברזיל יש כלל ברזל – מאוכל נהנים כמו בקאזה דו ברזיל!
+כשהשיפוד מתחיל לרוץ, כשאוכלים כמה שרוצים, כשריחות הבשר פולשים, כשקצב הסמבה דו ברזיל באוויר, מובטחת חוויה ענקית – לנפש ולגוף...`
     : "Casa do Brasil is more than a meal — it is a celebration. Authentic Brazilian churrasco, carved tableside by our passadors, paired with the rhythm, color and soul of carnival. Every visit is a feast for all the senses.";
 
   useEffect(() => {
@@ -196,9 +198,10 @@ export default function CasaVibesSection() {
           <p style={{
             ...animStyle(inView, 0.52),
             fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-            fontSize: mobile ? "clamp(15px, 4vw, 18px)" : "clamp(15px, 1.3vw, 18px)",
+            fontSize: mobile ? "clamp(14px, 3.8vw, 17px)" : "clamp(14px, 1.2vw, 17px)",
             color: "rgb(90,35,35)", lineHeight: 1.85,
-            maxWidth: "420px", marginBottom: "2rem",
+            maxWidth: "520px", marginBottom: "2rem",
+            whiteSpace: "pre-line",
             marginRight: isHe ? 0 : undefined,
             marginLeft: isHe ? "auto" : undefined,
           }}>
