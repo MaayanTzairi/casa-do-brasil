@@ -856,7 +856,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                     gap: "0.6rem",
                   }}>
                     <span style={{ color: BORDEAUX, fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
-                    <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(15px, 1.2vw, 18px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
+                    <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(17px, 1.4vw, 21px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
                       {isHe ? a.nameHe : a.name}
                     </span>
                   </li>
@@ -886,36 +886,28 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                   }}>
                     {/* Brazilian-style track name badge */}
                     {(track.name || track.nameHe) && (
-                      <div style={{
-                        marginBottom: "1.4rem",
-                        position: "relative",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.6rem",
-                      }}>
-                        {/* Left accent line */}
-                        <div style={{ width: "3px", height: "100%", minHeight: "32px", background: ti === 1 ? "#FEDF00" : "#009C3B", flexShrink: 0, borderRadius: "2px" }} />
-                        <div style={{
-                          background: ti === 1
-                            ? "linear-gradient(135deg, rgba(254,223,0,0.12) 0%, rgba(254,223,0,0.04) 100%)"
-                            : "linear-gradient(135deg, rgba(0,156,59,0.10) 0%, rgba(0,156,59,0.03) 100%)",
-                          border: `1px solid ${ti === 1 ? "rgba(254,223,0,0.35)" : "rgba(0,156,59,0.30)"}`,
-                          borderRadius: "3px",
-                          padding: "0.45rem 0.9rem",
-                          flex: 1,
-                        }}>
-                          <div style={{
-                            fontFamily: "'Heebo', sans-serif",
-                            fontWeight: 800,
-                            fontSize: "clamp(11px, 0.95vw, 14px)",
-                            letterSpacing: isHe ? "0.04em" : "0.20em",
-                            color: ti === 1 ? "#FEDF00" : "#009C3B",
-                            textTransform: "uppercase",
-                            lineHeight: 1.35,
-                          }}>
-                            {isHe ? track.nameHe : track.name}
-                          </div>
+                      <div style={{ marginBottom: "1.6rem" }}>
+                        {/* Decorative diamond separator */}
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "0.5rem" }}>
+                          <div style={{ flex: 1, height: "1px", background: ti === 1 ? "rgba(254,223,0,0.30)" : "rgba(0,156,59,0.25)" }} />
+                          <span style={{ fontSize: "0.45rem", color: ti === 1 ? "#FEDF00" : "#009C3B", opacity: 0.7 }}>◆</span>
+                          <div style={{ flex: 1, height: "1px", background: ti === 1 ? "rgba(254,223,0,0.30)" : "rgba(0,156,59,0.25)" }} />
                         </div>
+                        {/* Large typographic name */}
+                        <div style={{
+                          fontFamily: "'Heebo', sans-serif",
+                          fontWeight: 900,
+                          fontSize: "clamp(17px, 1.6vw, 22px)",
+                          letterSpacing: isHe ? "0.05em" : "0.15em",
+                          color: ti === 1 ? "#FEDF00" : "#009C3B",
+                          textTransform: "uppercase",
+                          lineHeight: 1.25,
+                          textAlign: isHe ? "right" : "left",
+                        }}>
+                          {isHe ? track.nameHe : track.name}
+                        </div>
+                        {/* Bottom thin rule */}
+                        <div style={{ height: "1px", background: ti === 1 ? "rgba(254,223,0,0.20)" : "rgba(0,156,59,0.18)", marginTop: "0.55rem" }} />
                       </div>
                     )}
                     {/* Track header */}
@@ -1016,7 +1008,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               {category.lunchStarters.map((s, i) => (
                 <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
                   <span style={{ color: GOLD, fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
-                  <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(15px, 1.2vw, 18px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
+                  <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(17px, 1.4vw, 21px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
                     {isHe ? s.nameHe : s.name}
                   </span>
                 </li>
