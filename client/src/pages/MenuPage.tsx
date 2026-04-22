@@ -939,15 +939,16 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                     )}
                     {/* Track header */}
                     <div style={{ marginBottom: "1.2rem" }}>
-                      {/* Count badge */}
+                      {/* Count badge — always green */}
                       <div style={{
                         display: "inline-block",
-                        border: `1px solid ${ti === 1 ? "rgba(254,223,0,0.45)" : "rgba(62,4,9,0.30)"}`,
+                        border: "1px solid rgba(0,156,59,0.45)",
                         borderRadius: "3px",
                         padding: "0.25rem 0.75rem",
                         marginBottom: "0.7rem",
+                        background: ti === 1 ? "rgba(0,156,59,0.12)" : "rgba(0,156,59,0.06)",
                       }}>
-                        <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "clamp(16px, 1.3vw, 20px)", letterSpacing: "0.10em", color: ti === 1 ? "#FEDF00" : BORDEAUX, textTransform: "uppercase" }}>
+                        <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "clamp(16px, 1.3vw, 20px)", letterSpacing: "0.10em", color: "#009C3B", textTransform: "uppercase" }}>
                           {isHe ? track.countHe : track.count}
                         </span>
                       </div>
@@ -980,11 +981,19 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                       ))}
                     </ul>
 
-                    {/* Track note */}
+                    {/* Track note — white box callout */}
                     {track.note && (
-                      <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(10px, 0.75vw, 12px)", color: ti === 1 ? "rgba(255,255,255,0.55)" : "rgba(62,4,9,0.5)", margin: "1rem 0 0", fontStyle: "italic", textAlign: isHe ? "right" : "left" }}>
-                        {isHe ? track.noteHe : track.note}
-                      </p>
+                      <div style={{
+                        marginTop: "1.1rem",
+                        background: "#fff",
+                        border: "1px solid rgba(62,4,9,0.18)",
+                        borderRadius: "3px",
+                        padding: "0.45rem 0.85rem",
+                      }}>
+                        <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1vw, 15px)", color: "rgba(62,4,9,0.70)", margin: 0, fontStyle: "italic", textAlign: isHe ? "right" : "left", direction: isHe ? "rtl" : "ltr" }}>
+                          {isHe ? track.noteHe : track.note}
+                        </p>
+                      </div>
                     )}
                   </div>
                 ))}
