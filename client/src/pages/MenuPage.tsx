@@ -832,13 +832,13 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
             {/* Appetizers block */}
             <div dir={isHe ? "rtl" : "ltr"} style={{
               padding: "1.4rem 1.8rem",
-              background: "rgba(185,161,103,0.05)",
-              border: `1px solid ${GOLD_R}0.18)`,
+              background: "rgba(62,4,9,0.04)",
+              border: `1px solid rgba(62,4,9,0.18)`,
               marginBottom: "2rem",
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}>
-                <div style={{ width: "16px", height: "1px", background: GOLD }} />
-                <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.85vw, 13px)", letterSpacing: isHe ? "0.06em" : "0.25em", textTransform: "uppercase", color: GOLD }}>
+                <div style={{ width: "16px", height: "1px", background: BORDEAUX }} />
+                <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.85vw, 13px)", letterSpacing: isHe ? "0.06em" : "0.25em", textTransform: "uppercase", color: BORDEAUX }}>
                   {isHe ? "מנות פתיחה" : "Appetizers"}
                 </span>
               </div>
@@ -849,7 +849,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                     alignItems: "flex-start",
                     gap: "0.6rem",
                   }}>
-                    <span style={{ color: GOLD, fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
+                    <span style={{ color: BORDEAUX, fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
                     <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(15px, 1.2vw, 18px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
                       {isHe ? a.nameHe : a.name}
                     </span>
@@ -857,7 +857,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                 ))}
               </ul>
               {category.appetizersNote && (
-                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(13px, 1vw, 15px)", color: GOLD, margin: "0.9rem 0 0", fontStyle: "italic", textAlign: isHe ? "right" : "left" }}>
+                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(13px, 1vw, 15px)", color: BORDEAUX, margin: "0.9rem 0 0", fontStyle: "italic", textAlign: isHe ? "right" : "left" }}>
                   {isHe ? category.appetizersNoteHe : category.appetizersNote}
                 </p>
               )}
@@ -873,14 +873,14 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               }}>
                 {category.tracks.map((track, ti) => (
                   <div key={ti} dir={isHe ? "rtl" : "ltr"} style={{
-                    border: `1px solid ${ti === 1 ? GOLD : GOLD_R + "0.35)"}`,
+                    border: `1px solid rgba(62,4,9,${ti === 1 ? 0.6 : 0.25})`,
                     background: ti === 1 ? BORDEAUX : "#fff",
                     padding: "1.6rem 1.8rem",
                     position: "relative",
                   }}>
                     {/* Track header */}
                     <div style={{ marginBottom: "1.2rem" }}>
-                      <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.9vw, 14px)", letterSpacing: "0.22em", color: ti === 1 ? GOLD : GOLD, textTransform: "uppercase", marginBottom: "0.5rem" }}>
+                      <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.9vw, 14px)", letterSpacing: "0.22em", color: ti === 1 ? "rgba(255,255,255,0.9)" : BORDEAUX, textTransform: "uppercase", marginBottom: "0.5rem" }}>
                         {isHe ? track.countHe : track.count}
                       </div>
                       <div style={{ display: "flex", alignItems: "baseline", gap: "0.4rem" }}>
@@ -894,7 +894,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                     </div>
 
                     {/* Divider */}
-                    <div style={{ height: "1px", background: ti === 1 ? `${GOLD_R}0.3)` : `${GOLD_R}0.18)`, marginBottom: "1.1rem" }} />
+                    <div style={{ height: "1px", background: ti === 1 ? "rgba(255,255,255,0.25)" : "rgba(62,4,9,0.15)", marginBottom: "1.1rem" }} />
 
                     {/* Meat list */}
                     <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.38rem" }}>
@@ -904,7 +904,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                           alignItems: "flex-start",
                           gap: "0.55rem",
                         }}>
-                          <span style={{ color: GOLD, fontSize: "0.5rem", marginTop: "4px", flexShrink: 0 }}>▪</span>
+                          <span style={{ color: ti === 1 ? "rgba(255,255,255,0.7)" : BORDEAUX, fontSize: "0.5rem", marginTop: "4px", flexShrink: 0 }}>▪</span>
                           <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(14px, 1.05vw, 16px)", color: ti === 1 ? "rgba(255,255,255,0.88)" : "rgb(70,25,25)", lineHeight: 1.5 }}>
                             {item}
                           </span>
