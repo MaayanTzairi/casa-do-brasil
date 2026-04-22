@@ -655,9 +655,9 @@ export default function Navbar({
               style={{
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 900,
-                fontSize: "clamp(22px, 6vw, 30px)",
+                fontSize: "clamp(26px, 7vw, 36px)",
                 letterSpacing: isHe ? "0.03em" : "0.18em",
-                color: (link as any).isVip ? "#FEDF00" : BORDEAUX,
+                color: BORDEAUX,
                 textDecoration: "none",
                 textTransform: "uppercase",
                 transition: `color 0.2s ease, opacity 0.35s ${0.05 + i * 0.05}s ease, transform 0.35s ${0.05 + i * 0.05}s ease`,
@@ -668,7 +668,7 @@ export default function Navbar({
                 (e.currentTarget as HTMLAnchorElement).style.color = "#009C3B";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = (link as any).isVip ? "#FEDF00" : BORDEAUX;
+                (e.currentTarget as HTMLAnchorElement).style.color = BORDEAUX;
               }}
             >
               {link.label}
@@ -758,9 +758,8 @@ function NavLink({
         letterSpacing: isHe ? "0.05em" : "0.18em",
         textTransform: "uppercase",
         textDecoration: "none",
-        color: isVip ? (scrolled ? "#B9A167" : "#fff") : (hovered ? "#009C3B" : color),
-        textShadow: isVip && scrolled ? "0 1px 6px rgba(185,161,103,0.55), 0 0 12px rgba(185,161,103,0.30)" : "none",
-        transition: "color 0.25s ease, text-shadow 0.25s ease",
+        color: hovered ? "#009C3B" : color,
+        transition: "color 0.25s ease",
         position: "relative",
         paddingBottom: "2px",
         whiteSpace: "nowrap",
