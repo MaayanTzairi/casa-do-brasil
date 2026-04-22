@@ -198,7 +198,7 @@ export default function CasaVibesSection() {
           <p style={{
             ...animStyle(inView, 0.52),
             fontFamily: "'Heebo', sans-serif", fontWeight: 300,
-            fontSize: mobile ? "clamp(14px, 3.8vw, 17px)" : "clamp(14px, 1.2vw, 17px)",
+            fontSize: mobile ? "clamp(16px, 4.2vw, 19px)" : "clamp(16px, 1.35vw, 19px)",
             color: "rgb(90,35,35)", lineHeight: 1.85,
             maxWidth: "520px", marginBottom: "2rem",
             whiteSpace: "pre-line",
