@@ -372,10 +372,10 @@ function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: st
         letterSpacing: isMobile ? "0.04em" : "0.18em", textTransform: "uppercase" as const,
         textDecoration: "none",
         whiteSpace: "nowrap" as const,
-        // White button
+        // White button — more opaque
         background: hovered
-          ? "rgba(255,255,255,0.22)"
-          : "rgba(255,255,255,0.12)",
+          ? "rgba(255,255,255,0.38)"
+          : "rgba(255,255,255,0.26)",
         backdropFilter: "blur(14px)",
         WebkitBackdropFilter: "blur(14px)",
         border: `2px solid ${hovered ? "rgba(255,255,255,0.90)" : "rgba(255,255,255,0.55)"}`,

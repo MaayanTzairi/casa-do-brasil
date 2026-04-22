@@ -56,7 +56,7 @@ const DEFAULTS: Required<NavbarContent> = {
   contactEn: "CONTACT",
   brandNameHe: "קאסה דו ברזיל",
   brandNameEn: "Casa do Brasil",
-  reservationHe: "הזמנת מקום",
+  reservationHe: "הזמנת שולחן",
   reservationEn: "RESERVATIONS",
 };
 
@@ -398,14 +398,14 @@ export default function Navbar({
                   backdropFilter: "blur(10px)",
                   WebkitBackdropFilter: "blur(10px)",
                   border: "1.5px solid rgba(0,156,59,0.75)",
-                  borderRadius: "50px",
+                  borderRadius: "10px",
                   padding: "0.35rem 0.75rem",
                   whiteSpace: "nowrap",
                   transition: "all 0.3s ease",
                   boxShadow: "0 2px 8px rgba(0,0,0,0.20)",
                 }}
               >
-                {isHe ? t.reservationHe : t.reservationEn}
+                {isHe ? "הזמנת שולחן" : t.reservationEn}
               </a>
             </div>
 
@@ -699,7 +699,7 @@ export default function Navbar({
                 backdropFilter: "blur(10px)",
                 WebkitBackdropFilter: "blur(10px)",
                 border: "2px solid rgba(0,156,59,0.85)",
-                borderRadius: "50px",
+                borderRadius: "10px",
                 padding: "0.85rem 2.5rem",
                 width: "100%",
                 maxWidth: "320px",
