@@ -275,6 +275,7 @@ export default function FAQPage() {
                 gap: "0.7rem",
                 marginBottom: "1rem",
                 flexDirection: isHe ? "row-reverse" : "row",
+                justifyContent: isHe ? "flex-end" : "flex-start",
               }}
             >
               <div
