@@ -131,21 +131,25 @@ export default function Footer() {
   );
 
   const sitemapLinks_HE = [
-    { label: "דף הבית",     href: "#home" },
-    { label: "הסיפור שלנו", href: "#about" },
-    { label: "התפריט",      href: "#menu" },
-    { label: "גלריה",       href: "#gallery" },
-    { label: "ביקורות",     href: "#reviews" },
-    { label: "VIP",         href: "#vip" },
+    { label: "בית",         href: "/" },
+    { label: "תפריט",       href: "/menu" },
+    { label: "גלריה",       href: "/gallery" },
+    { label: "שאלות",       href: "/faq" },
+    { label: "הטבות",       href: "/vip" },
+    { label: "בלוג",        href: "/blog" },
+    { label: "VIP",         href: "/vip" },
+    { label: "קצביה",       href: "#butcher" },
     { label: "צור קשר",     href: "#contact" },
   ];
   const sitemapLinks_EN = [
-    { label: "Home",        href: "#home" },
-    { label: "Our Story",   href: "#about" },
-    { label: "Menu",        href: "#menu" },
-    { label: "Gallery",     href: "#gallery" },
-    { label: "Reviews",     href: "#reviews" },
-    { label: "VIP",         href: "#vip" },
+    { label: "Home",        href: "/" },
+    { label: "Menu",        href: "/menu" },
+    { label: "Gallery",     href: "/gallery" },
+    { label: "FAQ",         href: "/faq" },
+    { label: "Benefits",    href: "/vip" },
+    { label: "Blog",        href: "/blog" },
+    { label: "VIP",         href: "/vip" },
+    { label: "Butcher",     href: "#butcher" },
     { label: "Contact",     href: "#contact" },
   ];
 

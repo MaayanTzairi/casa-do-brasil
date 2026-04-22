@@ -15,12 +15,12 @@ const BORDEAUX = "rgb(62,4,9)";
 
 // Fallback images (CDN)
 const FALLBACK_IMAGES = [
-  "/manus-storage/gallery-passador_3632ab2e.webp",
-  "/manus-storage/gallery-steak_9249c666.webp",
-  "/manus-storage/gallery-picanha_0fe0f9d4.webp",
-  "/manus-storage/gallery-plate-wine_6e1e0cce.png",
-  "/manus-storage/gallery-grill_da49511f.png",
-  "/manus-storage/gallery-fish_9c1f93cd.png",
+  "/manus-storage/gallery-passador_d9c37bdd.webp",
+  "/manus-storage/gallery-steak_631612b1.webp",
+  "/manus-storage/gallery-picanha_9c6c1d65.webp",
+  "/manus-storage/gallery-plate-wine_6e1a3784.png",
+  "/manus-storage/gallery-grill_8549487a.png",
+  "/manus-storage/gallery-fish_02f22508.png",
 ];
 
 function animStyle(inView: boolean, delay: number): React.CSSProperties {
