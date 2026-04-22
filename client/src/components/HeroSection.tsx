@@ -350,7 +350,7 @@ function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: st
         transition: "all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         transform: hovered ? "translateY(-3px) scale(1.03)" : "translateY(0) scale(1)",
         willChange: "transform, box-shadow",
-        borderRadius: "50px",
+        borderRadius: "10px",
       }}
     >
       {label} <span style={{ fontSize: "1.0rem", lineHeight: 1 }}>{isHe ? "←" : "→"}</span>
@@ -388,7 +388,7 @@ function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: st
         transition: "all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         transform: hovered ? "translateY(-3px) scale(1.03)" : "translateY(0) scale(1)",
         willChange: "transform, box-shadow",
-        borderRadius: "50px",
+        borderRadius: "10px",
       }}
     >
       {label}
