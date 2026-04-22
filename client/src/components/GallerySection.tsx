@@ -13,14 +13,14 @@ const GOLD = "#B9A167";
 const GOLD_R = "rgba(185,161,103,";
 const BORDEAUX = "rgb(62,4,9)";
 
-// Fallback images (CDN)
+// Fallback images (served from /public/gallery/)
 const FALLBACK_IMAGES = [
-  "/manus-storage/gallery-passador_d9c37bdd.webp",
-  "/manus-storage/gallery-steak_631612b1.webp",
-  "/manus-storage/gallery-picanha_9c6c1d65.webp",
-  "/manus-storage/gallery-plate-wine_6e1a3784.png",
-  "/manus-storage/gallery-grill_8549487a.png",
-  "/manus-storage/gallery-fish_02f22508.png",
+  "/gallery/passador.webp",
+  "/gallery/steak.webp",
+  "/gallery/picanha.webp",
+  "/gallery/plate-wine.png",
+  "/gallery/grill.png",
+  "/gallery/fish.png",
 ];
 
 function animStyle(inView: boolean, delay: number): React.CSSProperties {
