@@ -487,7 +487,7 @@ export default function Navbar({
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "clamp(1.2rem, 2vw, 2.4rem)",
+                gap: isHe ? "clamp(1.2rem, 2vw, 2.4rem)" : "clamp(0.6rem, 1.0vw, 1.2rem)",
                 flex: 1,
                 justifyContent: "flex-start",
               }}
@@ -757,8 +757,8 @@ function NavLink({
       style={{
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 700,
-        fontSize: "0.85rem",
-        letterSpacing: isHe ? "0.05em" : "0.18em",
+        fontSize: isHe ? "0.85rem" : "0.72rem",
+        letterSpacing: isHe ? "0.05em" : "0.10em",
         textTransform: "uppercase",
         textDecoration: "none",
         color: hovered ? "#009C3B" : color,
