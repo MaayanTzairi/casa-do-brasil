@@ -863,9 +863,36 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                 ))}
               </ul>
               {category.appetizersNote && (
-                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(13px, 1vw, 15px)", color: BORDEAUX, margin: "0.9rem 0 0", fontStyle: "italic", textAlign: isHe ? "right" : "left" }}>
-                  {isHe ? category.appetizersNoteHe : category.appetizersNote}
-                </p>
+                <div style={{
+                  marginTop: "1.2rem",
+                  display: "flex",
+                  justifyContent: isHe ? "flex-start" : "flex-end",
+                }}>
+                  <div style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.7rem",
+                    background: "linear-gradient(135deg, rgba(62,4,9,0.07) 0%, rgba(62,4,9,0.03) 100%)",
+                    border: `1px solid rgba(62,4,9,0.18)`,
+                    borderRadius: "2px",
+                    padding: "0.55rem 1.1rem",
+                    maxWidth: "100%",
+                  }}>
+                    {/* Brazilian flag mini accent */}
+                    <span style={{ fontSize: "1rem", lineHeight: 1, flexShrink: 0 }}>🇧🇷</span>
+                    <span style={{
+                      fontFamily: "'Heebo', sans-serif",
+                      fontWeight: 700,
+                      fontSize: "clamp(14px, 1.1vw, 17px)",
+                      color: BORDEAUX,
+                      fontStyle: "italic",
+                      letterSpacing: isHe ? "0.02em" : "0.05em",
+                      lineHeight: 1.4,
+                    }}>
+                      {isHe ? category.appetizersNoteHe : category.appetizersNote}
+                    </span>
+                  </div>
+                </div>
               )}
             </div>
 
@@ -937,7 +964,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                           gap: "0.55rem",
                         }}>
                           <span style={{ color: ti === 1 ? "rgba(255,255,255,0.7)" : BORDEAUX, fontSize: "0.5rem", marginTop: "4px", flexShrink: 0 }}>▪</span>
-                          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(14px, 1.05vw, 16px)", color: ti === 1 ? "rgba(255,255,255,0.88)" : "rgb(70,25,25)", lineHeight: 1.5 }}>
+                          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(17px, 1.4vw, 21px)", color: ti === 1 ? "rgba(255,255,255,0.88)" : "rgb(70,25,25)", lineHeight: 1.5 }}>
                             {item}
                           </span>
                         </li>
