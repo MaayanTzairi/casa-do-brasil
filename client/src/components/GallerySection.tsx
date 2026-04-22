@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * CASA DO BRASIL — Gallery Section (Slider Edition)
  * Connected to Sanity CMS — No framer-motion — CSS transitions + IntersectionObserver
@@ -31,22 +32,27 @@ function animStyle(inView: boolean, delay: number): React.CSSProperties {
 
 function CTAButton({ label, url }: { label: string; url: string }) {
   const { isHe } = useLanguage();
+  const [hov, setHov] = React.useState(false);
   return (
-    <Link href={url}>
-      <span
-        style={{
-          display: "inline-flex", alignItems: "center", gap: "0.7rem",
-          fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "1rem",
-          letterSpacing: "0.18em", textTransform: "uppercase", textDecoration: "none",
-          color: "#fff", padding: "0.9rem 2.2rem", border: "2px solid #FEDF00",
-          cursor: "pointer", transition: "background 0.28s, border-color 0.28s, box-shadow 0.28s", background: "#009C3B",
-          borderRadius: "10px", boxShadow: "0 4px 18px rgba(0,156,59,0.30)",
-        }}
-        onMouseEnter={(e) => { const el = e.currentTarget as HTMLSpanElement; el.style.background = "#007a2e"; el.style.borderColor = "#007a2e"; }}
-        onMouseLeave={(e) => { const el = e.currentTarget as HTMLSpanElement; el.style.background = "#009C3B"; el.style.borderColor = "#009C3B"; }}
-      >
-        {label} <span style={{ fontSize: "0.9rem" }}>{isHe ? "←" : "→"}</span>
-      </span>
+    <Link
+      href={url}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        display: "inline-flex", alignItems: "center", gap: "0.7rem",
+        fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "1rem",
+        letterSpacing: "0.18em", textTransform: "uppercase", textDecoration: "none",
+        color: "#fff", padding: "0.9rem 2.2rem",
+        border: `2px solid ${hov ? "#FEDF00" : "#FEDF00"}`,
+        cursor: "pointer",
+        transition: "background 0.28s, box-shadow 0.28s, transform 0.22s",
+        background: hov ? "#007a2e" : "#009C3B",
+        borderRadius: "10px",
+        boxShadow: hov ? "0 8px 28px rgba(0,156,59,0.45)" : "0 4px 18px rgba(0,156,59,0.30)",
+        transform: hov ? "translateY(-2px)" : "translateY(0)",
+      }}
+    >
+      {label} <span style={{ fontSize: "0.9rem" }}>{isHe ? "←" : "→"}</span>
     </Link>
   );
 }
