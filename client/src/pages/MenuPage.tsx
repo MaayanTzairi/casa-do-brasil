@@ -88,8 +88,8 @@ const MENU_DATA: MenuCategory[] = [
     id: "churrascaria",
     label: "Churrascaria",
     labelHe: "צ'ורוסקריה",
-    subtitle: "All You Can Eat",
-    subtitleHe: "אכול כפי יכולתך",
+    subtitle: "Served to the center of the table — as much as you want!",
+    subtitleHe: "מוגש למרכז השולחן — כמה שרוצים!",
     description: "Served to the center of the table — as much as you want. Choose your track and enjoy an endless parade of the finest Brazilian cuts.",
     descriptionHe: "מוגש למרכז השולחן — כמה שרוצים. בחרו את המסלול שלכם והתפנקו במצעד אינסופי של הנתחים הברזילאיים הטובים ביותר.",
     type: "rodizio",
@@ -770,14 +770,15 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
             )}
             <div style={{ position: "relative", zIndex: 1 }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row" }}>
-              <div style={{ width: "28px", height: "2px", background: "#009C3B" }} />
+              <div style={{ width: "28px", height: "2px", background: "#009C3B", flexShrink: 0 }} />
               <span style={{
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 800,
                 fontSize: "clamp(13px, 1.05vw, 16px)",
-                letterSpacing: isHe ? "0.06em" : "0.22em",
-                textTransform: "uppercase",
+                letterSpacing: isHe ? "0.04em" : "0.12em",
+                textTransform: subtitle.length > 30 ? "none" : "uppercase",
                 color: "#009C3B",
+                lineHeight: 1.4,
               }}>
                 {subtitle}
               </span>
@@ -1044,15 +1045,15 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
             marginBottom: "2rem",
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1rem" }}>
-              <div style={{ width: "20px", height: "2px", background: "#009C3B", flexShrink: 0 }} />
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(18px, 1.5vw, 22px)", letterSpacing: isHe ? "0.04em" : "0.12em", textTransform: "uppercase", color: "#009C3B" }}>
+              <div style={{ width: "20px", height: "2px", background: BORDEAUX, flexShrink: 0 }} />
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(18px, 1.5vw, 22px)", letterSpacing: isHe ? "0.04em" : "0.12em", textTransform: "uppercase", color: BORDEAUX }}>
                 {isHe ? "מנות פתיחה משותפות" : "Shared Starters"}
               </span>
             </div>
             <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.4rem" }}>
               {category.lunchStarters.map((s, i) => (
                 <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
-                  <span style={{ color: "#009C3B", fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
+                  <span style={{ color: BORDEAUX, fontSize: "0.55rem", marginTop: "3px", flexShrink: 0 }}>▪</span>
                   <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(17px, 1.4vw, 21px)", color: "rgb(80,30,30)", lineHeight: 1.55 }}>
                     {isHe ? s.nameHe : s.name}
                   </span>
@@ -1060,9 +1061,24 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               ))}
             </ul>
             {category.lunchStartersNote && (
-              <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(17px, 1.4vw, 21px)", color: "#009C3B", margin: "0.9rem 0 0", fontStyle: "italic" }}>
-                {isHe ? category.lunchStartersNoteHe : category.lunchStartersNote}
-              </p>
+              <div style={{ marginTop: "1rem", display: "flex", justifyContent: "center" }}>
+                <p style={{
+                  fontFamily: "'Heebo', sans-serif",
+                  fontWeight: 600,
+                  fontSize: "clamp(15px, 1.2vw, 18px)",
+                  color: BORDEAUX,
+                  margin: 0,
+                  fontStyle: "italic",
+                  letterSpacing: "0.03em",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                }}>
+                  <span>🇧🇷</span>
+                  <span>{isHe ? category.lunchStartersNoteHe : category.lunchStartersNote}</span>
+                  <span>🇧🇷</span>
+                </p>
+              </div>
             )}
           </div>
 
@@ -1083,7 +1099,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                     <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(20px, 2.2vw, 28px)", color: BORDEAUX, lineHeight: 1 }}>
                       {tier.price}
                     </div>
-                    <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 400, fontSize: "clamp(11px, 0.85vw, 13px)", color: "rgba(62,4,9,0.65)", letterSpacing: "0.06em" }}>
+                    <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 600, fontSize: "clamp(16px, 1.3vw, 20px)", color: "rgba(62,4,9,0.75)", letterSpacing: "0.04em" }}>
                       {isHe ? "לסועד" : "per diner"}
                     </div>
                   </div>
@@ -1099,7 +1115,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                     {tier.addons && (
                       <div style={{ marginTop: "0.5rem", display: "flex", flexDirection: "column", gap: "0.15rem" }}>
                         {(isHe ? tier.addonsHe! : tier.addons).map((a, ai) => (
-                          <span key={ai} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(15px, 1.1vw, 17px)", color: "#009C3B", fontStyle: "italic" }}>{a}</span>
+                          <span key={ai} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(17px, 1.4vw, 21px)", color: "#009C3B", fontStyle: "italic" }}>{a}</span>
                         ))}
                       </div>
                     )}
