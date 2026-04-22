@@ -270,6 +270,7 @@ export default function GallerySection() {
 
               {/* Prev button */}
               <button
+                dir="ltr"
                 onClick={prev}
                 style={{
                   position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)",
@@ -285,6 +286,7 @@ export default function GallerySection() {
 
               {/* Next button */}
               <button
+                dir="ltr"
                 onClick={next}
                 style={{
                   position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)",
