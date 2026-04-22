@@ -14,8 +14,8 @@ import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSeoMeta } from "@/hooks/useSeoMeta";
 
-const GOLD = "#B9A167";
-const GOLD_R = "rgba(185,161,103,";
+const GOLD = "#FEDF00";
+const GOLD_R = "rgba(254,223,0,";
 const BORDEAUX = "rgb(62,4,9)";
 const BORDEAUX_DEEP = "rgb(22,1,3)";
 
@@ -1163,8 +1163,8 @@ function TabBar({
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: isActive ? 800 : 500,
                 fontSize: isHe
-                  ? (isMobile ? "clamp(12px, 3.5vw, 15px)" : "clamp(11px, 1.05vw, 14px)")
-                  : (isMobile ? "clamp(9px, 2.5vw, 11px)" : "clamp(9px, 0.72vw, 11px)"),
+                  ? (isMobile ? "clamp(14px, 3.8vw, 17px)" : "clamp(13px, 1.15vw, 16px)")
+                  : (isMobile ? "clamp(11px, 2.8vw, 13px)" : "clamp(11px, 0.88vw, 13px)"),
                 letterSpacing: isHe ? "0.03em" : "0.18em",
                 textTransform: "uppercase",
                 color: isActive ? BORDEAUX : "rgba(62,4,9,0.45)",
@@ -1229,7 +1229,7 @@ function MenuHero({ isHe }: { isHe: boolean }) {
       {/* Overlay */}
       <div style={{
         position: "absolute", inset: 0,
-        background: "linear-gradient(110deg, rgba(22,1,3,0.88) 0%, rgba(62,4,9,0.72) 45%, rgba(20,4,6,0.45) 100%)",
+        background: "rgba(0,0,0,0.55)",
       }} />
 
       {/* No top/bottom gradient fades */}
@@ -1256,16 +1256,6 @@ function MenuHero({ isHe }: { isHe: boolean }) {
           paddingBottom: "clamp(3rem, 6vw, 5rem)",
         }}
       >
-        {/* Label */}
-        <div
-          style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "0.9rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start" }}
-        >
-          <div style={{ width: "22px", height: "1px", background: GOLD }} />
-          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.85vw, 13px)", letterSpacing: isHe ? "0.06em" : "0.25em", textTransform: "uppercase", color: GOLD }}>
-            {isHe ? "קאסה דו ברזיל" : "Casa do Brasil"}
-          </span>
-        </div>
-
         {/* Title */}
         <h1
           style={{
@@ -1278,7 +1268,7 @@ function MenuHero({ isHe }: { isHe: boolean }) {
             margin: "0 0 0.8rem",
           }}
         >
-          {isHe ? "התפריט" : "THE MENU"}
+          {isHe ? "תפריט" : "MENU"}
         </h1>
 
         {/* Gold rule */}
@@ -1298,12 +1288,12 @@ function MenuHero({ isHe }: { isHe: boolean }) {
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 300,
             fontSize: "clamp(15px, 1.4vw, 19px)",
-            color: GOLD,
             letterSpacing: isHe ? "0.04em" : "0.1em",
             fontStyle: "italic",
             margin: 0,
             direction: isHe ? "rtl" : "ltr",
             textAlign: isHe ? "right" : "left",
+            color: "rgba(240,220,160,0.90)",
           }}
         >
           {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקריה" : "Brazilian Grill — Music & Churrascaria"}
