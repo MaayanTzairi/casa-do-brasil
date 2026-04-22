@@ -517,11 +517,11 @@ export default function ReviewsSection() {
       <div style={{ position: "relative" }}>
         {/* Left arrow */}
         <button
+          dir="ltr"
           onClick={() => {
             const track = trackRef.current;
             if (!track) return;
             pausedRef.current = true;
-            const halfWidth = track.scrollWidth / 2;
             posRef.current = Math.max(0, posRef.current - 320);
             track.style.transform = `translateX(-${posRef.current}px)`;
             setTimeout(() => { pausedRef.current = false; }, 1200);
@@ -540,6 +540,7 @@ export default function ReviewsSection() {
         >‹</button>
         {/* Right arrow */}
         <button
+          dir="ltr"
           onClick={() => {
             const track = trackRef.current;
             if (!track) return;
@@ -565,6 +566,27 @@ export default function ReviewsSection() {
         style={{ position: "relative", overflow: "hidden", direction: "ltr" }}
         onMouseEnter={() => { pausedRef.current = true; }}
         onMouseLeave={() => { pausedRef.current = false; }}
+        onTouchStart={(e) => {
+          pausedRef.current = true;
+          (e.currentTarget as HTMLDivElement).dataset.touchStartX = String(e.touches[0].clientX);
+        }}
+        onTouchEnd={(e) => {
+          const startX = Number((e.currentTarget as HTMLDivElement).dataset.touchStartX ?? 0);
+          const endX = e.changedTouches[0].clientX;
+          const diff = startX - endX;
+          const track = trackRef.current;
+          if (!track) return;
+          if (Math.abs(diff) > 40) {
+            const halfWidth = track.scrollWidth / 2;
+            if (diff > 0) {
+              posRef.current = (posRef.current + 300) % halfWidth;
+            } else {
+              posRef.current = Math.max(0, posRef.current - 300);
+            }
+            track.style.transform = `translateX(-${posRef.current}px)`;
+          }
+          setTimeout(() => { pausedRef.current = false; }, 1200);
+        }}
       >
         {/* Left fade */}
         <div
