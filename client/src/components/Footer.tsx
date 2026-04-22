@@ -1,35 +1,39 @@
 /**
- * CASA DO BRASIL — Footer
- * Minimalist, modern, elegant
- * Equal spacing on both sides of center logo column
- * Unified font sizes and colors: ACCENT for titles, BORDEAUX for all body text
+ * CASA DO BRASIL — Footer v5
+ * Classic 3-column minimalist footer:
+ * HE (RTL): [פרטי קשר] | [לוגו] | [מפת אתר]
+ * EN (LTR): [Contact]   | [Logo]  | [Sitemap]
  */
-import { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useEffect, useState } from "react";
 
 const BG       = "#f7f3ee";
-const ACCENT   = "#009C3B";   // green — column titles only
-const BORDEAUX = "#6B2737";   // bordeaux — all body text
-const LIGHT    = "#a89880";   // muted — sub-text and bottom bar
-const GOLD     = "#FEDF00";   // time display
-const DIVIDER  = "rgba(107,39,55,0.15)"; // bordeaux-tinted divider
+const ACCENT   = "#009C3B";
+const BORDEAUX = "#6B2737";
+const LIGHT    = "#a89880";
+const GOLD     = "#FEDF00";
+const DIVIDER  = "rgba(107,39,55,0.13)";
 
 const LOGO_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp";
 
-/* ── Icons (bordeaux stroke) ── */
-const PhoneIcon = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={BORDEAUX} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.06 6.06l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z" />
+const IcoPhone = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={BORDEAUX} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.06 6.06l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/>
   </svg>
 );
-const MapPinIcon = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={BORDEAUX} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+const IcoPin = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={BORDEAUX} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
   </svg>
 );
-const ClockIcon = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={BORDEAUX} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+const IcoWhatsApp = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill={BORDEAUX} style={{ flexShrink: 0 }}>
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+  </svg>
+);
+const IcoClock = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={BORDEAUX} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
     <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
   </svg>
 );
@@ -43,7 +47,7 @@ function SocialBtn({ href, label, hoverColor, children }: {
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       style={{
         display: "inline-flex", alignItems: "center", justifyContent: "center",
-        width: 34, height: 34, borderRadius: 8,
+        width: 32, height: 32, borderRadius: 7,
         border: `1px solid ${hov ? hoverColor : DIVIDER}`,
         color: hov ? hoverColor : LIGHT,
         background: hov ? `${hoverColor}14` : "transparent",
@@ -52,45 +56,20 @@ function SocialBtn({ href, label, hoverColor, children }: {
   );
 }
 
-/* ── Shared text styles ── */
-const TITLE_STYLE: React.CSSProperties = {
-  fontFamily: "'Heebo', sans-serif",
-  fontWeight: 700,
-  fontSize: "0.65rem",
-  letterSpacing: "0.25em",
-  textTransform: "uppercase",
-  color: ACCENT,
-  marginBottom: "1rem",
-  display: "block",
+const rowStyle: React.CSSProperties = {
+  display: "flex",
+  alignItems: "flex-start",
+  gap: "0.6rem",
+  marginBottom: "0.75rem",
 };
 
-const BODY_STYLE: React.CSSProperties = {
-  fontFamily: "'Heebo', sans-serif",
-  fontWeight: 500,
-  fontSize: "0.88rem",
-  color: BORDEAUX,
-  margin: 0,
-  lineHeight: 1.65,
-};
-
-const SUB_STYLE: React.CSSProperties = {
+const rowText: React.CSSProperties = {
   fontFamily: "'Heebo', sans-serif",
   fontWeight: 400,
-  fontSize: "0.82rem",
+  fontSize: "0.85rem",
   color: BORDEAUX,
-  opacity: 0.65,
-  margin: "2px 0 0",
-  lineHeight: 1.5,
-};
-
-const TIME_STYLE: React.CSSProperties = {
-  fontFamily: "'Heebo', sans-serif",
-  fontWeight: 800,
-  fontSize: "1.05rem",
-  color: GOLD,
-  margin: "0.35rem 0 0",
-  letterSpacing: "0.05em",
-  display: "block",
+  margin: 0,
+  lineHeight: 1.6,
 };
 
 export default function Footer() {
@@ -104,241 +83,181 @@ export default function Footer() {
     return () => window.removeEventListener("resize", fn);
   }, []);
 
-  /* ── Social icons ── */
   const socials = (
-    <div style={{ display: "flex", gap: "0.45rem", justifyContent: "center" }}>
+    <div style={{ display: "flex", gap: "0.4rem", justifyContent: "center" }}>
       <SocialBtn href="https://www.instagram.com/casadobrasil.eilat" label="Instagram" hoverColor="#E1306C">
-        <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
         </svg>
       </SocialBtn>
       <SocialBtn href="https://www.facebook.com/casadobrasil.eilat" label="Facebook" hoverColor="#1877F2">
-        <svg width={15} height={15} viewBox="0 0 24 24" fill="currentColor">
+        <svg width={14} height={14} viewBox="0 0 24 24" fill="currentColor">
           <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
         </svg>
       </SocialBtn>
       <SocialBtn href="https://www.tiktok.com/@casadobrasil.eilat" label="TikTok" hoverColor="#69C9D0">
-        <svg width={15} height={15} viewBox="0 0 24 24" fill="currentColor">
+        <svg width={14} height={14} viewBox="0 0 24 24" fill="currentColor">
           <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
         </svg>
       </SocialBtn>
     </div>
   );
 
-  /* ── Vertical divider ── */
-  const vDivider = (
-    <div style={{
-      width: 1,
-      alignSelf: "stretch",
-      background: DIVIDER,
-      flexShrink: 0,
-    }} />
+  const vDiv = <div style={{ width: 1, alignSelf: "stretch", background: DIVIDER, flexShrink: 0 }} />;
+
+  const contactCol = (rtl: boolean) => (
+    <div style={{ flex: 1, direction: rtl ? "rtl" : "ltr" }}>
+      <div style={rowStyle}>
+        <IcoPhone />
+        <a href="tel:08-6323032"
+          style={{ ...rowText, fontWeight: 600, textDecoration: "none", transition: "color 0.18s" } as React.CSSProperties}
+          onMouseEnter={e => (e.currentTarget.style.color = ACCENT)}
+          onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>
+          08-6323032
+        </a>
+      </div>
+      <div style={rowStyle}>
+        <IcoPin />
+        <div>
+          <p style={rowText}>{rtl ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}</p>
+          <p style={{ ...rowText, fontSize: "0.78rem", opacity: 0.65 }}>{rtl ? "צמוד למלון נובה" : "Adjacent to the Nova Hotel"}</p>
+        </div>
+      </div>
+      <div style={rowStyle}>
+        <IcoWhatsApp />
+        <a href="https://wa.me/97286323032" target="_blank" rel="noopener noreferrer"
+          style={{ ...rowText, fontWeight: 500, textDecoration: "none", transition: "color 0.18s" } as React.CSSProperties}
+          onMouseEnter={e => (e.currentTarget.style.color = "#25D366")}
+          onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>
+          WhatsApp
+        </a>
+      </div>
+      <div style={rowStyle}>
+        <IcoClock />
+        <div>
+          <p style={rowText}>{rtl ? "ראשון עד שבת" : "Sun – Sat"}</p>
+          <p style={{ ...rowText, fontWeight: 700, color: GOLD, fontSize: "0.9rem" }}>12:00 – 23:00</p>
+        </div>
+      </div>
+    </div>
   );
 
-  /* ── CENTER column: logo + tagline + social ── */
-  const centerCol = (tagline: string) => (
-    <div style={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: "0.9rem",
-      /* Equal horizontal padding on both sides — this is the key */
-      padding: "0 3.5rem",
-      flexShrink: 0,
-    }}>
-      <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: 105, height: "auto", objectFit: "contain" }} />
-      <p style={{
-        fontFamily: "'Heebo', sans-serif",
-        fontWeight: 300,
-        fontSize: "0.7rem",
-        color: BORDEAUX,
-        opacity: 0.7,
-        margin: 0,
-        letterSpacing: "0.13em",
-        fontStyle: "italic",
-        textAlign: "center",
-        whiteSpace: "nowrap",
-      }}>{tagline}</p>
+  const sitemapLinks_HE = [
+    { label: "דף הבית",     href: "#home" },
+    { label: "הסיפור שלנו", href: "#about" },
+    { label: "התפריט",      href: "#menu" },
+    { label: "גלריה",       href: "#gallery" },
+    { label: "ביקורות",     href: "#reviews" },
+    { label: "VIP",         href: "#vip" },
+    { label: "צור קשר",     href: "#contact" },
+  ];
+  const sitemapLinks_EN = [
+    { label: "Home",        href: "#home" },
+    { label: "Our Story",   href: "#about" },
+    { label: "Menu",        href: "#menu" },
+    { label: "Gallery",     href: "#gallery" },
+    { label: "Reviews",     href: "#reviews" },
+    { label: "VIP",         href: "#vip" },
+    { label: "Contact",     href: "#contact" },
+  ];
+
+  const sitemapCol = (rtl: boolean) => {
+    const links = rtl ? sitemapLinks_HE : sitemapLinks_EN;
+    return (
+      <div style={{ flex: 1, direction: rtl ? "rtl" : "ltr", textAlign: rtl ? "right" : "left" }}>
+        <p style={{
+          fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.6rem",
+          letterSpacing: "0.22em", textTransform: "uppercase" as const,
+          color: ACCENT, margin: "0 0 0.9rem",
+        }}>{rtl ? "ניווט" : "Navigation"}</p>
+        {links.map(({ label, href }) => (
+          <a key={label} href={href}
+            style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 400, fontSize: "0.85rem", color: BORDEAUX, textDecoration: "none", lineHeight: 1.6, display: "block", transition: "color 0.18s" }}
+            onMouseEnter={e => (e.currentTarget.style.color = ACCENT)}
+            onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>
+            {label}
+          </a>
+        ))}
+      </div>
+    );
+  };
+
+  const logoCol = (tagline: string) => (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.85rem", padding: "0 3rem", flexShrink: 0 }}>
+      <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: 100, height: "auto", objectFit: "contain" }} />
+      <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.7rem", color: BORDEAUX, opacity: 0.7, margin: 0, letterSpacing: "0.13em", fontStyle: "italic", textAlign: "center", whiteSpace: "nowrap" }}>
+        {tagline}
+      </p>
       {socials}
     </div>
   );
 
-  /* ── Info row: icon + text ── */
-  const infoRow = (icon: React.ReactNode, main: string, sub?: string, isRtl = false) => (
-    <div style={{
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "flex-start",
-      gap: "0.45rem",
-      marginBottom: "0.65rem",
-      direction: isRtl ? "rtl" : "ltr",
-    }}>
-      <span style={{ marginTop: 3, flexShrink: 0 }}>{icon}</span>
-      <div>
-        <p style={BODY_STYLE}>{main}</p>
-        {sub && <p style={SUB_STYLE}>{sub}</p>}
-      </div>
-    </div>
-  );
-
-  /* ══════════════════════════════════════════
-     HEBREW COLUMNS
-  ══════════════════════════════════════════ */
-
-  /* RIGHT col: שעות פתיחה */
-  const heHoursCol = (
-    <div style={{ flex: 1, direction: "rtl", textAlign: "right" }}>
-      <span style={{ ...TITLE_STYLE, textAlign: "right" }}>שעות פתיחה</span>
-      {infoRow(<ClockIcon />, "ראשון עד שבת", undefined, true)}
-      <span style={TIME_STYLE}>12:00 – 23:00</span>
-    </div>
-  );
-
-  /* LEFT col: צור קשר */
-  const heContactCol = (
-    <div style={{ flex: 1, direction: "rtl", textAlign: "right" }}>
-      <span style={{ ...TITLE_STYLE, textAlign: "right" }}>צור קשר</span>
-      {infoRow(<MapPinIcon />, "חטיבת גולני 3, אילת", "צמוד למלון נובה", true)}
-      {/* phone row */}
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "0.45rem", direction: "rtl" }}>
-        <span style={{ flexShrink: 0 }}><PhoneIcon /></span>
-        <a href="tel:08-6323032"
-          style={{ ...BODY_STYLE, fontWeight: 700, textDecoration: "none", transition: "color 0.2s", direction: "ltr" }}
-          onMouseEnter={e => (e.currentTarget.style.color = ACCENT)}
-          onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>
-          08-6323032
-        </a>
-      </div>
-    </div>
-  );
-
-  /* ══════════════════════════════════════════
-     ENGLISH COLUMNS
-  ══════════════════════════════════════════ */
-
-  const enFindUsCol = (
-    <div style={{ flex: 1, direction: "ltr", textAlign: "left" }}>
-      <span style={{ ...TITLE_STYLE, textAlign: "left" }}>Find Us</span>
-      {infoRow(<MapPinIcon />, "Golani Brigade 3, Eilat", "Adjacent to the Nova Hotel")}
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "0.45rem" }}>
-        <span style={{ flexShrink: 0 }}><PhoneIcon /></span>
-        <a href="tel:08-6323032"
-          style={{ ...BODY_STYLE, fontWeight: 700, textDecoration: "none", transition: "color 0.2s" }}
-          onMouseEnter={e => (e.currentTarget.style.color = ACCENT)}
-          onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>
-          08-6323032
-        </a>
-      </div>
-    </div>
-  );
-
-  const enHoursCol = (
-    <div style={{ flex: 1, direction: "ltr", textAlign: "left" }}>
-      <span style={{ ...TITLE_STYLE, textAlign: "left" }}>Hours</span>
-      {infoRow(<ClockIcon />, "Sunday to Saturday")}
-      <span style={TIME_STYLE}>12:00 – 23:00</span>
-    </div>
-  );
-
-  /* ══════════════════════════════════════════
-     DESKTOP LAYOUTS
-  ══════════════════════════════════════════ */
-
   const desktopHE = (
-    <div style={{
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "flex-start",
-      justifyContent: "center",
-    }}>
-      {heHoursCol}
-      {vDivider}
-      {centerCol("גריל ברזילאי — מוזיקה וצ'וראסקוריה")}
-      {vDivider}
-      {heContactCol}
+    <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", justifyContent: "center" }}>
+      {contactCol(true)}
+      {vDiv}
+      {logoCol("גריל ברזילאי — מוזיקה וצ'וראסקוריה")}
+      {vDiv}
+      {sitemapCol(true)}
     </div>
   );
 
   const desktopEN = (
-    <div style={{
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "flex-start",
-      justifyContent: "center",
-    }}>
-      {enFindUsCol}
-      {vDivider}
-      {centerCol("Brazilian Grill · Music & Churrascaria")}
-      {vDivider}
-      {enHoursCol}
+    <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", justifyContent: "center" }}>
+      {contactCol(false)}
+      {vDiv}
+      {logoCol("Brazilian Grill · Music & Churrascaria")}
+      {vDiv}
+      {sitemapCol(false)}
     </div>
   );
 
-  /* ══════════════════════════════════════════
-     MOBILE
-  ══════════════════════════════════════════ */
   const mobileLayout = (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2rem", textAlign: "center" }}>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.8rem" }}>
-        <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: 95, height: "auto", objectFit: "contain" }} />
-        <p style={{ ...BODY_STYLE, opacity: 0.65, fontStyle: "italic", fontSize: "0.72rem", letterSpacing: "0.13em" }}>
+        <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: 90, height: "auto", objectFit: "contain" }} />
+        <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.7rem", color: BORDEAUX, opacity: 0.7, margin: 0, letterSpacing: "0.13em", fontStyle: "italic" }}>
           {isHe ? "גריל ברזילאי — מוזיקה וצ'וראסקוריה" : "Brazilian Grill · Music & Churrascaria"}
         </p>
         {socials}
       </div>
       <div style={{ width: "50%", height: 1, background: DIVIDER }} />
-      <div>
-        <span style={{ ...TITLE_STYLE, textAlign: "center", display: "block" }}>{isHe ? "שעות פתיחה" : "Hours"}</span>
-        <p style={BODY_STYLE}>{isHe ? "ראשון עד שבת" : "Sunday to Saturday"}</p>
-        <span style={TIME_STYLE}>12:00 – 23:00</span>
-      </div>
-      <div style={{ width: "50%", height: 1, background: DIVIDER }} />
-      <div>
-        <span style={{ ...TITLE_STYLE, textAlign: "center", display: "block" }}>{isHe ? "צור קשר" : "Find Us"}</span>
-        <p style={BODY_STYLE}>{isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}</p>
-        <p style={SUB_STYLE}>{isHe ? "צמוד למלון נובה" : "Adjacent to the Nova Hotel"}</p>
-        <a href="tel:08-6323032"
-          style={{ ...BODY_STYLE, fontWeight: 700, textDecoration: "none", display: "inline-block", marginTop: "0.5rem" }}
-          onMouseEnter={e => (e.currentTarget.style.color = ACCENT)}
-          onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>
-          08-6323032
-        </a>
+      <div style={{ direction: isHe ? "rtl" : "ltr", textAlign: isHe ? "right" : "left", width: "100%", paddingInline: "1.5rem" }}>
+        <div style={rowStyle}>
+          <IcoPhone />
+          <a href="tel:08-6323032" style={{ ...rowText, fontWeight: 600, textDecoration: "none" } as React.CSSProperties}>08-6323032</a>
+        </div>
+        <div style={rowStyle}>
+          <IcoPin />
+          <p style={rowText}>{isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}</p>
+        </div>
+        <div style={rowStyle}>
+          <IcoClock />
+          <div>
+            <p style={rowText}>{isHe ? "ראשון עד שבת" : "Sun – Sat"}</p>
+            <p style={{ ...rowText, fontWeight: 700, color: GOLD }}>12:00 – 23:00</p>
+          </div>
+        </div>
       </div>
     </div>
   );
 
-  /* ══════════════════════════════════════════
-     BOTTOM BAR
-  ══════════════════════════════════════════ */
   const items = isHe
-    ? [`© ${new Date().getFullYear()} Casa do Brasil`, "מדיניות פרטיות", "הצהרת נגישות", "עוצב ופותח על ידי MTMC"]
-    : [`© ${new Date().getFullYear()} Casa do Brasil`, "Privacy Policy", "Accessibility", "Designed & Built by MTMC"];
+    ? [`\u00a9 ${new Date().getFullYear()} Casa do Brasil`, "\u05de\u05d3\u05d9\u05e0\u05d9\u05d5\u05ea \u05e4\u05e8\u05d8\u05d9\u05d5\u05ea", "\u05d4\u05e6\u05d4\u05e8\u05ea \u05e0\u05d2\u05d9\u05e9\u05d5\u05ea", "\u05e2\u05d5\u05e6\u05d1 \u05d5\u05e4\u05d5\u05ea\u05d7 \u05e2\u05dc \u05d9\u05d3\u05d9 MTMC"]
+    : [`\u00a9 ${new Date().getFullYear()} Casa do Brasil`, "Privacy Policy", "Accessibility", "Designed & Built by MTMC"];
 
   const bottomBar = (
     <div style={{
       borderTop: `1px solid ${DIVIDER}`,
-      marginTop: "2.5rem",
-      paddingTop: "1.1rem",
-      paddingBottom: "1.4rem",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      flexWrap: "wrap",
-      gap: "0.3rem",
+      marginTop: "2.5rem", paddingTop: "1rem", paddingBottom: "1.3rem",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      flexWrap: "wrap", gap: "0.3rem",
       direction: isHe ? "rtl" : "ltr",
     }}>
       {items.map((item, i) => (
         <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
-          <span style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 400,
-            fontSize: "0.67rem",
-            letterSpacing: "0.07em",
-            color: LIGHT,
-          }}>{item}</span>
-          {i < items.length - 1 && (
-            <span style={{ width: 3, height: 3, borderRadius: "50%", background: DIVIDER, display: "inline-block", flexShrink: 0 }} />
-          )}
+          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 400, fontSize: "0.66rem", letterSpacing: "0.06em", color: LIGHT }}>{item}</span>
+          {i < items.length - 1 && <span style={{ width: 3, height: 3, borderRadius: "50%", background: DIVIDER, display: "inline-block" }} />}
         </span>
       ))}
     </div>
@@ -346,9 +265,7 @@ export default function Footer() {
 
   return (
     <footer id="contact" style={{ background: BG }}>
-      {/* tri-color top accent line */}
       <div style={{ height: 3, background: `linear-gradient(to ${isHe ? "left" : "right"}, #009C3B 0%, #FEDF00 50%, #002776 100%)` }} />
-
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: mobile ? "3rem 1.5rem 0" : "4rem 5rem 0" }}>
         {mobile ? mobileLayout : (isHe ? desktopHE : desktopEN)}
         {bottomBar}
