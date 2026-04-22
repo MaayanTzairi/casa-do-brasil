@@ -72,6 +72,10 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
           0%,100% { filter: drop-shadow(0 0 4px #ffe066) drop-shadow(0 0 10px #f5c518) drop-shadow(0 0 18px #d4a017); }
           50%     { filter: drop-shadow(0 0 8px #fff5a0) drop-shadow(0 0 22px #f5c518) drop-shadow(0 0 38px #d4a017); }
         }
+        @keyframes sparkle-1 { 0%,100%{opacity:0;transform:scale(0) rotate(0deg)} 20%,80%{opacity:1;transform:scale(1) rotate(72deg)} 50%{opacity:0.7;transform:scale(1.3) rotate(144deg)} }
+        @keyframes sparkle-2 { 0%,100%{opacity:0;transform:scale(0) rotate(0deg)} 30%,70%{opacity:1;transform:scale(0.9) rotate(-60deg)} 55%{opacity:0.8;transform:scale(1.2) rotate(-120deg)} }
+        @keyframes sparkle-3 { 0%,100%{opacity:0;transform:scale(0) rotate(0deg)} 15%,85%{opacity:1;transform:scale(1.1) rotate(45deg)} 45%{opacity:0.6;transform:scale(0.8) rotate(90deg)} }
+        @keyframes sparkle-4 { 0%,100%{opacity:0;transform:scale(0)} 25%,75%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
       `}</style>
 
       {/* Brazilian flag circle background */}
@@ -224,20 +228,33 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
         }}
       />
 
-      {/* Bow-tie permanent glow — always visible gold shine at the bow-tie position */}
+      {/* Bow-tie sparkle stars — 4-point stars that twinkle at bow-tie position */}
       <div style={{
         position: "absolute",
         left: "50%",
         top: "50%",
-        transform: `translate(-50%, calc(-50% + ${heroSize * 0.28}px))`,
-        width: heroSize * 0.22,
-        height: heroSize * 0.10,
-        borderRadius: "50%",
-        background: "radial-gradient(ellipse, rgba(255,224,80,0.75) 0%, rgba(245,197,24,0.45) 50%, transparent 100%)",
-        animation: "bowtie-glow-pulse 2.2s ease-in-out infinite",
+        transform: `translate(-50%, calc(-50% + ${heroSize * 0.27}px))`,
+        width: heroSize * 0.55,
+        height: heroSize * 0.22,
         zIndex: 3,
         pointerEvents: "none",
-      }} />
+      }}>
+        {/* Sparkle star SVG helper */}
+        {[
+          { x: "50%", y: "50%", size: heroSize * 0.09, anim: "sparkle-1 1.8s 0.0s ease-in-out infinite" },
+          { x: "28%", y: "40%", size: heroSize * 0.065, anim: "sparkle-2 2.1s 0.4s ease-in-out infinite" },
+          { x: "72%", y: "40%", size: heroSize * 0.065, anim: "sparkle-3 1.9s 0.7s ease-in-out infinite" },
+          { x: "38%", y: "70%", size: heroSize * 0.05,  anim: "sparkle-4 2.3s 1.1s ease-in-out infinite" },
+          { x: "62%", y: "70%", size: heroSize * 0.05,  anim: "sparkle-1 2.0s 1.5s ease-in-out infinite" },
+        ].map((s, i) => (
+          <svg key={i} style={{ position: "absolute", left: s.x, top: s.y, transform: "translate(-50%,-50%)", animation: s.anim, overflow: "visible" }}
+            width={s.size} height={s.size} viewBox="0 0 20 20">
+            {/* 4-point star */}
+            <path d="M10 0 L11.5 8.5 L20 10 L11.5 11.5 L10 20 L8.5 11.5 L0 10 L8.5 8.5 Z"
+              fill="#FEDF00" stroke="rgba(255,255,255,0.6)" strokeWidth="0.5" />
+          </svg>
+        ))}
+      </div>
     </div>
   );
 }
