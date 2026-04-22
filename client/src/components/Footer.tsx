@@ -106,7 +106,7 @@ export default function Footer() {
   const vDiv = <div style={{ width: 1, alignSelf: "stretch", background: DIVIDER, flexShrink: 0 }} />;
 
   const contactCol = (rtl: boolean) => (
-    <div style={{ flex: 1, direction: rtl ? "rtl" : "ltr", paddingInlineEnd: GAP }}>
+    <div style={{ flex: 1, direction: rtl ? "rtl" : "ltr" }}>
       <div style={rowStyle}>
         <IcoPhone />
         <a href="tel:08-6323032"
@@ -161,12 +161,12 @@ export default function Footer() {
     { label: "Contact",     href: "#contact" },
   ];
 
-  const GAP = "2.5rem"; // equal gap on both sides of each divider
+  const GAP = "3rem"; // equal gap on both sides of each divider
 
   const sitemapCol = (rtl: boolean) => {
     const links = rtl ? sitemapLinks_HE : sitemapLinks_EN;
     return (
-      <div style={{ flex: 1, direction: rtl ? "rtl" : "ltr", textAlign: rtl ? "right" : "left", paddingInlineStart: GAP }}>
+      <div style={{ flex: 1, direction: rtl ? "rtl" : "ltr", textAlign: rtl ? "right" : "left" }}>
         <p style={{
           fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.6rem",
           letterSpacing: "0.22em", textTransform: "uppercase" as const,
@@ -185,7 +185,7 @@ export default function Footer() {
   };
 
   const logoCol = (tagline: string) => (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.85rem", padding: `0 ${GAP}`, flexShrink: 0 }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.85rem", flexShrink: 0 }}>
       <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: 100, height: "auto", objectFit: "contain" }} />
       <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.7rem", color: BORDEAUX, opacity: 0.7, margin: 0, letterSpacing: "0.13em", fontStyle: "italic", textAlign: "center", whiteSpace: "nowrap" }}>
         {tagline}
@@ -194,23 +194,31 @@ export default function Footer() {
     </div>
   );
 
+  // Wrap each column so we can apply explicit padding on the divider-facing side
+  // RTL layout: [contactCol] | vDiv | [logoCol] | vDiv | [sitemapCol]
+  // contactCol is on the RIGHT → its LEFT side faces the divider → paddingLeft = GAP
+  // sitemapCol is on the LEFT  → its RIGHT side faces the divider → paddingRight = GAP
+  // logoCol is in the CENTER   → both sides face dividers → padding = 0 GAP
   const desktopHE = (
     <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", justifyContent: "center" }}>
-      {contactCol(true)}
+      <div style={{ flex: 1, paddingLeft: GAP }}>{contactCol(true)}</div>
       {vDiv}
-      {logoCol("גריל ברזילאי — מוזיקה וצ'וראסקוריה")}
+      <div style={{ paddingLeft: GAP, paddingRight: GAP, flexShrink: 0 }}>{logoCol("גריל ברזילאי — מוזיקה וצ'וראסקוריה")}</div>
       {vDiv}
-      {sitemapCol(true)}
+      <div style={{ flex: 1, paddingRight: GAP }}>{sitemapCol(true)}</div>
     </div>
   );
 
+  // LTR layout: [contactCol] | vDiv | [logoCol] | vDiv | [sitemapCol]
+  // contactCol is on the LEFT  → its RIGHT side faces the divider → paddingRight = GAP
+  // sitemapCol is on the RIGHT → its LEFT side faces the divider → paddingLeft = GAP
   const desktopEN = (
     <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", justifyContent: "center" }}>
-      {contactCol(false)}
+      <div style={{ flex: 1, paddingRight: GAP }}>{contactCol(false)}</div>
       {vDiv}
-      {logoCol("Brazilian Grill · Music & Churrascaria")}
+      <div style={{ paddingLeft: GAP, paddingRight: GAP, flexShrink: 0 }}>{logoCol("Brazilian Grill · Music & Churrascaria")}</div>
       {vDiv}
-      {sitemapCol(false)}
+      <div style={{ flex: 1, paddingLeft: GAP }}>{sitemapCol(false)}</div>
     </div>
   );
 
