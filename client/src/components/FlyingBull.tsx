@@ -29,7 +29,7 @@ const SCROLL_THRESHOLD_DESKTOP = 130;
 const SCROLL_THRESHOLD_MOBILE  = 90;
 
 // Desktop inline hero size (smaller than before to fit well in the layout)
-const BULL_HERO_DESKTOP = 180;
+const BULL_HERO_DESKTOP = 150;
 const BULL_HERO_MOBILE  = 88;
 const BULL_NAV_SIZE     = 44;
 

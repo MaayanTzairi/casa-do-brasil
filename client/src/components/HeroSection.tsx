@@ -16,9 +16,9 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { HeroBullInline } from "@/components/FlyingBull";
 
 const HERO_IMAGE_DEFAULT =
-  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/VUnXiWPIwuFLQQuf.png";
+  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/FLTykIJCMkNjpAGC.webp";
 const HERO_IMAGE_SM_DEFAULT =
-  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/VUnXiWPIwuFLQQuf.png";
+  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/FLTykIJCMkNjpAGC.webp";
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(40,3,6)";
