@@ -165,8 +165,21 @@ export default function Footer() {
 
   const sitemapCol = (rtl: boolean) => {
     const links = rtl ? sitemapLinks_HE : sitemapLinks_EN;
+    // RTL: sitemap is on the LEFT side. Divider is on its RIGHT.
+    //   → text must align to LEFT (physically, regardless of direction)
+    // LTR: sitemap is on the RIGHT side. Divider is on its LEFT.
+    //   → text must align to RIGHT (physically)
+    // We use direction:ltr on the container so flex-start = physical left.
+    // Individual link items keep their text readable via unicode-bidi.
     return (
-      <div style={{ flex: 1, direction: rtl ? "rtl" : "ltr", textAlign: rtl ? "right" : "left" }}>
+      <div style={{
+        flex: 1,
+        direction: "ltr",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: rtl ? "flex-start" : "flex-end",
+        textAlign: rtl ? "left" : "right",
+      }}>
         <p style={{
           fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.6rem",
           letterSpacing: "0.22em", textTransform: "uppercase" as const,
