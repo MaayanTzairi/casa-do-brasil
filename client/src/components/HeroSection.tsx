@@ -157,13 +157,12 @@ export default function HeroSection() {
               textAlign: "center",
               margin: 0,
               color: "#ffffff",
-              WebkitTextStroke: isMobile ? "0.8px rgba(62,4,9,0.60)" : "1.2px rgba(62,4,9,0.55)",
-              paintOrder: "stroke fill",
+              WebkitTextStroke: "0px transparent",
               textShadow: [
-                "0 0 20px rgba(254,223,0,0.50)",
-                "0 0 50px rgba(254,180,30,0.30)",
-                "0 0 90px rgba(220,120,10,0.18)",
-                "0 2px 8px rgba(0,0,0,0.55)",
+                "0 1px 0px rgba(255,255,255,0.15)",
+                "0 2px 4px rgba(0,0,0,0.65)",
+                "0 4px 16px rgba(0,0,0,0.40)",
+                "0 0 30px rgba(254,223,0,0.18)",
               ].join(", "),
             }}
           >
