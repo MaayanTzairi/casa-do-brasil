@@ -292,7 +292,7 @@ export default function Navbar({
         { label: "תפריט", href: menuHref },
         { label: "גלריה", href: galleryHref },
         { label: "שאלות", href: faqHref },
-        { label: "הטבות", href: "/vip" },
+        { label: "הטבות", href: "/benefits" },
         { label: "בלוג", href: "/blog" },
         { label: "VIP", href: "/vip", isVip: true },
         { label: "קצביה", href: "#butcher" },
