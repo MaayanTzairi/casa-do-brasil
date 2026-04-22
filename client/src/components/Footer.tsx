@@ -157,15 +157,23 @@ export default function Footer() {
             direction: "ltr",   // grid itself always LTR so col order is stable
           }}>
 
-            {/* Col 1 — LEFT in EN, LEFT in HE (shows FIND US in EN, HOURS in HE) */}
+            {/* Col 1 — in EN: FIND US (left-aligned); in HE: FIND US (right-aligned, rightmost column visually) */}
             <div style={{ direction: isHe ? "rtl" : "ltr", textAlign: isHe ? "right" : "left" }}>
               {isHe ? (
+                // HE Col 1 (visually RIGHT side) = מצאו אותנו
                 <>
-                  {sectionLabel("שעות פתיחה", "right")}
-                  {infoRow(clockIcon, "ראשון עד שבת", undefined, "right")}
-                  <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "1.2rem", color: GOLD, margin: "0.5rem 0 0", letterSpacing: "0.06em", textAlign: "right" }}>12:00 – 23:00</p>
+                  {sectionLabel("מצאו אותנו", "right")}
+                  {infoRow(mapPinIcon, "חטיבת גולני 3, אילת", "צמוד למלון נובה", "right")}
+                  <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "0.3rem" }}>
+                    <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: DARK, textDecoration: "none", transition: "color 0.2s", flexDirection: "row-reverse" }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = ACCENT; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = DARK; }}>
+                      {phoneIcon}08-6323032
+                    </a>
+                  </div>
                 </>
               ) : (
+                // EN Col 1 (visually LEFT side) = FIND US
                 <>
                   {sectionLabel("FIND US", "left")}
                   {infoRow(mapPinIcon, "Golani Brigade 3, Eilat", "Adjacent to the Nova Hotel", "left")}
@@ -188,21 +196,17 @@ export default function Footer() {
               {socialIcons()}
             </div>
 
-            {/* Col 3 — RIGHT in EN, RIGHT in HE (shows HOURS in EN, FIND US in HE) */}
-            <div style={{ direction: isHe ? "rtl" : "ltr", textAlign: isHe ? "right" : "right" }}>
+            {/* Col 3 — in EN: HOURS (right-aligned); in HE: HOURS (left-aligned, leftmost column visually) */}
+            <div style={{ direction: isHe ? "ltr" : "ltr", textAlign: isHe ? "left" : "right" }}>
               {isHe ? (
+                // HE Col 3 (visually LEFT side) = שעות פתיחה — left-aligned
                 <>
-                  {sectionLabel("מצאו אותנו", "right")}
-                  {infoRow(mapPinIcon, "חטיבת גולני 3, אילת", "צמוד למלון נובה", "right")}
-                  <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "0.3rem" }}>
-                    <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: DARK, textDecoration: "none", transition: "color 0.2s", flexDirection: "row-reverse" }}
-                      onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = ACCENT; }}
-                      onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = DARK; }}>
-                      {phoneIcon}08-6323032
-                    </a>
-                  </div>
+                  {sectionLabel("שעות פתיחה", "left")}
+                  {infoRow(clockIcon, "ראשון עד שבת", undefined, "left")}
+                  <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "1.2rem", color: GOLD, margin: "0.5rem 0 0", letterSpacing: "0.06em", textAlign: "left" }}>12:00 – 23:00</p>
                 </>
               ) : (
+                // EN Col 3 (visually RIGHT side) = HOURS
                 <>
                   {sectionLabel("HOURS", "right")}
                   {infoRow(clockIcon, "Sunday to Saturday", undefined, "right")}
