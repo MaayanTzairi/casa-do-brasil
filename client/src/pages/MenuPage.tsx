@@ -792,9 +792,9 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
             <p style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 300,
-              fontSize: "clamp(15px, 1.2vw, 18px)",
+              fontSize: "clamp(18px, 1.5vw, 22px)",
               color: "rgb(90,35,35)",
-              lineHeight: 1.75,
+              lineHeight: 1.7,
               margin: 0,
               direction: isHe ? "rtl" : "ltr",
               textAlign: isHe ? "right" : "left",
