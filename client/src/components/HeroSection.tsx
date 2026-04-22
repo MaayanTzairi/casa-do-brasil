@@ -152,21 +152,18 @@ export default function HeroSection() {
               fontWeight: 900,
               fontSize: isMobile ? "clamp(28px, 9vw, 52px)" : "clamp(42px, 6.5vw, 90px)",
               color: "#ffffff",
-              letterSpacing: "0.02em",
+              letterSpacing: "0.04em",
               lineHeight: 1.0,
               whiteSpace: "nowrap",
               textAlign: "center",
               WebkitTextStroke: "0px transparent",
               textShadow: [
-                "0 2px 4px rgba(0,0,0,0.95)",
-                "0 4px 12px rgba(0,0,0,0.85)",
-                "0 8px 28px rgba(0,0,0,0.70)",
-                "0 16px 48px rgba(0,0,0,0.55)",
-                "0 0 60px rgba(200,100,20,0.35)",
-                "0 0 120px rgba(180,70,10,0.20)",
+                "0 1px 3px rgba(0,0,0,0.45)",
+                "0 0 24px rgba(254,223,0,0.22)",
+                "0 0 60px rgba(254,200,60,0.14)",
               ].join(", "),
               margin: 0,
-              filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.9))",
+              filter: "drop-shadow(0 1px 8px rgba(0,0,0,0.35))",
             }}
           >
             {isHe ? t.titleHe : t.titleEn}
