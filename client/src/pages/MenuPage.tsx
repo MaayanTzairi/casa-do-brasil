@@ -660,7 +660,7 @@ function MenuItemRow({ item, isHe, type, index }: { item: MenuItem; isHe: boolea
           fontFamily: "'Heebo', sans-serif",
           fontWeight: 700,
           fontSize: "clamp(14px, 1.1vw, 16px)",
-          color: GOLD,
+          color: BORDEAUX,
           letterSpacing: "0.04em",
           paddingTop: "2px",
           whiteSpace: "nowrap",
@@ -764,14 +764,14 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
             )}
             <div style={{ position: "relative", zIndex: 1 }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row" }}>
-              <div style={{ width: "22px", height: "1px", background: GOLD }} />
+              <div style={{ width: "28px", height: "2px", background: "#009C3B" }} />
               <span style={{
                 fontFamily: "'Heebo', sans-serif",
-                fontWeight: 700,
-                fontSize: "clamp(11px, 0.85vw, 13px)",
-                letterSpacing: isHe ? "0.06em" : "0.28em",
+                fontWeight: 800,
+                fontSize: "clamp(13px, 1.05vw, 16px)",
+                letterSpacing: isHe ? "0.06em" : "0.22em",
                 textTransform: "uppercase",
-                color: GOLD,
+                color: "#009C3B",
               }}>
                 {subtitle}
               </span>
@@ -946,10 +946,10 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
             padding: "0.6rem 1.2rem",
             border: `1px solid ${GOLD_R}0.4)`,
           }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="1.8">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#009C3B" strokeWidth="1.8">
               <circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/>
             </svg>
-            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.85vw, 13px)", letterSpacing: "0.15em", color: GOLD, textTransform: "uppercase" }}>
+            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "clamp(13px, 1.05vw, 16px)", letterSpacing: "0.15em", color: "#009C3B", textTransform: "uppercase" }}>
               {isHe ? category.subtitleHe : category.subtitle}
             </span>
           </div>
