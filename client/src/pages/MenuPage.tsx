@@ -864,33 +864,46 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               </ul>
               {category.appetizersNote && (
                 <div style={{
-                  marginTop: "1.2rem",
+                  marginTop: "1.4rem",
                   display: "flex",
                   justifyContent: isHe ? "flex-start" : "flex-end",
                 }}>
                   <div style={{
                     display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.7rem",
-                    background: "linear-gradient(135deg, rgba(62,4,9,0.07) 0%, rgba(62,4,9,0.03) 100%)",
-                    border: `1px solid rgba(62,4,9,0.18)`,
-                    borderRadius: "2px",
-                    padding: "0.55rem 1.1rem",
+                    alignItems: "stretch",
+                    overflow: "hidden",
+                    borderRadius: "3px",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
                     maxWidth: "100%",
                   }}>
-                    {/* Brazilian flag mini accent */}
-                    <span style={{ fontSize: "1rem", lineHeight: 1, flexShrink: 0 }}>🇧🇷</span>
-                    <span style={{
-                      fontFamily: "'Heebo', sans-serif",
-                      fontWeight: 700,
-                      fontSize: "clamp(14px, 1.1vw, 17px)",
-                      color: BORDEAUX,
-                      fontStyle: "italic",
-                      letterSpacing: isHe ? "0.02em" : "0.05em",
-                      lineHeight: 1.4,
+                    {/* Green left/right accent bar */}
+                    <div style={{
+                      width: "5px",
+                      background: "#009C3B",
+                      flexShrink: 0,
+                      order: isHe ? 2 : 0,
+                    }} />
+                    {/* Dark content area */}
+                    <div style={{
+                      background: "rgba(18,12,8,0.88)",
+                      padding: "0.6rem 1.2rem",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "0.1rem",
+                      order: 1,
                     }}>
-                      {isHe ? category.appetizersNoteHe : category.appetizersNote}
-                    </span>
+                      <span style={{
+                        fontFamily: "'Heebo', sans-serif",
+                        fontWeight: 900,
+                        fontSize: "clamp(15px, 1.2vw, 19px)",
+                        color: "#FEDF00",
+                        letterSpacing: isHe ? "0.04em" : "0.08em",
+                        lineHeight: 1.3,
+                        textTransform: "uppercase",
+                      }}>
+                        {isHe ? category.appetizersNoteHe : category.appetizersNote}
+                      </span>
+                    </div>
                   </div>
                 </div>
               )}
