@@ -1084,15 +1084,15 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
 
           {/* Price tiers */}
           {category.lunchTiers && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem", marginBottom: "2rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0", marginBottom: "2rem" }}>
               {category.lunchTiers.map((tier, ti) => (
                 <div key={ti} dir={isHe ? "rtl" : "ltr"} style={{
                   display: "flex",
                   alignItems: "flex-start",
                   gap: "1.5rem",
-                  padding: "1.2rem 1.5rem",
-                  border: `1px solid ${GOLD_R}0.18)`,
-                  background: "#fff",
+                  padding: "1.2rem 0",
+                  borderBottom: ti < (category.lunchTiers!.length - 1) ? "1px solid rgba(180,180,180,0.35)" : "none",
+                  background: "transparent",
                 }}>
                   {/* Price badge */}
                   <div style={{ flexShrink: 0, textAlign: "center", minWidth: "60px" }}>
