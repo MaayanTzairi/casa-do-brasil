@@ -119,7 +119,7 @@ export default function StickyReservationBtn() {
           lineHeight: 1.25,
         }}
       >
-        {isHe ? "הזמנת מקום" : "RESERVATION"}
+        {isHe ? "הזמנת שולחן" : "Book a Table"}
       </span>
     </a>
   );

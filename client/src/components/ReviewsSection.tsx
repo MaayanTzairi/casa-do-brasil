@@ -433,7 +433,7 @@ export default function ReviewsSection() {
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: "#009C3B", lineHeight: 1, letterSpacing: "-0.02em" }}>{customersValue}</span>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(22px, 6vw, 34px)" : "clamp(28px, 4vw, 54px)", color: "#FEDF00", lineHeight: 1 }}>{customersSuffix}</span>
             </div>
-            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: mobile ? "clamp(13px, 3.5vw, 16px)" : "clamp(14px, 1.1vw, 18px)", color: "rgb(62,4,9)", letterSpacing: mobile ? "0.04em" : "0.06em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3, whiteSpace: "nowrap" }}>
+            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: mobile ? "clamp(11px, 2.8vw, 14px)" : "clamp(14px, 1.1vw, 18px)", color: "rgb(62,4,9)", letterSpacing: mobile ? "0.03em" : "0.06em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.25, whiteSpace: mobile ? "normal" : "nowrap", maxWidth: mobile ? "80px" : "none" }}>
               {customersLabel}
             </span>
           </div>
@@ -447,7 +447,7 @@ export default function ReviewsSection() {
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(28px, 8vw, 42px)" : "clamp(38px, 5.5vw, 72px)", color: "#009C3B", lineHeight: 1, letterSpacing: "-0.02em" }}>{yearsValue}</span>
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(22px, 6vw, 34px)" : "clamp(28px, 4vw, 54px)", color: "#FEDF00", lineHeight: 1 }}>{yearsSuffix}</span>
             </div>
-            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: mobile ? "clamp(13px, 3.5vw, 16px)" : "clamp(14px, 1.1vw, 18px)", color: "rgb(62,4,9)", letterSpacing: mobile ? "0.04em" : "0.06em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.3, whiteSpace: "nowrap" }}>
+            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: mobile ? "clamp(11px, 2.8vw, 14px)" : "clamp(14px, 1.1vw, 18px)", color: "rgb(62,4,9)", letterSpacing: mobile ? "0.03em" : "0.06em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.25, whiteSpace: mobile ? "normal" : "nowrap", maxWidth: mobile ? "80px" : "none" }}>
               {yearsLabel}
             </span>
           </div>
@@ -462,7 +462,7 @@ export default function ReviewsSection() {
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: mobile ? "clamp(22px, 6vw, 34px)" : "clamp(28px, 4vw, 54px)", color: "#FEDF00", lineHeight: 1 }}>+</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", justifyContent: "center", whiteSpace: "nowrap" }}>
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: mobile ? "clamp(13px, 3.5vw, 16px)" : "clamp(14px, 1.1vw, 18px)", color: "rgb(62,4,9)", letterSpacing: mobile ? "0.04em" : "0.06em", textTransform: "uppercase", lineHeight: 1.3 }}>
+              <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: mobile ? "clamp(11px, 2.8vw, 14px)" : "clamp(14px, 1.1vw, 18px)", color: "rgb(62,4,9)", letterSpacing: mobile ? "0.03em" : "0.06em", textTransform: "uppercase", lineHeight: 1.25 }}>
                 {isHe ? "ביקורות" : "Reviews"}
               </span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
