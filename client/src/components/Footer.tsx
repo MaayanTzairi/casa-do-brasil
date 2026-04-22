@@ -118,26 +118,14 @@ export default function Footer() {
       </div>
       <div style={rowStyle}>
         <IcoPin />
-        <div>
-          <p style={rowText}>{rtl ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}</p>
-          <p style={{ ...rowText, fontSize: "0.78rem", opacity: 0.65 }}>{rtl ? "צמוד למלון נובה" : "Adjacent to the Nova Hotel"}</p>
-        </div>
-      </div>
-      <div style={rowStyle}>
-        <IcoWhatsApp />
-        <a href="https://wa.me/97286323032" target="_blank" rel="noopener noreferrer"
-          style={{ ...rowText, fontWeight: 500, textDecoration: "none", transition: "color 0.18s" } as React.CSSProperties}
-          onMouseEnter={e => (e.currentTarget.style.color = "#25D366")}
-          onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>
-          WhatsApp
-        </a>
+        <p style={rowText}>{rtl ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}</p>
       </div>
       <div style={rowStyle}>
         <IcoClock />
-        <div>
-          <p style={rowText}>{rtl ? "ראשון עד שבת" : "Sun – Sat"}</p>
-          <p style={{ ...rowText, fontWeight: 700, color: GOLD, fontSize: "0.9rem" }}>12:00 – 23:00</p>
-        </div>
+        <p style={{ ...rowText, fontWeight: 600 }}>
+          {rtl ? "ראשון עד שבת" : "Sun – Sat"}&nbsp;&nbsp;
+          <span style={{ color: ACCENT, fontWeight: 700 }}>12:00 – 23:00</span>
+        </p>
       </div>
     </div>
   );
@@ -235,8 +223,11 @@ export default function Footer() {
     </div>
   );
 
+  const sitemapLinksMobile = isHe ? sitemapLinks_HE : sitemapLinks_EN;
+
   const mobileLayout = (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2rem", textAlign: "center" }}>
+      {/* 1. Logo + tagline + socials */}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.8rem" }}>
         <img src={LOGO_URL} alt="Casa do Brasil" style={{ width: 90, height: "auto", objectFit: "contain" }} />
         <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.7rem", color: BORDEAUX, opacity: 0.7, margin: 0, letterSpacing: "0.13em", fontStyle: "italic" }}>
@@ -244,23 +235,43 @@ export default function Footer() {
         </p>
         {socials}
       </div>
+
       <div style={{ width: "50%", height: 1, background: DIVIDER }} />
-      <div style={{ direction: isHe ? "rtl" : "ltr", textAlign: isHe ? "right" : "left", width: "100%", paddingInline: "1.5rem" }}>
-        <div style={rowStyle}>
+
+      {/* 2. Contact details — centered */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.6rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <IcoPhone />
           <a href="tel:08-6323032" style={{ ...rowText, fontWeight: 600, textDecoration: "none" } as React.CSSProperties}>08-6323032</a>
         </div>
-        <div style={rowStyle}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <IcoPin />
           <p style={rowText}>{isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}</p>
         </div>
-        <div style={rowStyle}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <IcoClock />
-          <div>
-            <p style={rowText}>{isHe ? "ראשון עד שבת" : "Sun – Sat"}</p>
-            <p style={{ ...rowText, fontWeight: 700, color: GOLD }}>12:00 – 23:00</p>
-          </div>
+          <p style={{ ...rowText, fontWeight: 600 }}>
+            {isHe ? "ראשון עד שבת" : "Sun – Sat"}&nbsp;&nbsp;
+            <span style={{ color: ACCENT, fontWeight: 700 }}>12:00 – 23:00</span>
+          </p>
         </div>
+      </div>
+
+      <div style={{ width: "50%", height: 1, background: DIVIDER }} />
+
+      {/* 3. Sitemap — centered */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.3rem" }}>
+        <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.22em", textTransform: "uppercase" as const, color: ACCENT, margin: "0 0 0.5rem" }}>
+          {isHe ? "ניווט" : "Navigation"}
+        </p>
+        {sitemapLinksMobile.map(({ label, href }) => (
+          <a key={label} href={href}
+            style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 400, fontSize: "0.85rem", color: BORDEAUX, textDecoration: "none", lineHeight: 1.7, transition: "color 0.18s" }}
+            onMouseEnter={e => (e.currentTarget.style.color = ACCENT)}
+            onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>
+            {label}
+          </a>
+        ))}
       </div>
     </div>
   );
