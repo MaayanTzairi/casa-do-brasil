@@ -201,15 +201,6 @@ export default function MenuSection() {
         {/* ── TITLE BLOCK ── */}
         <div style={{ flex: mobile ? "none" : "1", width: mobile ? "100%" : undefined, display:"flex", flexDirection:"column", justifyContent:"center", order: mobile ? 1 : (isHe ? 1 : 2), textAlign: isHe ? "right" : "left", alignItems: isHe ? "flex-end" : "flex-start", direction: isHe ? "rtl" : "ltr" }}>
 
-          {/* Cow logo above menu label */}
-          <div style={{ ...animStyle(inView, 0), display:"flex", justifyContent: isHe ? "flex-end" : "flex-start", marginBottom:"1rem", width:"100%" }}>
-            <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp"
-              alt="Casa do Brasil"
-              style={{ width:"64px", height:"64px", objectFit:"contain", filter:"drop-shadow(0 2px 8px rgba(62,4,9,0.18))" }}
-            />
-          </div>
-
           <div style={{ ...animStyle(inView, 0.05), display:"flex", alignItems:"center", gap:"0.7rem", marginBottom:"1.4rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start", width:"100%" }}>
             <div style={{ display:"flex", flexDirection:"column", gap:"2px", width:"14px" }}>
               <div style={{ height:"2px", background:"#009C3B", borderRadius:"1px" }} />
