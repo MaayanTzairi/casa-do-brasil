@@ -148,11 +148,19 @@ function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: bo
   const isHe = lang === "he";
   const [hov, setHov] = useState(false);
 
-  // White glass background with Brazilian yellow text
+  // On hero (not scrolled): white glass + yellow text
+  // On white navbar (scrolled): yellow-gold background + dark text
+  const isScrolledState = !inOverlay && scrolled;
   const bg = inOverlay
     ? (hov ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.85)")
-    : (hov ? "rgba(255,255,255,0.38)" : "rgba(255,255,255,0.22)");
-  const border = hov ? "rgba(255,255,255,0.90)" : "rgba(255,255,255,0.55)";
+    : isScrolledState
+      ? (hov ? "#e8cc00" : "#FEDF00")
+      : (hov ? "rgba(255,255,255,0.38)" : "rgba(255,255,255,0.22)");
+  const border = isScrolledState
+    ? (hov ? "#c8b000" : "#d4bc00")
+    : (hov ? "rgba(255,255,255,0.90)" : "rgba(255,255,255,0.55)");
+  const textColor = isScrolledState ? "#1a1200" : "#FEDF00";
+  const iconStroke = isScrolledState ? "#1a1200" : "#FEDF00";
 
   return (
     <button
@@ -179,7 +187,7 @@ function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: bo
         transform: hov ? "translateY(-1px)" : "translateY(0)",
       }}
     >
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FEDF00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={iconStroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
         <line x1="2" y1="12" x2="22" y2="12" />
         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
@@ -190,10 +198,10 @@ function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: bo
           fontWeight: 800,
           fontSize: "0.62rem",
           letterSpacing: "0.18em",
-          color: "#FEDF00",
+          color: textColor,
           textTransform: "uppercase",
           lineHeight: 1,
-          textShadow: "0 1px 3px rgba(0,0,0,0.40)",
+          textShadow: isScrolledState ? "none" : "0 1px 3px rgba(0,0,0,0.40)",
         }}
       >
         {isHe ? "EN" : "עב"}
