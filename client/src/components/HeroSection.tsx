@@ -156,10 +156,17 @@ export default function HeroSection() {
               lineHeight: 1.0,
               whiteSpace: "nowrap",
               textAlign: "center",
-              WebkitTextStroke: isMobile ? "1.5px rgba(62,4,9,0.85)" : "2.5px rgba(62,4,9,0.85)",
-              textShadow: "0 3px 14px rgba(0,0,0,0.70), 0 1px 4px rgba(0,0,0,0.50)",
+              WebkitTextStroke: "0px transparent",
+              textShadow: [
+                "0 2px 4px rgba(0,0,0,0.95)",
+                "0 4px 12px rgba(0,0,0,0.85)",
+                "0 8px 28px rgba(0,0,0,0.70)",
+                "0 16px 48px rgba(0,0,0,0.55)",
+                "0 0 60px rgba(200,100,20,0.35)",
+                "0 0 120px rgba(180,70,10,0.20)",
+              ].join(", "),
               margin: 0,
-              paintOrder: "stroke fill",
+              filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.9))",
             }}
           >
             {isHe ? t.titleHe : t.titleEn}
