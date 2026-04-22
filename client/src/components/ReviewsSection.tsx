@@ -215,7 +215,7 @@ function Stars({ rating }: { rating: number }) {
   return (
     <div style={{ display: "flex", gap: "2px" }}>
       {[1, 2, 3, 4, 5].map((i) => (
-        <svg key={i} width="11" height="11" viewBox="0 0 24 24" fill={i <= rating ? "#FEDF00" : "rgba(254,223,0,0.2)"}>
+        <svg key={i} width="15" height="15" viewBox="0 0 24 24" fill={i <= rating ? "#FEDF00" : "rgba(254,223,0,0.2)"}>
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
         </svg>
       ))}
@@ -228,7 +228,6 @@ function ReviewCard({ review, isHe }: { review: Review; isHe: boolean }) {
   const googleReviewUrl = review.googleUrl || "https://www.google.com/maps/search/Casa+do+Brasil+Eilat";
   const text = isHe ? review.textHe : review.text;
   const author = isHe ? review.authorHe : review.author;
-  const date = isHe ? review.dateHe : review.date;
 
   return (
     <div
@@ -255,7 +254,7 @@ function ReviewCard({ review, isHe }: { review: Review; isHe: boolean }) {
         style={{
           fontFamily: "'Heebo', sans-serif",
           fontWeight: 300,
-          fontSize: "clamp(12px, 0.85vw, 13.5px)",
+          fontSize: "clamp(14px, 1.0vw, 16px)",
           color: "rgb(80,30,30)",
           lineHeight: 1.75,
           margin: 0,
@@ -269,7 +268,7 @@ function ReviewCard({ review, isHe }: { review: Review; isHe: boolean }) {
         "{text}"
       </p>
 
-      {/* Author + date + Google link */}
+      {/* Author + Google link */}
       <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
         {/* Author with Google icon */}
         <div style={{ display: "flex", alignItems: "center", gap: "6px", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start" }}>
@@ -291,17 +290,7 @@ function ReviewCard({ review, isHe }: { review: Review; isHe: boolean }) {
             {author}
           </span>
         </div>
-        <span
-          style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 300,
-            fontSize: "0.65rem",
-            color: "rgba(62,4,9,0.65)",
-            letterSpacing: "0.06em",
-          }}
-        >
-          {date}
-        </span>
+
         {/* View full review link */}
         <a
           href={googleReviewUrl}
