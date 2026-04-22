@@ -30,7 +30,7 @@ const DEFAULTS = {
   subtitleHe: "גריל ברזילאי — מוזיקה וצ'וראסקוריה",
   subtitleEn: "Brazilian Grill - Music & Churrascaria",
   reserveBtnHe: "הזמנת שולחן",
-  reserveBtnEn: "RESERVE A TABLE",
+  reserveBtnEn: "BOOK A TABLE",
   reserveBtnUrl: "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73",
   menuBtnHe: "תפריט",
   menuBtnEn: "MENU",
@@ -106,7 +106,8 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* ── No overlay — image shown as-is ── */}
+      {/* ── Light 25% black overlay ── */}
+      <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.25)", pointerEvents: "none" }} />
 
 
 

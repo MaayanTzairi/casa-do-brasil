@@ -57,7 +57,7 @@ const DEFAULTS: Required<NavbarContent> = {
   brandNameHe: "קאסה דו ברזיל",
   brandNameEn: "Casa do Brasil",
   reservationHe: "הזמנת שולחן",
-  reservationEn: "RESERVATIONS",
+  reservationEn: "BOOK A TABLE",
 };
 
 /* ─── Logo Badge ─── */
