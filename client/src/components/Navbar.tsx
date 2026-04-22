@@ -289,20 +289,25 @@ export default function Navbar({
   const navLinks = isHe
     ? [
         { label: "בית", href: "/" },
-        { label: t.menuHe, href: menuHref },
-        { label: t.galleryHe, href: galleryHref },
-        { label: t.faqHe, href: faqHref },
-        { label: t.contactHe, href: contactHref },
+        { label: "תפריט", href: menuHref },
+        { label: "גלריה", href: galleryHref },
+        { label: "שאלות", href: faqHref },
+        { label: "הטבות", href: "/vip" },
+        { label: "בלוג", href: "/blog" },
         { label: "VIP", href: "/vip", isVip: true },
+        { label: "קצביה", href: "#butcher" },
+        { label: "צור קשר", href: contactHref },
       ]
     : [
         { label: "HOME", href: "/" },
         { label: t.menuEn, href: menuHref },
         { label: t.galleryEn, href: galleryHref },
         { label: t.faqEn, href: faqHref },
-        { label: t.contactEn, href: contactHref },
+        { label: "BENEFITS", href: "/vip" },
         { label: "BLOG", href: "/blog" },
         { label: "VIP", href: "/vip", isVip: true },
+        { label: "BUTCHER", href: "#butcher" },
+        { label: t.contactEn, href: contactHref },
       ];
 
   useEffect(() => {
