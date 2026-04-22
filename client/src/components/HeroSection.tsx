@@ -16,9 +16,9 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { HeroBullInline } from "@/components/FlyingBull";
 
 const HERO_IMAGE_DEFAULT =
-  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/AeZbROCvjWSyrEgj.png";
+  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/VUnXiWPIwuFLQQuf.png";
 const HERO_IMAGE_SM_DEFAULT =
-  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/AeZbROCvjWSyrEgj.png";
+  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/VUnXiWPIwuFLQQuf.png";
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(40,3,6)";
@@ -107,7 +107,7 @@ export default function HeroSection() {
       </div>
 
       {/* ── Light 25% black overlay ── */}
-      <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.62)", pointerEvents: "none" }} />
+      <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.45)", pointerEvents: "none" }} />
 
 
 
