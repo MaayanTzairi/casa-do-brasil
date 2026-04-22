@@ -107,7 +107,7 @@ export default function HeroSection() {
       </div>
 
       {/* ── Light 25% black overlay ── */}
-      <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.25)", pointerEvents: "none" }} />
+      <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.50)", pointerEvents: "none" }} />
 
 
 
