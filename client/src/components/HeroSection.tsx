@@ -16,9 +16,9 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { HeroBullInline } from "@/components/FlyingBull";
 
 const HERO_IMAGE_DEFAULT =
-  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/fUAfQQLFqCanDksS.jpg";
+  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/UPvFDtBGOyQSmlVO.webp";
 const HERO_IMAGE_SM_DEFAULT =
-  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/fUAfQQLFqCanDksS.jpg";
+  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/UPvFDtBGOyQSmlVO.webp";
 
 const GOLD = "rgb(185,161,103)";
 const BORDEAUX = "rgb(40,3,6)";
@@ -106,25 +106,9 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* ── Warm Cinematic Overlay ── */}
-      <div className="absolute inset-0">
-        {/* Warm amber/brown tint — like the reference image */}
-        <div
-          className="absolute inset-0"
-          style={{ background: "linear-gradient(160deg, rgba(30,14,4,0.72) 0%, rgba(50,22,6,0.50) 40%, rgba(20,10,2,0.65) 100%)" }}
-        />
-        {/* Extra warm vignette around edges */}
-        <div
-          className="absolute inset-0"
-          style={{ background: "radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(10,4,0,0.55) 100%)" }}
-        />
-      </div>
+      {/* ── No overlay — image shown as-is ── */}
 
-      {/* ── Bottom Gradient Fade ── */}
-      <div
-        className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ height: "clamp(100px, 18vw, 220px)", background: "linear-gradient(to top, rgba(10,8,6,0.55) 0%, transparent 100%)" }}
-      />
+
 
 
 
