@@ -39,6 +39,8 @@ interface RodizioTrack {
   priceHe: string;
   count: string;
   countHe: string;
+  name?: string;
+  nameHe?: string;
   items: string[];
   itemsHe: string[];
   note?: string;
@@ -109,6 +111,8 @@ const MENU_DATA: MenuCategory[] = [
         priceHe: "259",
         count: "11 KINDS OF MEAT",
         countHe: "11 סוגי בשר",
+        name: "CHURRASCARIA CASA DO BRASIL",
+        nameHe: "צ'ורוסקריה קאזה דו ברזיל",
         items: [
           "Veal asado",
           "Lamb shin",
@@ -141,6 +145,8 @@ const MENU_DATA: MenuCategory[] = [
         priceHe: "289",
         count: "12 KINDS OF MEAT",
         countHe: "12 סוגי בשר",
+        name: "CHURRASCARIA CASA PREMIUM",
+        nameHe: "צ'ורוסקריה קאזה פרימיום",
         items: [
           "Entrecote (rib eye)",
           "Veal asado",
@@ -836,9 +842,9 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
               border: `1px solid rgba(62,4,9,0.18)`,
               marginBottom: "2rem",
             }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}>
-                <div style={{ width: "16px", height: "1px", background: BORDEAUX }} />
-                <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.85vw, 13px)", letterSpacing: isHe ? "0.06em" : "0.25em", textTransform: "uppercase", color: BORDEAUX }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1rem" }}>
+                <div style={{ width: "20px", height: "2px", background: BORDEAUX, flexShrink: 0 }} />
+                <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(18px, 1.5vw, 22px)", letterSpacing: isHe ? "0.04em" : "0.12em", textTransform: "uppercase", color: BORDEAUX }}>
                   {isHe ? "מנות פתיחה" : "Appetizers"}
                 </span>
               </div>
@@ -878,6 +884,22 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                     padding: "1.6rem 1.8rem",
                     position: "relative",
                   }}>
+                    {/* Wooden sign track name */}
+                    {(track.name || track.nameHe) && (
+                      <div style={{
+                        marginBottom: "1.2rem",
+                        background: ti === 1 ? "rgba(255,255,255,0.08)" : "rgba(101,60,20,0.10)",
+                        border: `1px solid ${ti === 1 ? "rgba(255,255,255,0.18)" : "rgba(101,60,20,0.28)"}`,
+                        borderRadius: "4px",
+                        padding: "0.55rem 1rem",
+                        display: "inline-block",
+                        maxWidth: "100%",
+                      }}>
+                        <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "clamp(12px, 1vw, 15px)", letterSpacing: isHe ? "0.05em" : "0.18em", color: ti === 1 ? "rgba(255,255,255,0.88)" : "rgba(101,60,20,0.85)", textTransform: "uppercase", lineHeight: 1.3 }}>
+                          {isHe ? track.nameHe : track.name}
+                        </div>
+                      </div>
+                    )}
                     {/* Track header */}
                     <div style={{ marginBottom: "1.2rem" }}>
                       <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.9vw, 14px)", letterSpacing: "0.22em", color: ti === 1 ? "rgba(255,255,255,0.9)" : BORDEAUX, textTransform: "uppercase", marginBottom: "0.5rem" }}>
