@@ -72,7 +72,7 @@ export default function StickyReservationBtn() {
         alignItems: "center",
         gap: "0.55rem",
         padding: "0.55rem 1.1rem 0.55rem 0.65rem",
-        borderRadius: "999px",
+        borderRadius: "10px",
         background: hovered ? BR_GREEN : BR_YELLOW,
         border: `2.5px solid ${hovered ? BR_YELLOW : BR_GREEN}`,
         textDecoration: "none",

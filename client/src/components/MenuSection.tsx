@@ -97,6 +97,7 @@ function MenuCard({ img, mobileSrc, name, subtitle, btnText, href, dark=false, d
         transition: `box-shadow 0.45s ease, transform 0.75s ${delay}s cubic-bezier(0.25,0.46,0.45,0.94)`,
         cursor: "pointer",
         background: dark ? BORDEAUX_DEEP : "#FAFAF8",
+        borderRadius: "12px",
         overflow: "hidden", display: "flex", flexDirection: "column",
       }}
     >
@@ -239,9 +240,9 @@ export default function MenuSection() {
           </div>
 
           <div style={{ ...animStyle(inView, 0.42), display:"flex", justifyContent: mobile ? "center" : "flex-start", width:"100%" }}>
-            <a href={ctaBtnUrl} style={{ display:"inline-flex", alignItems:"center", gap:"0.7rem", fontFamily:"'Heebo', sans-serif", fontWeight:800, fontSize:"1rem", letterSpacing:"0.18em", textTransform:"uppercase", textDecoration:"none", color:"#fff", padding:"0.9rem 2.2rem", background:"#009C3B", border:"2px solid #009C3B", borderRadius:"2px", transition:"background 0.28s, border-color 0.28s" }}
-              onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background="#007a2e"; el.style.borderColor="#007a2e"; }}
-              onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background="#009C3B"; el.style.borderColor="#009C3B"; }}
+            <a href={ctaBtnUrl} style={{ display:"inline-flex", alignItems:"center", gap:"0.7rem", fontFamily:"'Heebo', sans-serif", fontWeight:800, fontSize:"1rem", letterSpacing:"0.18em", textTransform:"uppercase", textDecoration:"none", color:"#fff", padding:"0.9rem 2.2rem", background:"#009C3B", border:"2px solid #FEDF00", borderRadius:"10px", boxShadow:"0 4px 18px rgba(0,156,59,0.30)", transition:"background 0.28s, border-color 0.28s, box-shadow 0.28s" }}
+              onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background="#007a2e"; el.style.boxShadow="0 6px 24px rgba(0,156,59,0.45)"; }}
+              onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background="#009C3B"; el.style.boxShadow="0 4px 18px rgba(0,156,59,0.30)"; }}
             >
               {ctaBtnText} <span style={{ fontSize:"0.9rem" }}>{isHe ? "←" : "→"}</span>
             </a>

@@ -71,7 +71,7 @@ function ImageCard({ src, srcSet, sizes, alt, aspectRatio, objectPosition, delay
         ...animStyle(inView, delay),
         position: "relative",
         overflow: "hidden",
-        borderRadius: "4px",
+        borderRadius: "12px",
         border: `1.5px solid ${hovered ? BR_GREEN : "rgba(0,156,59,0.25)"}`,
         transition: "border-color 0.35s ease",
         boxShadow: hovered
@@ -235,7 +235,7 @@ export default function CasaVibesSection() {
       {mobile && (
         <div style={{ display: "flex", gap: "10px", width: "100%", maxWidth: "1280px", margin: "2.5rem auto 0", alignItems: "stretch" }}>
           <div style={{ ...animStyle(inView, 0.1), flex: "1 1 0", minWidth: 0 }}>
-            <div style={{ position: "relative", overflow: "hidden", height: "260px", borderRadius: "4px", border: "1.5px solid rgba(0,156,59,0.30)" }}>
+            <div style={{ position: "relative", overflow: "hidden", height: "260px", borderRadius: "12px", border: "1.5px solid rgba(0,156,59,0.30)" }}>
               <img
                 src={MEAT_URL} srcSet={img1SrcSet} sizes="50vw" alt="Churrasco"
                 loading="lazy" decoding="async" width={600} height={800}
@@ -244,7 +244,7 @@ export default function CasaVibesSection() {
             </div>
           </div>
           <div style={{ ...animStyle(inView, 0.22), flex: "1 1 0", minWidth: 0 }}>
-            <div style={{ position: "relative", overflow: "hidden", height: "260px", borderRadius: "4px", border: "1.5px solid rgba(0,156,59,0.30)" }}>
+            <div style={{ position: "relative", overflow: "hidden", height: "260px", borderRadius: "12px", border: "1.5px solid rgba(0,156,59,0.30)" }}>
               <img
                 src={CARNIVAL_URL} srcSet={img2SrcSet} sizes="50vw" alt="Carnival"
                 loading="lazy" decoding="async" width={600} height={750}

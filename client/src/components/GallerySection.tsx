@@ -38,9 +38,9 @@ function CTAButton({ label, url }: { label: string; url: string }) {
           display: "inline-flex", alignItems: "center", gap: "0.7rem",
           fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "1rem",
           letterSpacing: "0.18em", textTransform: "uppercase", textDecoration: "none",
-          color: "#fff", padding: "0.9rem 2.2rem", border: "2px solid #009C3B",
-          cursor: "pointer", transition: "background 0.28s, border-color 0.28s", background: "#009C3B",
-          borderRadius: "2px",
+          color: "#fff", padding: "0.9rem 2.2rem", border: "2px solid #FEDF00",
+          cursor: "pointer", transition: "background 0.28s, border-color 0.28s, box-shadow 0.28s", background: "#009C3B",
+          borderRadius: "10px", boxShadow: "0 4px 18px rgba(0,156,59,0.30)",
         }}
         onMouseEnter={(e) => { const el = e.currentTarget as HTMLSpanElement; el.style.background = "#007a2e"; el.style.borderColor = "#007a2e"; }}
         onMouseLeave={(e) => { const el = e.currentTarget as HTMLSpanElement; el.style.background = "#009C3B"; el.style.borderColor = "#009C3B"; }}
@@ -244,7 +244,7 @@ export default function GallerySection() {
             ))}
 
             <div style={{
-              margin: "10px", position: "relative", overflow: "hidden",
+              margin: "10px", position: "relative", overflow: "hidden", borderRadius: "12px",
               aspectRatio: "4/3",
               minHeight: mobile ? "240px" : "clamp(280px, 34vw, 500px)",
               maxHeight: mobile ? "320px" : "500px",
@@ -274,7 +274,7 @@ export default function GallerySection() {
                 style={{
                   position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)",
                   background: "rgba(255,255,255,0.92)", border: "none", color: "#009C3B",
-                  width: "40px", height: "40px", borderRadius: "50%", cursor: "pointer",
+                  width: "40px", height: "40px", borderRadius: "10px", cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   fontSize: "20px", zIndex: 5, boxShadow: "0 2px 12px rgba(0,0,0,0.18)",
                   transition: "background 0.22s, color 0.22s, transform 0.22s",
@@ -289,7 +289,7 @@ export default function GallerySection() {
                 style={{
                   position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)",
                   background: "rgba(255,255,255,0.92)", border: "none", color: "#009C3B",
-                  width: "40px", height: "40px", borderRadius: "50%", cursor: "pointer",
+                  width: "40px", height: "40px", borderRadius: "10px", cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   fontSize: "20px", zIndex: 5, boxShadow: "0 2px 12px rgba(0,0,0,0.18)",
                   transition: "background 0.22s, color 0.22s, transform 0.22s",

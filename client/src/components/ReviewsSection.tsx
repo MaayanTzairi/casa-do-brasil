@@ -530,7 +530,7 @@ export default function ReviewsSection() {
           style={{
             position: "absolute", left: "8px", top: "50%", transform: "translateY(-50%)",
             zIndex: 10, background: "#009C3B", border: "2px solid #FEDF00",
-            borderRadius: "50%", width: "40px", height: "40px", cursor: "pointer",
+            borderRadius: "10px", width: "40px", height: "40px", cursor: "pointer",
             display: "flex", alignItems: "center", justifyContent: "center",
             boxShadow: "0 2px 12px rgba(0,0,0,0.18)", transition: "background 0.2s",
             color: "#fff", fontSize: "18px", lineHeight: 1,
@@ -553,7 +553,7 @@ export default function ReviewsSection() {
           style={{
             position: "absolute", right: "8px", top: "50%", transform: "translateY(-50%)",
             zIndex: 10, background: "#009C3B", border: "2px solid #FEDF00",
-            borderRadius: "50%", width: "40px", height: "40px", cursor: "pointer",
+            borderRadius: "10px", width: "40px", height: "40px", cursor: "pointer",
             display: "flex", alignItems: "center", justifyContent: "center",
             boxShadow: "0 2px 12px rgba(0,0,0,0.18)", transition: "background 0.2s",
             color: "#fff", fontSize: "18px", lineHeight: 1,
