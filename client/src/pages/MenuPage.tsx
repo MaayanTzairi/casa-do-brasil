@@ -866,44 +866,31 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                 <div style={{
                   marginTop: "1.4rem",
                   display: "flex",
-                  justifyContent: isHe ? "flex-start" : "flex-end",
+                  justifyContent: "center",
                 }}>
                   <div style={{
                     display: "inline-flex",
-                    alignItems: "stretch",
-                    overflow: "hidden",
-                    borderRadius: "3px",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+                    alignItems: "center",
+                    gap: "0.7rem",
+                    background: "rgba(62,4,9,0.05)",
+                    border: `1px solid rgba(62,4,9,0.18)`,
+                    borderRadius: "4px",
+                    padding: "0.55rem 1.1rem",
                     maxWidth: "100%",
                   }}>
-                    {/* Green left/right accent bar */}
-                    <div style={{
-                      width: "5px",
-                      background: "#009C3B",
-                      flexShrink: 0,
-                      order: isHe ? 2 : 0,
-                    }} />
-                    {/* Dark content area */}
-                    <div style={{
-                      background: "rgba(18,12,8,0.88)",
-                      padding: "0.6rem 1.2rem",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "0.1rem",
-                      order: 1,
+                    <span style={{ fontSize: "1.1rem", lineHeight: 1, flexShrink: 0 }}>🇧🇷</span>
+                    <span style={{
+                      fontFamily: "'Heebo', sans-serif",
+                      fontWeight: 700,
+                      fontSize: "clamp(14px, 1.1vw, 17px)",
+                      color: BORDEAUX,
+                      fontStyle: "italic",
+                      letterSpacing: isHe ? "0.02em" : "0.05em",
+                      lineHeight: 1.4,
                     }}>
-                      <span style={{
-                        fontFamily: "'Heebo', sans-serif",
-                        fontWeight: 900,
-                        fontSize: "clamp(15px, 1.2vw, 19px)",
-                        color: "#FEDF00",
-                        letterSpacing: isHe ? "0.04em" : "0.08em",
-                        lineHeight: 1.3,
-                        textTransform: "uppercase",
-                      }}>
-                        {isHe ? category.appetizersNoteHe : category.appetizersNote}
-                      </span>
-                    </div>
+                      {isHe ? category.appetizersNoteHe : category.appetizersNote}
+                    </span>
+                    <span style={{ fontSize: "1.1rem", lineHeight: 1, flexShrink: 0 }}>🇧🇷</span>
                   </div>
                 </div>
               )}
@@ -952,14 +939,23 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                     )}
                     {/* Track header */}
                     <div style={{ marginBottom: "1.2rem" }}>
-                      <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "clamp(11px, 0.9vw, 14px)", letterSpacing: "0.22em", color: ti === 1 ? "rgba(255,255,255,0.9)" : BORDEAUX, textTransform: "uppercase", marginBottom: "0.5rem" }}>
-                        {isHe ? track.countHe : track.count}
+                      {/* Count badge */}
+                      <div style={{
+                        display: "inline-block",
+                        border: `1px solid ${ti === 1 ? "rgba(254,223,0,0.45)" : "rgba(62,4,9,0.30)"}`,
+                        borderRadius: "3px",
+                        padding: "0.25rem 0.75rem",
+                        marginBottom: "0.7rem",
+                      }}>
+                        <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "clamp(16px, 1.3vw, 20px)", letterSpacing: "0.10em", color: ti === 1 ? "#FEDF00" : BORDEAUX, textTransform: "uppercase" }}>
+                          {isHe ? track.countHe : track.count}
+                        </span>
                       </div>
                       <div style={{ display: "flex", alignItems: "baseline", gap: "0.4rem" }}>
                         <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(28px, 3vw, 40px)", color: ti === 1 ? "#fff" : BORDEAUX, lineHeight: 1 }}>
                           ₪{track.price}
                         </span>
-                        <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 400, fontSize: "clamp(11px, 0.9vw, 14px)", color: ti === 1 ? "rgba(255,255,255,0.75)" : "rgba(62,4,9,0.65)", letterSpacing: "0.06em" }}>
+                        <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 600, fontSize: "clamp(16px, 1.3vw, 20px)", color: ti === 1 ? "rgba(255,255,255,0.85)" : "rgba(62,4,9,0.75)", letterSpacing: "0.04em" }}>
                           {isHe ? "לסועד" : "per diner"}
                         </span>
                       </div>
