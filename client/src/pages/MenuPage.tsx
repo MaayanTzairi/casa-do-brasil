@@ -639,7 +639,7 @@ function MenuItemRow({ item, isHe, type, index }: { item: MenuItem; isHe: boolea
           <span style={{
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 800,
-            fontSize: "clamp(15px, 1.3vw, 19px)",
+            fontSize: "clamp(18px, 1.5vw, 22px)",
             color: BORDEAUX,
             letterSpacing: isHe ? "0.01em" : "0.04em",
           }}>
@@ -650,7 +650,7 @@ function MenuItemRow({ item, isHe, type, index }: { item: MenuItem; isHe: boolea
         <p style={{
           fontFamily: "'Heebo', sans-serif",
           fontWeight: 300,
-          fontSize: "clamp(14px, 1.05vw, 16px)",
+          fontSize: "clamp(17px, 1.4vw, 21px)",
           color: "rgb(100,50,50)",
           lineHeight: 1.65,
           margin: 0,
