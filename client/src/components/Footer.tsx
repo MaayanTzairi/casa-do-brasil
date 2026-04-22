@@ -12,7 +12,7 @@ const ACCENT = "#009C3B";      // Brazilian green for accents
 const DARK = "#1a1208";        // near-black for text
 const MID = "#5a4a35";         // warm brown for secondary text
 const LIGHT = "#9a8a75";       // light brown for tertiary text
-const GOLD = "#b8860b";        // gold for highlights
+const GOLD = "#FEDF00";        // Brazilian yellow-gold (unified brand color)
 
 const LOGO_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp";
@@ -46,7 +46,8 @@ export default function Footer() {
     return () => window.removeEventListener("resize", fn);
   }, []);
 
-  const sectionLabel = (text: string) => (
+  // Section label — always uppercase, green, consistent
+  const sectionLabel = (text: string, align: "left" | "right" | "center" = "left") => (
     <div style={{
       fontFamily: "'Heebo', sans-serif",
       fontWeight: 800,
@@ -55,6 +56,7 @@ export default function Footer() {
       textTransform: "uppercase" as const,
       color: ACCENT,
       marginBottom: "1.2rem",
+      textAlign: align,
     }}>{text}</div>
   );
 
@@ -78,8 +80,16 @@ export default function Footer() {
     </div>
   );
 
-  const infoRow = (icon: React.ReactNode, text: string, sub?: string) => (
-    <div style={{ display: "flex", alignItems: "flex-start", gap: "0.55rem", marginBottom: "0.75rem" }}>
+  // infoRow — icon always on the outer edge, text flows naturally
+  const infoRow = (icon: React.ReactNode, text: string, sub?: string, align: "left" | "right" = "left") => (
+    <div style={{
+      display: "flex",
+      alignItems: "flex-start",
+      flexDirection: align === "right" ? "row-reverse" : "row",
+      gap: "0.55rem",
+      marginBottom: "0.75rem",
+      textAlign: align,
+    }}>
       <span style={{ marginTop: "2px", flexShrink: 0 }}>{icon}</span>
       <div>
         <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 500, fontSize: "0.9rem", color: DARK, margin: 0, lineHeight: 1.5 }}>{text}</p>
@@ -94,7 +104,7 @@ export default function Footer() {
       dir={isHe ? "rtl" : "ltr"}
       style={{ background: BG, color: DARK }}
     >
-      {/* Thin gold top accent line */}
+      {/* Thin tri-color top accent line */}
       <div style={{ height: "3px", background: `linear-gradient(90deg, ${ACCENT} 0%, #FEDF00 50%, #002776 100%)` }} />
 
       <div style={{ padding: mobile ? "3rem 1.5rem 0" : "4rem 6vw 0" }}>
@@ -115,7 +125,7 @@ export default function Footer() {
 
             {/* Find Us */}
             <div style={{ textAlign: "center" }}>
-              {sectionLabel(isHe ? "מצאו אותנו" : "FIND US")}
+              {sectionLabel(isHe ? "מצאו אותנו" : "FIND US", "center")}
               {infoRow(mapPinIcon,
                 isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat",
                 isHe ? "צמוד למלון נובה" : "Adjacent to the Nova Hotel")}
@@ -128,7 +138,7 @@ export default function Footer() {
 
             {/* Hours */}
             <div style={{ textAlign: "center" }}>
-              {sectionLabel(isHe ? "שעות פתיחה" : "HOURS")}
+              {sectionLabel(isHe ? "שעות פתיחה" : "HOURS", "center")}
               {infoRow(clockIcon,
                 isHe ? "ראשון עד שבת" : "Sunday to Saturday")}
               <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "1.15rem", color: GOLD, margin: 0, letterSpacing: "0.06em" }}>
@@ -138,35 +148,37 @@ export default function Footer() {
 
           </div>
         ) : (
-          /* ── DESKTOP: 3-column grid ── */
+          /* ── DESKTOP: 3-column grid — always LTR grid, content direction per column ── */
           <div style={{
             display: "grid",
             gridTemplateColumns: "1fr auto 1fr",
             alignItems: "start",
             gap: "3rem",
-            direction: "ltr",
+            direction: "ltr",   // grid itself always LTR so col order is stable
           }}>
 
-            {/* Col 1 */}
-            <div style={{ textAlign: isHe ? "right" : "left", direction: isHe ? "rtl" : "ltr" }}>
-              {sectionLabel(isHe ? "שעות פתיחה" : "FIND US")}
-              {isHe
-                ? <>
-                    {infoRow(clockIcon, "ראשון עד שבת")}
-                    <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "1.2rem", color: GOLD, margin: "0.5rem 0 0", letterSpacing: "0.06em" }}>12:00 – 23:00</p>
-                  </>
-                : <>
-                    {infoRow(mapPinIcon, "Golani Brigade 3, Eilat", "Adjacent to the Nova Hotel")}
-                    <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: DARK, textDecoration: "none", transition: "color 0.2s", marginTop: "0.3rem" }}
-                      onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = ACCENT; }}
-                      onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = DARK; }}>
-                      {phoneIcon}08-6323032
-                    </a>
-                  </>
-              }
+            {/* Col 1 — LEFT in EN, LEFT in HE (shows FIND US in EN, HOURS in HE) */}
+            <div style={{ direction: isHe ? "rtl" : "ltr", textAlign: isHe ? "right" : "left" }}>
+              {isHe ? (
+                <>
+                  {sectionLabel("שעות פתיחה", "right")}
+                  {infoRow(clockIcon, "ראשון עד שבת", undefined, "right")}
+                  <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "1.2rem", color: GOLD, margin: "0.5rem 0 0", letterSpacing: "0.06em", textAlign: "right" }}>12:00 – 23:00</p>
+                </>
+              ) : (
+                <>
+                  {sectionLabel("FIND US", "left")}
+                  {infoRow(mapPinIcon, "Golani Brigade 3, Eilat", "Adjacent to the Nova Hotel", "left")}
+                  <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: DARK, textDecoration: "none", transition: "color 0.2s", marginTop: "0.3rem" }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = ACCENT; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = DARK; }}>
+                    {phoneIcon}08-6323032
+                  </a>
+                </>
+              )}
             </div>
 
-            {/* Col 2 — center */}
+            {/* Col 2 — CENTER: logo + tagline + social */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.2rem", minWidth: "180px" }}>
               <img src={LOGO_URL} alt="Casa do Brasil"
                 style={{ width: "140px", height: "auto", objectFit: "contain" }} />
@@ -176,23 +188,27 @@ export default function Footer() {
               {socialIcons()}
             </div>
 
-            {/* Col 3 */}
-            <div style={{ textAlign: isHe ? "left" : "right", direction: isHe ? "ltr" : "rtl" }}>
-              {sectionLabel(isHe ? "מצאו אותנו" : "HOURS")}
-              {isHe
-                ? <div style={{ direction: "ltr", textAlign: "left" }}>
-                    {infoRow(mapPinIcon, "חטיבת גולני 3, אילת", "צמוד למלון נובה")}
-                    <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: DARK, textDecoration: "none", transition: "color 0.2s", marginTop: "0.3rem" }}
+            {/* Col 3 — RIGHT in EN, RIGHT in HE (shows HOURS in EN, FIND US in HE) */}
+            <div style={{ direction: isHe ? "rtl" : "ltr", textAlign: isHe ? "right" : "right" }}>
+              {isHe ? (
+                <>
+                  {sectionLabel("מצאו אותנו", "right")}
+                  {infoRow(mapPinIcon, "חטיבת גולני 3, אילת", "צמוד למלון נובה", "right")}
+                  <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "0.3rem" }}>
+                    <a href="tel:08-6323032" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1rem", color: DARK, textDecoration: "none", transition: "color 0.2s", flexDirection: "row-reverse" }}
                       onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = ACCENT; }}
                       onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = DARK; }}>
                       {phoneIcon}08-6323032
                     </a>
                   </div>
-                : <>
-                    {infoRow(clockIcon, "Sunday to Saturday")}
-                    <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "1.2rem", color: GOLD, margin: "0.5rem 0 0", letterSpacing: "0.06em", textAlign: "right", direction: "ltr" }}>12:00 – 23:00</p>
-                  </>
-              }
+                </>
+              ) : (
+                <>
+                  {sectionLabel("HOURS", "right")}
+                  {infoRow(clockIcon, "Sunday to Saturday", undefined, "right")}
+                  <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "1.2rem", color: GOLD, margin: "0.5rem 0 0", letterSpacing: "0.06em", textAlign: "right" }}>12:00 – 23:00</p>
+                </>
+              )}
             </div>
 
           </div>
