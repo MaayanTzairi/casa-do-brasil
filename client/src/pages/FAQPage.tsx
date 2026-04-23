@@ -151,7 +151,7 @@ function AccordionItem({
             fontFamily: "'Heebo', sans-serif",
             fontWeight: 800,
             fontSize: "clamp(18px, 1.5vw, 22px)",
-            color: isOpen ? BORDEAUX : "rgb(30,10,12)",
+            color: BORDEAUX,
             lineHeight: 1.4,
             transition: "color 0.25s ease",
             flex: 1,
@@ -252,7 +252,7 @@ export default function FAQPage() {
       >
         <div
           style={{
-            maxWidth: "860px",
+            maxWidth: "1100px",
             margin: "0 auto",
             padding: "0 clamp(1.2rem, 6vw, 3rem)",
           }}

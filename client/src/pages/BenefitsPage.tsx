@@ -98,7 +98,7 @@ export default function BenefitsPage() {
       >
         <div
           style={{
-            maxWidth: "860px",
+            maxWidth: "1100px",
             margin: "0 auto",
             padding: "0 clamp(1.2rem, 6vw, 3rem)",
           }}
