@@ -140,6 +140,7 @@ export default function Footer() {
     { label: "VIP",         href: "/vip" },
     { label: "קצביה",       href: "#butcher" },
     { label: "צור קשר",     href: "#contact" },
+    { label: "נגישות",       href: "/accessibility" },
   ];
   const sitemapLinks_EN = [
     { label: "Home",        href: "/" },
@@ -151,6 +152,7 @@ export default function Footer() {
     { label: "VIP",         href: "/vip" },
     { label: "Butcher",     href: "#butcher" },
     { label: "Contact",     href: "#contact" },
+    { label: "Accessibility", href: "/accessibility" },
   ];
 
   const GAP = "3rem"; // equal gap on both sides of each divider
