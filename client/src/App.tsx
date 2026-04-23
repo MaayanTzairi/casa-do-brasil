@@ -22,27 +22,52 @@ const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
 const BenefitsPage = lazy(() => import("./pages/BenefitsPage"));
 const AccessibilityPage = lazy(() => import("./pages/AccessibilityPage"));
 const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
-// Minimal loading fallback — dark bordeaux bg prevents white flash on page transitions
+// Branded loading fallback — bull logo with spinning yellow-green-blue ring
+const BULL_LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp";
 function PageLoader() {
-  const [location] = useLocation();
-  const isHome = location === "/";
   return (
     <div style={{
       minHeight: "100vh",
-      background: isHome ? "rgb(28,2,4)" : "#fff",
+      background: "rgb(12,9,7)",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
     }}>
-      <div style={{
-        width: "32px",
-        height: "32px",
-        border: "2px solid rgba(185,161,103,0.25)",
-        borderTop: "2px solid #B9A167",
-        borderRadius: "50%",
-        animation: "spin 0.8s linear infinite",
-      }} />
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      <div style={{ position: "relative", width: "130px", height: "130px" }}>
+        {/* Spinning conic-gradient ring: yellow → green → blue */}
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "50%",
+          background: "conic-gradient(from 0deg, #f5c518 0%, #2db84b 30%, #42a5f5 55%, #1565c0 70%, #f5c518 100%)",
+          animation: "bullRingSpin 1.3s linear infinite",
+          WebkitMask: "radial-gradient(farthest-side, transparent calc(100% - 6px), #fff calc(100% - 6px))",
+          mask: "radial-gradient(farthest-side, transparent calc(100% - 6px), #fff calc(100% - 6px))",
+          filter: "drop-shadow(0 0 8px rgba(45,184,75,0.6)) drop-shadow(0 0 16px rgba(245,197,24,0.4))",
+        }} />
+        {/* Bull logo centered */}
+        <div style={{
+          position: "absolute",
+          inset: "10px",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "rgba(12,9,7,0.90)",
+        }}>
+          <img
+            src={BULL_LOGO_URL}
+            alt="Casa do Brasil"
+            style={{ width: "80px", height: "80px", objectFit: "contain" }}
+          />
+        </div>
+      </div>
+      <style>{`
+        @keyframes bullRingSpin {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }
