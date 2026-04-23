@@ -13,6 +13,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSeoMeta } from "@/hooks/useSeoMeta";
+import { PageHeader, PageWrapper } from "@/components/PageHeader";
 
 const BORDEAUX = "rgb(62,4,9)";
 const GOLD = "#FEDF00";
@@ -240,104 +241,20 @@ export default function FAQPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#ffffff" }}>
-      {/* forceScrolled: page has white background, no hero — show scrolled navbar from the start */}
       <Navbar forceScrolled={true} />
 
-      <main
-        dir={isHe ? "rtl" : "ltr"}
-        style={{
-          paddingTop: "calc(70px + 4rem)",
-          paddingBottom: "6rem",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "1100px",
-            margin: "0 auto",
-            padding: "0 clamp(1.2rem, 6vw, 3rem)",
-          }}
-        >
-          {/* ── Page Header — matches CategoryPanel header style ── */}
-          <header
-            dir={isHe ? "rtl" : "ltr"}
-            style={{
-              padding: "0 0 2.5rem",
-              borderBottom: `1px solid ${GOLD_R}0.2)`,
-              marginBottom: "0.5rem",
-              textAlign: isHe ? "right" : "left",
-            }}
-          >
-            {/* Green label row — same as CategoryPanel subtitle row */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.7rem",
-                marginBottom: "1rem",
-                flexDirection: isHe ? "row-reverse" : "row",
-                justifyContent: isHe ? "flex-end" : "flex-start",
-              }}
-            >
-              <div
-                style={{
-                  width: "28px",
-                  height: "2px",
-                  background: GREEN,
-                  flexShrink: 0,
-                }}
-              />
-              <span
-                style={{
-                  fontFamily: "'Heebo', sans-serif",
-                  fontWeight: 800,
-                  fontSize: "clamp(13px, 1.05vw, 16px)",
-                  letterSpacing: isHe ? "0.04em" : "0.12em",
-                  textTransform: "uppercase",
-                  color: GREEN,
-                  lineHeight: 1.4,
-                }}
-              >
-                {isHe ? "כל מה שרצית לדעת" : "Everything you need to know"}
-              </span>
-            </div>
-
-            {/* Main title — identical to CategoryPanel h2 */}
-            <h1
-              style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(32px, 4.5vw, 62px)",
-                color: BORDEAUX,
-                lineHeight: 0.9,
-                letterSpacing: isHe ? "0.01em" : "0.02em",
-                margin: "0 0 1.2rem",
-              }}
-            >
-              {isHe ? "שאלות ותשובות" : "FAQ"}
-            </h1>
-
-            {/* Subtitle — identical to CategoryPanel description */}
-            <p
-              style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 300,
-                fontSize: "clamp(18px, 1.5vw, 22px)",
-                color: "rgb(90,35,35)",
-                lineHeight: 1.7,
-                margin: 0,
-                direction: isHe ? "rtl" : "ltr",
-                textAlign: isHe ? "right" : "left",
-                unicodeBidi: "embed",
-              }}
-            >
-              {isHe
-                ? "מצאו תשובות לשאלות הנפוצות ביותר על קאסה דו ברזיל — שעות, הזמנות, תפריט ועוד."
-                : "Find answers to the most common questions about Casa do Brasil — hours, reservations, menu, and more."}
-            </p>
-          </header>
+      <PageWrapper isHe={isHe}>
+        <PageHeader
+          badge={isHe ? "כל מה שרצית לדעת" : "Everything you need to know"}
+          title={isHe ? "שאלות ותשובות" : "FAQ"}
+          subtitle={isHe
+            ? "מצאו תשובות לשאלות הנפוצות ביותר על קאסה דו ברזיל — שעות, הזמנות, תפריט ועוד."
+            : "Find answers to the most common questions about Casa do Brasil — hours, reservations, menu, and more."}
+          isHe={isHe}
+        />
 
           {/* ── Accordion list ── */}
-          <section style={{ marginTop: "0.5rem" }}>
+          <section>
             {faqs.map((item, i) => (
               <AccordionItem
                 key={i}
@@ -410,8 +327,7 @@ export default function FAQPage() {
               {isHe ? "התקשרו אלינו" : "Call Us"}
             </a>
           </div>
-        </div>
-      </main>
+      </PageWrapper>
 
       <Footer />
     </div>

@@ -89,93 +89,17 @@ export default function BenefitsPage() {
     <div style={{ minHeight: "100vh", background: "#ffffff" }}>
       <Navbar forceScrolled={true} />
 
-      <main
-        dir={isHe ? "rtl" : "ltr"}
-        style={{
-          paddingTop: "calc(70px + 4rem)",
-          paddingBottom: "6rem",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "1100px",
-            margin: "0 auto",
-            padding: "0 clamp(1.2rem, 6vw, 3rem)",
-          }}
-        >
-          {/* ── Page Header — same style as FAQPage ── */}
-          <header
-            style={{
-              padding: "0 0 2.5rem",
-              borderBottom: `1px solid ${GOLD_R}0.2)`,
-              marginBottom: "3rem",
-              textAlign: isHe ? "right" : "left",
-            }}
-          >
-            {/* Green label row */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.7rem",
-                marginBottom: "1rem",
-                flexDirection: isHe ? "row-reverse" : "row",
-                justifyContent: isHe ? "flex-end" : "flex-start",
-              }}
-            >
-              <div style={{ width: "28px", height: "2px", background: GREEN, flexShrink: 0 }} />
-              <span
-                style={{
-                  fontFamily: "'Heebo', sans-serif",
-                  fontWeight: 800,
-                  fontSize: "clamp(13px, 1.05vw, 16px)",
-                  letterSpacing: isHe ? "0.04em" : "0.12em",
-                  textTransform: "uppercase",
-                  color: GREEN,
-                  lineHeight: 1.4,
-                }}
-              >
-                {isHe ? "מועדון VIP" : "VIP Club"}
-              </span>
-            </div>
+      <PageWrapper isHe={isHe}>
+          <PageHeader
+            badge={isHe ? "מועדון VIP" : "VIP Club"}
+            title={isHe ? "הטבות" : "BENEFITS"}
+            subtitle={isHe
+              ? "הטבות בלעדיות לחברי מועדון VIP של קאסה דו ברזיל — כי אורחים קבועים מגיעים לטיפול מיוחד."
+              : "Exclusive benefits for Casa do Brasil VIP club members — because loyal guests deserve special treatment."}
+            isHe={isHe}
+          />
 
-            {/* Main title */}
-            <h1
-              style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(32px, 4.5vw, 62px)",
-                color: BORDEAUX,
-                lineHeight: 0.9,
-                letterSpacing: isHe ? "0.01em" : "0.02em",
-                margin: "0 0 1.2rem",
-              }}
-            >
-              {isHe ? "הטבות" : "BENEFITS"}
-            </h1>
-
-            {/* Gold rule */}
-            <div style={{ width: "clamp(60px, 10vw, 140px)", height: "1px", background: GOLD, marginBottom: "1.2rem" }} />
-
-            {/* Subtitle */}
-            <p
-              style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 300,
-                fontSize: "clamp(18px, 1.5vw, 22px)",
-                color: "rgb(90,35,35)",
-                lineHeight: 1.7,
-                margin: 0,
-                textAlign: isHe ? "right" : "left",
-              }}
-            >
-              {isHe
-                ? "הטבות בלעדיות לחברי מועדון VIP של קאסה דו ברזיל — כי אורחים קבועים מגיעים לטיפול מיוחד."
-                : "Exclusive benefits for Casa do Brasil VIP club members — because loyal guests deserve special treatment."}
-            </p>
-          </header>
-
-          {/* ── Benefits list ── */}
+                    {/* ── Benefits list ── */}
           <div>
             {BENEFITS.map((b, i) => (
               <div
@@ -272,8 +196,7 @@ export default function BenefitsPage() {
               {isHe ? "צרו קשר" : "CONTACT US"}
             </a>
           </div>
-        </div>
-      </main>
+      </PageWrapper>
 
       <Footer />
     </div>
