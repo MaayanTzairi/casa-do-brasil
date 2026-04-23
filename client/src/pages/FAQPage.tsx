@@ -273,17 +273,18 @@ export default function FAQPage() {
             style={{
               marginTop: "3.5rem",
               borderRadius: "18px",
-              overflow: "hidden",
-              background: BORDEAUX,
+              background: "#fff",
+              border: `1px solid rgba(62,4,9,0.18)`,
+              boxShadow: "0 2px 18px rgba(62,4,9,0.07)",
               padding: "2.8rem clamp(1.8rem, 5vw, 3.5rem)",
               display: "flex",
               flexDirection: "column",
               alignItems: isHe ? "flex-end" : "flex-start",
-              gap: "0",
               position: "relative",
+              overflow: "hidden",
             }}
           >
-            {/* Subtle gold decorative line */}
+            {/* Subtle bordeaux top accent line */}
             <div style={{
               position: "absolute",
               top: 0,
@@ -291,7 +292,7 @@ export default function FAQPage() {
               right: isHe ? "2.5rem" : "auto",
               width: "60px",
               height: "3px",
-              background: GOLD,
+              background: BORDEAUX,
               borderRadius: "0 0 3px 3px",
             }} />
 
@@ -300,10 +301,10 @@ export default function FAQPage() {
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 900,
                 fontSize: "clamp(22px, 2vw, 30px)",
-                color: "#fff",
+                color: BORDEAUX,
                 margin: "0 0 0.6rem",
-                letterSpacing: isHe ? "-0.01em" : "-0.01em",
                 lineHeight: 1.15,
+                textAlign: isHe ? "right" : "left",
               }}
             >
               {isHe ? "לא מצאתם תשובה?" : "Didn't find your answer?"}
@@ -313,9 +314,10 @@ export default function FAQPage() {
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 300,
                 fontSize: "clamp(16px, 1.3vw, 20px)",
-                color: "rgba(255,255,255,0.78)",
+                color: "rgb(90,40,40)",
                 margin: "0 0 2rem",
                 lineHeight: 1.65,
+                textAlign: isHe ? "right" : "left",
               }}
             >
               {isHe
@@ -334,7 +336,7 @@ export default function FAQPage() {
                 letterSpacing: isHe ? "0.04em" : "0.1em",
                 textTransform: "uppercase",
                 textDecoration: "none",
-                color: BORDEAUX,
+                color: "#fff",
                 background: GREEN,
                 padding: "0.85rem 2.2rem",
                 borderRadius: "50px",
