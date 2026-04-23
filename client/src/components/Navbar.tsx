@@ -295,7 +295,7 @@ export default function Navbar({
         { label: "הטבות", href: "/benefits" },
         { label: "בלוג", href: "/blog" },
         { label: "VIP", href: "/vip", isVip: true },
-        { label: "קצביה", href: "#butcher" },
+        { label: "קצביה", href: "/menu?tab=fresh-meat" },
         { label: "צור קשר", href: contactHref },
       ]
     : [
@@ -306,7 +306,7 @@ export default function Navbar({
         { label: "BENEFITS", href: "/vip" },
         { label: "BLOG", href: "/blog" },
         { label: "VIP", href: "/vip", isVip: true },
-        { label: "BUTCHER", href: "#butcher" },
+        { label: "BUTCHER", href: "/menu?tab=fresh-meat" },
         { label: t.contactEn, href: contactHref },
       ];
 
