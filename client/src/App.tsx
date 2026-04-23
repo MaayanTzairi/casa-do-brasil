@@ -21,6 +21,7 @@ const BlogPage = lazy(() => import("./pages/BlogPage"));
 const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
 const BenefitsPage = lazy(() => import("./pages/BenefitsPage"));
 const AccessibilityPage = lazy(() => import("./pages/AccessibilityPage"));
+const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
 // Minimal loading fallback — dark bordeaux bg prevents white flash on page transitions
 function PageLoader() {
   const [location] = useLocation();
@@ -65,6 +66,7 @@ function Router() {
         <Route path={"/blog/:slug"} component={BlogPostPage} />
         <Route path={"/benefits"} component={BenefitsPage} />
         <Route path={"/accessibility"} component={AccessibilityPage} />
+        <Route path={"/privacy"} component={PrivacyPage} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>
