@@ -869,7 +869,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                   display: "flex",
                   justifyContent: "center",
                 }}>
-                  <div style={{
+                  <div dir={isHe ? "rtl" : "ltr"} style={{
                     display: "inline-flex",
                     alignItems: "center",
                     gap: "0.7rem",
@@ -888,6 +888,7 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
                       fontStyle: "italic",
                       letterSpacing: isHe ? "0.02em" : "0.05em",
                       lineHeight: 1.4,
+                      direction: isHe ? "rtl" : "ltr",
                     }}>
                       {isHe ? category.appetizersNoteHe : category.appetizersNote}
                     </span>

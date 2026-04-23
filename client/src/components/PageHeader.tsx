@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 /**
  * Shared page header for content pages (FAQ, Benefits, Blog, etc.)
  * Ensures pixel-identical spacing and layout across all pages.
+ * Full RTL support for Hebrew.
  */
 const BORDEAUX = "rgb(62,4,9)";
 const GOLD = "#FEDF00";
@@ -10,9 +11,9 @@ const GOLD_R = "rgba(254,223,0,";
 const GREEN = "#009C3B";
 
 interface PageHeaderProps {
-  badge: string;       // Green label text (e.g. "כל מה שרצית לדעת")
-  title: string;       // Main h1 title
-  subtitle: string;    // Subtitle paragraph
+  badge: string;
+  title: string;
+  subtitle: string;
   isHe: boolean;
 }
 
@@ -24,18 +25,15 @@ export function PageHeader({ badge, title, subtitle, isHe }: PageHeaderProps) {
         padding: "0 0 2.5rem",
         borderBottom: `1px solid ${GOLD_R}0.2)`,
         marginBottom: "3rem",
-        textAlign: isHe ? "right" : "left",
       }}
     >
-      {/* Green label row */}
+      {/* Green badge — simple block, dir handles alignment */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           gap: "0.7rem",
           marginBottom: "1rem",
-          flexDirection: isHe ? "row-reverse" : "row",
-          justifyContent: isHe ? "flex-end" : "flex-start",
         }}
       >
         <div
@@ -52,7 +50,6 @@ export function PageHeader({ badge, title, subtitle, isHe }: PageHeaderProps) {
             fontWeight: 800,
             fontSize: "clamp(13px, 1.05vw, 16px)",
             letterSpacing: isHe ? "0.04em" : "0.12em",
-            textTransform: "uppercase",
             color: GREEN,
             lineHeight: 1.4,
           }}
@@ -95,7 +92,6 @@ export function PageHeader({ badge, title, subtitle, isHe }: PageHeaderProps) {
           color: "rgb(90,35,35)",
           lineHeight: 1.7,
           margin: 0,
-          textAlign: isHe ? "right" : "left",
         }}
       >
         {subtitle}
@@ -106,7 +102,6 @@ export function PageHeader({ badge, title, subtitle, isHe }: PageHeaderProps) {
 
 /**
  * Shared outer wrapper for content pages (no-hero, white background).
- * Provides identical paddingTop, paddingBottom, maxWidth, and horizontal padding.
  */
 interface PageWrapperProps {
   isHe: boolean;

@@ -20,14 +20,12 @@ const XTRA_LOGO = "/xtra-logo.jpg";
 function SectionTitle({ he, en, isHe }: { he: string; en: string; isHe: boolean }) {
   return (
     <div
-      dir={isHe ? "rtl" : "ltr"}
       style={{
         display: "flex",
         alignItems: "center",
         gap: "0.9rem",
         marginBottom: "1.6rem",
         marginTop: "3rem",
-        flexDirection: isHe ? "row-reverse" : "row",
       }}
     >
       <div style={{ width: "32px", height: "2px", background: GOLD, flexShrink: 0 }} />
