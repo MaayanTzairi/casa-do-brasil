@@ -35,6 +35,9 @@ const DEFAULTS = {
   menuBtnHe: "תפריט",
   menuBtnEn: "MENU",
   menuBtnUrl: "/menu",
+  butcherBtnHe: "קצביה",
+  butcherBtnEn: "BUTCHER",
+  butcherBtnUrl: "/menu?tab=fresh-meat",
   instagramUrl: "https://www.instagram.com/casadobrasill/",
   facebookUrl: "https://www.facebook.com/casadobrasil",
   tiktokUrl: "https://www.tiktok.com/@casadobrasileilat",
@@ -83,7 +86,7 @@ export default function HeroSection() {
       ref={heroRef}
       id="hero"
       className="relative w-full overflow-hidden"
-      style={{ height: "100svh", minHeight: "600px", background: "rgb(10,8,6)" }} /* base bg only shows if image fails */
+      style={{ height: "100svh", minHeight: "600px", background: "rgb(10,8,6)" }}
     >
       {/* ── Background Image + Parallax ── */}
       <div ref={imgWrapRef} className="absolute inset-0 w-full h-full" style={{ willChange: "transform" }}>
@@ -106,33 +109,27 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* ── Light 25% black overlay ── */}
+      {/* ── Light overlay ── */}
       <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.55)", pointerEvents: "none" }} />
-
-
-
-
 
       {/* ── Hero Content ── */}
       <div
         className="absolute inset-0 z-10 flex flex-col"
         style={{
-          // Both mobile and desktop: flex-start from paddingTop, gap between items
           paddingTop:    isMobile ? "110px" : "90px",
           paddingBottom: isMobile ? "clamp(3rem, 8vw, 5rem)" : "clamp(3rem, 6vw, 6rem)",
           paddingLeft:   isMobile ? "1.2rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           paddingRight:  isMobile ? "1.2rem" : "clamp(2rem, 5.5vw, 5.5rem)",
           alignItems: "center",
-          // Desktop: space-between so buttons sit at bottom; Mobile: center
           justifyContent: isMobile ? "center" : "space-between",
           gap: isMobile ? "clamp(0.6rem, 2vh, 1.4rem)" : "clamp(1.2rem, 3vh, 2.8rem)",
           direction: isHe ? "rtl" : "ltr",
         }}
       >
-        {/* ── Bull Logo (inline, first flex child on both mobile and desktop) ── */}
+        {/* ── Bull Logo ── */}
         <HeroBullInline progress={bullProgress} isMobile={isMobile} />
 
-        {/* Title + Subtitle — combined block, subtitle tucked directly under title */}
+        {/* Title + Subtitle */}
         <div
           style={{
             width: "100%",
@@ -168,7 +165,6 @@ export default function HeroSection() {
           >
             {isHe ? t.titleHe : t.titleEn}
           </h1>
-          {/* Subtitle — directly under title, larger size */}
           <p
             style={{
               fontFamily: "'Heebo', sans-serif",
@@ -188,7 +184,7 @@ export default function HeroSection() {
           </p>
         </div>
 
-        {/* Mobile social icons — horizontal row, centered, with more spacing from subtitle */}
+        {/* Mobile social icons */}
         {isMobile && (
           <div
             style={{
@@ -216,30 +212,40 @@ export default function HeroSection() {
           </div>
         )}
 
-        {/* CTA Buttons — mobile: pushed to bottom; desktop: pushed to bottom via marginTop auto */}
+        {/* ── CTA Buttons: 3 buttons, Book a Table in center ── */}
         <div
           style={{
-            display: "flex", alignItems: "center",
-            gap: isMobile ? "0.7rem" : "1.25rem",
+            display: "flex",
+            alignItems: "center",
+            gap: isMobile ? "0.6rem" : "1.1rem",
             flexWrap: "nowrap",
             justifyContent: "center",
             width: "100%",
             marginTop: "auto",
             animation: "fadeUp 0.8s 1.6s cubic-bezier(0.25,0.46,0.45,0.94) both",
+            direction: "ltr", // always LTR so order is: Menu | Book | Butcher
           }}
         >
-          {/* HE order: ReserveButton first in DOM = rightmost visually in RTL */}
-          {isHe ? (
-            <>
-              <ReserveButton isMobile={isMobile} label={t.reserveBtnHe} href={t.reserveBtnUrl} />
-              <ExploreButton isMobile={isMobile} label={t.menuBtnHe} href={t.menuBtnUrl} />
-            </>
-          ) : (
-            <>
-              <ReserveButton isMobile={isMobile} label={t.reserveBtnEn} href={t.reserveBtnUrl} />
-              <ExploreButton isMobile={isMobile} label={t.menuBtnEn} href={t.menuBtnUrl} />
-            </>
-          )}
+          {/* Left button: Menu (same style as before) */}
+          <ExploreButton
+            isMobile={isMobile}
+            label={isHe ? t.menuBtnHe : t.menuBtnEn}
+            href={t.menuBtnUrl}
+          />
+
+          {/* Center button: Book a Table — shimmer border, no arrow */}
+          <ReserveButton
+            isMobile={isMobile}
+            label={isHe ? t.reserveBtnHe : t.reserveBtnEn}
+            href={t.reserveBtnUrl}
+          />
+
+          {/* Right button: Butcher — bordeaux border */}
+          <ButcherButton
+            isMobile={isMobile}
+            label={isHe ? t.butcherBtnHe : t.butcherBtnEn}
+            href={t.butcherBtnUrl}
+          />
         </div>
       </div>
 
@@ -284,20 +290,15 @@ function SocialIcon({ href, label, icon, hoverColor, isMobile }: { href: string;
     <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
-        // Always show brand color (not just on hover) — glass effect with brand tint
         color: hovered ? "#fff" : hoverColor,
         transition: "all 0.28s cubic-bezier(0.25,0.46,0.45,0.94)",
         transform: hovered ? "scale(1.12) translateY(-3px)" : "scale(1) translateY(0)",
         display: "flex", alignItems: "center", justifyContent: "center",
         width: sz, height: sz,
-        background: hovered
-          ? `${hoverColor}CC`
-          : `${hoverColor}22`,
+        background: hovered ? `${hoverColor}CC` : `${hoverColor}22`,
         backdropFilter: "blur(14px)",
         WebkitBackdropFilter: "blur(14px)",
-        border: hovered
-          ? `1.5px solid ${hoverColor}`
-          : `1.5px solid ${hoverColor}66`,
+        border: hovered ? `1.5px solid ${hoverColor}` : `1.5px solid ${hoverColor}66`,
         borderRadius: "12px",
         boxShadow: hovered
           ? `0 8px 24px rgba(0,0,0,0.35), 0 0 0 1px ${hoverColor}44, inset 0 1px 0 rgba(255,255,255,0.20)`
@@ -307,34 +308,35 @@ function SocialIcon({ href, label, icon, hoverColor, isMobile }: { href: string;
   );
 }
 
-/* ── Reserve A Table Button ── */
+/* ── Reserve A Table Button — shimmer border, no arrow ── */
 function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: string; href: string }) {
   const [hovered, setHovered] = useState(false);
-  const { isHe } = useLanguage();
+  const btnW = isMobile ? "clamp(100px, 30vw, 140px)" : "clamp(160px, 14vw, 220px)";
   return (
-    <a href={href}
+    <a
+      href={href}
       target={href.startsWith("http") ? "_blank" : undefined}
       rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="hero-reserve-btn"
       style={{
-        display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.4rem",
-        padding: isMobile ? "0.75rem 1.4rem" : "1.1rem 3.2rem",
+        display: "inline-flex", alignItems: "center", justifyContent: "center",
+        width: btnW,
+        padding: isMobile ? "0.75rem 0.5rem" : "1.1rem 0.5rem",
         fontFamily: "'Heebo', sans-serif", fontWeight: 800,
-        fontSize: isMobile ? "0.80rem" : "1.15rem",
-        letterSpacing: isMobile ? "0.04em" : "0.18em", textTransform: "uppercase" as const,
+        fontSize: isMobile ? "0.78rem" : "1.05rem",
+        letterSpacing: isMobile ? "0.04em" : "0.16em",
+        textTransform: "uppercase" as const,
         textDecoration: "none",
         whiteSpace: "nowrap" as const,
-        // Premium 3D gradient: light top → dark bottom
         background: hovered
           ? "linear-gradient(180deg, #1e9444 0%, #0d6030 55%, #094a24 100%)"
           : "linear-gradient(180deg, #1a8a3e 0%, #0b5528 55%, #083d1c 100%)",
         backdropFilter: "blur(14px)",
         WebkitBackdropFilter: "blur(14px)",
-        // Gold border for premium look
-        border: `2px solid ${hovered ? "rgba(210,170,30,0.90)" : "rgba(185,145,20,0.75)"}`,
         color: "#e8f5e0",
         textShadow: "0 1px 4px rgba(0,0,0,0.50)",
-        // Deep 3D shadow + inset highlight on top edge
         boxShadow: hovered
           ? "0 10px 32px rgba(0,0,0,0.55), 0 3px 10px rgba(0,0,0,0.30), inset 0 1.5px 0 rgba(255,255,255,0.18), inset 0 -2px 0 rgba(0,0,0,0.25)"
           : "0 5px 18px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.25), inset 0 1.5px 0 rgba(255,255,255,0.14), inset 0 -2px 0 rgba(0,0,0,0.20)",
@@ -342,9 +344,15 @@ function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: st
         transform: hovered ? "translateY(-3px) scale(1.03)" : "translateY(0) scale(1)",
         willChange: "transform, box-shadow",
         borderRadius: "10px",
+        position: "relative",
+        overflow: "hidden",
+        // border is handled via ::before pseudo in CSS (shimmer)
+        border: "2px solid transparent",
       }}
     >
-      {label} <span style={{ fontSize: "1.0rem", lineHeight: 1 }}>{isHe ? "←" : "→"}</span>
+      {/* Shimmer overlay */}
+      <span className="hero-reserve-shimmer" />
+      {label}
     </a>
   );
 }
@@ -352,30 +360,68 @@ function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: st
 /* ── Explore Menu Button ── */
 function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: string; href: string }) {
   const [hovered, setHovered] = useState(false);
+  const btnW = isMobile ? "clamp(100px, 30vw, 140px)" : "clamp(160px, 14vw, 220px)";
   return (
     <a href={href}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
-        display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.4rem",
-        padding: isMobile ? "0.75rem 1.4rem" : "1.1rem 3.2rem",
+        display: "inline-flex", alignItems: "center", justifyContent: "center",
+        width: btnW,
+        padding: isMobile ? "0.75rem 0.5rem" : "1.1rem 0.5rem",
         fontFamily: "'Heebo', sans-serif", fontWeight: 800,
-        fontSize: isMobile ? "0.80rem" : "1.15rem",
-        letterSpacing: isMobile ? "0.04em" : "0.18em", textTransform: "uppercase" as const,
+        fontSize: isMobile ? "0.78rem" : "1.05rem",
+        letterSpacing: isMobile ? "0.04em" : "0.16em",
+        textTransform: "uppercase" as const,
         textDecoration: "none",
         whiteSpace: "nowrap" as const,
-        // White button — more opaque
-        background: hovered
-          ? "rgba(255,255,255,0.38)"
-          : "rgba(255,255,255,0.26)",
+        background: hovered ? "rgba(255,255,255,0.38)" : "rgba(255,255,255,0.26)",
         backdropFilter: "blur(14px)",
         WebkitBackdropFilter: "blur(14px)",
         border: `2px solid ${hovered ? "rgba(255,255,255,0.90)" : "rgba(255,255,255,0.55)"}`,
         color: "#ffffff",
         textShadow: "0 1px 4px rgba(0,0,0,0.50)",
-        // Deep 3D shadow + inset highlight on top edge
         boxShadow: hovered
           ? "0 10px 32px rgba(0,0,0,0.50), 0 3px 10px rgba(180,140,0,0.30), inset 0 1.5px 0 rgba(255,255,200,0.40), inset 0 -2px 0 rgba(0,0,0,0.20)"
           : "0 5px 18px rgba(0,0,0,0.40), 0 2px 6px rgba(180,140,0,0.20), inset 0 1.5px 0 rgba(255,255,200,0.30), inset 0 -2px 0 rgba(0,0,0,0.15)",
+        transition: "all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        transform: hovered ? "translateY(-3px) scale(1.03)" : "translateY(0) scale(1)",
+        willChange: "transform, box-shadow",
+        borderRadius: "10px",
+      }}
+    >
+      {label}
+    </a>
+  );
+}
+
+/* ── Butcher Button — bordeaux border ── */
+function ButcherButton({ isMobile, label, href }: { isMobile: boolean; label: string; href: string }) {
+  const [hovered, setHovered] = useState(false);
+  const btnW = isMobile ? "clamp(100px, 30vw, 140px)" : "clamp(160px, 14vw, 220px)";
+  // Bordeaux color
+  const bordeauxBorder = hovered ? "rgba(120,10,18,0.95)" : "rgba(90,6,12,0.80)";
+  return (
+    <a href={href}
+      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "inline-flex", alignItems: "center", justifyContent: "center",
+        width: btnW,
+        padding: isMobile ? "0.75rem 0.5rem" : "1.1rem 0.5rem",
+        fontFamily: "'Heebo', sans-serif", fontWeight: 800,
+        fontSize: isMobile ? "0.78rem" : "1.05rem",
+        letterSpacing: isMobile ? "0.04em" : "0.16em",
+        textTransform: "uppercase" as const,
+        textDecoration: "none",
+        whiteSpace: "nowrap" as const,
+        background: hovered ? "rgba(90,6,12,0.45)" : "rgba(60,4,8,0.30)",
+        backdropFilter: "blur(14px)",
+        WebkitBackdropFilter: "blur(14px)",
+        border: `2px solid ${bordeauxBorder}`,
+        color: "#ffffff",
+        textShadow: "0 1px 4px rgba(0,0,0,0.60)",
+        boxShadow: hovered
+          ? "0 10px 32px rgba(0,0,0,0.50), 0 3px 10px rgba(90,6,12,0.35), inset 0 1.5px 0 rgba(255,200,200,0.20), inset 0 -2px 0 rgba(0,0,0,0.20)"
+          : "0 5px 18px rgba(0,0,0,0.40), 0 2px 6px rgba(90,6,12,0.25), inset 0 1.5px 0 rgba(255,200,200,0.12), inset 0 -2px 0 rgba(0,0,0,0.15)",
         transition: "all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         transform: hovered ? "translateY(-3px) scale(1.03)" : "translateY(0) scale(1)",
         willChange: "transform, box-shadow",
