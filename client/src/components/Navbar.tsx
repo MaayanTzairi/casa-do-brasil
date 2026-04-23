@@ -23,13 +23,13 @@ interface NavbarContent {
 
 function navigateToHash(href: string, e: React.MouseEvent) {
   if (href.startsWith("#")) {
-    const isHome = window.location.pathname === "/";
-    if (isHome) {
-      e.preventDefault();
-      const el = document.querySelector(href);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    e.preventDefault();
+    const el = document.querySelector(href);
+    if (el) {
+      // Element exists on current page — scroll to it
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
-      e.preventDefault();
+      // Element not on current page — navigate to home with hash
       window.location.href = "/" + href;
     }
   }
