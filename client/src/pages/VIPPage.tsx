@@ -18,7 +18,7 @@ const BORDEAUX_D = "rgb(22,1,3)";
 const GREEN      = "#009C3B";
 
 const CDN      = "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP";
-const HERO_IMG = `${CDN}/gallery-dining_opt_7d37c45c.webp`;
+const HERO_IMG = "/manus-storage/vip-hero_cc152063.webp";
 
 /* ─── Content ─── */
 const T = {
@@ -38,7 +38,7 @@ const T = {
     ctaSub: "For reservations and inquiries",
   },
   he: {
-    heroTitle:    "VIP פרטי",
+    heroTitle:    "חדר VIP פרטי",
     heroSubtitle: "גריל ברזילאי — חוויה בלעדית",
     badge:        "חוויה בלעדית",
     sectionTitle: "ערב שלא תשכחו",
@@ -347,28 +347,20 @@ export default function VIPPage() {
           {/* ── CTA ── */}
           <div
             style={{
-              background: BORDEAUX,
-              padding: "clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem)",
-              textAlign: "center",
+              borderTop: "1px solid rgba(180,180,180,0.35)",
+              paddingTop: "3rem",
+              paddingBottom: "1rem",
+              textAlign: isHe ? "right" : "left",
             }}
           >
-            <div
-              style={{
-                width: 50,
-                height: 1,
-                background: GOLD_RGB,
-                margin: "0 auto 1.6rem",
-              }}
-            />
             <p
               style={{
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 300,
-                fontSize: "clamp(14px, 1.1vw, 17px)",
-                color: "rgba(255,255,255,0.65)",
-                letterSpacing: isHe ? "0.04em" : "0.18em",
-                textTransform: isHe ? "none" : "uppercase",
-                margin: "0 0 1.2rem",
+                fontSize: "clamp(15px, 1.2vw, 18px)",
+                color: "rgb(80,40,40)",
+                margin: "0 0 1.6rem",
+                lineHeight: 1.7,
               }}
             >
               {t.ctaSub}
@@ -388,13 +380,20 @@ export default function VIPPage() {
                 letterSpacing: isHe ? "0.06em" : "0.22em",
                 textTransform: isHe ? "none" : "uppercase",
                 color: BORDEAUX,
-                background: GOLD_RGB,
-                padding: "1rem 3rem",
+                background: "transparent",
+                border: `1px solid ${BORDEAUX}`,
+                padding: "0.85rem 2.8rem",
                 textDecoration: "none",
-                transition: "opacity 0.2s ease",
+                transition: "background 0.2s ease, color 0.2s ease",
               }}
-              onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
-              onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = BORDEAUX;
+                e.currentTarget.style.color = "#fff";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.color = BORDEAUX;
+              }}
             >
               {t.cta}
             </a>
