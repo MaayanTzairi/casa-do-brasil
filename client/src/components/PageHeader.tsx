@@ -1,8 +1,9 @@
+import type { ReactNode } from "react";
+
 /**
  * Shared page header for content pages (FAQ, Benefits, Blog, etc.)
  * Ensures pixel-identical spacing and layout across all pages.
  */
-
 const BORDEAUX = "rgb(62,4,9)";
 const GOLD = "#FEDF00";
 const GOLD_R = "rgba(254,223,0,";
@@ -109,7 +110,7 @@ export function PageHeader({ badge, title, subtitle, isHe }: PageHeaderProps) {
  */
 interface PageWrapperProps {
   isHe: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export function PageWrapper({ isHe, children }: PageWrapperProps) {

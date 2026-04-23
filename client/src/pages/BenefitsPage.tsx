@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useEffect } from "react";
+import { PageHeader, PageWrapper } from "@/components/PageHeader";
 
 const BORDEAUX = "rgb(62,4,9)";
 const GOLD = "#FEDF00";
