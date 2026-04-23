@@ -1,14 +1,5 @@
 /**
  * CASA DO BRASIL — Hero Section
- * Design: Cinematic Asymmetric Luxury
- * Colors: White · Gold (185,161,103) · Deep Red (98,7,14) · Bordeaux (62,4,9)
- * Font: Heebo Black/Bold/Regular/Light only
- *
- * Desktop layout (flex-col, centered):
- *   [paddingTop = navbar height] → HeroBullInline → title → gold rule → subtitle → CTA buttons
- *
- * Mobile layout (flex-col, bottom-aligned):
- *   FlyingBull handles the fixed badge separately.
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -20,10 +11,6 @@ const HERO_IMAGE_DEFAULT =
 const HERO_IMAGE_SM_DEFAULT =
   "https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/FLTykIJCMkNjpAGC.webp";
 
-const GOLD = "rgb(185,161,103)";
-const BORDEAUX = "rgb(40,3,6)";
-
-// Hardcoded fallbacks
 const DEFAULTS = {
   titleHe: "CASA DO BRASIL",
   titleEn: "CASA DO BRASIL",
@@ -49,7 +36,6 @@ export default function HeroSection() {
   const [isMobile, setIsMobile] = useState(false);
   const [bullProgress, setBullProgress] = useState(0);
   const { isHe } = useLanguage();
-
   const t = DEFAULTS;
   const [bgImage] = useState(HERO_IMAGE_DEFAULT);
 
@@ -60,7 +46,6 @@ export default function HeroSection() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Listen to bull scroll progress so the inline bull can fade/shrink in sync
   useEffect(() => {
     const onBullProgress = (e: Event) => {
       setBullProgress((e as CustomEvent<number>).detail);
@@ -69,12 +54,10 @@ export default function HeroSection() {
     return () => window.removeEventListener("bullProgress", onBullProgress);
   }, []);
 
-  // Lightweight CSS parallax — image only
   useEffect(() => {
     const onScroll = () => {
-      const scrollY = window.scrollY;
       if (imgWrapRef.current) {
-        imgWrapRef.current.style.transform = `translateY(${scrollY * 0.25}px)`;
+        imgWrapRef.current.style.transform = `translateY(${window.scrollY * 0.25}px)`;
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -88,7 +71,7 @@ export default function HeroSection() {
       className="relative w-full overflow-hidden"
       style={{ height: "100svh", minHeight: "600px", background: "rgb(10,8,6)" }}
     >
-      {/* ── Background Image + Parallax ── */}
+      {/* Background */}
       <div ref={imgWrapRef} className="absolute inset-0 w-full h-full" style={{ willChange: "transform" }}>
         <img
           src={bgImage}
@@ -108,11 +91,9 @@ export default function HeroSection() {
           }}
         />
       </div>
-
-      {/* ── Light overlay ── */}
       <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.55)", pointerEvents: "none" }} />
 
-      {/* ── Hero Content ── */}
+      {/* Content */}
       <div
         className="absolute inset-0 z-10 flex flex-col"
         style={{
@@ -126,74 +107,44 @@ export default function HeroSection() {
           direction: isHe ? "rtl" : "ltr",
         }}
       >
-        {/* ── Bull Logo ── */}
         <HeroBullInline progress={bullProgress} isMobile={isMobile} />
 
         {/* Title + Subtitle */}
-        <div
-          style={{
-            width: "100%",
-            textAlign: "center",
-            overflow: "visible",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: isMobile ? "2px" : "4px",
-            animation: "fadeUp 0.95s 0.4s cubic-bezier(0.25,0.46,0.45,0.94) both",
-          }}
-        >
-          <h1
-            className="block select-none"
-            style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 900,
-              fontSize: isMobile ? "clamp(28px, 9vw, 52px)" : "clamp(42px, 6.5vw, 90px)",
-              letterSpacing: "0.04em",
-              lineHeight: 1.0,
-              whiteSpace: "nowrap",
-              textAlign: "center",
-              margin: 0,
-              color: "#ffffff",
-              WebkitTextStroke: "0px transparent",
-              textShadow: [
-                "0 1px 0px rgba(255,255,255,0.15)",
-                "0 2px 4px rgba(0,0,0,0.65)",
-                "0 4px 16px rgba(0,0,0,0.40)",
-                "0 0 30px rgba(254,223,0,0.18)",
-              ].join(", "),
-            }}
-          >
+        <div style={{
+          width: "100%", textAlign: "center", overflow: "visible",
+          display: "flex", flexDirection: "column", alignItems: "center",
+          gap: isMobile ? "2px" : "4px",
+          animation: "fadeUp 0.95s 0.4s cubic-bezier(0.25,0.46,0.45,0.94) both",
+        }}>
+          <h1 className="block select-none" style={{
+            fontFamily: "'Heebo', sans-serif", fontWeight: 900,
+            fontSize: isMobile ? "clamp(28px, 9vw, 52px)" : "clamp(42px, 6.5vw, 90px)",
+            letterSpacing: "0.04em", lineHeight: 1.0, whiteSpace: "nowrap",
+            textAlign: "center", margin: 0, color: "#ffffff",
+            WebkitTextStroke: "0px transparent",
+            textShadow: "0 1px 0px rgba(255,255,255,0.15), 0 2px 4px rgba(0,0,0,0.65), 0 4px 16px rgba(0,0,0,0.40), 0 0 30px rgba(254,223,0,0.18)",
+          }}>
             {isHe ? t.titleHe : t.titleEn}
           </h1>
-          <p
-            style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 600,
-              fontSize: isMobile ? "clamp(14px, 4.2vw, 20px)" : "clamp(20px, 2.2vw, 30px)",
-              color: "rgba(240,220,160,0.90)",
-              letterSpacing: isMobile ? "0.08em" : "0.18em",
-              fontStyle: "italic",
-              textAlign: "center",
-              whiteSpace: "nowrap",
-              margin: 0,
-              textShadow: "0 2px 12px rgba(0,0,0,0.90)",
-              lineHeight: 1.3,
-            }}
-          >
+          <p style={{
+            fontFamily: "'Heebo', sans-serif", fontWeight: 600,
+            fontSize: isMobile ? "clamp(14px, 4.2vw, 20px)" : "clamp(20px, 2.2vw, 30px)",
+            color: "rgba(240,220,160,0.90)",
+            letterSpacing: isMobile ? "0.08em" : "0.18em",
+            fontStyle: "italic", textAlign: "center", whiteSpace: "nowrap",
+            margin: 0, textShadow: "0 2px 12px rgba(0,0,0,0.90)", lineHeight: 1.3,
+          }}>
             {isHe ? t.subtitleHe : t.subtitleEn}
           </p>
         </div>
 
         {/* Mobile social icons */}
         {isMobile && (
-          <div
-            style={{
-              display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center",
-              gap: "1.6rem",
-              marginTop: "clamp(1.5rem, 5vh, 3rem)",
-              animation: "fadeIn 0.6s 0.8s ease both",
-            }}
-          >
+          <div style={{
+            display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center",
+            gap: "1.6rem", marginTop: "clamp(1.5rem, 5vh, 3rem)",
+            animation: "fadeIn 0.6s 0.8s ease both",
+          }}>
             <SocialIcon href={t.instagramUrl} label="Instagram" hoverColor="#E1306C" isMobile={true} icon={
               <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
@@ -212,54 +163,34 @@ export default function HeroSection() {
           </div>
         )}
 
-        {/* ── CTA Buttons: 3 buttons, Book a Table in center ── */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: isMobile ? "0.6rem" : "1.1rem",
-            flexWrap: "nowrap",
-            justifyContent: "center",
-            width: "100%",
-            marginTop: "auto",
-            animation: "fadeUp 0.8s 1.6s cubic-bezier(0.25,0.46,0.45,0.94) both",
-            direction: "ltr", // always LTR so order is: Menu | Book | Butcher
-          }}
-        >
-          {/* Left button: Menu (same style as before) */}
-          <ExploreButton
-            isMobile={isMobile}
-            label={isHe ? t.menuBtnHe : t.menuBtnEn}
-            href={t.menuBtnUrl}
-          />
+        {/* ── CTA Buttons ── */}
+        <div style={{
+          display: "flex", alignItems: "center",
+          gap: isMobile ? "0.55rem" : "1rem",
+          flexWrap: "nowrap", justifyContent: "center",
+          width: "100%", marginTop: "auto",
+          animation: "fadeUp 0.8s 1.6s cubic-bezier(0.25,0.46,0.45,0.94) both",
+          direction: "ltr",
+        }}>
+          {/* Menu — white glass */}
+          <GlassButton isMobile={isMobile} label={isHe ? t.menuBtnHe : t.menuBtnEn} href={t.menuBtnUrl} />
 
-          {/* Center button: Book a Table — shimmer border, no arrow */}
-          <ReserveButton
-            isMobile={isMobile}
-            label={isHe ? t.reserveBtnHe : t.reserveBtnEn}
-            href={t.reserveBtnUrl}
-          />
+          {/* Book a Table — prominent green, wider, real shimmer */}
+          <ReserveButton isMobile={isMobile} label={isHe ? t.reserveBtnHe : t.reserveBtnEn} href={t.reserveBtnUrl} />
 
-          {/* Right button: Butcher — bordeaux border */}
-          <ButcherButton
-            isMobile={isMobile}
-            label={isHe ? t.butcherBtnHe : t.butcherBtnEn}
-            href={t.butcherBtnUrl}
-          />
+          {/* Butcher — same white glass as Menu */}
+          <GlassButton isMobile={isMobile} label={isHe ? t.butcherBtnHe : t.butcherBtnEn} href={t.butcherBtnUrl} />
         </div>
       </div>
 
-      {/* ── Social Icons — desktop only, vertical on side ── */}
+      {/* Desktop social icons */}
       {!isMobile && (
-        <div
-          className="absolute z-20 flex flex-col items-center gap-4"
-          style={{
-            bottom: "9rem",
-            right: isHe ? undefined : "2.5rem",
-            left:  isHe ? "2.5rem" : undefined,
-            animation: "fadeIn 0.6s 0.8s ease both",
-          }}
-        >
+        <div className="absolute z-20 flex flex-col items-center gap-4" style={{
+          bottom: "9rem",
+          right: isHe ? undefined : "2.5rem",
+          left:  isHe ? "2.5rem" : undefined,
+          animation: "fadeIn 0.6s 0.8s ease both",
+        }}>
           <SocialIcon href={t.instagramUrl} label="Instagram" hoverColor="#E1306C" isMobile={false} icon={
             <svg width={32} height={32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
@@ -282,7 +213,7 @@ export default function HeroSection() {
   );
 }
 
-/* ── Social Icon — glass effect ── */
+/* ── Social Icon ── */
 function SocialIcon({ href, label, icon, hoverColor, isMobile }: { href: string; label: string; icon: React.ReactNode; hoverColor: string; isMobile?: boolean }) {
   const [hovered, setHovered] = useState(false);
   const sz = isMobile ? 44 : 52;
@@ -296,8 +227,7 @@ function SocialIcon({ href, label, icon, hoverColor, isMobile }: { href: string;
         display: "flex", alignItems: "center", justifyContent: "center",
         width: sz, height: sz,
         background: hovered ? `${hoverColor}CC` : `${hoverColor}22`,
-        backdropFilter: "blur(14px)",
-        WebkitBackdropFilter: "blur(14px)",
+        backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)",
         border: hovered ? `1.5px solid ${hoverColor}` : `1.5px solid ${hoverColor}66`,
         borderRadius: "12px",
         boxShadow: hovered
@@ -308,127 +238,88 @@ function SocialIcon({ href, label, icon, hoverColor, isMobile }: { href: string;
   );
 }
 
-/* ── Reserve A Table Button — shimmer border, no arrow ── */
+/* ── Glass Button (Menu & Butcher — identical white glass style) ── */
+function GlassButton({ isMobile, label, href }: { isMobile: boolean; label: string; href: string }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <a href={href}
+      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "inline-flex", alignItems: "center", justifyContent: "center",
+        minWidth: isMobile ? "clamp(88px, 26vw, 130px)" : "clamp(140px, 11vw, 190px)",
+        padding: isMobile ? "0.72rem 0.6rem" : "1.05rem 0.8rem",
+        fontFamily: "'Heebo', sans-serif", fontWeight: 800,
+        fontSize: isMobile ? "0.78rem" : "1.0rem",
+        letterSpacing: isMobile ? "0.04em" : "0.15em",
+        textTransform: "uppercase" as const,
+        textDecoration: "none", whiteSpace: "nowrap" as const,
+        background: hovered ? "rgba(255,255,255,0.38)" : "rgba(255,255,255,0.22)",
+        backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)",
+        border: `2px solid ${hovered ? "rgba(255,255,255,0.90)" : "rgba(255,255,255,0.52)"}`,
+        color: "#ffffff",
+        textShadow: "0 1px 4px rgba(0,0,0,0.55)",
+        boxShadow: hovered
+          ? "0 10px 32px rgba(0,0,0,0.50), 0 3px 10px rgba(180,140,0,0.25), inset 0 1.5px 0 rgba(255,255,200,0.35), inset 0 -2px 0 rgba(0,0,0,0.18)"
+          : "0 5px 18px rgba(0,0,0,0.38), 0 2px 6px rgba(180,140,0,0.15), inset 0 1.5px 0 rgba(255,255,200,0.25), inset 0 -2px 0 rgba(0,0,0,0.12)",
+        transition: "all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        transform: hovered ? "translateY(-3px) scale(1.03)" : "translateY(0) scale(1)",
+        willChange: "transform, box-shadow",
+        borderRadius: "10px",
+      }}
+    >
+      {label}
+    </a>
+  );
+}
+
+/* ── Reserve Button — wider, prominent green, animated shimmer border ── */
 function ReserveButton({ isMobile, label, href }: { isMobile: boolean; label: string; href: string }) {
   const [hovered, setHovered] = useState(false);
-  const btnW = isMobile ? "clamp(100px, 30vw, 140px)" : "clamp(160px, 14vw, 220px)";
   return (
-    <a
-      href={href}
-      target={href.startsWith("http") ? "_blank" : undefined}
-      rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="hero-reserve-btn"
+    /* Outer wrapper carries the animated gradient border */
+    <div
+      className="hero-reserve-wrap"
       style={{
-        display: "inline-flex", alignItems: "center", justifyContent: "center",
-        width: btnW,
-        padding: isMobile ? "0.75rem 0.5rem" : "1.1rem 0.5rem",
-        fontFamily: "'Heebo', sans-serif", fontWeight: 800,
-        fontSize: isMobile ? "0.78rem" : "1.05rem",
-        letterSpacing: isMobile ? "0.04em" : "0.16em",
-        textTransform: "uppercase" as const,
-        textDecoration: "none",
-        whiteSpace: "nowrap" as const,
-        background: hovered
-          ? "linear-gradient(180deg, #1e9444 0%, #0d6030 55%, #094a24 100%)"
-          : "linear-gradient(180deg, #1a8a3e 0%, #0b5528 55%, #083d1c 100%)",
-        backdropFilter: "blur(14px)",
-        WebkitBackdropFilter: "blur(14px)",
-        color: "#e8f5e0",
-        textShadow: "0 1px 4px rgba(0,0,0,0.50)",
-        boxShadow: hovered
-          ? "0 10px 32px rgba(0,0,0,0.55), 0 3px 10px rgba(0,0,0,0.30), inset 0 1.5px 0 rgba(255,255,255,0.18), inset 0 -2px 0 rgba(0,0,0,0.25)"
-          : "0 5px 18px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.25), inset 0 1.5px 0 rgba(255,255,255,0.14), inset 0 -2px 0 rgba(0,0,0,0.20)",
-        transition: "all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-        transform: hovered ? "translateY(-3px) scale(1.03)" : "translateY(0) scale(1)",
-        willChange: "transform, box-shadow",
-        borderRadius: "10px",
-        position: "relative",
-        overflow: "hidden",
-        // border is handled via ::before pseudo in CSS (shimmer)
-        border: "2px solid transparent",
+        padding: "2.5px",
+        borderRadius: "12px",
+        flexShrink: 0,
+        transform: hovered ? "translateY(-3px) scale(1.04)" : "translateY(0) scale(1)",
+        transition: "transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94)",
+        willChange: "transform",
       }}
     >
-      {/* Shimmer overlay */}
-      <span className="hero-reserve-shimmer" />
-      {label}
-    </a>
-  );
-}
-
-/* ── Explore Menu Button ── */
-function ExploreButton({ isMobile, label, href }: { isMobile: boolean; label: string; href: string }) {
-  const [hovered, setHovered] = useState(false);
-  const btnW = isMobile ? "clamp(100px, 30vw, 140px)" : "clamp(160px, 14vw, 220px)";
-  return (
-    <a href={href}
-      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-      style={{
-        display: "inline-flex", alignItems: "center", justifyContent: "center",
-        width: btnW,
-        padding: isMobile ? "0.75rem 0.5rem" : "1.1rem 0.5rem",
-        fontFamily: "'Heebo', sans-serif", fontWeight: 800,
-        fontSize: isMobile ? "0.78rem" : "1.05rem",
-        letterSpacing: isMobile ? "0.04em" : "0.16em",
-        textTransform: "uppercase" as const,
-        textDecoration: "none",
-        whiteSpace: "nowrap" as const,
-        background: hovered ? "rgba(255,255,255,0.38)" : "rgba(255,255,255,0.26)",
-        backdropFilter: "blur(14px)",
-        WebkitBackdropFilter: "blur(14px)",
-        border: `2px solid ${hovered ? "rgba(255,255,255,0.90)" : "rgba(255,255,255,0.55)"}`,
-        color: "#ffffff",
-        textShadow: "0 1px 4px rgba(0,0,0,0.50)",
-        boxShadow: hovered
-          ? "0 10px 32px rgba(0,0,0,0.50), 0 3px 10px rgba(180,140,0,0.30), inset 0 1.5px 0 rgba(255,255,200,0.40), inset 0 -2px 0 rgba(0,0,0,0.20)"
-          : "0 5px 18px rgba(0,0,0,0.40), 0 2px 6px rgba(180,140,0,0.20), inset 0 1.5px 0 rgba(255,255,200,0.30), inset 0 -2px 0 rgba(0,0,0,0.15)",
-        transition: "all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-        transform: hovered ? "translateY(-3px) scale(1.03)" : "translateY(0) scale(1)",
-        willChange: "transform, box-shadow",
-        borderRadius: "10px",
-      }}
-    >
-      {label}
-    </a>
-  );
-}
-
-/* ── Butcher Button — bordeaux border ── */
-function ButcherButton({ isMobile, label, href }: { isMobile: boolean; label: string; href: string }) {
-  const [hovered, setHovered] = useState(false);
-  const btnW = isMobile ? "clamp(100px, 30vw, 140px)" : "clamp(160px, 14vw, 220px)";
-  // Bordeaux color
-  const bordeauxBorder = hovered ? "rgba(120,10,18,0.95)" : "rgba(90,6,12,0.80)";
-  return (
-    <a href={href}
-      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-      style={{
-        display: "inline-flex", alignItems: "center", justifyContent: "center",
-        width: btnW,
-        padding: isMobile ? "0.75rem 0.5rem" : "1.1rem 0.5rem",
-        fontFamily: "'Heebo', sans-serif", fontWeight: 800,
-        fontSize: isMobile ? "0.78rem" : "1.05rem",
-        letterSpacing: isMobile ? "0.04em" : "0.16em",
-        textTransform: "uppercase" as const,
-        textDecoration: "none",
-        whiteSpace: "nowrap" as const,
-        background: hovered ? "rgba(90,6,12,0.45)" : "rgba(60,4,8,0.30)",
-        backdropFilter: "blur(14px)",
-        WebkitBackdropFilter: "blur(14px)",
-        border: `2px solid ${bordeauxBorder}`,
-        color: "#ffffff",
-        textShadow: "0 1px 4px rgba(0,0,0,0.60)",
-        boxShadow: hovered
-          ? "0 10px 32px rgba(0,0,0,0.50), 0 3px 10px rgba(90,6,12,0.35), inset 0 1.5px 0 rgba(255,200,200,0.20), inset 0 -2px 0 rgba(0,0,0,0.20)"
-          : "0 5px 18px rgba(0,0,0,0.40), 0 2px 6px rgba(90,6,12,0.25), inset 0 1.5px 0 rgba(255,200,200,0.12), inset 0 -2px 0 rgba(0,0,0,0.15)",
-        transition: "all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-        transform: hovered ? "translateY(-3px) scale(1.03)" : "translateY(0) scale(1)",
-        willChange: "transform, box-shadow",
-        borderRadius: "10px",
-      }}
-    >
-      {label}
-    </a>
+      <a
+        href={href}
+        target={href.startsWith("http") ? "_blank" : undefined}
+        rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          display: "inline-flex", alignItems: "center", justifyContent: "center",
+          minWidth: isMobile ? "clamp(110px, 32vw, 160px)" : "clamp(190px, 16vw, 270px)",
+          padding: isMobile ? "0.72rem 0.8rem" : "1.1rem 1rem",
+          fontFamily: "'Heebo', sans-serif", fontWeight: 900,
+          fontSize: isMobile ? "0.82rem" : "1.1rem",
+          letterSpacing: isMobile ? "0.05em" : "0.18em",
+          textTransform: "uppercase" as const,
+          textDecoration: "none", whiteSpace: "nowrap" as const,
+          background: hovered
+            ? "linear-gradient(180deg, #22a84e 0%, #0f6e35 55%, #0a4e26 100%)"
+            : "linear-gradient(180deg, #1a9444 0%, #0c6030 55%, #083d1c 100%)",
+          backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)",
+          border: "none",
+          color: "#e8f5e0",
+          textShadow: "0 1px 6px rgba(0,0,0,0.55)",
+          boxShadow: hovered
+            ? "0 12px 36px rgba(0,0,0,0.60), 0 4px 14px rgba(0,100,30,0.40), inset 0 1.5px 0 rgba(255,255,255,0.22), inset 0 -2px 0 rgba(0,0,0,0.28)"
+            : "0 6px 22px rgba(0,0,0,0.50), 0 2px 8px rgba(0,80,20,0.30), inset 0 1.5px 0 rgba(255,255,255,0.16), inset 0 -2px 0 rgba(0,0,0,0.22)",
+          transition: "background 0.25s ease, box-shadow 0.25s ease",
+          willChange: "box-shadow",
+          borderRadius: "10px",
+        }}
+      >
+        {label}
+      </a>
+    </div>
   );
 }

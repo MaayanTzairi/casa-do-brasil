@@ -262,46 +262,34 @@
   to { transform: scale(1.08) translate3d(1.5%, -1%, 0); }
 }
 
-/* ── Hero Reserve Button shimmer border ── */
-@keyframes borderShimmer {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* ── Hero Reserve Button — animated conic-gradient border ── */
+@keyframes spinBorder {
+  0%   { --border-angle: 0deg; }
+  100% { --border-angle: 360deg; }
 }
 
-.hero-reserve-btn {
-  background-clip: padding-box;
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
 }
 
-/* Shimmer border via pseudo-element on the span inside */
-.hero-reserve-shimmer {
-  position: absolute;
-  inset: -2px;
-  border-radius: 12px;
-  z-index: 0;
-  background: linear-gradient(
-    270deg,
-    rgba(185,161,103,0.0) 0%,
-    rgba(210,185,130,0.90) 25%,
-    rgba(255,235,180,1.0) 50%,
-    rgba(210,185,130,0.90) 75%,
-    rgba(185,161,103,0.0) 100%
+.hero-reserve-wrap {
+  background: conic-gradient(
+    from var(--border-angle),
+    rgba(185,161,103,0.15) 0%,
+    rgba(255,235,160,0.95) 20%,
+    rgba(210,180,80,1.0) 40%,
+    rgba(255,245,200,1.0) 50%,
+    rgba(210,180,80,1.0) 60%,
+    rgba(255,235,160,0.95) 80%,
+    rgba(185,161,103,0.15) 100%
   );
-  background-size: 300% 300%;
-  animation: borderShimmer 2.8s ease-in-out infinite;
-  pointer-events: none;
-  /* Mask: only show the border ring, not the fill */
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  padding: 2px;
-}
-
-.hero-reserve-btn > *:not(.hero-reserve-shimmer) {
-  position: relative;
-  z-index: 1;
+  animation: spinBorder 2.4s linear infinite;
+  box-shadow:
+    0 0 18px rgba(210,180,80,0.55),
+    0 0 36px rgba(210,180,80,0.25),
+    0 8px 28px rgba(0,0,0,0.50);
 }
 
 @keyframes slideInLeft {
