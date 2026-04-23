@@ -283,8 +283,7 @@ export default function VIPPage() {
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-              gap: "0",
-              borderTop: "1px solid rgba(180,180,180,0.35)",
+              gap: "1rem",
               marginBottom: "4rem",
             }}
           >
@@ -292,19 +291,29 @@ export default function VIPPage() {
               <div
                 key={i}
                 style={{
-                  padding: "2rem 1.5rem",
-                  borderBottom: "1px solid rgba(180,180,180,0.35)",
-                  borderRight: isHe ? "none" : (i % 2 === 0 ? "1px solid rgba(180,180,180,0.35)" : "none"),
-                  borderLeft: isHe ? (i % 2 === 0 ? "1px solid rgba(180,180,180,0.35)" : "none") : "none",
+                  padding: "2rem 1.8rem",
+                  borderRadius: "14px",
+                  background: "rgba(62,4,9,0.04)",
+                  border: "1px solid rgba(62,4,9,0.10)",
+                  transition: "box-shadow 0.25s ease, transform 0.25s ease",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 6px 28px rgba(62,4,9,0.10)";
+                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(-3px)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
                 }}
               >
-                {/* Gold accent line */}
+                {/* Green accent line */}
                 <div
                   style={{
-                    width: 32,
-                    height: 2,
-                    background: GOLD_RGB,
-                    marginBottom: "1rem",
+                    width: 36,
+                    height: 3,
+                    background: GREEN,
+                    borderRadius: "2px",
+                    marginBottom: "1.1rem",
                   }}
                 />
                 <h3

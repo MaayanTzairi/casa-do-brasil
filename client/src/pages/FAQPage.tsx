@@ -271,19 +271,39 @@ export default function FAQPage() {
           <div
             dir={isHe ? "rtl" : "ltr"}
             style={{
-              marginTop: "3rem",
-              padding: "1.8rem 2rem",
-              background: "rgba(62,4,9,0.04)",
-              borderInlineStart: `3px solid ${BORDEAUX}`,
+              marginTop: "3.5rem",
+              borderRadius: "18px",
+              overflow: "hidden",
+              background: BORDEAUX,
+              padding: "2.8rem clamp(1.8rem, 5vw, 3.5rem)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: isHe ? "flex-end" : "flex-start",
+              gap: "0",
+              position: "relative",
             }}
           >
+            {/* Subtle gold decorative line */}
+            <div style={{
+              position: "absolute",
+              top: 0,
+              left: isHe ? "auto" : "2.5rem",
+              right: isHe ? "2.5rem" : "auto",
+              width: "60px",
+              height: "3px",
+              background: GOLD,
+              borderRadius: "0 0 3px 3px",
+            }} />
+
             <p
               style={{
                 fontFamily: "'Heebo', sans-serif",
-                fontWeight: 700,
-                fontSize: "clamp(18px, 1.5vw, 22px)",
-                color: BORDEAUX,
-                margin: "0 0 0.5rem",
+                fontWeight: 900,
+                fontSize: "clamp(22px, 2vw, 30px)",
+                color: "#fff",
+                margin: "0 0 0.6rem",
+                letterSpacing: isHe ? "-0.01em" : "-0.01em",
+                lineHeight: 1.15,
               }}
             >
               {isHe ? "לא מצאתם תשובה?" : "Didn't find your answer?"}
@@ -292,10 +312,10 @@ export default function FAQPage() {
               style={{
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 300,
-                fontSize: "clamp(17px, 1.4vw, 21px)",
-                color: "rgb(90,40,40)",
-                margin: "0 0 1.2rem",
-                lineHeight: 1.6,
+                fontSize: "clamp(16px, 1.3vw, 20px)",
+                color: "rgba(255,255,255,0.78)",
+                margin: "0 0 2rem",
+                lineHeight: 1.65,
               }}
             >
               {isHe
@@ -305,25 +325,34 @@ export default function FAQPage() {
             <a
               href="tel:08-6323032"
               style={{
-                display: "inline-block",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.55rem",
                 fontFamily: "'Heebo', sans-serif",
-                fontWeight: 700,
-                fontSize: "clamp(13px, 1.05vw, 16px)",
-                letterSpacing: "0.12em",
+                fontWeight: 800,
+                fontSize: "clamp(14px, 1.1vw, 17px)",
+                letterSpacing: isHe ? "0.04em" : "0.1em",
                 textTransform: "uppercase",
                 textDecoration: "none",
-                color: "#fff",
-                background: BORDEAUX,
-                padding: "0.65rem 1.8rem",
-                transition: "background 0.25s ease",
+                color: BORDEAUX,
+                background: GREEN,
+                padding: "0.85rem 2.2rem",
+                borderRadius: "50px",
+                transition: "background 0.25s ease, transform 0.2s ease",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.background = "#009C3B";
+                (e.currentTarget as HTMLAnchorElement).style.background = "#007a2e";
+                (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.background = BORDEAUX;
+                (e.currentTarget as HTMLAnchorElement).style.background = GREEN;
+                (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
               }}
             >
+              {/* Phone icon */}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z" />
+              </svg>
               {isHe ? "התקשרו אלינו" : "Call Us"}
             </a>
           </div>
