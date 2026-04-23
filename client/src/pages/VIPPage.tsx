@@ -18,7 +18,7 @@ const BORDEAUX_D = "rgb(22,1,3)";
 const GREEN      = "#009C3B";
 
 const CDN      = "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP";
-const HERO_IMG = "/manus-storage/vip-hero_cc152063.webp";
+const HERO_IMG = "/vip-hero_cc152063.webp";
 
 /* ─── Content ─── */
 const T = {
@@ -344,60 +344,7 @@ export default function VIPPage() {
             ))}
           </div>
 
-          {/* ── CTA ── */}
-          <div
-            style={{
-              borderTop: "1px solid rgba(180,180,180,0.35)",
-              paddingTop: "3rem",
-              paddingBottom: "1rem",
-              textAlign: isHe ? "right" : "left",
-            }}
-          >
-            <p
-              style={{
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 300,
-                fontSize: "clamp(15px, 1.2vw, 18px)",
-                color: "rgb(80,40,40)",
-                margin: "0 0 1.6rem",
-                lineHeight: 1.7,
-              }}
-            >
-              {t.ctaSub}
-            </p>
-            <a
-              href="#contact"
-              onClick={e => {
-                e.preventDefault();
-                const el = document.querySelector("#contact");
-                if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-              }}
-              style={{
-                display: "inline-block",
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 700,
-                fontSize: "clamp(12px, 1vw, 14px)",
-                letterSpacing: isHe ? "0.06em" : "0.22em",
-                textTransform: isHe ? "none" : "uppercase",
-                color: BORDEAUX,
-                background: "transparent",
-                border: `1px solid ${BORDEAUX}`,
-                padding: "0.85rem 2.8rem",
-                textDecoration: "none",
-                transition: "background 0.2s ease, color 0.2s ease",
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = BORDEAUX;
-                e.currentTarget.style.color = "#fff";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.color = BORDEAUX;
-              }}
-            >
-              {t.cta}
-            </a>
-          </div>
+
         </div>
       </main>
 
