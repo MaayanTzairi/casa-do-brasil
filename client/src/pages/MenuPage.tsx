@@ -1284,14 +1284,6 @@ function TabBar({
 
 /* ─── HERO SECTION ─── */
 function MenuHero({ isHe }: { isHe: boolean }) {
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = HERO_IMG;
-    img.onload = () => setLoaded(true);
-  }, []);
-
   return (
     <section
       style={{

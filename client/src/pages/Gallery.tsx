@@ -4,7 +4,7 @@
  * Grid: simple masonry, no category filters, lightbox on click
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"; // useState still needed for lightbox
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -65,14 +65,6 @@ const ALL_IMAGES = [
 
 /* ─── HERO — identical to MenuPage hero, different image & text ─── */
 function GalleryHero({ isHe }: { isHe: boolean }) {
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = HERO_IMG;
-    img.onload = () => setLoaded(true);
-  }, []);
-
   return (
     <section
       style={{

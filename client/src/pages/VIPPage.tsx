@@ -4,7 +4,7 @@
  * Below: service description section
  */
 
-import { useState, useEffect } from "react";
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -56,14 +56,7 @@ const T = {
 
 /* ─── HERO — identical structure to GalleryHero ─── */
 function VIPHero({ isHe }: { isHe: boolean }) {
-  const [loaded, setLoaded] = useState(false);
   const t = isHe ? T.he : T.en;
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = HERO_IMG;
-    img.onload = () => setLoaded(true);
-  }, []);
 
   return (
     <section
@@ -85,8 +78,6 @@ function VIPHero({ isHe }: { isHe: boolean }) {
               backgroundImage: `url(${HERO_IMG})`,
               backgroundSize: "cover",
               backgroundPosition: "center 35%",
-              opacity: loaded ? 1 : 0,
-              transition: "opacity 0.6s ease",
             }}
           />
         </div>
