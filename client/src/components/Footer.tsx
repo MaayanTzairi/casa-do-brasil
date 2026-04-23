@@ -282,10 +282,20 @@ export default function Footer() {
     </div>
   );
 
-  const items = isHe
-    ? [`\u00a9 ${new Date().getFullYear()} Casa do Brasil`, "\u05de\u05d3\u05d9\u05e0\u05d9\u05d5\u05ea \u05e4\u05e8\u05d8\u05d9\u05d5\u05ea", "\u05d4\u05e6\u05d4\u05e8\u05ea \u05e0\u05d2\u05d9\u05e9\u05d5\u05ea", "\u05e2\u05d5\u05e6\u05d1 \u05d5\u05e4\u05d5\u05ea\u05d7 \u05e2\u05dc \u05d9\u05d3\u05d9 MTMC"]
-    : [`\u00a9 ${new Date().getFullYear()} Casa do Brasil`, "Privacy Policy", "Accessibility", "Designed & Built by MTMC"];
-
+  type BottomItem = { label: string; href?: string };
+  const items: BottomItem[] = isHe
+    ? [
+        { label: `\u00a9 ${new Date().getFullYear()} Casa do Brasil` },
+        { label: "\u05de\u05d3\u05d9\u05e0\u05d9\u05d5\u05ea \u05e4\u05e8\u05d8\u05d9\u05d5\u05ea" },
+        { label: "\u05d4\u05e6\u05d4\u05e8\u05ea \u05e0\u05d2\u05d9\u05e9\u05d5\u05ea", href: "/accessibility" },
+        { label: "\u05e2\u05d5\u05e6\u05d1 \u05d5\u05e4\u05d5\u05ea\u05d7 \u05e2\u05dc \u05d9\u05d3\u05d9 MTMC" },
+      ]
+    : [
+        { label: `\u00a9 ${new Date().getFullYear()} Casa do Brasil` },
+        { label: "Privacy Policy" },
+        { label: "Accessibility", href: "/accessibility" },
+        { label: "Designed & Built by MTMC" },
+      ];
   const bottomBar = (
     <div style={{
       borderTop: `1px solid ${DIVIDER}`,
@@ -296,7 +306,15 @@ export default function Footer() {
     }}>
       {items.map((item, i) => (
         <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
-          <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 400, fontSize: "0.66rem", letterSpacing: "0.06em", color: LIGHT }}>{item}</span>
+          {item.href ? (
+            <a href={item.href} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 400, fontSize: "0.66rem", letterSpacing: "0.06em", color: LIGHT, textDecoration: "none", transition: "color 0.18s" }}
+              onMouseEnter={e => (e.currentTarget.style.color = BORDEAUX)}
+              onMouseLeave={e => (e.currentTarget.style.color = LIGHT)}>
+              {item.label}
+            </a>
+          ) : (
+            <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 400, fontSize: "0.66rem", letterSpacing: "0.06em", color: LIGHT }}>{item.label}</span>
+          )}
           {i < items.length - 1 && <span style={{ width: 3, height: 3, borderRadius: "50%", background: DIVIDER, display: "inline-block" }} />}
         </span>
       ))}
