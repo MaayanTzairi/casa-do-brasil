@@ -23,7 +23,7 @@ export function PageHeader({ badge, title, subtitle, isHe }: PageHeaderProps) {
       dir={isHe ? "rtl" : "ltr"}
       style={{
         padding: "0 0 2.5rem",
-        borderBottom: `1px solid ${GOLD_R}0.2)`,
+        borderBottom: "1px solid rgba(180,180,180,0.35)",
         marginBottom: "3rem",
       }}
     >
@@ -72,16 +72,6 @@ export function PageHeader({ badge, title, subtitle, isHe }: PageHeaderProps) {
       >
         {title}
       </h1>
-
-      {/* Gold rule */}
-      <div
-        style={{
-          width: "clamp(60px, 10vw, 140px)",
-          height: "1px",
-          background: GOLD,
-          marginBottom: "1.2rem",
-        }}
-      />
 
       {/* Subtitle */}
       <p

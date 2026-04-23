@@ -83,7 +83,7 @@ export default function PrivacyPage() {
         <div style={dividerStyle} />
 
         {/* Placeholder content */}
-        <div style={{ maxWidth: "780px", marginInlineStart: isHe ? "auto" : "0" }}>
+          <div style={{ maxWidth: "780px" }}>
 
           {/* Notice */}
           <div style={{
