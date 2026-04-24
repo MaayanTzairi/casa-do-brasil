@@ -89,8 +89,25 @@ function ConditionalFlyingBull() {
   if (location !== "/") return null;
   return <FlyingBull />;
 }
+function useHashScroll() {
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash) return;
+    // Wait for the page to render, then scroll to the element
+    const tryScroll = (attempts = 0) => {
+      const el = document.querySelector(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else if (attempts < 10) {
+        setTimeout(() => tryScroll(attempts + 1), 150);
+      }
+    };
+    setTimeout(() => tryScroll(), 100);
+  }, []);
+}
 function Router() {
   usePrefetchSecondaryPages();
+  useHashScroll();
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>

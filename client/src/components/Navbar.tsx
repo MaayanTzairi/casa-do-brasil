@@ -30,7 +30,7 @@ function navigateToHash(href: string, e: React.MouseEvent) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
       // Element not on current page — navigate to home with hash
-      window.location.href = "/" + href;
+      window.location.href = "/#" + href.slice(1);
     }
   }
 }
