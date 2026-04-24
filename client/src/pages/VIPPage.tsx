@@ -212,7 +212,7 @@ function ExperienceCards({ isHe }: { isHe: boolean }) {
               style={{
                 borderRadius: "16px",
                 overflow: "hidden",
-                background: `linear-gradient(145deg, rgba(107,39,55,0.06) 0%, rgba(0,156,59,0.04) 100%)`,
+                background: `linear-gradient(145deg, rgba(107,39,55,0.05) 0%, rgba(0,156,59,0.03) 100%)`,
                 border: `1px solid rgba(107,39,55,0.12)`,
                 padding: "2rem 1.6rem 1.8rem",
                 position: "relative",
@@ -220,8 +220,10 @@ function ExperienceCards({ isHe }: { isHe: boolean }) {
             >
               {/* Top accent stripe */}
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: `linear-gradient(90deg, ${GREEN}, ${GOLD})` }} />
-              {/* Icon */}
-              <div style={{ fontSize: "2.4rem", marginBottom: "1rem", lineHeight: 1 }}>{exp.icon}</div>
+              {/* Number accent */}
+              <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "2.8rem", color: `rgba(107,39,55,0.08)`, lineHeight: 1, marginBottom: "0.6rem", letterSpacing: "-0.04em" }}>
+                {String(i + 1).padStart(2, "0")}
+              </div>
               {/* Title */}
               <h3 style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: "clamp(16px,1.3vw,20px)", color: BORDEAUX, margin: "0 0 0.55rem", lineHeight: 1.2 }}>
                 {exp.title}
@@ -246,167 +248,155 @@ function VIPForm({ isHe }: { isHe: boolean }) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In production: send to backend via tRPC
     setSent(true);
   };
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
-    background: "rgba(255,255,255,0.08)",
-    border: "1.5px solid rgba(254,223,0,0.35)",
+    background: "#fff",
+    border: `1.5px solid rgba(107,39,55,0.2)`,
     borderRadius: "10px",
     padding: "0.85rem 1.1rem",
     fontFamily: "'Heebo', sans-serif",
     fontSize: "1rem",
-    color: "#fff",
+    color: BORDEAUX,
     outline: "none",
     boxSizing: "border-box",
-    transition: "border-color 0.2s, background 0.2s",
+    transition: "border-color 0.2s, box-shadow 0.2s",
   };
 
   const labelStyle: React.CSSProperties = {
     fontFamily: "'Heebo', sans-serif",
-    fontWeight: 600,
-    fontSize: "0.85rem",
-    color: "rgba(254,223,0,0.85)",
+    fontWeight: 700,
+    fontSize: "0.82rem",
+    color: BORDEAUX,
     display: "block",
     marginBottom: "0.4rem",
     letterSpacing: isHe ? "0.03em" : "0.08em",
+    textTransform: "uppercase" as const,
   };
 
   return (
-    <section style={{ background: `linear-gradient(160deg, ${BORDEAUX_D} 0%, #3e0409 60%, #1a0a0e 100%)`, padding: "5rem 0 6rem", marginTop: "4rem" }}>
+    <section style={{ background: "#f7f3ee", padding: "5rem 0 6rem", marginTop: "4rem" }}>
       <div style={{ maxWidth: "680px", margin: "0 auto", padding: "0 clamp(1.2rem,6vw,2.5rem)" }} dir={isHe ? "rtl" : "ltr"}>
-        {/* Brazilian decorative top element */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", marginBottom: "2rem" }}>
-          <div style={{ flex: 1, height: "1px", background: `linear-gradient(${isHe ? "to left" : "to right"}, transparent, rgba(254,223,0,0.5))` }} />
-          <div style={{ display: "flex", gap: "6px" }}>
-            <div style={{ width: 8, height: 8, borderRadius: "50%", background: GREEN }} />
-            <div style={{ width: 8, height: 8, borderRadius: "50%", background: GOLD }} />
-            <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#003087" }} />
+
+        {/* Card */}
+        <div style={{
+          background: "#fff",
+          borderRadius: "20px",
+          boxShadow: "0 8px 40px rgba(107,39,55,0.12), 0 2px 8px rgba(0,0,0,0.06)",
+          overflow: "hidden",
+          border: `1px solid rgba(107,39,55,0.10)`,
+        }}>
+          {/* Card header — bordeaux gradient */}
+          <div style={{
+            background: `linear-gradient(135deg, ${BORDEAUX} 0%, #3e0409 100%)`,
+            padding: "2.2rem clamp(1.5rem,5vw,2.5rem) 2rem",
+            textAlign: "center",
+            position: "relative",
+            overflow: "hidden",
+          }}>
+            {/* Subtle pattern overlay */}
+            <div style={{ position: "absolute", inset: 0, opacity: 0.06, backgroundImage: "repeating-linear-gradient(45deg, #FEDF00 0, #FEDF00 1px, transparent 0, transparent 50%)", backgroundSize: "12px 12px" }} />
+            {/* Brazilian dots */}
+            <div style={{ display: "flex", justifyContent: "center", gap: "6px", marginBottom: "1.2rem", position: "relative" }}>
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: GREEN }} />
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: GOLD }} />
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#003087" }} />
+            </div>
+            <h2 className="vip-gold-title" style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(22px,3vw,38px)", margin: "0 0 0.5rem", lineHeight: 1.1 }}>
+              {t.formTitle}
+            </h2>
+            <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(14px,1.1vw,17px)", color: "rgba(255,255,255,0.80)", margin: "0 0 0.4rem" }}>
+              {t.formSubtitle}
+            </p>
+            <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 500, fontSize: "clamp(12px,0.95vw,14px)", color: `rgba(254,223,0,0.75)`, margin: 0, fontStyle: "italic" }}>
+              {t.formNote}
+            </p>
           </div>
-          <div style={{ flex: 1, height: "1px", background: `linear-gradient(${isHe ? "to right" : "to left"}, transparent, rgba(254,223,0,0.5))` }} />
-        </div>
 
-        {/* Form title */}
-        <h2 className="vip-gold-title" style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(26px,3.5vw,46px)", textAlign: "center", margin: "0 0 0.5rem", lineHeight: 1.1 }}>
-          {t.formTitle}
-        </h2>
-        <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(15px,1.2vw,18px)", color: "rgba(255,255,255,0.75)", textAlign: "center", margin: "0 0 0.5rem" }}>
-          {t.formSubtitle}
-        </p>
-        <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 500, fontSize: "clamp(13px,1vw,15px)", color: "rgba(254,223,0,0.7)", textAlign: "center", margin: "0 0 2.5rem", fontStyle: "italic" }}>
-          {t.formNote}
-        </p>
-
-        {sent ? (
-          <div style={{ textAlign: "center", padding: "3rem 2rem", borderRadius: "16px", border: "1.5px solid rgba(254,223,0,0.4)", background: "rgba(255,255,255,0.06)" }}>
-            <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🎉</div>
-            <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1.2rem", color: GOLD, margin: 0 }}>{t.success}</p>
+          {/* Card body */}
+          <div style={{ padding: "2rem clamp(1.5rem,5vw,2.5rem) 2.5rem" }}>
+            {sent ? (
+              <div style={{ textAlign: "center", padding: "2.5rem 1rem" }}>
+                <div style={{ width: 56, height: 56, borderRadius: "50%", background: `rgba(0,156,59,0.1)`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1rem" }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={GREEN} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "1.15rem", color: BORDEAUX, margin: 0 }}>{t.success}</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+                {/* Name */}
+                <div>
+                  <label style={labelStyle}>{t.fields.name}</label>
+                  <input
+                    type="text" required
+                    placeholder={isHe ? "ישראל ישראלי" : "John Smith"}
+                    value={form.name}
+                    onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                    style={inputStyle}
+                    onFocus={e => { e.currentTarget.style.borderColor = BORDEAUX; e.currentTarget.style.boxShadow = `0 0 0 3px rgba(107,39,55,0.10)`; }}
+                    onBlur={e => { e.currentTarget.style.borderColor = "rgba(107,39,55,0.2)"; e.currentTarget.style.boxShadow = "none"; }}
+                  />
+                </div>
+                {/* Phone + Email */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                  <div>
+                    <label style={labelStyle}>{t.fields.phone}</label>
+                    <input type="tel" required placeholder="050-0000000" value={form.phone}
+                      onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} style={inputStyle}
+                      onFocus={e => { e.currentTarget.style.borderColor = BORDEAUX; e.currentTarget.style.boxShadow = `0 0 0 3px rgba(107,39,55,0.10)`; }}
+                      onBlur={e => { e.currentTarget.style.borderColor = "rgba(107,39,55,0.2)"; e.currentTarget.style.boxShadow = "none"; }}
+                    />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>{t.fields.email}</label>
+                    <input type="email" placeholder="your@email.com" value={form.email}
+                      onChange={e => setForm(f => ({ ...f, email: e.target.value }))} style={inputStyle}
+                      onFocus={e => { e.currentTarget.style.borderColor = BORDEAUX; e.currentTarget.style.boxShadow = `0 0 0 3px rgba(107,39,55,0.10)`; }}
+                      onBlur={e => { e.currentTarget.style.borderColor = "rgba(107,39,55,0.2)"; e.currentTarget.style.boxShadow = "none"; }}
+                    />
+                  </div>
+                </div>
+                {/* Guests + Time */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                  <div>
+                    <label style={labelStyle}>{t.fields.guests}</label>
+                    <input type="number" min="1" max="30" required placeholder={t.guestsPlaceholder} value={form.guests}
+                      onChange={e => setForm(f => ({ ...f, guests: e.target.value }))} style={inputStyle}
+                      onFocus={e => { e.currentTarget.style.borderColor = BORDEAUX; e.currentTarget.style.boxShadow = `0 0 0 3px rgba(107,39,55,0.10)`; }}
+                      onBlur={e => { e.currentTarget.style.borderColor = "rgba(107,39,55,0.2)"; e.currentTarget.style.boxShadow = "none"; }}
+                    />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>{t.fields.time}</label>
+                    <input type="text" required placeholder={t.timePlaceholder} value={form.time}
+                      onChange={e => setForm(f => ({ ...f, time: e.target.value }))} style={inputStyle}
+                      onFocus={e => { e.currentTarget.style.borderColor = BORDEAUX; e.currentTarget.style.boxShadow = `0 0 0 3px rgba(107,39,55,0.10)`; }}
+                      onBlur={e => { e.currentTarget.style.borderColor = "rgba(107,39,55,0.2)"; e.currentTarget.style.boxShadow = "none"; }}
+                    />
+                  </div>
+                </div>
+                {/* Submit */}
+                <button
+                  type="submit"
+                  style={{
+                    marginTop: "0.4rem", width: "100%", padding: "1rem 2rem",
+                    borderRadius: "12px", border: "none",
+                    background: `linear-gradient(90deg, ${GREEN} 0%, #00b844 100%)`,
+                    color: "#fff", fontFamily: "'Heebo', sans-serif", fontWeight: 800,
+                    fontSize: "1.05rem", letterSpacing: isHe ? "0.05em" : "0.14em",
+                    cursor: "pointer", boxShadow: "0 4px 20px rgba(0,156,59,0.35)",
+                    transition: "transform 0.18s, box-shadow 0.18s",
+                  }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 8px 28px rgba(0,156,59,0.50)"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 20px rgba(0,156,59,0.35)"; }}
+                >
+                  {t.fields.submit}
+                </button>
+              </form>
+            )}
           </div>
-        ) : (
-          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
-            {/* Name */}
-            <div>
-              <label style={labelStyle}>{t.fields.name}</label>
-              <input
-                className="vip-input"
-                type="text"
-                required
-                placeholder={isHe ? "ישראל ישראלי" : "John Smith"}
-                value={form.name}
-                onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                style={inputStyle}
-              />
-            </div>
-            {/* Phone + Email row */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-              <div>
-                <label style={labelStyle}>{t.fields.phone}</label>
-                <input
-                  className="vip-input"
-                  type="tel"
-                  required
-                  placeholder="050-0000000"
-                  value={form.phone}
-                  onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-                  style={inputStyle}
-                />
-              </div>
-              <div>
-                <label style={labelStyle}>{t.fields.email}</label>
-                <input
-                  className="vip-input"
-                  type="email"
-                  placeholder={isHe ? "your@email.com" : "your@email.com"}
-                  value={form.email}
-                  onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                  style={inputStyle}
-                />
-              </div>
-            </div>
-            {/* Guests + Time row */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-              <div>
-                <label style={labelStyle}>{t.fields.guests}</label>
-                <input
-                  className="vip-input"
-                  type="number"
-                  min="1"
-                  max="30"
-                  required
-                  placeholder={t.guestsPlaceholder}
-                  value={form.guests}
-                  onChange={e => setForm(f => ({ ...f, guests: e.target.value }))}
-                  style={inputStyle}
-                />
-              </div>
-              <div>
-                <label style={labelStyle}>{t.fields.time}</label>
-                <input
-                  className="vip-input"
-                  type="text"
-                  required
-                  placeholder={t.timePlaceholder}
-                  value={form.time}
-                  onChange={e => setForm(f => ({ ...f, time: e.target.value }))}
-                  style={inputStyle}
-                />
-              </div>
-            </div>
-
-            {/* Submit button */}
-            <button
-              type="submit"
-              style={{
-                marginTop: "0.5rem",
-                width: "100%",
-                padding: "1rem 2rem",
-                borderRadius: "12px",
-                border: "none",
-                background: `linear-gradient(90deg, ${GREEN} 0%, #00b844 100%)`,
-                color: "#fff",
-                fontFamily: "'Heebo', sans-serif",
-                fontWeight: 800,
-                fontSize: "1.05rem",
-                letterSpacing: isHe ? "0.05em" : "0.14em",
-                cursor: "pointer",
-                boxShadow: "0 4px 20px rgba(0,156,59,0.45)",
-                transition: "transform 0.18s, box-shadow 0.18s",
-              }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 8px 28px rgba(0,156,59,0.55)"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 20px rgba(0,156,59,0.45)"; }}
-            >
-              {t.fields.submit}
-            </button>
-          </form>
-        )}
-
-        {/* Bottom Brazilian stripe */}
-        <div style={{ display: "flex", height: "3px", borderRadius: "2px", overflow: "hidden", marginTop: "3rem" }}>
-          <div style={{ flex: 1, background: GREEN }} />
-          <div style={{ flex: 1, background: GOLD }} />
-          <div style={{ flex: 1, background: "#003087" }} />
         </div>
       </div>
     </section>
