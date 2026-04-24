@@ -4,9 +4,10 @@
  * - Appears after scrolling past the hero (window.scrollY > 75vh)
  * - Mobile: centered bottom
  * - Desktop EN: bottom-right | Desktop HE: bottom-left
+ * - Stops at the footer top border (button center aligns with footer top line)
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const LOGO_URL =
@@ -18,12 +19,17 @@ const RESERVATIONS_URL =
 const BR_GREEN = "#009C3B";
 const BR_YELLOW = "#FEDF00";
 
+/** Height of the button in px (approximate — used for centering on footer line) */
+const BTN_HEIGHT = 52;
+
 export default function StickyReservationBtn() {
   const { lang } = useLanguage();
   const isHe = lang === "he";
   const [visible, setVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  // bottomOffset: how far from the viewport bottom the button sits
+  const [bottomOffset, setBottomOffset] = useState(32); // default 2rem = 32px
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth < 768);
@@ -34,10 +40,40 @@ export default function StickyReservationBtn() {
 
   useEffect(() => {
     const threshold = window.innerHeight * 0.75;
-    const onScroll = () => setVisible(window.scrollY > threshold);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    const update = () => {
+      setVisible(window.scrollY > threshold);
+
+      // Find the footer element
+      const footer = document.getElementById("contact");
+      if (!footer) {
+        setBottomOffset(32);
+        return;
+      }
+
+      const footerRect = footer.getBoundingClientRect();
+      const viewportH = window.innerHeight;
+
+      // footerRect.top is the distance from viewport top to footer top
+      // We want the button center to sit on the footer top line.
+      // button bottom = viewportH - footerRect.top + BTN_HEIGHT/2
+      // but we clamp to minimum 32px so it never goes below viewport
+      if (footerRect.top < viewportH) {
+        // Footer is visible — push button up so its center aligns with footer top
+        const distFromBottom = viewportH - footerRect.top + BTN_HEIGHT / 2;
+        setBottomOffset(Math.max(32, distFromBottom));
+      } else {
+        setBottomOffset(32);
+      }
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
   }, []);
 
   // Position: mobile = centered, desktop = side
@@ -65,7 +101,7 @@ export default function StickyReservationBtn() {
       onMouseLeave={() => setHovered(false)}
       style={{
         position: "fixed",
-        bottom: "2rem",
+        bottom: `${bottomOffset}px`,
         ...positionStyle,
         zIndex: 999,
         display: "flex",
@@ -88,6 +124,7 @@ export default function StickyReservationBtn() {
           "opacity 0.35s ease",
           "background 0.3s ease",
           "box-shadow 0.3s ease",
+          "bottom 0.15s ease",
         ].join(", "),
         whiteSpace: "nowrap",
         flexDirection: isHe ? "row-reverse" : "row",

@@ -184,7 +184,7 @@ export default function MenuSection() {
   const card2Name   = isHe ? (cms?.card2NameHe ?? "עיקריות") : (cms?.card2NameEn ?? "ENTRÉES");
   const card2Type   = isHe ? (cms?.card2TypeHe ?? "מנות עיקריות לבחירה") : (cms?.card2TypeEn ?? "Individual Selections");
   const card2Btn    = isHe ? (cms?.card2BtnHe ?? "לצפייה בתפריט") : (cms?.card2BtnEn ?? "View Menu");
-  const card2Url    = cms?.card2BtnUrl ?? "/menu?tab=classic";
+  const card2Url    = cms?.card2BtnUrl ?? "/menu?tab=specials";
 
   return (
     <div

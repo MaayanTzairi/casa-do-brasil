@@ -241,18 +241,10 @@ export default function GallerySection() {
         {/* ── IMAGE SLIDER COLUMN ── */}
         <div style={{ ...animStyle(inView, 0.2), flex: 1, display: "flex", flexDirection: "column", alignItems: "stretch" }}>
           <div style={{ position: "relative" }}>
-            {/* Corner brackets */}
-            {[
-              { top: 0, left: 0, borderTop: "1.5px solid rgba(0,156,59,0.45)", borderLeft: "1.5px solid rgba(0,156,59,0.45)" },
-              { top: 0, right: 0, borderTop: "1.5px solid rgba(0,156,59,0.45)", borderRight: "1.5px solid rgba(0,156,59,0.45)" },
-              { bottom: 0, left: 0, borderBottom: "1.5px solid rgba(0,156,59,0.45)", borderLeft: "1.5px solid rgba(0,156,59,0.45)" },
-              { bottom: 0, right: 0, borderBottom: "1.5px solid rgba(0,156,59,0.45)", borderRight: "1.5px solid rgba(0,156,59,0.45)" },
-            ].map((s, i) => (
-              <div key={i} style={{ position: "absolute", width: "18px", height: "18px", opacity: 0.7, zIndex: 4, pointerEvents: "none", ...s }} />
-            ))}
+
 
             <div style={{
-              margin: "10px", position: "relative", overflow: "hidden", borderRadius: "12px",
+              position: "relative", overflow: "hidden", borderRadius: "12px",
               aspectRatio: "4/3",
               minHeight: mobile ? "240px" : "clamp(280px, 34vw, 500px)",
               maxHeight: mobile ? "320px" : "500px",
@@ -308,15 +300,7 @@ export default function GallerySection() {
                 onMouseLeave={(e) => { const el = e.currentTarget as HTMLButtonElement; el.style.background = "rgba(255,255,255,0.92)"; el.style.color = "#009C3B"; el.style.transform = "translateY(-50%) scale(1)"; }}
               >›</button>
 
-              {/* Counter */}
-              <div style={{
-                position: "absolute", bottom: "12px", right: "12px",
-                fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "0.65rem",
-                letterSpacing: "0.2em", color: "rgba(0,156,59,0.9)", zIndex: 4,
-                textShadow: "0 1px 4px rgba(0,0,0,0.5)",
-              }}>
-                {String(current + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
-              </div>
+
             </div>
           </div>
         </div>
