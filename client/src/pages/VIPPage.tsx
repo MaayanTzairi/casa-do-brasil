@@ -137,38 +137,48 @@ function VIPHero({ isHe, onCtaClick }: { isHe: boolean; onCtaClick: () => void }
 
       <div
         dir={isHe ? "rtl" : "ltr"}
-        style={{ position: "absolute", inset: 0, zIndex: 10, display: "flex", flexDirection: "column", justifyContent: "flex-end", alignItems: isHe ? "flex-end" : "flex-start", padding: "clamp(2rem,5vw,4rem) clamp(1.5rem,6vw,5.5rem)", paddingBottom: "clamp(3.5rem,7vw,5.5rem)" }}
+        style={{
+          position: "absolute", inset: 0, zIndex: 10,
+          display: "flex", flexDirection: "column",
+          justifyContent: "flex-end",
+          alignItems: isHe ? "flex-end" : "flex-start",
+          textAlign: isHe ? "right" : "left",
+          padding: "clamp(2rem,5vw,4rem) clamp(1.5rem,6vw,5.5rem)",
+          paddingBottom: "clamp(3.5rem,7vw,5.5rem)",
+        }}
       >
         {/* VIP title only */}
         <h1
           className="vip-gold-title"
-          style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(80px,14vw,160px)", lineHeight: 0.85, letterSpacing: "-0.03em", margin: "0 0 1.2rem" }}
+          style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: "clamp(80px,14vw,160px)", lineHeight: 0.85, letterSpacing: "-0.03em", margin: "0 0 1.2rem", direction: "ltr" }}
         >
           VIP
         </h1>
 
-        {/* Gold divider */}
+        {/* Gold divider — aligned to reading direction */}
         <div style={{ width: "clamp(60px,10vw,140px)", height: "2px", background: `linear-gradient(${isHe ? "to left" : "to right"}, ${GOLD}, transparent)`, marginBottom: "1.4rem" }} />
 
-        {/* CTA button → scroll to form */}
+        {/* CTA button — gold shimmer */}
         <button
           onClick={onCtaClick}
+          className="vip-gold-title"
           style={{
             fontFamily: "'Heebo', sans-serif",
-            fontWeight: 700,
-            fontSize: "clamp(14px,1.2vw,17px)",
-            letterSpacing: isHe ? "0.04em" : "0.12em",
-            color: "#fff",
+            fontWeight: 800,
+            fontSize: "clamp(15px,1.3vw,19px)",
+            letterSpacing: isHe ? "0.05em" : "0.12em",
             background: "transparent",
-            border: `1.5px solid rgba(255,255,255,0.65)`,
-            borderRadius: "8px",
-            padding: "0.75rem 2rem",
+            border: `2px solid ${GOLD}`,
+            borderRadius: "10px",
+            padding: "0.85rem 2.2rem",
             cursor: "pointer",
-            backdropFilter: "blur(6px)",
-            transition: "background 0.2s, border-color 0.2s",
+            backdropFilter: "blur(8px)",
+            boxShadow: `0 0 18px rgba(254,223,0,0.30), 0 0 40px rgba(254,223,0,0.12)`,
+            transition: "box-shadow 0.2s, border-color 0.2s",
+            WebkitTextFillColor: "unset",
           }}
-          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.15)"; (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.9)"; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.65)"; }}
+          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = `0 0 28px rgba(254,223,0,0.55), 0 0 60px rgba(254,223,0,0.25)`; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = `0 0 18px rgba(254,223,0,0.30), 0 0 40px rgba(254,223,0,0.12)`; }}
         >
           {t.heroCta}
         </button>
@@ -357,12 +367,13 @@ function VIPStickyBtn({ isHe, onClick }: { isHe: boolean; onClick: () => void })
         zIndex: 999,
         display: "flex",
         alignItems: "center",
-        gap: "0.6rem",
+        justifyContent: "center",
+        gap: "0.55rem",
         background: GOLD,
         color: BORDEAUX,
         border: "none",
-        borderRadius: "50px",
-        padding: "0.85rem 1.8rem",
+        borderRadius: "14px",
+        padding: "0.9rem 2rem",
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 800,
         fontSize: "clamp(14px,1.1vw,16px)",
@@ -371,14 +382,11 @@ function VIPStickyBtn({ isHe, onClick }: { isHe: boolean; onClick: () => void })
         boxShadow: "0 6px 24px rgba(0,0,0,0.22)",
         transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s",
         whiteSpace: "nowrap",
+        minWidth: "180px",
       }}
       onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
       onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 6px 24px rgba(0,0,0,0.22)"; }}
     >
-      {/* Star icon */}
-      <svg width="16" height="16" viewBox="0 0 24 24" fill={BORDEAUX} stroke="none">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-      </svg>
       {t.stickyLabel}
     </button>
   );
@@ -404,7 +412,6 @@ export default function VIPPage() {
     <div style={{ minHeight: "100vh", background: "#fff" }}>
       <Navbar />
       <VIPHero isHe={isHe} onCtaClick={scrollToForm} />
-      <FeatureTitles isHe={isHe} />
       <VIPForm isHe={isHe} formRef={formRef} />
       <Footer />
       <VIPStickyBtn isHe={isHe} onClick={scrollToForm} />

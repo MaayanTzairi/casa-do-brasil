@@ -79,6 +79,11 @@ function PageLoader() {
     </div>
   );
 }
+function ConditionalStickyBtn() {
+  const [location] = useLocation();
+  if (location === "/vip") return null;
+  return <StickyReservationBtn />;
+}
 function ConditionalFlyingBull() {
   const [location] = useLocation();
   if (location !== "/") return null;
@@ -115,7 +120,7 @@ function App() {
           <TooltipProvider>
             <Toaster />
             <Router />
-            <Suspense fallback={null}><StickyReservationBtn /></Suspense>
+            <Suspense fallback={null}><ConditionalStickyBtn /></Suspense>
             <ConditionalFlyingBull />
           </TooltipProvider>
         </ThemeProvider>
