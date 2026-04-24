@@ -26,6 +26,7 @@ const T = {
       "Fully Private Space — up to 30 guests",
       "Your Own Personal Gaucho — exclusive tableside service",
       "Curated Menu & Drinks — a fully tailored experience",
+      "Seats are limited — we recommend calling ahead",
     ],
     fields: {
       name:    "Full Name",
@@ -53,6 +54,7 @@ const T = {
       "מרחב פרטי לחלוטין — עד 30 אורחים",
       "גאושו אישי משלכם — שירות בלעדי ליד השולחן",
       "תפריט ומשקאות מותאמים — חוויה מותאמת אישית",
+      "מספר המקומות מוגבל — מומלץ להתקשר מבעוד מועד",
     ],
     fields: {
       name:    "שם מלא",
@@ -235,7 +237,7 @@ function VIPForm({ isHe, formRef }: { isHe: boolean; formRef: React.RefObject<HT
               {t.bullets.map((b, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
                   <div style={{ width: 8, height: 8, borderRadius: "50%", background: GOLD, flexShrink: 0, marginTop: "0.38rem" }} />
-                  <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 400, fontSize: "clamp(13px,1vw,15px)", color: "rgba(255,255,255,0.85)", lineHeight: 1.55 }}>{b}</span>
+                  <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 500, fontSize: "clamp(15px,1.1vw,17px)", color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>{b}</span>
                 </div>
               ))}
             </div>
