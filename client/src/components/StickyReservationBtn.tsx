@@ -4,85 +4,40 @@
  * - Appears after scrolling past the hero (window.scrollY > 75vh)
  * - Mobile: centered bottom
  * - Desktop EN: bottom-right | Desktop HE: bottom-left
- * - Stops at the footer top border (button center aligns with footer top line)
  */
-
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-
 const LOGO_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663392712778/NSX3yZdWqRV4jGmQcXqBFP/logo-bull-nobg_opt_4cf70427.webp";
-
 const RESERVATIONS_URL =
   "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73";
-
 const BR_GREEN = "#009C3B";
 const BR_YELLOW = "#FEDF00";
-
-/** Height of the button in px (approximate — used for centering on footer line) */
-const BTN_HEIGHT = 52;
-
 export default function StickyReservationBtn() {
   const { lang } = useLanguage();
   const isHe = lang === "he";
   const [visible, setVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  // bottomOffset: how far from the viewport bottom the button sits
-  const [bottomOffset, setBottomOffset] = useState(32); // default 2rem = 32px
-
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth < 768);
     onResize();
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
-
   useEffect(() => {
     const threshold = window.innerHeight * 0.75;
-
-    const update = () => {
-      setVisible(window.scrollY > threshold);
-
-      // Find the footer element
-      const footer = document.getElementById("contact");
-      if (!footer) {
-        setBottomOffset(32);
-        return;
-      }
-
-      const footerRect = footer.getBoundingClientRect();
-      const viewportH = window.innerHeight;
-
-      // footerRect.top is the distance from viewport top to footer top
-      // We want the button center to sit on the footer top line.
-      // button bottom = viewportH - footerRect.top + BTN_HEIGHT/2
-      // but we clamp to minimum 32px so it never goes below viewport
-      if (footerRect.top < viewportH) {
-        // Footer is visible — push button up so its center aligns with footer top
-        const distFromBottom = viewportH - footerRect.top + BTN_HEIGHT / 2;
-        setBottomOffset(Math.max(32, distFromBottom));
-      } else {
-        setBottomOffset(32);
-      }
-    };
-
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
+    const onScroll = () => setVisible(window.scrollY > threshold);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
   // Position: mobile = centered, desktop = side
   const positionStyle: React.CSSProperties = isMobile
     ? { left: "50%", right: "auto" }
     : isHe
     ? { left: "1.5rem", right: "auto" }
     : { right: "1.5rem", left: "auto" };
-
   // Transform: mobile needs translateX(-50%) for centering
   const transformVisible = isMobile
     ? "translateX(-50%) translateY(0) scale(1)"
@@ -90,7 +45,6 @@ export default function StickyReservationBtn() {
   const transformHidden = isMobile
     ? "translateX(-50%) translateY(30px) scale(0.7)"
     : "translateY(30px) scale(0.7)";
-
   return (
     <a
       href={RESERVATIONS_URL}
@@ -101,7 +55,7 @@ export default function StickyReservationBtn() {
       onMouseLeave={() => setHovered(false)}
       style={{
         position: "fixed",
-        bottom: `${bottomOffset}px`,
+        bottom: "2rem",
         ...positionStyle,
         zIndex: 999,
         display: "flex",
@@ -124,7 +78,6 @@ export default function StickyReservationBtn() {
           "opacity 0.35s ease",
           "background 0.3s ease",
           "box-shadow 0.3s ease",
-          "bottom 0.15s ease",
         ].join(", "),
         whiteSpace: "nowrap",
         flexDirection: isHe ? "row-reverse" : "row",
@@ -143,7 +96,6 @@ export default function StickyReservationBtn() {
           filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.4))",
         }}
       />
-
       {/* Label — always visible */}
       <span
         style={{
