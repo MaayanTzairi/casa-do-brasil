@@ -290,21 +290,21 @@ export default function Navbar({
     ? [
         { label: "בית", href: "/" },
         { label: "תפריט", href: menuHref },
-        { label: "גלריה", href: galleryHref },
+        { label: "VIP", href: "/vip", isVip: true },
         { label: "שאלות", href: faqHref },
         { label: "הטבות", href: "/benefits" },
+        { label: "גלריה", href: galleryHref },
         { label: "בלוג", href: "/blog" },
-        { label: "VIP", href: "/vip", isVip: true },
         { label: "צור קשר", href: contactHref },
       ]
     : [
         { label: "HOME", href: "/" },
         { label: t.menuEn, href: menuHref },
-        { label: t.galleryEn, href: galleryHref },
-        { label: t.faqEn, href: faqHref },
-        { label: "BENEFITS", href: "/vip" },
-        { label: "BLOG", href: "/blog" },
         { label: "VIP", href: "/vip", isVip: true },
+        { label: t.faqEn, href: faqHref },
+        { label: "BENEFITS", href: "/benefits" },
+        { label: t.galleryEn, href: galleryHref },
+        { label: "BLOG", href: "/blog" },
         { label: t.contactEn, href: contactHref },
       ];
 
@@ -676,18 +676,19 @@ export default function Navbar({
             </a>
           ))}
 
-          {/* ── Bottom: reservation button only ── */}
+          {/* ── Bottom: reservation + butcher buttons ── */}
           <div style={{
             position: "absolute",
             bottom: "2.5rem",
             display: "flex",
-            flexDirection: "column",
+            flexDirection: "row",
             alignItems: "center",
-            gap: "1rem",
+            justifyContent: "center",
+            gap: "0.75rem",
             width: "100%",
             padding: "0 2rem",
           }}>
-            {/* Reservation CTA button */}
+            {/* Reservation CTA button — slightly smaller */}
             <a
               href={RESERVATIONS_URL}
               target="_blank"
@@ -696,11 +697,11 @@ export default function Navbar({
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
-                gap: "0.5rem",
+                gap: "0.4rem",
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 800,
-                fontSize: "1.0rem",
-                letterSpacing: isHe ? "0.04em" : "0.14em",
+                fontSize: "0.82rem",
+                letterSpacing: isHe ? "0.04em" : "0.12em",
                 textTransform: "uppercase",
                 textDecoration: "none",
                 color: "#fff",
@@ -709,13 +710,42 @@ export default function Navbar({
                 WebkitBackdropFilter: "blur(10px)",
                 border: "2px solid rgba(0,156,59,0.85)",
                 borderRadius: "10px",
-                padding: "0.85rem 2.5rem",
-                width: "100%",
-                maxWidth: "320px",
+                padding: "0.7rem 1.2rem",
+                flex: 1,
+                maxWidth: "180px",
                 boxShadow: "0 4px 16px rgba(0,0,0,0.20)",
               }}
             >
-              {isHe ? "הזמנת שולחן" : "RESERVE A TABLE"} {isHe ? "←" : "→"}
+              {isHe ? "הזמנת שולחן" : "BOOK A TABLE"}
+            </a>
+            {/* Butcher button — same style as hero */}
+            <a
+              href="/menu?tab=fresh-meat"
+              onClick={(e) => { setMenuOpen(false); }}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.4rem",
+                fontFamily: "'Heebo', sans-serif",
+                fontWeight: 800,
+                fontSize: "0.82rem",
+                letterSpacing: isHe ? "0.04em" : "0.12em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                color: "rgba(255,255,255,0.92)",
+                background: "rgba(255,255,255,0.12)",
+                backdropFilter: "blur(10px)",
+                WebkitBackdropFilter: "blur(10px)",
+                border: "2px solid rgba(120,0,20,0.75)",
+                borderRadius: "10px",
+                padding: "0.7rem 1.2rem",
+                flex: 1,
+                maxWidth: "180px",
+                boxShadow: "0 4px 16px rgba(0,0,0,0.20)",
+              }}
+            >
+              {isHe ? "קצביה" : "BUTCHER"}
             </a>
           </div>
           {/* Bottom Brazilian stripe */}
