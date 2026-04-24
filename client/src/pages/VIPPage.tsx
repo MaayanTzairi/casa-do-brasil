@@ -39,6 +39,8 @@ const T = {
     guestsPlaceholder: "e.g. 15",
     success: "Thank you! We'll be in touch shortly.",
     stickyLabel: "Leave Details",
+    callUs: "Or call us:",
+    phone: "08-6323032",
   },
   he: {
     heroCta:     "להשארת פרטים",
@@ -64,6 +66,8 @@ const T = {
     guestsPlaceholder: "לדוגמה: 15",
     success: "תודה! ניצור אתכם קשר בהקדם.",
     stickyLabel: "השאר פרטים",
+    callUs: "או חייגו:",
+    phone: "08-6323032",
   },
 };
 
@@ -126,11 +130,12 @@ function VIPHero({ isHe, onCtaClick }: { isHe: boolean; onCtaClick: () => void }
 
       {/* Content — right-aligned in Hebrew */}
       <div
+        dir={isHe ? "rtl" : "ltr"}
         style={{
           position: "absolute", inset: 0, zIndex: 10,
           display: "flex", flexDirection: "column",
           justifyContent: "flex-end",
-          alignItems: isHe ? "flex-end" : "flex-start",
+          alignItems: "flex-start",
           padding: "clamp(2rem,5vw,4rem) clamp(1.5rem,6vw,5.5rem)",
           paddingBottom: "clamp(3.5rem,7vw,5.5rem)",
         }}
@@ -290,6 +295,12 @@ function VIPForm({ isHe, formRef }: { isHe: boolean; formRef: React.RefObject<HT
                 >
                   {t.fields.submit}
                 </button>
+
+                {/* Phone call option */}
+                <div style={{ textAlign: "center", marginTop: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+                  <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 400, fontSize: "0.9rem", color: "rgba(107,39,55,0.65)" }}>{t.callUs}</span>
+                  <a href={`tel:${t.phone}`} style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: "0.95rem", color: BORDEAUX, textDecoration: "none", direction: "ltr", display: "inline-block" }}>{t.phone}</a>
+                </div>
               </form>
             )}
           </div>
@@ -368,7 +379,6 @@ export default function VIPPage() {
       <VIPHero isHe={isHe} onCtaClick={scrollToForm} />
       <VIPForm isHe={isHe} formRef={formRef} />
       <Footer />
-      <VIPStickyBtn isHe={isHe} onClick={scrollToForm} />
     </div>
   );
 }
