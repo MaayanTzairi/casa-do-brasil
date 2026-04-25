@@ -296,6 +296,7 @@ export default function FAQPage() {
               borderRadius: "0 0 3px 3px",
             }} />
 
+            <div style={{ width: "100%", textAlign: isHe ? "right" : "left" }}>
             <p
               style={{
                 fontFamily: "'Heebo', sans-serif",
@@ -304,7 +305,6 @@ export default function FAQPage() {
                 color: BORDEAUX,
                 margin: "0 0 0.6rem",
                 lineHeight: 1.15,
-                textAlign: isHe ? "right" : "left",
               }}
             >
               {isHe ? "לא מצאתם תשובה?" : "Didn't find your answer?"}
@@ -317,13 +317,13 @@ export default function FAQPage() {
                 color: "rgb(90,40,40)",
                 margin: "0 0 2rem",
                 lineHeight: 1.65,
-                textAlign: isHe ? "right" : "left",
               }}
             >
               {isHe
                 ? "צרו קשר ישירות בטלפון 08-6323032 ונשמח לעזור."
                 : "Call us directly at 08-6323032 and we'll be happy to help."}
             </p>
+            </div>
             <div style={{ width: "100%", textAlign: isHe ? "right" : "left" }}>
             <a
               href="tel:08-6323032"
