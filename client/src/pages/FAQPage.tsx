@@ -324,6 +324,7 @@ export default function FAQPage() {
                 ? "צרו קשר ישירות בטלפון 08-6323032 ונשמח לעזור."
                 : "Call us directly at 08-6323032 and we'll be happy to help."}
             </p>
+            <div style={{ width: "100%", textAlign: isHe ? "right" : "left" }}>
             <a
               href="tel:08-6323032"
               style={{
@@ -357,6 +358,7 @@ export default function FAQPage() {
               </svg>
               {isHe ? "התקשרו אלינו" : "Call Us"}
             </a>
+            </div>
           </div>
       </PageWrapper>
 
