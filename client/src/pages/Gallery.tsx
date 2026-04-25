@@ -157,22 +157,7 @@ function GalleryHero({ isHe }: { isHe: boolean }) {
           }}
         />
 
-        {/* Subtitle */}
-        <p
-          style={{
-            fontFamily: "'Heebo', sans-serif",
-            fontWeight: 300,
-            fontSize: "clamp(15px, 1.4vw, 19px)",
-            letterSpacing: isHe ? "0.04em" : "0.1em",
-            fontStyle: "italic",
-            margin: 0,
-            direction: isHe ? "rtl" : "ltr",
-            textAlign: isHe ? "right" : "left",
-            color: "rgba(240,220,160,0.90)",
-          }}
-        >
-          {isHe ? "גריל ברזילאי — מוזיקה וצ'ורוסקריה" : "Brazilian Grill — Music & Churrascaria"}
-        </p>
+
       </div>
     </section>
   );

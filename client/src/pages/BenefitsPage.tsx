@@ -216,8 +216,8 @@ export default function BenefitsPage() {
               gridTemplateColumns: "repeat(2, 1fr)",
               gap: "clamp(1rem, 3vw, 2rem)",
               maxWidth: "600px",
-              marginInlineStart: isHe ? "auto" : "0",
-              marginInlineEnd: isHe ? "0" : "auto",
+              marginInlineStart: "auto",
+              marginInlineEnd: "auto",
             }}
           >
             {/* BuyMe */}
@@ -347,7 +347,7 @@ export default function BenefitsPage() {
               fontSize: "clamp(17px, 1.35vw, 21px)",
               color: "rgb(90,35,35)",
               lineHeight: 1.8,
-              margin: "0 0 1.2rem",
+              margin: 0,
               textAlign: isHe ? "right" : "left",
             }}
           >
@@ -355,23 +355,26 @@ export default function BenefitsPage() {
               ? "קאסה דו ברזיל עובדת עם מספר כרטיסי אשראי המעניקים הנחות והטבות, ביניהם: חבר טעמים, כרטיס קרנות השוטרים, שוברים וקופונים."
               : "Casa do Brasil works with several credit cards that offer discounts and benefits, including: Chaver Te'amim, Police Officers Fund card, vouchers and coupons."}
           </p>
-          <p
-            style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 400,
-              fontSize: "clamp(13px, 1.05vw, 15px)",
-              color: "rgba(62,4,9,0.55)",
-              lineHeight: 1.6,
-              margin: 0,
-              fontStyle: "italic",
-              textAlign: isHe ? "right" : "left",
-            }}
-          >
-            {isHe
-              ? "* אין כפל מבצעים והנחות. האמור כאן כפוף לשינויים של המסעדה — יש לברר פרטים בטלפון."
-              : "* Offers cannot be combined. All details are subject to change — please call to confirm."}
-          </p>
         </div>
+
+        {/* Disclaimer note — below the gray divider */}
+        <p
+          dir={isHe ? "rtl" : "ltr"}
+          style={{
+            fontFamily: "'Heebo', sans-serif",
+            fontWeight: 400,
+            fontSize: "clamp(12px, 0.95vw, 14px)",
+            color: "rgba(62,4,9,0.50)",
+            lineHeight: 1.6,
+            margin: "1.2rem 0 0",
+            fontStyle: "italic",
+            textAlign: isHe ? "right" : "left",
+          }}
+        >
+          {isHe
+            ? "* אין כפל מבצעים והנחות. האמור כאן כפוף לשינויים של המסעדה — יש לברר פרטים בטלפון."
+            : "* Offers cannot be combined. All details are subject to change — please call to confirm."}
+        </p>
 
       </PageWrapper>
 
