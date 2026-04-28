@@ -247,7 +247,7 @@ export default function ButcherPage() {
             textAlign: isHe ? "right" : "left",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start" }}>
             <div style={{ width: "28px", height: "2px", background: "#009C3B", flexShrink: 0 }} />
             <span dir={isHe ? "rtl" : "ltr"} style={{
               fontFamily: "'Heebo', sans-serif",

@@ -532,7 +532,7 @@ export default function Navbar({
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: isHe ? "clamp(0.9rem, 1.2vw, 1.6rem)" : "clamp(0.7rem, 0.9vw, 1.2rem)",
+                gap: isHe ? "clamp(1.1rem, 1.6vw, 2rem)" : "clamp(0.5rem, 0.6vw, 0.9rem)",
                 flex: 1,
                 justifyContent: "flex-start",
               }}
@@ -544,18 +544,30 @@ export default function Navbar({
                   <LangToggle scrolled={scrolled} />
                 </>
               ) : (
-                navLinks.map((link) => (
-                  <NavLink
-                    key={link.label}
-                    href={link.href}
-                    color={linkColor}
-                    scrolled={scrolled}
-                    isHe={isHe}
-                    isVip={(link as any).isVip}
-                    isButcher={(link as any).isButcher}
-                  >
-                    {link.label}
-                  </NavLink>
+                navLinks.map((link, i) => (
+                  <>
+                    {i > 0 && (
+                      <span key={`dot-${i}`} aria-hidden="true" style={{
+                        color: GOLD,
+                        fontSize: "clamp(8px, 0.55vw, 10px)",
+                        opacity: 0.7,
+                        lineHeight: 1,
+                        userSelect: "none",
+                        flexShrink: 0,
+                      }}>●</span>
+                    )}
+                    <NavLink
+                      key={link.label}
+                      href={link.href}
+                      color={linkColor}
+                      scrolled={scrolled}
+                      isHe={isHe}
+                      isVip={(link as any).isVip}
+                      isButcher={(link as any).isButcher}
+                    >
+                      {link.label}
+                    </NavLink>
+                  </>
                 ))
               )}
             </div>
@@ -580,24 +592,36 @@ export default function Navbar({
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: isHe ? "clamp(0.9rem, 1.2vw, 1.6rem)" : "clamp(0.7rem, 0.9vw, 1.2rem)",
+                gap: isHe ? "clamp(0.5rem, 0.6vw, 0.9rem)" : "clamp(1.1rem, 1.6vw, 2rem)",
                 flex: 1,
                 justifyContent: "flex-end",
               }}
             >
               {isHe ? (
-                [...navLinks].reverse().map((link) => (
-                  <NavLink
-                    key={link.label}
-                    href={link.href}
-                    color={linkColor}
-                    scrolled={scrolled}
-                    isHe={isHe}
-                    isVip={(link as any).isVip}
-                    isButcher={(link as any).isButcher}
-                  >
-                    {link.label}
-                  </NavLink>
+                [...navLinks].reverse().map((link, i) => (
+                  <>
+                    {i > 0 && (
+                      <span key={`dot-he-${i}`} aria-hidden="true" style={{
+                        color: GOLD,
+                        fontSize: "clamp(8px, 0.55vw, 10px)",
+                        opacity: 0.7,
+                        lineHeight: 1,
+                        userSelect: "none",
+                        flexShrink: 0,
+                      }}>●</span>
+                    )}
+                    <NavLink
+                      key={link.label}
+                      href={link.href}
+                      color={linkColor}
+                      scrolled={scrolled}
+                      isHe={isHe}
+                      isVip={(link as any).isVip}
+                      isButcher={(link as any).isButcher}
+                    >
+                      {link.label}
+                    </NavLink>
+                  </>
                 ))
               ) : (
                 <>
