@@ -207,7 +207,93 @@ function VIPForm({ isHe, formRef }: { isHe: boolean; formRef: React.RefObject<HT
   };
 
   return (
-    <section ref={formRef} style={{ background: "#f7f3ee", padding: "5rem 0 6rem" }}>
+    <section ref={formRef} style={{ background: "#f7f3ee", padding: "5rem 0 6rem", position: "relative" }}>
+      {/* Coming Soon diagonal banner */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        zIndex: 20,
+        background: "rgba(22,1,3,0.72)",
+        backdropFilter: "blur(4px)",
+        WebkitBackdropFilter: "blur(4px)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "1.2rem",
+        pointerEvents: "all",
+      }}>
+        {/* Diagonal ribbon */}
+        <div style={{
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.6rem",
+        }}>
+          {/* Gold top stripe */}
+          <div style={{ display: "flex", gap: 4, marginBottom: "0.5rem" }}>
+            <div style={{ height: 3, width: 40, background: "#009C3B", borderRadius: 2 }} />
+            <div style={{ height: 3, width: 40, background: "#FEDF00", borderRadius: 2 }} />
+            <div style={{ height: 3, width: 40, background: "#002776", borderRadius: 2 }} />
+          </div>
+          <div style={{
+            background: "linear-gradient(135deg, #FEDF00 0%, #e8c800 100%)",
+            color: "rgb(62,4,9)",
+            padding: "0.7rem 3.5rem",
+            transform: "rotate(-3deg)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.45), 0 2px 8px rgba(254,223,0,0.35)",
+            borderTop: "3px solid rgba(255,255,255,0.35)",
+            borderBottom: "3px solid rgba(0,0,0,0.20)",
+          }}>
+            <span style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 900,
+              fontSize: "clamp(28px, 5vw, 52px)",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              display: "block",
+              textAlign: "center",
+              lineHeight: 1,
+              textShadow: "0 1px 0 rgba(255,255,255,0.4)",
+            }}>
+              {isHe ? "בקרוב" : "COMING SOON"}
+            </span>
+            <span style={{
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 600,
+              fontSize: "clamp(13px, 1.5vw, 18px)",
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              display: "block",
+              textAlign: "center",
+              marginTop: "0.25rem",
+              opacity: 0.75,
+            }}>
+              {isHe ? "COMING SOON" : "בקרוב"}
+            </span>
+          </div>
+          {/* Gold bottom stripe */}
+          <div style={{ display: "flex", gap: 4, marginTop: "0.5rem" }}>
+            <div style={{ height: 3, width: 40, background: "#002776", borderRadius: 2 }} />
+            <div style={{ height: 3, width: 40, background: "#FEDF00", borderRadius: 2 }} />
+            <div style={{ height: 3, width: 40, background: "#009C3B", borderRadius: 2 }} />
+          </div>
+        </div>
+        <p style={{
+          fontFamily: "'Heebo', sans-serif",
+          fontWeight: 400,
+          fontSize: "clamp(13px, 1.1vw, 16px)",
+          color: "rgba(255,255,255,0.70)",
+          letterSpacing: "0.06em",
+          textAlign: "center",
+          margin: 0,
+          maxWidth: "340px",
+          lineHeight: 1.6,
+        }}>
+          {isHe ? "החדר עוד לא פתוח — פרטים בקרוב" : "The room is not yet open — details coming soon"}
+        </p>
+      </div>
       <div
         style={{ maxWidth: "680px", margin: "0 auto", padding: "0 clamp(1.2rem,6vw,2.5rem)" }}
         dir={isHe ? "rtl" : "ltr"}

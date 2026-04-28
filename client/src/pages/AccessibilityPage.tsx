@@ -136,10 +136,10 @@ export default function AccessibilityPage() {
               {isHe ? "מייל לפניות בנושא הנגשת האתר" : "Contact for accessibility inquiries"}
             </p>
             <a
-              href="mailto:studio@2eat.co.il"
+              href="mailto:cdb@carel.co.il"
               style={emailStyle}
             >
-              studio@2eat.co.il
+              cdb@carel.co.il
             </a>
           </div>
         </div>

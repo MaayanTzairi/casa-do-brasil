@@ -1,8 +1,8 @@
 /**
  * CASA DO BRASIL — Sticky Navbar
  * Desktop 3-column layout:
- *   EN (LTR): [MENU · STORY · GALLERY · CONTACT] | LOGO | [RESERVATIONS · 🌐]
- *   HE (RTL): [תפריט · סיפור · גלריה · צור קשר] | LOGO | [הזמנת מקום · 🌐]
+ *   EN (LTR): [MENU · BUTCHER · STORY · GALLERY · CONTACT] | LOGO | [RESERVATIONS · GMAPS · 🌐]
+ *   HE (RTL): [תפריט · קצביה · סיפור · גלריה · צור קשר] | LOGO | [הזמנת מקום · GMAPS · 🌐]
  * Mobile: [RESERVE] | LOGO (center) | [🌐 · ☰]
  * No framer-motion — pure CSS transitions
  */
@@ -26,10 +26,8 @@ function navigateToHash(href: string, e: React.MouseEvent) {
     e.preventDefault();
     const el = document.querySelector(href);
     if (el) {
-      // Element exists on current page — scroll to it
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
-      // Element not on current page — navigate to home with hash
       window.location.href = "/#" + href.slice(1);
     }
   }
@@ -42,6 +40,8 @@ const GOLD = "#B9A167";
 const BORDEAUX = "rgb(62,4,9)";
 const RESERVATIONS_URL =
   "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73";
+const GOOGLE_MAPS_URL =
+  "https://www.google.com/maps/search/?api=1&query=דרך+הערבה+23+אילת";
 
 const DEFAULTS: Required<NavbarContent> = {
   menuHe: "תפריט",
@@ -148,8 +148,6 @@ function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: bo
   const isHe = lang === "he";
   const [hov, setHov] = useState(false);
 
-  // On hero (not scrolled): white glass + yellow text
-  // On white navbar (scrolled) OR in overlay: yellow-gold background + dark text
   const isScrolledState = (!inOverlay && scrolled) || inOverlay;
   const bg = isScrolledState
     ? (hov ? "#e8cc00" : "#FEDF00")
@@ -205,6 +203,55 @@ function LangToggle({ scrolled, inOverlay }: { scrolled: boolean; inOverlay?: bo
         {isHe ? "EN" : "עב"}
       </span>
     </button>
+  );
+}
+
+/* ─── Google Maps Icon Button ─── */
+function GoogleMapsBtn({ scrolled }: { scrolled: boolean }) {
+  const [hov, setHov] = useState(false);
+  const isScrolledState = scrolled;
+  const bg = isScrolledState
+    ? (hov ? "rgba(66,133,244,0.15)" : "rgba(66,133,244,0.08)")
+    : (hov ? "rgba(255,255,255,0.38)" : "rgba(255,255,255,0.18)");
+  const border = isScrolledState
+    ? (hov ? "rgba(66,133,244,0.60)" : "rgba(66,133,244,0.30)")
+    : (hov ? "rgba(255,255,255,0.90)" : "rgba(255,255,255,0.45)");
+
+  return (
+    <a
+      href={GOOGLE_MAPS_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Google Maps — דרך הערבה 23, אילת"
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "34px",
+        height: "34px",
+        background: bg,
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        border: `1px solid ${border}`,
+        borderRadius: "8px",
+        cursor: "pointer",
+        transition: "all 0.25s ease",
+        flexShrink: 0,
+        boxShadow: hov
+          ? "0 4px 14px rgba(0,0,0,0.25)"
+          : "0 2px 8px rgba(0,0,0,0.15)",
+        transform: hov ? "translateY(-1px)" : "translateY(0)",
+        textDecoration: "none",
+      }}
+    >
+      {/* Google Maps pin icon */}
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#EA4335"/>
+        <circle cx="12" cy="9" r="2.5" fill="#fff"/>
+      </svg>
+    </a>
   );
 }
 
@@ -290,6 +337,7 @@ export default function Navbar({
     ? [
         { label: "בית", href: "/" },
         { label: "תפריט", href: menuHref },
+        { label: "קצביה", href: "/menu?tab=fresh-meat", isButcher: true },
         { label: "VIP", href: "/vip", isVip: true },
         { label: "שאלות", href: faqHref },
         { label: "הטבות", href: "/benefits" },
@@ -300,6 +348,7 @@ export default function Navbar({
     : [
         { label: "HOME", href: "/" },
         { label: t.menuEn, href: menuHref },
+        { label: "BUTCHER", href: "/menu?tab=fresh-meat", isButcher: true },
         { label: "VIP", href: "/vip", isVip: true },
         { label: t.faqEn, href: faqHref },
         { label: "BENEFITS", href: "/benefits" },
@@ -313,7 +362,6 @@ export default function Navbar({
     const onResize = () => {
       const mobile = window.innerWidth < 1024;
       setIsMobile(mobile);
-      // Close menu if resizing to desktop
       if (!mobile) setMenuOpen(false);
     };
     onScroll();
@@ -330,7 +378,6 @@ export default function Navbar({
   useEffect(() => {
     if (!isMobile) return;
     if (menuOpen) {
-      // Save current scroll position and lock
       const scrollY = window.scrollY;
       document.body.style.position = "fixed";
       document.body.style.top = `-${scrollY}px`;
@@ -338,7 +385,6 @@ export default function Navbar({
       document.body.style.right = "0";
       document.body.style.overflow = "hidden";
     } else {
-      // Restore scroll position
       const scrollY = document.body.style.top;
       document.body.style.position = "";
       document.body.style.top = "";
@@ -362,7 +408,7 @@ export default function Navbar({
 
   return (
     <>
-      {/* ── NAVBAR BAR ── hidden behind overlay when menu open */}
+      {/* ── NAVBAR BAR ── */}
       <nav
         dir="ltr"
         style={{
@@ -370,7 +416,6 @@ export default function Navbar({
           top: 0,
           left: 0,
           right: 0,
-          // Overlay is z-index 300; navbar is always below it
           zIndex: 50,
           padding: isMobile ? "0.9rem 1.4rem" : "0 2.8rem",
           height: isMobile ? "auto" : "70px",
@@ -433,7 +478,7 @@ export default function Navbar({
               <LogoBadge size={44} scrolled={scrolled} forceScrolled={forceScrolled} brandName={brandName} />
             </a>
 
-            {/* Right: Lang toggle + Hamburger (3 lines only, no X animation) */}
+            {/* Right: Lang toggle + Hamburger */}
             <div
               style={{
                 display: "flex",
@@ -480,12 +525,12 @@ export default function Navbar({
           </>
         ) : (
           <>
-            {/* Left column */}
+            {/* Left column — Hebrew: [Book + GMaps + Lang] | English: [nav links] */}
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: isHe ? "clamp(1.2rem, 2vw, 2.4rem)" : "clamp(0.6rem, 1.0vw, 1.2rem)",
+                gap: isHe ? "clamp(0.5rem, 0.8vw, 1rem)" : "clamp(0.5rem, 0.8vw, 1.0rem)",
                 flex: 1,
                 justifyContent: "flex-start",
               }}
@@ -493,6 +538,7 @@ export default function Navbar({
               {isHe ? (
                 <>
                   <ReservationsBtn scrolled={scrolled} label={t.reservationHe} />
+                  <GoogleMapsBtn scrolled={scrolled} />
                   <LangToggle scrolled={scrolled} />
                 </>
               ) : (
@@ -504,6 +550,7 @@ export default function Navbar({
                     scrolled={scrolled}
                     isHe={isHe}
                     isVip={(link as any).isVip}
+                    isButcher={(link as any).isButcher}
                   >
                     {link.label}
                   </NavLink>
@@ -526,12 +573,12 @@ export default function Navbar({
               <LogoBadge size={48} scrolled={scrolled} brandName={brandName} />
             </a>
 
-            {/* Right column */}
+            {/* Right column — Hebrew: [nav links reversed] | English: [Book + GMaps + Lang] */}
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "clamp(1rem, 1.8vw, 2rem)",
+                gap: "clamp(0.5rem, 0.8vw, 1rem)",
                 flex: 1,
                 justifyContent: "flex-end",
               }}
@@ -545,6 +592,7 @@ export default function Navbar({
                     scrolled={scrolled}
                     isHe={isHe}
                     isVip={(link as any).isVip}
+                    isButcher={(link as any).isButcher}
                   >
                     {link.label}
                   </NavLink>
@@ -552,6 +600,7 @@ export default function Navbar({
               ) : (
                 <>
                   <ReservationsBtn scrolled={scrolled} label={t.reservationEn} />
+                  <GoogleMapsBtn scrolled={scrolled} />
                   <LangToggle scrolled={scrolled} />
                 </>
               )}
@@ -560,10 +609,7 @@ export default function Navbar({
         )}
       </nav>
 
-      {/* ── MOBILE FULL-SCREEN OVERLAY ──
-          z-index 300 — always above navbar (50) and FlyingBull (60)
-          Slide up from bottom. Only rendered when isMobile to avoid desktop interference.
-      */}
+      {/* ── MOBILE FULL-SCREEN OVERLAY ── */}
       {isMobile && (
         <div
           role="dialog"
@@ -578,17 +624,14 @@ export default function Navbar({
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            gap: "clamp(0.85rem, 2.5vw, 1.3rem)",
-            // Slide up from bottom when opening
+            gap: "clamp(0.75rem, 2.2vw, 1.1rem)",
             transform: menuOpen ? "translateY(0)" : "translateY(100%)",
             opacity: menuOpen ? 1 : 0,
             pointerEvents: menuOpen ? "auto" : "none",
             transition: "transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease",
-            // Prevent any scroll inside overlay
             overflow: "hidden",
             overscrollBehavior: "contain",
           }}
-          // Prevent touch scroll from leaking to body
           onTouchMove={(e) => e.stopPropagation()}
         >
           {/* ── Top bar: lang toggle (left) + cow logo (center) + X close (right) ── */}
@@ -656,12 +699,12 @@ export default function Navbar({
               style={{
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 900,
-                fontSize: "clamp(18px, 4.5vw, 24px)",
+                fontSize: "clamp(16px, 4vw, 22px)",
                 letterSpacing: isHe ? "0.03em" : "0.18em",
-                color: BORDEAUX,
+                color: (link as any).isButcher ? "#6B2737" : BORDEAUX,
                 textDecoration: "none",
                 textTransform: "uppercase",
-                transition: `color 0.2s ease, opacity 0.35s ${0.05 + i * 0.05}s ease, transform 0.35s ${0.05 + i * 0.05}s ease`,
+                transition: `color 0.2s ease, opacity 0.35s ${0.05 + i * 0.04}s ease, transform 0.35s ${0.05 + i * 0.04}s ease`,
                 opacity: menuOpen ? 1 : 0,
                 transform: menuOpen ? "translateY(0)" : "translateY(12px)",
               }}
@@ -669,7 +712,7 @@ export default function Navbar({
                 (e.currentTarget as HTMLAnchorElement).style.color = "#009C3B";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = BORDEAUX;
+                (e.currentTarget as HTMLAnchorElement).style.color = (link as any).isButcher ? "#6B2737" : BORDEAUX;
               }}
             >
               {link.label}
@@ -688,7 +731,7 @@ export default function Navbar({
             width: "100%",
             padding: "0 2rem",
           }}>
-            {/* Reservation CTA button — slightly smaller */}
+            {/* Reservation CTA button */}
             <a
               href={RESERVATIONS_URL}
               target="_blank"
@@ -718,7 +761,7 @@ export default function Navbar({
             >
               {isHe ? "הזמנת שולחן" : "BOOK A TABLE"}
             </a>
-            {/* Butcher button — same style as hero */}
+            {/* Butcher button */}
             <a
               href="/menu?tab=fresh-meat"
               onClick={(e) => { setMenuOpen(false); }}
@@ -767,6 +810,7 @@ function NavLink({
   children,
   isHe,
   isVip = false,
+  isButcher = false,
 }: {
   href: string;
   color: string;
@@ -774,8 +818,11 @@ function NavLink({
   children: React.ReactNode;
   isHe: boolean;
   isVip?: boolean;
+  isButcher?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
+  // Butcher gets bordeaux color, VIP gets gold, others get standard
+  const baseColor = isButcher ? "#6B2737" : color;
   return (
     <a
       href={href}
@@ -785,11 +832,11 @@ function NavLink({
       style={{
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 700,
-        fontSize: isHe ? "0.85rem" : "0.72rem",
+        fontSize: isHe ? "0.89rem" : "0.76rem",
         letterSpacing: isHe ? "0.05em" : "0.10em",
         textTransform: "uppercase",
         textDecoration: "none",
-        color: hovered ? "#009C3B" : color,
+        color: hovered ? "#009C3B" : baseColor,
         transition: "color 0.25s ease",
         position: "relative",
         paddingBottom: "2px",

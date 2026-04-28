@@ -14,8 +14,8 @@ const HERO_IMAGE_SM_DEFAULT =
 const DEFAULTS = {
   titleHe: "CASA DO BRASIL",
   titleEn: "CASA DO BRASIL",
-  subtitleHe: "גריל ברזילאי — מוזיקה וצ'וראסקוריה",
-  subtitleEn: "Brazilian Grill - Music & Churrascaria",
+  subtitleHe: "גריל ברזילאי — מוזיקה וצ'וראסקוריה באילת",
+  subtitleEn: "Brazilian Grill — Music & Churrascaria in Eilat",
   reserveBtnHe: "הזמנת שולחן",
   reserveBtnEn: "BOOK A TABLE",
   reserveBtnUrl: "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=619bae58c6a7c716a41bdc73",
@@ -177,9 +177,6 @@ export default function HeroSection() {
 
           {/* Book a Table — prominent green, wider, real shimmer */}
           <ReserveButton isMobile={isMobile} label={isHe ? t.reserveBtnHe : t.reserveBtnEn} href={t.reserveBtnUrl} />
-
-          {/* Butcher — same white glass as Menu */}
-          <GlassButton isMobile={isMobile} label={isHe ? t.butcherBtnHe : t.butcherBtnEn} href={t.butcherBtnUrl} />
         </div>
       </div>
 
@@ -249,7 +246,7 @@ function GlassButton({ isMobile, label, href }: { isMobile: boolean; label: stri
         minWidth: isMobile ? "clamp(88px, 26vw, 130px)" : "clamp(140px, 11vw, 190px)",
         padding: isMobile ? "0.72rem 0.6rem" : "1.05rem 0.8rem",
         fontFamily: "'Heebo', sans-serif", fontWeight: 800,
-        fontSize: isMobile ? "0.78rem" : "1.0rem",
+        fontSize: isMobile ? "0.82rem" : "1.1rem",
         letterSpacing: isMobile ? "0.04em" : "0.15em",
         textTransform: "uppercase" as const,
         textDecoration: "none", whiteSpace: "nowrap" as const,

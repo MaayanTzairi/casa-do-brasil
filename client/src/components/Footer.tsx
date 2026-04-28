@@ -118,7 +118,7 @@ export default function Footer() {
       </div>
       <div style={rowStyle}>
         <IcoPin />
-        <p style={rowText}>{rtl ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=%D7%93%D7%A8%D7%9A+%D7%94%D7%A2%D7%A8%D7%91%D7%94+23+%D7%90%D7%99%D7%9C%D7%AA" target="_blank" rel="noopener noreferrer" style={{ ...rowText, textDecoration: "none", transition: "color 0.18s" } as React.CSSProperties} onMouseEnter={e => (e.currentTarget.style.color = ACCENT)} onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>{rtl ? "דרך הערבה 23, אילת" : "Derekh HaArava 23, Eilat"}</a>
       </div>
       <div style={rowStyle}>
         <IcoClock />
@@ -250,7 +250,7 @@ export default function Footer() {
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <IcoPin />
-          <p style={rowText}>{isHe ? "חטיבת גולני 3, אילת" : "Golani Brigade 3, Eilat"}</p>
+          <a href="https://www.google.com/maps/search/?api=1&query=%D7%93%D7%A8%D7%9A+%D7%94%D7%A2%D7%A8%D7%91%D7%94+23+%D7%90%D7%99%D7%9C%D7%AA" target="_blank" rel="noopener noreferrer" style={{ ...rowText, textDecoration: "none", transition: "color 0.18s" } as React.CSSProperties} onMouseEnter={e => (e.currentTarget.style.color = ACCENT)} onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>{isHe ? "דרך הערבה 23, אילת" : "Derekh HaArava 23, Eilat"}</a>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <IcoClock />
