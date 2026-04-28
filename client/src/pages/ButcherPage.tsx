@@ -259,13 +259,15 @@ export default function ButcherPage() {
         >
           <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row" }}>
             <div style={{ width: "28px", height: "2px", background: "#009C3B", flexShrink: 0 }} />
-            <span style={{
+            <span dir={isHe ? "rtl" : "ltr"} style={{
               fontFamily: "'Heebo', sans-serif",
               fontWeight: 800,
               fontSize: "clamp(13px, 1.05vw, 16px)",
               letterSpacing: isHe ? "0.04em" : "0.12em",
-              textTransform: "uppercase",
+              textTransform: isHe ? "none" : "uppercase",
               color: "#009C3B",
+              unicodeBidi: "embed",
+              lineHeight: 1.4,
             }}>
               {isHe ? "מחיר לקילוגרם" : "Priced Per Kilogram"}
             </span>
