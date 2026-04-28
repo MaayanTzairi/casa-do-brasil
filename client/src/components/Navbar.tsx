@@ -532,7 +532,7 @@ export default function Navbar({
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: isHe ? "clamp(0.7rem, 1.0vw, 1.3rem)" : "clamp(0.3rem, 0.4vw, 0.6rem)",
+                gap: isHe ? "clamp(0.9rem, 1.3vw, 1.6rem)" : "clamp(0.45rem, 0.6vw, 0.85rem)",
                 flex: "0 0 auto",
                 maxWidth: "calc(50% - 70px)",
                 justifyContent: "flex-start",
@@ -550,10 +550,10 @@ export default function Navbar({
                     {i > 0 && (
                       <span aria-hidden="true" style={{
                         display: "inline-block",
-                        width: "1px",
-                        height: "11px",
+                        width: "1.5px",
+                        height: "13px",
                         background: GOLD,
-                        opacity: 0.4,
+                        opacity: 0.65,
                         flexShrink: 0,
                         alignSelf: "center",
                       }} />
@@ -593,7 +593,7 @@ export default function Navbar({
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: isHe ? "clamp(0.3rem, 0.4vw, 0.6rem)" : "clamp(0.7rem, 1.0vw, 1.3rem)",
+                gap: isHe ? "clamp(0.45rem, 0.6vw, 0.85rem)" : "clamp(0.9rem, 1.3vw, 1.6rem)",
                 flex: "0 0 auto",
                 maxWidth: "calc(50% - 70px)",
                 justifyContent: "flex-end",
@@ -605,10 +605,10 @@ export default function Navbar({
                     {i > 0 && (
                       <span aria-hidden="true" style={{
                         display: "inline-block",
-                        width: "1px",
-                        height: "11px",
+                        width: "1.5px",
+                        height: "13px",
                         background: GOLD,
-                        opacity: 0.4,
+                        opacity: 0.65,
                         flexShrink: 0,
                         alignSelf: "center",
                       }} />
