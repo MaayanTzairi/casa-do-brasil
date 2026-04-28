@@ -445,7 +445,7 @@ export default function Navbar({
                 style={{
                   fontFamily: "'Heebo', sans-serif",
                   fontWeight: 800,
-                  fontSize: "0.60rem",
+                  fontSize: "0.72rem",
                   letterSpacing: isHe ? "0.02em" : "0.10em",
                   textTransform: "uppercase",
                   textDecoration: "none",
@@ -532,7 +532,7 @@ export default function Navbar({
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: isHe ? "clamp(0.5rem, 0.8vw, 1rem)" : "clamp(0.5rem, 0.8vw, 1.0rem)",
+                gap: isHe ? "clamp(0.9rem, 1.2vw, 1.6rem)" : "clamp(0.9rem, 1.2vw, 1.6rem)",
                 flex: 1,
                 justifyContent: "flex-start",
               }}
@@ -580,7 +580,7 @@ export default function Navbar({
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "clamp(0.5rem, 0.8vw, 1rem)",
+                gap: "clamp(0.9rem, 1.2vw, 1.6rem)",
                 flex: 1,
                 justifyContent: "flex-end",
               }}
@@ -626,7 +626,9 @@ export default function Navbar({
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            gap: "clamp(0.75rem, 2.2vw, 1.1rem)",
+            gap: "clamp(0.55rem, 1.8vw, 1.0rem)",
+            paddingTop: "6rem",
+            paddingBottom: "7rem",
             transform: menuOpen ? "translateY(0)" : "translateY(100%)",
             opacity: menuOpen ? 1 : 0,
             pointerEvents: menuOpen ? "auto" : "none",
@@ -863,7 +865,7 @@ function NavLink({
       style={{
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 700,
-        fontSize: isHe ? "0.95rem" : "0.82rem",
+        fontSize: isHe ? "1.01rem" : "0.88rem",
         letterSpacing: isHe ? "0.05em" : "0.10em",
         textTransform: "uppercase",
         textDecoration: "none",

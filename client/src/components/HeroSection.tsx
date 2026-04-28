@@ -129,7 +129,7 @@ export default function HeroSection() {
           {isMobile ? (
             <p style={{
               fontFamily: "'Heebo', sans-serif", fontWeight: 600,
-              fontSize: "clamp(13px, 3.8vw, 18px)",
+              fontSize: "clamp(16px, 4.8vw, 24px)",
               color: "rgba(240,220,160,0.90)",
               letterSpacing: "0.06em",
               fontStyle: "italic", textAlign: "center",
@@ -148,7 +148,7 @@ export default function HeroSection() {
           ) : (
             <p style={{
               fontFamily: "'Heebo', sans-serif", fontWeight: 600,
-              fontSize: "clamp(20px, 2.2vw, 30px)",
+              fontSize: "clamp(22px, 2.5vw, 34px)",
               color: "rgba(240,220,160,0.90)",
               letterSpacing: "0.18em",
               fontStyle: "italic", textAlign: "center", whiteSpace: "nowrap",
