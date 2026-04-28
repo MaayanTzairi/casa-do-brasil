@@ -78,8 +78,8 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
         @keyframes sparkle-4 { 0%,100%{opacity:0;transform:scale(0)} 25%,75%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
       `}</style>
 
-      {/* Brazilian flag circle background */}
-      <svg
+      {/* Video circle background */}
+      <div
         style={{
           position: "absolute",
           left: 6, top: 6,
@@ -89,30 +89,23 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
           borderRadius: "50%",
           overflow: "hidden",
           boxShadow: "0 16px 56px rgba(0,0,0,0.80), 0 4px 16px rgba(0,0,0,0.50)",
+          background: "#000",
         }}
-        viewBox="0 0 200 200"
       >
-        {/* Green background */}
-        <circle cx="100" cy="100" r="100" fill="#009C3B" />
-        {/* Yellow diamond */}
-        <polygon points="100,18 182,100 100,182 18,100" fill="#FEDF00" />
-        {/* Blue circle */}
-        <circle cx="100" cy="100" r="42" fill="#002776" />
-        {/* White band */}
-        <path d="M 58 100 Q 100 88 142 100" fill="none" stroke="white" strokeWidth="5" />
-        {/* Stars — simplified 5 white dots */}
-        <circle cx="82" cy="97" r="3" fill="white" />
-        <circle cx="100" cy="92" r="3" fill="white" />
-        <circle cx="118" cy="97" r="3" fill="white" />
-        <circle cx="90" cy="107" r="2.5" fill="white" />
-        <circle cx="110" cy="107" r="2.5" fill="white" />
-        {/* Dark vignette overlay */}
-        <radialGradient id="flag-vignette" cx="50%" cy="50%" r="50%">
-          <stop offset="40%" stopColor="rgba(0,0,0,0)" />
-          <stop offset="100%" stopColor="rgba(0,0,0,0.45)" />
-        </radialGradient>
-        <circle cx="100" cy="100" r="100" fill="url(#flag-vignette)" />
-      </svg>
+        <video
+          src="/manus-storage/casa-logo-video_9640aa49.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block",
+          }}
+        />
+      </div>
 
       {/* Premium gold multi-ring SVG frame */}
       <svg
