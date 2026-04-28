@@ -246,10 +246,12 @@ function GoogleMapsBtn({ scrolled }: { scrolled: boolean }) {
         textDecoration: "none",
       }}
     >
-      {/* Google Maps pin icon */}
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#EA4335"/>
-        <circle cx="12" cy="9" r="2.5" fill="#fff"/>
+      {/* Official Google Maps icon */}
+      <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#EA4335"/>
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#EA4335" opacity="0"/>
+        <path d="M12 6.5c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z" fill="#fff"/>
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 1.74.5 3.37 1.36 4.74L12 22l5.64-8.26A6.96 6.96 0 0 0 19 9c0-3.87-3.13-7-7-7z" fill="none" stroke="#C5221F" strokeWidth="0.5"/>
       </svg>
     </a>
   );
@@ -268,7 +270,7 @@ function ReservationsBtn({ scrolled, label }: { scrolled: boolean; label: string
       style={{
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 800,
-        fontSize: "0.78rem",
+        fontSize: "0.86rem",
         letterSpacing: "0.14em",
         textTransform: "uppercase",
         textDecoration: "none",
@@ -699,11 +701,12 @@ export default function Navbar({
               style={{
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: 900,
-                fontSize: "clamp(16px, 4vw, 22px)",
+                fontSize: "clamp(18px, 4.5vw, 24px)",
                 letterSpacing: isHe ? "0.03em" : "0.18em",
-                color: (link as any).isButcher ? "#6B2737" : BORDEAUX,
+                color: BORDEAUX,
                 textDecoration: "none",
                 textTransform: "uppercase",
+                padding: "0.35rem 0",
                 transition: `color 0.2s ease, opacity 0.35s ${0.05 + i * 0.04}s ease, transform 0.35s ${0.05 + i * 0.04}s ease`,
                 opacity: menuOpen ? 1 : 0,
                 transform: menuOpen ? "translateY(0)" : "translateY(12px)",
@@ -712,12 +715,39 @@ export default function Navbar({
                 (e.currentTarget as HTMLAnchorElement).style.color = "#009C3B";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = (link as any).isButcher ? "#6B2737" : BORDEAUX;
+                (e.currentTarget as HTMLAnchorElement).style.color = BORDEAUX;
               }}
             >
               {link.label}
             </a>
           ))}
+
+          {/* ── Google Maps link in overlay ── */}
+          <a
+            href={GOOGLE_MAPS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.45rem",
+              fontFamily: "'Heebo', sans-serif",
+              fontWeight: 600,
+              fontSize: "0.78rem",
+              letterSpacing: "0.06em",
+              color: "#5f6368",
+              textDecoration: "none",
+              opacity: menuOpen ? 0.85 : 0,
+              transition: `opacity 0.35s 0.4s ease`,
+              marginTop: "0.2rem",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#EA4335"/>
+              <path d="M12 6.5c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z" fill="#fff"/>
+            </svg>
+            {isHe ? "דרך הערבה 23, אילת" : "Derekh HaArava 23, Eilat"}
+          </a>
 
           {/* ── Bottom: reservation + butcher buttons ── */}
           <div style={{
@@ -756,6 +786,7 @@ export default function Navbar({
                 padding: "0.7rem 1.2rem",
                 flex: 1,
                 maxWidth: "180px",
+                whiteSpace: "nowrap",
                 boxShadow: "0 4px 16px rgba(0,0,0,0.20)",
               }}
             >
@@ -821,8 +852,8 @@ function NavLink({
   isButcher?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
-  // Butcher gets bordeaux color, VIP gets gold, others get standard
-  const baseColor = isButcher ? "#6B2737" : color;
+  // Butcher uses same color as other nav links (white on hero, bordeaux when scrolled)
+  const baseColor = color;
   return (
     <a
       href={href}
@@ -832,7 +863,7 @@ function NavLink({
       style={{
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 700,
-        fontSize: isHe ? "0.89rem" : "0.76rem",
+        fontSize: isHe ? "0.95rem" : "0.82rem",
         letterSpacing: isHe ? "0.05em" : "0.10em",
         textTransform: "uppercase",
         textDecoration: "none",

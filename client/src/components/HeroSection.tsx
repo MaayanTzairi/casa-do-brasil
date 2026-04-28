@@ -126,16 +126,37 @@ export default function HeroSection() {
           }}>
             {isHe ? t.titleHe : t.titleEn}
           </h1>
-          <p style={{
-            fontFamily: "'Heebo', sans-serif", fontWeight: 600,
-            fontSize: isMobile ? "clamp(14px, 4.2vw, 20px)" : "clamp(20px, 2.2vw, 30px)",
-            color: "rgba(240,220,160,0.90)",
-            letterSpacing: isMobile ? "0.08em" : "0.18em",
-            fontStyle: "italic", textAlign: "center", whiteSpace: "nowrap",
-            margin: 0, textShadow: "0 2px 12px rgba(0,0,0,0.90)", lineHeight: 1.3,
-          }}>
-            {isHe ? t.subtitleHe : t.subtitleEn}
-          </p>
+          {isMobile ? (
+            <p style={{
+              fontFamily: "'Heebo', sans-serif", fontWeight: 600,
+              fontSize: "clamp(13px, 3.8vw, 18px)",
+              color: "rgba(240,220,160,0.90)",
+              letterSpacing: "0.06em",
+              fontStyle: "italic", textAlign: "center",
+              margin: 0, textShadow: "0 2px 12px rgba(0,0,0,0.90)", lineHeight: 1.5,
+            }}>
+              {isHe ? (
+                <>
+                  גריל ברזילאי — מוזיקה וצ'וראסקוריה<br />באילת
+                </>
+              ) : (
+                <>
+                  Brazilian Grill — Music &amp; Churrascaria<br />in Eilat
+                </>
+              )}
+            </p>
+          ) : (
+            <p style={{
+              fontFamily: "'Heebo', sans-serif", fontWeight: 600,
+              fontSize: "clamp(20px, 2.2vw, 30px)",
+              color: "rgba(240,220,160,0.90)",
+              letterSpacing: "0.18em",
+              fontStyle: "italic", textAlign: "center", whiteSpace: "nowrap",
+              margin: 0, textShadow: "0 2px 12px rgba(0,0,0,0.90)", lineHeight: 1.3,
+            }}>
+              {isHe ? t.subtitleHe : t.subtitleEn}
+            </p>
+          )}
         </div>
 
         {/* Mobile social icons */}
