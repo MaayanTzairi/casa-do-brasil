@@ -4,6 +4,7 @@
  * Same design language as MenuPage (Cinematic Asymmetric Luxury).
  */
 
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -60,40 +61,49 @@ const FOOTER_NOTES_HE = [
 
 /* ─── HERO ─── */
 function ButcherHero({ isHe }: { isHe: boolean }) {
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  );
+  useEffect(() => {
+    const h = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", h);
+    return () => window.removeEventListener("resize", h);
+  }, []);
+
   return (
     <section
       style={{
         position: "relative",
         width: "100%",
-        height: "clamp(420px, 70vh, 720px)",
+        height: isMobile ? "38vh" : "52vh",
+        minHeight: isMobile ? "220px" : "320px",
+        maxHeight: isMobile ? "360px" : "520px",
         overflow: "hidden",
-        background: "rgb(22,1,3)",
+        background: "#0a0a0a",
       }}
     >
       {/* Background image */}
-      <div className="absolute inset-0 w-full h-full">
-        <div className="w-full h-full">
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              backgroundImage: `url(${HERO_IMG})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center 40%",
-            }}
-          />
-        </div>
+      <div style={{ position: "absolute", inset: 0 }}>
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            backgroundImage: `url(${HERO_IMG})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center 40%",
+          }}
+        />
       </div>
 
       {/* Overlay */}
-      <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.55)" }} />
+      <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.58)" }} />
 
-      {/* Gold inset frame — identical to MenuPage */}
+      {/* Gold inset frame */}
       <div style={{ position: "absolute", top: 0, left: "20px", right: "20px", bottom: "20px", pointerEvents: "none", zIndex: 2 }}>
-        <div style={{ position: "absolute", top: "82px", left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} />
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "left" }} />
-        <div style={{ position: "absolute", top: "82px", bottom: 0, left: 0, width: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} />
-        <div style={{ position: "absolute", top: "82px", bottom: 0, right: 0, width: "1px", background: "rgba(185,161,103,0.55)", transformOrigin: "top" }} />
+        <div style={{ position: "absolute", top: "82px", left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)" }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "rgba(185,161,103,0.55)" }} />
+        <div style={{ position: "absolute", top: "82px", bottom: 0, left: 0, width: "1px", background: "rgba(185,161,103,0.55)" }} />
+        <div style={{ position: "absolute", top: "82px", bottom: 0, right: 0, width: "1px", background: "rgba(185,161,103,0.55)" }} />
       </div>
 
       {/* Content */}
@@ -247,7 +257,7 @@ export default function ButcherPage() {
             textAlign: isHe ? "right" : "left",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row", justifyContent: isHe ? "flex-end" : "flex-start" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem", flexDirection: isHe ? "row-reverse" : "row" }}>
             <div style={{ width: "28px", height: "2px", background: "#009C3B", flexShrink: 0 }} />
             <span dir={isHe ? "rtl" : "ltr"} style={{
               fontFamily: "'Heebo', sans-serif",
