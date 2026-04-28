@@ -93,7 +93,7 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
         }}
       >
         <video
-          src="/manus-storage/casa-logo-video_9640aa49.mp4"
+          src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663392712778/CvvTxsyabNHttRma.mp4"
           autoPlay
           loop
           muted
