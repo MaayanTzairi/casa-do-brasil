@@ -31,18 +31,18 @@ interface MeatItem {
 const MEAT_ITEMS: MeatItem[] = [
   { name: "Picanha", nameHe: "פיקאניה", description: "", descriptionHe: "", price: "₪269 / kg" },
   { name: "Spring Chicken", nameHe: "פרגית", description: "", descriptionHe: "", price: "₪139 / kg" },
-  { name: "Entrecote", nameHe: "אנטריקוט", description: "", descriptionHe: "", price: "₪349 / kg", tag: "*No Discount", tagHe: "*ללא הנחה" },
-  { name: "Goose Liver", nameHe: "כבד אווז", description: "", descriptionHe: "", price: "₪520 / kg", tag: "*No Discount", tagHe: "*ללא הנחה" },
+   { name: "Entrecote", nameHe: "אנטריקוט", description: "", descriptionHe: "", price: "₪349 / kg" },
+   { name: "Goose Liver", nameHe: "כבד אווז", description: "", descriptionHe: "", price: "₪520 / kg" },
   { name: "Moulard Breast", nameHe: "חזה מולאר", description: "", descriptionHe: "", price: "₪289 / kg" },
   { name: "Chorizo (Spicy Sausage)", nameHe: "צ'וריסו (נקניק חריף)", description: "", descriptionHe: "", price: "₪169 / kg" },
-  { name: "Beef Fillet", nameHe: "פילה בקר", description: "", descriptionHe: "", price: "₪349 / kg", tag: "*No Discount", tagHe: "*ללא הנחה" },
+  { name: "Beef Fillet", nameHe: "פילה בקר", description: "", descriptionHe: "", price: "₪349 / kg" },
   { name: "Dry-Aged Sirloin", nameHe: "סירלוין יבש", description: "", descriptionHe: "", price: "₪269 / kg" },
   { name: "Lamb Chops", nameHe: "צלעות כבש", description: "", descriptionHe: "", price: "₪269 / kg" },
   { name: "Hamburger", nameHe: "המבורגר", description: "Burger bun +₪5 | Vegetable toppings +₪12", descriptionHe: "לחמניית בורגר +5 שקל | תוספת ירקות +12 שקל", price: "₪149 / kg" },
   { name: "Bolinho (Brazilian Meatballs)", nameHe: "בוליניו (קציצות ברזילאיות)", description: "", descriptionHe: "", price: "₪149 / kg" },
   { name: "Chicken Hearts", nameHe: "לבבות עוף", description: "", descriptionHe: "", price: "₪79 / kg" },
   { name: "Chicken Wings", nameHe: "כנפי עוף", description: "", descriptionHe: "", price: "₪69 / kg" },
-  { name: "Beyond Meat Veggie Burger", nameHe: "בורגר צמחוני Beyond Meat", description: "", descriptionHe: "", price: "₪33", tag: "Vegan", tagHe: "טבעוני" },
+  { name: "Beyond Meat Veggie Burger", nameHe: "בורגר צמחוני Beyond Meat", description: "", descriptionHe: "", price: "₪33" },
 ];
 
 const FOOTER_NOTES_EN = [

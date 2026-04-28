@@ -1147,21 +1147,55 @@ function CategoryPanel({ category, isHe }: { category: MenuCategory; isHe: boole
         ))}
       </div>
 
-      {/* Weight section note */}
+      {/* Weight section footer notes + note */}
       {category.type === "weight" && (
-        <div style={{
-          marginTop: "2rem",
-          padding: "1.2rem 1.5rem",
-          background: "rgba(185,161,103,0.06)",
-          border: `1px solid ${GOLD_R}0.18)`,
-          textAlign: isHe ? "right" : "left",
-        }}>
-          <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(15px, 1.2vw, 18px)", color: "rgb(90,35,35)", margin: 0, lineHeight: 1.65 }}>
-            {isHe
-              ? "כל הנתחים מוכנים לפי הזמנה. המחיר הוא לפי 100 גרם. המשקל הסופי עשוי להשתנות מעט. מינימום הזמנה כמצוין."
-              : "All cuts prepared to order. Price is per 100g. Final weight may vary slightly. Minimum order as indicated."}
-          </p>
-        </div>
+        <>
+          {/* Footer notes box — same as ButcherPage */}
+          {category.footerNotes && (
+            <div
+              dir={isHe ? "rtl" : "ltr"}
+              style={{
+                marginTop: "2.5rem",
+                padding: "1.2rem 1.5rem",
+                background: `${GOLD_R}0.06)`,
+                border: `1px solid ${GOLD_R}0.18)`,
+                textAlign: isHe ? "right" : "left",
+              }}
+            >
+              {(isHe ? category.footerNotesHe! : category.footerNotes).map((note, i) => (
+                <p
+                  key={i}
+                  style={{
+                    fontFamily: "'Heebo', sans-serif",
+                    fontWeight: i === 3 ? 700 : 300,
+                    fontSize: "clamp(13px, 1vw, 15px)",
+                    color: i === 3 ? BORDEAUX : "rgba(62,4,9,0.55)",
+                    margin: "0.3rem 0",
+                    fontStyle: i < 3 ? "italic" : "normal",
+                    direction: isHe ? "rtl" : "ltr",
+                    textAlign: isHe ? "right" : "left",
+                  }}
+                >
+                  {note}
+                </p>
+              ))}
+            </div>
+          )}
+          {/* Weight note */}
+          <div style={{
+            marginTop: "1.5rem",
+            padding: "1.2rem 1.5rem",
+            background: "rgba(185,161,103,0.06)",
+            border: `1px solid ${GOLD_R}0.18)`,
+            textAlign: isHe ? "right" : "left",
+          }}>
+            <p style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(15px, 1.2vw, 18px)", color: "rgb(90,35,35)", margin: 0, lineHeight: 1.65 }}>
+              {isHe
+                ? "כל הנתחים מוכנים לפי הזמנה. המחיר הוא לפי קילוגרם. המשקל הסופי עשוי להשתנות מעט."
+                : "All cuts prepared to order. Price is per kilogram. Final weight may vary slightly."}
+            </p>
+          </div>
+        </>
       )}
     </div>
   );
