@@ -7,7 +7,7 @@
  * No framer-motion — pure CSS transitions
  */
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -527,35 +527,48 @@ export default function Navbar({
           </>
         ) : (
           <>
-            {/* Left column — Hebrew: [Book + GMaps + Lang] | English: [nav links] */}
+            {/* Left column — Hebrew: [Lang → Reserve → GMaps] | English: [nav links with separators] */}
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: isHe ? "clamp(0.9rem, 1.2vw, 1.6rem)" : "clamp(0.7rem, 0.9vw, 1.2rem)",
-                flex: 1,
+                gap: isHe ? "clamp(0.7rem, 1.0vw, 1.3rem)" : "clamp(0.3rem, 0.4vw, 0.6rem)",
+                flex: "0 0 auto",
+                maxWidth: "calc(50% - 70px)",
                 justifyContent: "flex-start",
               }}
             >
               {isHe ? (
                 <>
+                  <LangToggle scrolled={scrolled} />
                   <ReservationsBtn scrolled={scrolled} label={t.reservationHe} />
                   <GoogleMapsBtn scrolled={scrolled} />
-                  <LangToggle scrolled={scrolled} />
                 </>
               ) : (
-                navLinks.map((link) => (
-                  <NavLink
-                    key={link.label}
-                    href={link.href}
-                    color={linkColor}
-                    scrolled={scrolled}
-                    isHe={isHe}
-                    isVip={(link as any).isVip}
-                    isButcher={(link as any).isButcher}
-                  >
-                    {link.label}
-                  </NavLink>
+                navLinks.map((link, i) => (
+                  <React.Fragment key={link.label}>
+                    {i > 0 && (
+                      <span aria-hidden="true" style={{
+                        display: "inline-block",
+                        width: "1px",
+                        height: "11px",
+                        background: GOLD,
+                        opacity: 0.4,
+                        flexShrink: 0,
+                        alignSelf: "center",
+                      }} />
+                    )}
+                    <NavLink
+                      href={link.href}
+                      color={linkColor}
+                      scrolled={scrolled}
+                      isHe={isHe}
+                      isVip={(link as any).isVip}
+                      isButcher={(link as any).isButcher}
+                    >
+                      {link.label}
+                    </NavLink>
+                  </React.Fragment>
                 ))
               )}
             </div>
@@ -575,29 +588,42 @@ export default function Navbar({
               <LogoBadge size={48} scrolled={scrolled} brandName={brandName} />
             </a>
 
-            {/* Right column — Hebrew: [nav links reversed] | English: [Book + GMaps + Lang] */}
+            {/* Right column — Hebrew: [nav links reversed with separators] | English: [Book + GMaps + Lang] */}
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: isHe ? "clamp(0.9rem, 1.2vw, 1.6rem)" : "clamp(0.7rem, 0.9vw, 1.2rem)",
-                flex: 1,
+                gap: isHe ? "clamp(0.3rem, 0.4vw, 0.6rem)" : "clamp(0.7rem, 1.0vw, 1.3rem)",
+                flex: "0 0 auto",
+                maxWidth: "calc(50% - 70px)",
                 justifyContent: "flex-end",
               }}
             >
               {isHe ? (
-                [...navLinks].reverse().map((link) => (
-                  <NavLink
-                    key={link.label}
-                    href={link.href}
-                    color={linkColor}
-                    scrolled={scrolled}
-                    isHe={isHe}
-                    isVip={(link as any).isVip}
-                    isButcher={(link as any).isButcher}
-                  >
-                    {link.label}
-                  </NavLink>
+                [...navLinks].reverse().map((link, i) => (
+                  <React.Fragment key={link.label}>
+                    {i > 0 && (
+                      <span aria-hidden="true" style={{
+                        display: "inline-block",
+                        width: "1px",
+                        height: "11px",
+                        background: GOLD,
+                        opacity: 0.4,
+                        flexShrink: 0,
+                        alignSelf: "center",
+                      }} />
+                    )}
+                    <NavLink
+                      href={link.href}
+                      color={linkColor}
+                      scrolled={scrolled}
+                      isHe={isHe}
+                      isVip={(link as any).isVip}
+                      isButcher={(link as any).isButcher}
+                    >
+                      {link.label}
+                    </NavLink>
+                  </React.Fragment>
                 ))
               ) : (
                 <>
@@ -865,7 +891,7 @@ function NavLink({
       style={{
         fontFamily: "'Heebo', sans-serif",
         fontWeight: 700,
-        fontSize: isHe ? "1.01rem" : "0.88rem",
+        fontSize: isHe ? "1.01rem" : "0.80rem",
         letterSpacing: isHe ? "0.05em" : "0.10em",
         textTransform: "uppercase",
         textDecoration: "none",
