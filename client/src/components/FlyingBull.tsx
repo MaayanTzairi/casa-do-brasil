@@ -105,6 +105,14 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
             display: "block",
           }}
         />
+        {/* Dark radial vignette overlay so the bull pops */}
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "50%",
+          background: "radial-gradient(circle at 50% 55%, rgba(0,0,0,0) 28%, rgba(0,0,0,0.55) 72%, rgba(0,0,0,0.78) 100%)",
+          pointerEvents: "none",
+        }} />
       </div>
 
       {/* Premium gold multi-ring SVG frame */}
@@ -216,7 +224,7 @@ export function HeroBullInline({ progress, isMobile }: { progress: number; isMob
           height: "auto",
           objectFit: "contain",
           zIndex: 2,
-          filter: `drop-shadow(0 4px 20px rgba(0,0,0,0.55))`,
+          filter: `drop-shadow(0 2px 8px rgba(0,0,0,0.90)) drop-shadow(0 6px 24px rgba(0,0,0,0.75)) drop-shadow(0 0 12px rgba(0,0,0,0.60))`,
           willChange: "transform",
         }}
       />

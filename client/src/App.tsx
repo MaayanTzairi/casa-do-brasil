@@ -21,6 +21,7 @@ const VIPPage = lazy(() => import("./pages/VIPPage"));
 const BlogPage = lazy(() => import("./pages/BlogPage"));
 const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
 const BenefitsPage = lazy(() => import("./pages/BenefitsPage"));
+const ButcherPage = lazy(() => import("./pages/ButcherPage"));
 const AccessibilityPage = lazy(() => import("./pages/AccessibilityPage"));
 const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
 // Prefetch secondary pages during browser idle time so they’re ready before the user clicks
@@ -121,6 +122,7 @@ function Router() {
         <Route path={"/blog"} component={BlogPage} />
         <Route path={"/blog/:slug"} component={BlogPostPage} />
         <Route path={"/benefits"} component={BenefitsPage} />
+        <Route path={"/butcher"} component={ButcherPage} />
         <Route path={"/accessibility"} component={AccessibilityPage} />
         <Route path={"/privacy"} component={PrivacyPage} />
         <Route path={"/404"} component={NotFound} />

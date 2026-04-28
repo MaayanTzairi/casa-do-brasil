@@ -339,7 +339,7 @@ export default function Navbar({
     ? [
         { label: "בית", href: "/" },
         { label: "תפריט", href: menuHref },
-        { label: "קצביה", href: "/menu?tab=fresh-meat", isButcher: true },
+        { label: "קצביה", href: "/butcher", isButcher: true },
         { label: "VIP", href: "/vip", isVip: true },
         { label: "שאלות", href: faqHref },
         { label: "הטבות", href: "/benefits" },
@@ -350,7 +350,7 @@ export default function Navbar({
     : [
         { label: "HOME", href: "/" },
         { label: t.menuEn, href: menuHref },
-        { label: "BUTCHER", href: "/menu?tab=fresh-meat", isButcher: true },
+        { label: "BUTCHER", href: "/butcher", isButcher: true },
         { label: "VIP", href: "/vip", isVip: true },
         { label: t.faqEn, href: faqHref },
         { label: "BENEFITS", href: "/benefits" },
@@ -532,7 +532,7 @@ export default function Navbar({
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: isHe ? "clamp(0.9rem, 1.2vw, 1.6rem)" : "clamp(0.9rem, 1.2vw, 1.6rem)",
+                gap: isHe ? "clamp(0.9rem, 1.2vw, 1.6rem)" : "clamp(0.7rem, 0.9vw, 1.2rem)",
                 flex: 1,
                 justifyContent: "flex-start",
               }}
@@ -580,7 +580,7 @@ export default function Navbar({
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "clamp(0.9rem, 1.2vw, 1.6rem)",
+                gap: isHe ? "clamp(0.9rem, 1.2vw, 1.6rem)" : "clamp(0.7rem, 0.9vw, 1.2rem)",
                 flex: 1,
                 justifyContent: "flex-end",
               }}
@@ -796,7 +796,7 @@ export default function Navbar({
             </a>
             {/* Butcher button */}
             <a
-              href="/menu?tab=fresh-meat"
+              href="/butcher"
               onClick={(e) => { setMenuOpen(false); }}
               style={{
                 display: "inline-flex",
