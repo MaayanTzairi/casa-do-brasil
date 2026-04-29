@@ -13,3 +13,9 @@
 
 ## Hero Desktop Layout Fix — Apr 21 2026
 - [x] Bull must start below navbar (not overlap), content flows: bull → title → subtitle → buttons distributed across hero height
+
+## QA Fixes — Apr 29 2026
+- [x] Fix menu tab bar overflow on mobile — add scroll indicator or reduce tab font size
+- [x] Fix RTL tab bar cut-off on mobile HE — first tab "צ'ורוסקריה" gets clipped
+- [x] Fix blog date language — use isoDate + toLocaleDateString with correct locale
+- [x] Fix gallery page <title> — always shows Hebrew regardless of language

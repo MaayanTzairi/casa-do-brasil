@@ -1234,9 +1234,11 @@ function TabBar({
 
   // Hide scroll hint after first scroll interaction
   const handleScroll = () => {
-    if (scrollRef.current && scrollRef.current.scrollLeft > 10) {
-      setShowScrollHint(false);
-    }
+    const el = scrollRef.current;
+    if (!el) return;
+    // In RTL, scrollLeft is negative in some browsers
+    const scrolled = Math.abs(el.scrollLeft);
+    if (scrolled > 10) setShowScrollHint(false);
   };
 
   return (
@@ -1253,9 +1255,26 @@ function TabBar({
         boxShadow: sticky ? `0 4px 24px rgba(62,4,9,0.07)` : "none",
         transition: "box-shadow 0.3s ease",
         overflow: "hidden",
+        position: "relative",
       }}
     >
-
+      {/* Fade indicator on the trailing edge — right for LTR, left for RTL */}
+      {isMobile && showScrollHint && (
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            [isHe ? "left" : "right"]: 0,
+            width: "48px",
+            background: isHe
+              ? "linear-gradient(to right, rgba(255,255,255,0.95), transparent)"
+              : "linear-gradient(to left, rgba(255,255,255,0.95), transparent)",
+            pointerEvents: "none",
+            zIndex: 2,
+          }}
+        />
+      )}
 
       <div
         ref={scrollRef}
@@ -1271,7 +1290,7 @@ function TabBar({
           scrollbarWidth: "none",
           msOverflowStyle: "none",
           /* Center tabs on desktop when they fit */
-          justifyContent: isMobile ? "flex-start" : "center",
+          justifyContent: isMobile ? (isHe ? "flex-end" : "flex-start") : "center",
         }}
       >
         {categories.map((cat) => {
@@ -1292,7 +1311,7 @@ function TabBar({
                 fontFamily: "'Heebo', sans-serif",
                 fontWeight: isActive ? 800 : 500,
                 fontSize: isHe
-                  ? (isMobile ? "clamp(14px, 3.8vw, 17px)" : "clamp(13px, 1.15vw, 16px)")
+                  ? (isMobile ? "clamp(11px, 2.8vw, 13px)" : "clamp(13px, 1.15vw, 16px)")
                   : (isMobile ? "clamp(11px, 2.8vw, 13px)" : "clamp(11px, 0.88vw, 13px)"),
                 letterSpacing: isHe ? "0.03em" : "0.18em",
                 textTransform: "uppercase",

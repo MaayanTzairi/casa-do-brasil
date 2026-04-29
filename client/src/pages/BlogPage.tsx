@@ -100,7 +100,12 @@ function PostCard({ post, isHe }: { post: BlogPost; isHe: boolean }) {
               color: "rgba(62,4,9,0.5)",
             }}
           >
-            {post.date}
+            {post.isoDate
+              ? new Date(post.isoDate).toLocaleDateString(
+                  isHe ? "he-IL" : "en-US",
+                  { year: "numeric", month: "long", day: "numeric" }
+                )
+              : post.date}
           </span>
         </div>
 

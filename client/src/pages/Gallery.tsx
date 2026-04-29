@@ -182,6 +182,16 @@ export default function Gallery() {
     setTimeout(() => setLightbox(null), 300);
   };
 
+  // SEO: language-aware page title
+  useEffect(() => {
+    document.title = isHe
+      ? "גלריה | קאסה דו ברזיל — גריל ברזילאי אילת"
+      : "Gallery | Casa do Brasil — Brazilian Grill Eilat";
+    return () => {
+      document.title = "Casa do Brasil | Brazilian Steakhouse Eilat";
+    };
+  }, [isHe]);
+
   useEffect(() => {
     const fn = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeLightbox();

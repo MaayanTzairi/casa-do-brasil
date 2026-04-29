@@ -211,7 +211,12 @@ export default function BlogPostPage() {
               </span>
               <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "rgba(62,4,9,0.25)", flexShrink: 0 }} />
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(12px, 0.95vw, 14px)", color: "rgba(62,4,9,0.5)" }}>
-                {post.date}
+                {post.isoDate
+                  ? new Date(post.isoDate).toLocaleDateString(
+                      isHe ? "he-IL" : "en-US",
+                      { year: "numeric", month: "long", day: "numeric" }
+                    )
+                  : post.date}
               </span>
               <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "rgba(62,4,9,0.25)", flexShrink: 0 }} />
               <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 300, fontSize: "clamp(12px, 0.95vw, 14px)", color: "rgba(62,4,9,0.5)" }}>
