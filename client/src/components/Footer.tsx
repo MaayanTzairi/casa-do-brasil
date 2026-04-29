@@ -23,7 +23,7 @@ const IcoPhone = () => (
   </svg>
 );
 const IcoPin = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={BORDEAUX} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={BORDEAUX} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, alignSelf: "center" }}>
     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
   </svg>
 );
@@ -33,7 +33,7 @@ const IcoWhatsApp = () => (
   </svg>
 );
 const IcoClock = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={BORDEAUX} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={BORDEAUX} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, alignSelf: "center" }}>
     <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
   </svg>
 );
@@ -118,11 +118,11 @@ export default function Footer() {
       </div>
       <div style={rowStyle}>
         <IcoPin />
-        <a href="https://www.google.com/maps/search/?api=1&query=%D7%93%D7%A8%D7%9A+%D7%94%D7%A2%D7%A8%D7%91%D7%94+23+%D7%90%D7%99%D7%9C%D7%AA" target="_blank" rel="noopener noreferrer" style={{ ...rowText, textDecoration: "none", transition: "color 0.18s" } as React.CSSProperties} onMouseEnter={e => (e.currentTarget.style.color = ACCENT)} onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>{rtl ? "דרך הערבה 23, אילת" : "Derekh HaArava 23, Eilat"}</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=%D7%93%D7%A8%D7%9A+%D7%94%D7%A2%D7%A8%D7%91%D7%94+23+%D7%90%D7%99%D7%9C%D7%AA" target="_blank" rel="noopener noreferrer" style={{ ...rowText, fontSize: "1.25rem", fontWeight: 500, textDecoration: "none", transition: "color 0.18s" } as React.CSSProperties} onMouseEnter={e => (e.currentTarget.style.color = ACCENT)} onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>{rtl ? "דרך הערבה 23, אילת" : "Derekh HaArava 23, Eilat"}</a>
       </div>
       <div style={rowStyle}>
         <IcoClock />
-        <p style={{ ...rowText, fontWeight: 600 }}>
+        <p style={{ ...rowText, fontSize: "1.25rem", fontWeight: 600 }}>
           {rtl ? "ראשון עד שבת" : "Sun – Sat"}&nbsp;&nbsp;
           <span style={{ color: ACCENT, fontWeight: 700 }}>12:00 – 23:00</span>
         </p>
@@ -254,11 +254,11 @@ export default function Footer() {
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <IcoPin />
-          <a href="https://www.google.com/maps/search/?api=1&query=%D7%93%D7%A8%D7%9A+%D7%94%D7%A2%D7%A8%D7%91%D7%94+23+%D7%90%D7%99%D7%9C%D7%AA" target="_blank" rel="noopener noreferrer" style={{ ...rowText, textDecoration: "none", transition: "color 0.18s" } as React.CSSProperties} onMouseEnter={e => (e.currentTarget.style.color = ACCENT)} onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>{isHe ? "דרך הערבה 23, אילת" : "Derekh HaArava 23, Eilat"}</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=%D7%93%D7%A8%D7%9A+%D7%94%D7%A2%D7%A8%D7%91%D7%94+23+%D7%90%D7%99%D7%9C%D7%AA" target="_blank" rel="noopener noreferrer" style={{ ...rowText, fontSize: "1.25rem", fontWeight: 500, textDecoration: "none", transition: "color 0.18s" } as React.CSSProperties} onMouseEnter={e => (e.currentTarget.style.color = ACCENT)} onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>{isHe ? "דרך הערבה 23, אילת" : "Derekh HaArava 23, Eilat"}</a>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <IcoClock />
-          <p style={{ ...rowText, fontWeight: 600 }}>
+          <p style={{ ...rowText, fontSize: "1.25rem", fontWeight: 600 }}>
             {isHe ? "ראשון עד שבת" : "Sun – Sat"}&nbsp;&nbsp;
             <span style={{ color: ACCENT, fontWeight: 700 }}>12:00 – 23:00</span>
           </p>
