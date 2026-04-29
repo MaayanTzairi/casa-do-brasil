@@ -133,6 +133,7 @@ export default function Footer() {
   const sitemapLinks_HE = [
     { label: "בית",         href: "/" },
     { label: "תפריט",       href: "/menu" },
+    { label: "קצביה",       href: "/butcher" },
     { label: "VIP",         href: "/vip" },
     { label: "שאלות",       href: "/faq" },
     { label: "הטבות",       href: "/benefits" },
@@ -144,6 +145,7 @@ export default function Footer() {
   const sitemapLinks_EN = [
     { label: "Home",        href: "/" },
     { label: "Menu",        href: "/menu" },
+    { label: "Butcher",     href: "/butcher" },
     { label: "VIP",         href: "/vip" },
     { label: "FAQ",         href: "/faq" },
     { label: "Benefits",    href: "/benefits" },

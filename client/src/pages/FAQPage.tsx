@@ -44,7 +44,7 @@ const FAQ_EN: FAQItem[] = [
   },
   {
     q: "Is there parking nearby?",
-    a: "Yes, there is parking available adjacent to the Nova Hotel, right next to the restaurant.",
+    a: "Yes, there is parking available near the restaurant at Derekh HaArava 23, Eilat.",
   },
   {
     q: "Do you cater to vegetarians or vegans?",
@@ -64,7 +64,7 @@ const FAQ_EN: FAQItem[] = [
   },
   {
     q: "Where are you located?",
-    a: "We are located at Golani Brigade 3, Eilat, adjacent to the Nova Hotel. Easy to find in the heart of the city.",
+    a: "We are located at Derekh HaArava 23, Eilat. Easy to find in the heart of the city.",
   },
 ];
 
@@ -87,7 +87,7 @@ const FAQ_HE: FAQItem[] = [
   },
   {
     q: "האם יש חניה בסביבה?",
-    a: "כן, יש חניה זמינה צמוד למלון נובה, ממש ליד המסעדה.",
+    a: "כן, יש חניה זמינה ליד המסעדה בדרך הערבה 23, אילת.",
   },
   {
     q: "האם יש אפשרויות לצמחונים או טבעונים?",
@@ -107,7 +107,7 @@ const FAQ_HE: FAQItem[] = [
   },
   {
     q: "איפה אתם נמצאים?",
-    a: "אנו ממוקמים ברחוב חטיבת גולני 3, אילת, צמוד למלון נובה. קל למצוא בלב העיר.",
+    a: "אנו ממוקמים בדרך הערבה 23, אילת. קל למצוא בלב העיר.",
   },
 ];
 

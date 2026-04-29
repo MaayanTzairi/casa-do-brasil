@@ -75,9 +75,7 @@ function ButcherHero({ isHe }: { isHe: boolean }) {
       style={{
         position: "relative",
         width: "100%",
-        height: isMobile ? "38vh" : "52vh",
-        minHeight: isMobile ? "220px" : "320px",
-        maxHeight: isMobile ? "360px" : "520px",
+        height: "clamp(420px, 70vh, 720px)",
         overflow: "hidden",
         background: "#0a0a0a",
       }}

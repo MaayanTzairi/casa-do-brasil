@@ -171,7 +171,7 @@ export default function PrivacyPage() {
               {isHe ? "פניות בנושא פרטיות" : "Privacy inquiries"}
             </p>
             <a
-              href="mailto:studio@2eat.co.il"
+              href="mailto:cdb@carel.co.il"
               style={{
                 color: BORDEAUX,
                 fontWeight: 600,
@@ -183,7 +183,7 @@ export default function PrivacyPage() {
                 transition: "border-color 0.2s",
               }}
             >
-              studio@2eat.co.il
+              cdb@carel.co.il
             </a>
           </div>
         </div>
