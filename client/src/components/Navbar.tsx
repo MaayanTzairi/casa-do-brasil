@@ -650,11 +650,7 @@ export default function Navbar({
             background: "#f5f0e8",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "clamp(0.55rem, 1.8vw, 1.0rem)",
-            paddingTop: "6rem",
-            paddingBottom: "7rem",
+            alignItems: "stretch",
             transform: menuOpen ? "translateY(0)" : "translateY(100%)",
             opacity: menuOpen ? 1 : 0,
             pointerEvents: menuOpen ? "auto" : "none",
@@ -664,18 +660,16 @@ export default function Navbar({
           }}
           onTouchMove={(e) => e.stopPropagation()}
         >
-          {/* ── Top bar: lang toggle (left) + cow logo (center) + X close (right) ── */}
+          {/* ── TOP BAR (fixed height) ── */}
           <div style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
+            flexShrink: 0,
             height: "5rem",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             borderBottom: "1px solid rgba(62,4,9,0.10)",
             padding: "0 1.2rem",
+            position: "relative",
           }}>
             {/* Lang toggle — top left */}
             <div style={{ position: "absolute", left: "1.2rem" }}>
@@ -715,79 +709,92 @@ export default function Navbar({
             </button>
           </div>
 
-          {/* ── Nav links ── */}
-          {navLinks.map((link, i) => (
+          {/* ── SCROLLABLE MIDDLE: nav links + maps link ── */}
+          <div style={{
+            flex: 1,
+            overflowY: "auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "clamp(0.3rem, 1.6vh, 0.9rem)",
+            padding: "1rem 1.5rem",
+            minHeight: 0,
+          }}>
+            {navLinks.map((link, i) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target={link.href.startsWith("http") ? "_blank" : undefined}
+                rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                onClick={(e) => {
+                  navigateToHash(link.href, e);
+                  setMenuOpen(false);
+                }}
+                style={{
+                  fontFamily: "'Heebo', sans-serif",
+                  fontWeight: 900,
+                  fontSize: "clamp(15px, 4.0vw, 22px)",
+                  letterSpacing: isHe ? "0.03em" : "0.18em",
+                  color: BORDEAUX,
+                  textDecoration: "none",
+                  textTransform: "uppercase",
+                  padding: "clamp(0.15rem, 0.6vh, 0.35rem) 0",
+                  transition: `color 0.2s ease, opacity 0.35s ${0.05 + i * 0.04}s ease, transform 0.35s ${0.05 + i * 0.04}s ease`,
+                  opacity: menuOpen ? 1 : 0,
+                  transform: menuOpen ? "translateY(0)" : "translateY(12px)",
+                  flexShrink: 0,
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.color = "#009C3B";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.color = BORDEAUX;
+                }}
+              >
+                {link.label}
+              </a>
+            ))}
+
+            {/* Google Maps link */}
             <a
-              key={link.label}
-              href={link.href}
-              target={link.href.startsWith("http") ? "_blank" : undefined}
-              rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              onClick={(e) => {
-                navigateToHash(link.href, e);
-                setMenuOpen(false);
-              }}
+              href={GOOGLE_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.45rem",
                 fontFamily: "'Heebo', sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(18px, 4.5vw, 24px)",
-                letterSpacing: isHe ? "0.03em" : "0.18em",
-                color: BORDEAUX,
+                fontWeight: 600,
+                fontSize: "0.78rem",
+                letterSpacing: "0.06em",
+                color: "#5f6368",
                 textDecoration: "none",
-                textTransform: "uppercase",
-                padding: "0.35rem 0",
-                transition: `color 0.2s ease, opacity 0.35s ${0.05 + i * 0.04}s ease, transform 0.35s ${0.05 + i * 0.04}s ease`,
-                opacity: menuOpen ? 1 : 0,
-                transform: menuOpen ? "translateY(0)" : "translateY(12px)",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = "#009C3B";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = BORDEAUX;
+                opacity: menuOpen ? 0.85 : 0,
+                transition: `opacity 0.35s 0.4s ease`,
+                marginTop: "0.3rem",
+                flexShrink: 0,
               }}
             >
-              {link.label}
+              <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#EA4335"/>
+                <path d="M12 6.5c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z" fill="#fff"/>
+              </svg>
+              {isHe ? "דרך הערבה 23, אילת" : "Derekh HaArava 23, Eilat"}
             </a>
-          ))}
+          </div>
 
-          {/* ── Google Maps link in overlay ── */}
-          <a
-            href={GOOGLE_MAPS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.45rem",
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 600,
-              fontSize: "0.78rem",
-              letterSpacing: "0.06em",
-              color: "#5f6368",
-              textDecoration: "none",
-              opacity: menuOpen ? 0.85 : 0,
-              transition: `opacity 0.35s 0.4s ease`,
-              marginTop: "0.2rem",
-            }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#EA4335"/>
-              <path d="M12 6.5c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z" fill="#fff"/>
-            </svg>
-            {isHe ? "דרך הערבה 23, אילת" : "Derekh HaArava 23, Eilat"}
-          </a>
-
-          {/* ── Bottom: reservation + butcher buttons ── */}
+          {/* ── BOTTOM BAR (fixed height): reservation + butcher buttons ── */}
           <div style={{
-            position: "absolute",
-            bottom: "2.5rem",
+            flexShrink: 0,
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
             gap: "0.75rem",
-            width: "100%",
-            padding: "0 2rem",
+            padding: "0.9rem 2rem 1.2rem",
+            borderTop: "1px solid rgba(62,4,9,0.08)",
           }}>
             {/* Reservation CTA button */}
             <a
@@ -851,7 +858,7 @@ export default function Navbar({
             </a>
           </div>
           {/* Bottom Brazilian stripe */}
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "4px", display: "flex" }}>
+          <div style={{ flexShrink: 0, height: "4px", display: "flex" }}>
             <div style={{ flex: 1, background: "#009C3B" }} />
             <div style={{ flex: 1, background: "#FEDF00" }} />
             <div style={{ flex: 1, background: "#002776" }} />
