@@ -19,3 +19,6 @@
 - [x] Fix RTL tab bar cut-off on mobile HE — first tab "צ'ורוסקריה" gets clipped
 - [x] Fix blog date language — use isoDate + toLocaleDateString with correct locale
 - [x] Fix gallery page <title> — always shows Hebrew regardless of language
+
+## Footer Phone Size — Apr 29 2026
+- [x] Increase phone number font size in Footer (desktop + mobile, EN + HE)

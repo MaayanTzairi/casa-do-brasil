@@ -110,7 +110,7 @@ export default function Footer() {
       <div style={rowStyle}>
         <IcoPhone />
         <a href="tel:08-6323032"
-          style={{ ...rowText, fontWeight: 600, textDecoration: "none", transition: "color 0.18s" } as React.CSSProperties}
+          style={{ ...rowText, fontWeight: 700, fontSize: "1.25rem", letterSpacing: "0.04em", textDecoration: "none", transition: "color 0.18s" } as React.CSSProperties}
           onMouseEnter={e => (e.currentTarget.style.color = ACCENT)}
           onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>
           08-6323032
@@ -248,7 +248,9 @@ export default function Footer() {
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.6rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <IcoPhone />
-          <a href="tel:08-6323032" style={{ ...rowText, fontWeight: 600, textDecoration: "none" } as React.CSSProperties}>08-6323032</a>
+          <a href="tel:08-6323032" style={{ ...rowText, fontWeight: 700, fontSize: "1.25rem", letterSpacing: "0.04em", textDecoration: "none", transition: "color 0.18s" } as React.CSSProperties}
+            onMouseEnter={e => (e.currentTarget.style.color = ACCENT)}
+            onMouseLeave={e => (e.currentTarget.style.color = BORDEAUX)}>08-6323032</a>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <IcoPin />
